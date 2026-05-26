@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Whole Health Pharmacy — MedMe Health</title>
+<meta name="description" content="How Whole Health rolled MedMe across their footprint to standardize MedsCheck, minor ailments, and immunization workflows — with measurable utilization gains in the first quarter." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/customers/whole-health/" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.ca/ca/customers/whole-health/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/brand.css?v=34" />
+<style>
+  /* TODO: content pass — replace stub hero with full page structure. */
+  .stub-hero { background: var(--seashell, #FFF7F2); padding: 3.5rem 0 2.5rem; }
+  .stub-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
+  .stub-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
+  .stub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .stub-hero__breadcrumb a:hover { color: var(--indigo, #063E54); }
+  .stub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+  .stub-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 920px; }
+  .stub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 760px; margin: 0 auto 2rem; }
+  .stub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .stub-todo { max-width: 720px; margin: 2rem auto 0; padding: 1.25rem 1.5rem; background: rgba(195, 196, 48, 0.12); border: 1px dashed rgba(195, 196, 48, 0.55); border-radius: 12px; color: #5a5b14; font-size: 0.875rem; line-height: 1.55; text-align: left; }
+  .stub-todo b { color: var(--indigo, #063E54); font-weight: 700; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="util-bar" role="region" aria-label="Site announcement">
+  <div class="wrap util-bar--center">
+    <div class="news">
+      <strong>NEW:</strong> Admin Clerk &mdash; the AI assistant that books the consult while you fill the script. <a href="/ca/platform/ai-assistants/admin-clerk">See it work &rarr;</a>
+    </div>
+  </div>
+</div>
+<script src="/assets/site.js" defer></script>
+<!-- Cookie banner + preferences modal — appears on every page.
+     Behavior is driven by JS in /assets/site.js (consent management).
+     Compliant target: GDPR (EU), CCPA/CPRA (US), PIPEDA + Quebec Law 25 (CA),
+     and the strictest interpretation across all four. -->
+<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Cookie preferences" hidden>
+  <div class="cookie-banner__inner">
+    <p class="cookie-banner__desc">
+      We use essential cookies. Analytics and marketing are your choice.
+      See our <a href="/legal/privacy">privacy policy</a>.
+    </p>
+    <div class="cookie-banner__actions">
+      <button type="button" class="cookie-banner__btn cookie-banner__btn--ghost" data-consent-reject>Reject</button>
+      <button type="button" class="cookie-banner__btn cookie-banner__btn--ghost" data-consent-customize>Customize</button>
+      <button type="button" class="cookie-banner__btn cookie-banner__btn--accent" data-consent-accept>Accept</button>
+    </div>
+  </div>
+</div>
+
+<div class="cookie-modal" id="cookieModal" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle" hidden>
+  <div class="cookie-modal__overlay" data-consent-close aria-hidden="true"></div>
+  <div class="cookie-modal__panel" role="document">
+    <button type="button" class="cookie-modal__close" data-consent-close aria-label="Close preferences">✕</button>
+    <h2 id="cookieModalTitle" class="cookie-modal__title">Cookie preferences</h2>
+    <p class="cookie-modal__desc">
+      Choose what cookies MedMe can use during your visit. You can change these any time
+      via the "Cookie preferences" link in the footer.
+    </p>
+
+    <div class="cookie-cat">
+      <div class="cookie-cat__head">
+        <strong>Strictly necessary</strong>
+        <span class="cookie-cat__locked">Always on</span>
+      </div>
+      <p>Required for the site to load and function — session, security, region selection, accessibility preferences. Cannot be disabled.</p>
+    </div>
+
+    <div class="cookie-cat">
+      <label class="cookie-cat__head">
+        <strong>Functional</strong>
+        <input type="checkbox" data-consent-cat="functional" checked />
+        <span class="cookie-cat__toggle" aria-hidden="true"></span>
+      </label>
+      <p>Remember your region preference (US vs Canada), recent calculator inputs, and display preferences so you don't have to re-enter them.</p>
+    </div>
+
+    <div class="cookie-cat">
+      <label class="cookie-cat__head">
+        <strong>Analytics</strong>
+        <input type="checkbox" data-consent-cat="analytics" />
+        <span class="cookie-cat__toggle" aria-hidden="true"></span>
+      </label>
+      <p>Aggregate, de-identified usage data so we can improve the site (page views, navigation paths, broken-link detection). No PHI, no personally identifying info.</p>
+    </div>
+
+    <div class="cookie-cat">
+      <label class="cookie-cat__head">
+        <strong>Marketing</strong>
+        <input type="checkbox" data-consent-cat="marketing" />
+        <span class="cookie-cat__toggle" aria-hidden="true"></span>
+      </label>
+      <p>Help us understand which content brought you here so we can tailor follow-up. Used only if you've also given consent in any contact forms.</p>
+    </div>
+
+    <div class="cookie-modal__actions">
+      <button type="button" class="cookie-modal__btn cookie-modal__btn--ghost" data-consent-reject>Reject non-essential</button>
+      <button type="button" class="cookie-modal__btn cookie-modal__btn--accent" data-consent-save>Save preferences</button>
+    </div>
+  </div>
+</div>
+<!--
+  CA navigation — locked to sitemap v11 (CA branch).
+  Differences from US v11:
+   - Platform overview labeled "MedMe Care Platform" (pending Purya alignment)
+   - No Medical Billing Suite under platform modules (US-only)
+   - Networks subtext: "Banners & Co-ops" (no PSAOs)
+   - Partners: Provincial Associations (not Pharmacy Associations)
+   - Enterprises has a CA-only L4 sub-page: Nova Scotia / PANS
+-->
+<header class="nav" role="banner">
+  <div class="wrap">
+    <a href="/ca" class="nav__logo" aria-label="MedMe Health home">
+      <svg viewBox="0 0 190 39" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedMe">
+          <g>
+            <path d="M83.2942 11.6621C84.985 10.7174 86.8984 10.2439 88.835 10.2908C90.6783 10.2542 92.4978 10.7074 94.1081 11.6042C95.6073 12.4489 96.8456 13.6893 97.6873 15.19C98.554 16.7363 98.9987 18.4834 98.9761 20.2557V21.1857C98.9792 21.3417 98.9706 21.4977 98.9505 21.6524C98.9432 21.8095 98.8755 21.9577 98.7614 22.0662C98.6474 22.1747 98.4961 22.2351 98.3387 22.235H83.5004C83.5162 22.9344 83.6712 23.6237 83.9554 24.2629C84.2402 24.902 84.6489 25.4783 85.1582 25.9583C86.1463 26.8564 87.4419 27.3408 88.7771 27.3116C89.7219 27.3419 90.6545 27.0898 91.4554 26.5878C92.0538 26.2024 92.5503 25.6787 92.9028 25.0609C92.9522 24.9611 93.0291 24.8772 93.1236 24.8185C93.2188 24.7608 93.3273 24.7283 93.4384 24.7244H97.5171C97.6184 24.7247 97.7178 24.7496 97.8068 24.7968C97.8971 24.8452 97.974 24.9147 98.0313 24.9994C98.0868 25.0843 98.1216 25.1809 98.1326 25.2816C98.1399 25.3825 98.1252 25.4838 98.0893 25.5784C97.6989 26.5426 97.156 27.4381 96.4826 28.2306C95.5915 29.2858 94.4795 30.132 93.2249 30.7092C91.8262 31.3338 90.305 31.6391 88.7734 31.6029C86.882 31.6367 85.0131 31.1857 83.3448 30.2931C81.7852 29.4366 80.4994 28.1572 79.6351 26.6024C78.7098 24.9234 78.2438 23.0299 78.2853 21.1133C78.2505 19.1585 78.7067 17.2263 79.6137 15.494C80.4591 13.8987 81.7339 12.5715 83.2942 11.6621ZM92.1288 15.7364C91.2059 14.943 90.022 14.5201 88.8051 14.5494C87.5895 14.5331 86.4013 14.9143 85.4223 15.6351C84.386 16.4478 83.7096 17.6335 83.537 18.9386H93.6232C93.6061 18.3322 93.467 17.7353 93.2145 17.1837C92.9559 16.6317 92.5862 16.139 92.1288 15.7364Z" fill="currentColor"/>
+            <path d="M166.839 11.6625C168.529 10.7185 170.441 10.2449 172.376 10.2912C174.219 10.2546 176.038 10.7079 177.649 11.6047C179.148 12.4483 180.386 13.6891 181.225 15.1905C182.094 16.7357 182.54 18.4833 182.517 20.2562V21.1861C182.52 21.3422 182.512 21.4982 182.491 21.6529C182.484 21.81 182.416 21.9582 182.302 22.0667C182.189 22.1752 182.037 22.2356 181.88 22.2354H167.041C167.057 22.9349 167.212 23.6242 167.497 24.2633C167.781 24.9025 168.19 25.4787 168.699 25.9587C169.687 26.8571 170.983 27.3416 172.318 27.312C173.263 27.3418 174.195 27.0899 174.996 26.5883C175.594 26.2029 176.091 25.6791 176.443 25.0613C176.493 24.9616 176.57 24.8776 176.664 24.819C176.76 24.7616 176.868 24.7293 176.98 24.7249H181.062C181.163 24.7247 181.262 24.7496 181.351 24.7972C181.441 24.8457 181.518 24.9152 181.576 24.9999C181.633 25.084 181.668 25.1812 181.677 25.2824C181.687 25.3836 181.67 25.4856 181.63 25.5788C181.242 26.5436 180.701 27.4393 180.027 28.2311C179.137 29.2874 178.025 30.1338 176.77 30.7096C175.371 31.3342 173.85 31.6395 172.318 31.6034C170.426 31.6371 168.557 31.1862 166.889 30.2935C165.329 29.4361 164.042 28.1571 163.176 26.6028C162.253 24.9229 161.789 23.0298 161.83 21.1137C161.793 19.1588 162.25 17.2261 163.158 15.4945C164.003 13.8991 165.278 12.5719 166.839 11.6625ZM175.705 15.7369C174.781 14.9421 173.594 14.5191 172.376 14.55C171.156 14.5306 169.963 14.912 168.981 15.6355C167.945 16.4482 167.269 17.6339 167.095 18.9391H177.2C177.183 18.3326 177.044 17.7357 176.791 17.1842C176.533 16.6322 176.163 16.1395 175.705 15.7369Z" fill="currentColor"/>
+            <path d="M122.431 3.00001C122.512 3.00009 122.591 3.01613 122.665 3.04719C122.739 3.07825 122.806 3.12376 122.862 3.18097C122.978 3.29602 123.043 3.45217 123.043 3.61515V30.4599C123.043 30.5401 123.027 30.6195 122.996 30.6935C122.965 30.7674 122.92 30.8344 122.862 30.8905C122.748 31.0054 122.593 31.0715 122.431 31.075H118.878C118.735 31.0732 118.599 31.022 118.49 30.9303C118.379 30.8387 118.305 30.7103 118.28 30.5684L117.817 28.155C117.109 29.1035 116.229 29.9101 115.222 30.5323C113.94 31.2707 112.474 31.6284 110.995 31.5635C109.195 31.5881 107.425 31.104 105.889 30.1668C104.385 29.2323 103.157 27.9164 102.327 26.353C101.437 24.6597 100.988 22.7694 101.021 20.8567C100.985 18.9506 101.434 17.0666 102.327 15.3821C103.157 13.8306 104.386 12.5289 105.889 11.6117C107.429 10.6851 109.198 10.2087 110.995 10.2368C112.38 10.2035 113.755 10.4973 115.005 11.0944C116.127 11.6477 117.087 12.4816 117.792 13.515V3.61515C117.791 3.5343 117.806 3.45413 117.839 3.37998C117.868 3.3053 117.912 3.23751 117.969 3.18097C118.025 3.1235 118.093 3.07795 118.168 3.04707C118.243 3.01555 118.323 2.99952 118.403 3.00001H122.431ZM112.135 14.8463C110.586 14.8463 109.098 15.453 107.991 16.5364C107.44 17.1196 107.012 17.8074 106.732 18.559C106.453 19.3069 106.324 20.1024 106.352 20.9001C106.326 21.7051 106.456 22.5075 106.735 23.263C107.017 24.0141 107.444 24.7025 107.991 25.2892C108.518 25.845 109.156 26.2836 109.864 26.5767C110.572 26.8697 111.333 27.0105 112.099 26.9898V26.9717C112.877 27.0006 113.651 26.8635 114.372 26.5697C115.093 26.2758 115.743 25.832 116.279 25.2675C117.32 24.0514 117.893 22.503 117.893 20.9019C117.893 19.3009 117.32 17.7525 116.279 16.5364C115.171 15.453 113.684 14.8464 112.135 14.8463Z" fill="currentColor"/>
+            <path d="M50.0159 11.0907C51.1714 10.4953 52.4586 10.2015 53.7581 10.2367C56.8946 10.2367 59.1168 11.4537 60.4246 13.8877C61.1664 12.7584 62.1874 11.8398 63.3886 11.2209C64.6422 10.5611 66.0402 10.2229 67.4565 10.2367C70.1105 10.2367 72.1422 11.0303 73.5512 12.6175C74.9602 14.2048 75.6684 16.5327 75.6757 19.6011V30.4707C75.6751 30.6336 75.6104 30.7899 75.4945 30.9049C75.4384 30.9621 75.3713 31.0075 75.2975 31.0386C75.2237 31.0696 75.1444 31.0857 75.0639 31.0858H71.0394C70.8772 31.0839 70.7222 31.0183 70.6076 30.9033C70.4935 30.7882 70.4289 30.6329 70.4276 30.4707V20.075C70.4276 18.3237 70.094 16.9826 69.4255 16.0514C68.757 15.1203 67.728 14.6547 66.3385 14.6547C65.6877 14.6273 65.0399 14.7512 64.4452 15.0166C63.8539 15.2895 63.3326 15.6943 62.9218 16.1998C62.0628 17.2395 61.6345 18.6868 61.637 20.5418V30.4561C61.6365 30.6192 61.5715 30.7753 61.456 30.8904C61.3999 30.9478 61.3329 30.9933 61.259 31.0244C61.185 31.0555 61.1056 31.0714 61.0253 31.0713H57.0262C56.8644 31.0704 56.7095 31.0053 56.5955 30.8904C56.4813 30.7745 56.4165 30.6188 56.4145 30.4561V20.075C56.4145 18.3237 56.0743 16.9826 55.3939 16.0514C54.7135 15.1203 53.664 14.6547 52.2453 14.6547C51.6015 14.6359 50.9621 14.7672 50.3778 15.0383C49.7922 15.3093 49.2769 15.7117 48.8722 16.2143C48.0133 17.2539 47.5838 18.7013 47.5838 20.5563V30.4561C47.5804 30.6185 47.5158 30.7737 47.4029 30.8904C47.2889 31.0053 47.134 31.0704 46.9722 31.0713H42.9622C42.8011 31.0701 42.6467 31.0066 42.5315 30.894C42.4194 30.7781 42.3549 30.6246 42.3506 30.4635V11.3222C42.351 11.1592 42.416 11.0031 42.5315 10.888C42.647 10.7754 42.8009 10.7107 42.9622 10.7071H46.4511C46.5973 10.7068 46.7388 10.7594 46.8491 10.8555C46.9581 10.9482 47.0311 11.0763 47.0554 11.2173L47.4174 13.4535C48.0784 12.4662 48.9704 11.6552 50.0159 11.0907Z" fill="currentColor"/>
+            <path d="M133.781 11.0906C134.937 10.4955 136.224 10.2018 137.523 10.2367C140.66 10.2367 142.882 11.4536 144.19 13.8876C144.932 12.7583 145.953 11.8398 147.154 11.2209C148.407 10.5613 149.805 10.2231 151.222 10.2367C153.876 10.2367 155.907 11.0303 157.316 12.6176C158.725 14.2048 159.434 16.5327 159.441 19.6011V30.4706C159.44 30.6336 159.376 30.7898 159.26 30.9048C159.204 30.9622 159.137 31.0078 159.063 31.0389C158.989 31.0699 158.91 31.0859 158.829 31.0858H154.819C154.658 31.0848 154.503 31.0197 154.389 30.9048C154.276 30.7881 154.211 30.633 154.207 30.4706V20.075C154.207 18.3237 153.874 16.9825 153.209 16.0514C152.543 15.1203 151.513 14.6547 150.118 14.6547C149.467 14.6319 148.82 14.7609 148.227 15.0316C147.635 15.3023 147.114 15.7072 146.705 16.2142C145.846 17.2539 145.417 18.7012 145.417 20.5563V30.4561C145.416 30.6184 145.353 30.7741 145.239 30.8904C145.125 31.0058 144.968 31.0709 144.805 31.0712H140.795C140.632 31.0709 140.476 31.0058 140.361 30.8904C140.248 30.7736 140.183 30.6185 140.18 30.4561V20.075C140.18 18.3237 139.839 16.9825 139.159 16.0514C138.479 15.1203 137.429 14.6547 136.011 14.6547C135.366 14.637 134.726 14.7686 134.141 15.0391C133.556 15.3097 133.041 15.7119 132.638 16.2142C131.784 17.2539 131.354 18.7012 131.349 20.5563V30.4561C131.348 30.6184 131.284 30.7738 131.169 30.8888C131.055 31.0038 130.9 31.0694 130.738 31.0712H126.727C126.566 31.0701 126.412 31.0065 126.297 30.8939C126.185 30.7781 126.12 30.6245 126.116 30.4634V11.3222C126.116 11.1592 126.181 11.003 126.297 10.888C126.412 10.7759 126.566 10.7114 126.727 10.7071H130.216C130.362 10.7068 130.504 10.7594 130.614 10.8554C130.725 10.9471 130.798 11.0757 130.821 11.2172L131.183 13.4534C131.843 12.4662 132.736 11.6551 133.781 11.0906Z" fill="currentColor"/>
+            <path d="M24.0991 3.24596C26.0597 3.63474 27.8246 4.69174 29.0925 6.23655C30.3604 7.78136 31.0528 9.71826 31.0515 11.7166V19.8434H25.8544C25.7308 19.8426 25.6125 19.7932 25.5251 19.706C25.4802 19.6629 25.4446 19.6112 25.4204 19.554C25.3961 19.4967 25.3837 19.4352 25.3839 19.373V11.6623C25.3844 11.5389 25.3605 11.4167 25.3136 11.3026C25.2667 11.1884 25.1978 11.0847 25.1107 10.9973C25.0236 10.9099 24.92 10.8405 24.8061 10.7932C24.6922 10.7459 24.5699 10.7215 24.4465 10.7215H20.6972C20.4477 10.7228 20.2088 10.8215 20.0312 10.9965C19.9439 11.084 19.8746 11.1878 19.8274 11.3021C19.7802 11.4163 19.756 11.5387 19.7562 11.6623V19.373C19.7562 19.4348 19.7441 19.4961 19.7205 19.5532C19.697 19.6103 19.6623 19.6622 19.6186 19.706C19.5294 19.7928 19.4102 19.842 19.2857 19.8434H11.5877C11.464 19.8429 11.3415 19.867 11.2271 19.9141C11.1127 19.9612 11.0088 20.0304 10.9213 20.1179C10.8338 20.2054 10.7645 20.3093 10.7174 20.4236C10.6703 20.538 10.6463 20.6605 10.6468 20.7842V24.5365C10.6463 24.6601 10.6703 24.7827 10.7174 24.897C10.7645 25.0114 10.8338 25.1153 10.9213 25.2028C11.0088 25.2902 11.1127 25.3595 11.2271 25.4066C11.3415 25.4537 11.464 25.4777 11.5877 25.4773H19.2857C19.4102 25.4786 19.5294 25.5278 19.6186 25.6148C19.6623 25.6585 19.697 25.7104 19.7205 25.7675C19.7441 25.8246 19.7562 25.8858 19.7562 25.9476V31.1292H11.642C9.34987 31.1292 7.15164 30.2188 5.53085 28.5984C3.91006 26.9779 2.99951 24.7801 2.99951 22.4885C2.99951 20.1968 3.91006 17.9991 5.53085 16.3786C7.15164 14.7581 9.34987 13.8478 11.642 13.8478H13.7737V11.7202C13.7739 10.4429 14.0573 9.18156 14.6035 8.0269C15.1497 6.87225 15.9452 5.85302 16.9326 5.0426C17.9201 4.23218 19.075 3.65071 20.3142 3.34004C21.5533 3.02938 22.846 2.99725 24.0991 3.24596ZM25.3912 31.1292V26.1032C25.3921 25.9375 25.4584 25.7788 25.5756 25.6617C25.6928 25.5444 25.8515 25.4782 26.0173 25.4773H31.0551V31.1292H25.3912Z" fill="#C3C430"/>
+          </g>
+        </svg>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+
+        <!-- PHARMACY -->
+        <li class="nav__item-group" aria-expanded="false">
+          <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Pharmacy</button>
+          <div class="nav__dropdown" role="menu">
+            <a href="/ca/pharmacy/independents" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">◇</span>
+              <span><span class="nav__dropdown-title">Independents</span><span class="nav__dropdown-desc">Single-store and small-group owners</span></span>
+            </a>
+            <a href="/ca/pharmacy/enterprises" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">◆</span>
+              <span><span class="nav__dropdown-title">Enterprises</span><span class="nav__dropdown-desc">Regional chains &amp; health systems</span></span>
+            </a>
+            <a href="/ca/pharmacy/networks" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">⌬</span>
+              <span><span class="nav__dropdown-title">Networks</span><span class="nav__dropdown-desc">Banners &amp; Co-ops</span></span>
+            </a>
+            <a href="/ca/pharmacy/specialty" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">◈</span>
+              <span><span class="nav__dropdown-title">Specialty</span><span class="nav__dropdown-desc">Specialty pharmacies and payer partners</span></span>
+            </a>
+          </div>
+        </li>
+
+        <!-- PLATFORM -->
+        <li class="nav__item-group" aria-expanded="false">
+          <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Platform</button>
+          <div class="nav__dropdown nav__dropdown--mega" role="menu">
+            <div class="nav__dropdown-group">
+              <h4 class="nav__dropdown-group-label">MedMe Care Platform</h4>
+              <a href="/ca/platform" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">⊟</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">MedMe Care Platform</span>
+                  <span class="nav__dropdown-tile-desc">Platform overview</span>
+                </span>
+              </a>
+              <a href="/ca/platform/scheduling-queuing" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">↻</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">Scheduling &amp; Queuing</span>
+                  <span class="nav__dropdown-tile-desc">Online booking + eligibility + intake</span>
+                </span>
+              </a>
+              <a href="/ca/platform/patient-intake" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">✎</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">Patient Intake Form</span>
+                  <span class="nav__dropdown-tile-desc">Pre-visit data capture, prefilled</span>
+                </span>
+              </a>
+              <a href="/ca/platform/assisted-documentation" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">⌘</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">Assisted Documentation</span>
+                  <span class="nav__dropdown-tile-desc">SOAP, care plans, transitions-of-care</span>
+                </span>
+              </a>
+              <a href="/ca/platform/messaging-follow-ups" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">✉</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">Messaging &amp; Follow-Ups</span>
+                  <span class="nav__dropdown-tile-desc">Multi-channel patient messaging</span>
+                </span>
+              </a>
+              <a href="/ca/platform/ai-clinical-assistant" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">★</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">AI Clinical Assistant <em class="nav__tag">Add-on</em></span>
+                  <span class="nav__dropdown-tile-desc">AI Scribe + code suggestion</span>
+                </span>
+              </a>
+            </div>
+            <div class="nav__dropdown-group">
+              <h4 class="nav__dropdown-group-label">AI Assistants</h4>
+              <a href="/ca/platform/ai-assistants" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">◎</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">AI Assistants</span>
+                  <span class="nav__dropdown-tile-desc">Overview</span>
+                </span>
+              </a>
+              <a href="/ca/platform/ai-assistants/patient-concierge" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">☎</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">Patient Concierge</span>
+                  <span class="nav__dropdown-tile-desc">Inbound triage, outreach, rebooking</span>
+                </span>
+              </a>
+              <a href="/ca/platform/ai-assistants/admin-clerk" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">⚙</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">Admin Clerk <em class="nav__tag nav__tag--new">New</em></span>
+                  <span class="nav__dropdown-tile-desc">PMS bridge + back-office tasks</span>
+                </span>
+              </a>
+            </div>
+            <div class="nav__dropdown-group">
+              <h4 class="nav__dropdown-group-label">Foundation</h4>
+              <a href="/ca/platform/pms-integrations" class="nav__dropdown-tile" role="menuitem">
+                <span class="nav__dropdown-tile-icon" aria-hidden="true">⚙</span>
+                <span>
+                  <span class="nav__dropdown-tile-title">PMS Integrations</span>
+                  <span class="nav__dropdown-tile-desc">Kroll, Fillware, BD, &amp; more</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <!-- RESOURCES -->
+        <li class="nav__item-group" aria-expanded="false">
+          <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Resources</button>
+          <div class="nav__dropdown" role="menu">
+            <a href="/ca/resources/blog" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">✎</span>
+              <span><span class="nav__dropdown-title">Blog</span><span class="nav__dropdown-desc">Stories from clinical pharmacy</span></span>
+            </a>
+            <a href="/ca/resources/events" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">◉</span>
+              <span><span class="nav__dropdown-title">Events</span><span class="nav__dropdown-desc">Conferences, dinners, in-person</span></span>
+            </a>
+            <a href="/ca/resources/white-papers" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">≣</span>
+              <span><span class="nav__dropdown-title">White Papers</span><span class="nav__dropdown-desc">Research and policy briefs</span></span>
+            </a>
+            <a href="/ca/resources/webinars" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">▷</span>
+              <span><span class="nav__dropdown-title">Webinars</span><span class="nav__dropdown-desc">Live + on-demand sessions</span></span>
+            </a>
+            <a href="/ca/resources/roi-calculator" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">∑</span>
+              <span><span class="nav__dropdown-title">ROI Calculator</span><span class="nav__dropdown-desc">Estimate your clinical-service revenue</span></span>
+            </a>
+          </div>
+        </li>
+
+        <!-- PARTNERS -->
+        <li class="nav__item-group" aria-expanded="false">
+          <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Partners</button>
+          <div class="nav__dropdown" role="menu">
+            <a href="/ca/partners/provincial-associations" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">◇</span>
+              <span><span class="nav__dropdown-title">Provincial Associations</span><span class="nav__dropdown-desc">Provincial association partnerships</span></span>
+            </a>
+            <a href="/ca/pharmacy/networks" class="nav__dropdown-link" role="menuitem">
+              <span class="nav__dropdown-icon" aria-hidden="true">⌬</span>
+              <span><span class="nav__dropdown-title">Networks <em class="nav__tag nav__tag--ref">ref</em></span><span class="nav__dropdown-desc">See Pharmacy → Networks</span></span>
+            </a>
+          </div>
+        </li>
+
+        <!-- ABOUT (no children) -->
+        <li><a href="/ca/about">About</a></li>
+      </ul>
+    </nav>
+    <div class="nav__cta">
+      <div class="region-switch nav__region" data-open="false">
+        <button type="button" class="region-switch__trigger" aria-haspopup="true" aria-expanded="false" aria-label="Switch region (currently Canada)">
+          <span class="region-flag" aria-hidden="true">🇨🇦</span>
+          <span class="region-switch__chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="region-switch__menu" role="menu">
+          <a href="/us" class="region-switch__item" role="menuitem" hreflang="en-us" data-set-region="US">
+            <span class="region-flag" aria-hidden="true">🇺🇸</span>
+            <span>United States</span>
+          </a>
+          <a href="/ca" class="region-switch__item region-switch__item--current" role="menuitem" aria-current="page" data-set-region="CA">
+            <span class="region-flag" aria-hidden="true">🇨🇦</span>
+            <span>Canada</span>
+            <span class="region-switch__check" aria-hidden="true">✓</span>
+          </a>
+        </div>
+      </div>
+      <a class="btn btn-primary nav__cta-desktop" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
+      <button type="button" class="nav__hamburger" aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile drawer -->
+  <nav class="nav-drawer" id="mobile-drawer" aria-hidden="true">
+    <ul class="nav-drawer__links">
+      <li><a href="/ca/pharmacy/independents">Pharmacy</a></li>
+      <li><a href="/ca/platform">Platform</a></li>
+      <li><a href="/ca/resources">Resources</a></li>
+      <li><a href="/ca/partners">Partners</a></li>
+      <li><a href="/ca/about">About</a></li>
+    </ul>
+    <a class="btn btn-primary nav-drawer__cta" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
+  </nav>
+</header>
+
+<main id="main">
+<section class="stub-hero">
+  <div class="stub-hero__inner">
+    <div class="stub-hero__breadcrumb"><a href="/ca">Home</a><span class="sep">/</span><a href="/ca/customers">Customers</a><span class="sep">/</span><span>Whole Health</span></div>
+    <span class="kicker kicker--matcha">Customer story</span>
+    <h1 class="h-display h-display--xl">Whole Health Pharmacy.<br>One workflow, every service.</h1>
+    <p class="stub-hero__lede">How Whole Health rolled MedMe across their footprint to standardize MedsCheck, minor ailments, and immunization workflows &mdash; with measurable utilization gains in the first quarter.</p>
+    <div class="stub-hero__cta">
+      <a class="btn btn-primary" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
+      
+    </div>
+    <!-- TODO: content pass — full page sections go here. -->
+    <div class="stub-todo">
+      <b>Carryover (CA).</b> Page was migrated from the pre-v11 design system. Hero, breadcrumb, and nav/footer are now v11-compliant. Full content pass to replace the stub body with sections matching Christine&rsquo;s direction.
+    </div>
+  </div>
+</section>
+</main>
+
+<!--
+  CA footer — locked to sitemap v11 (CA branch).
+  Mirrors US v11 layout, with CA-specific labels:
+   - "MedMe Care Platform" instead of "Pharmacy EHR"
+   - No Medical Billing Suite link
+   - "Provincial Associations" instead of "Pharmacy Associations"
+   - "Banners & Co-ops" subtext under Networks
+-->
+<footer class="site-footer" role="contentinfo">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div class="foot__brand">
+        <svg viewBox="0 0 190 39" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedMe">
+          <g>
+            <path d="M83.2942 11.6621C84.985 10.7174 86.8984 10.2439 88.835 10.2908C90.6783 10.2542 92.4978 10.7074 94.1081 11.6042C95.6073 12.4489 96.8456 13.6893 97.6873 15.19C98.554 16.7363 98.9987 18.4834 98.9761 20.2557V21.1857C98.9792 21.3417 98.9706 21.4977 98.9505 21.6524C98.9432 21.8095 98.8755 21.9577 98.7614 22.0662C98.6474 22.1747 98.4961 22.2351 98.3387 22.235H83.5004C83.5162 22.9344 83.6712 23.6237 83.9554 24.2629C84.2402 24.902 84.6489 25.4783 85.1582 25.9583C86.1463 26.8564 87.4419 27.3408 88.7771 27.3116C89.7219 27.3419 90.6545 27.0898 91.4554 26.5878C92.0538 26.2024 92.5503 25.6787 92.9028 25.0609C92.9522 24.9611 93.0291 24.8772 93.1236 24.8185C93.2188 24.7608 93.3273 24.7283 93.4384 24.7244H97.5171C97.6184 24.7247 97.7178 24.7496 97.8068 24.7968C97.8971 24.8452 97.974 24.9147 98.0313 24.9994C98.0868 25.0843 98.1216 25.1809 98.1326 25.2816C98.1399 25.3825 98.1252 25.4838 98.0893 25.5784C97.6989 26.5426 97.156 27.4381 96.4826 28.2306C95.5915 29.2858 94.4795 30.132 93.2249 30.7092C91.8262 31.3338 90.305 31.6391 88.7734 31.6029C86.882 31.6367 85.0131 31.1857 83.3448 30.2931C81.7852 29.4366 80.4994 28.1572 79.6351 26.6024C78.7098 24.9234 78.2438 23.0299 78.2853 21.1133C78.2505 19.1585 78.7067 17.2263 79.6137 15.494C80.4591 13.8987 81.7339 12.5715 83.2942 11.6621ZM92.1288 15.7364C91.2059 14.943 90.022 14.5201 88.8051 14.5494C87.5895 14.5331 86.4013 14.9143 85.4223 15.6351C84.386 16.4478 83.7096 17.6335 83.537 18.9386H93.6232C93.6061 18.3322 93.467 17.7353 93.2145 17.1837C92.9559 16.6317 92.5862 16.139 92.1288 15.7364Z" fill="currentColor"/>
+            <path d="M166.839 11.6625C168.529 10.7185 170.441 10.2449 172.376 10.2912C174.219 10.2546 176.038 10.7079 177.649 11.6047C179.148 12.4483 180.386 13.6891 181.225 15.1905C182.094 16.7357 182.54 18.4833 182.517 20.2562V21.1861C182.52 21.3422 182.512 21.4982 182.491 21.6529C182.484 21.81 182.416 21.9582 182.302 22.0667C182.189 22.1752 182.037 22.2356 181.88 22.2354H167.041C167.057 22.9349 167.212 23.6242 167.497 24.2633C167.781 24.9025 168.19 25.4787 168.699 25.9587C169.687 26.8571 170.983 27.3416 172.318 27.312C173.263 27.3418 174.195 27.0899 174.996 26.5883C175.594 26.2029 176.091 25.6791 176.443 25.0613C176.493 24.9616 176.57 24.8776 176.664 24.819C176.76 24.7616 176.868 24.7293 176.98 24.7249H181.062C181.163 24.7247 181.262 24.7496 181.351 24.7972C181.441 24.8457 181.518 24.9152 181.576 24.9999C181.633 25.084 181.668 25.1812 181.677 25.2824C181.687 25.3836 181.67 25.4856 181.63 25.5788C181.242 26.5436 180.701 27.4393 180.027 28.2311C179.137 29.2874 178.025 30.1338 176.77 30.7096C175.371 31.3342 173.85 31.6395 172.318 31.6034C170.426 31.6371 168.557 31.1862 166.889 30.2935C165.329 29.4361 164.042 28.1571 163.176 26.6028C162.253 24.9229 161.789 23.0298 161.83 21.1137C161.793 19.1588 162.25 17.2261 163.158 15.4945C164.003 13.8991 165.278 12.5719 166.839 11.6625ZM175.705 15.7369C174.781 14.9421 173.594 14.5191 172.376 14.55C171.156 14.5306 169.963 14.912 168.981 15.6355C167.945 16.4482 167.269 17.6339 167.095 18.9391H177.2C177.183 18.3326 177.044 17.7357 176.791 17.1842C176.533 16.6322 176.163 16.1395 175.705 15.7369Z" fill="currentColor"/>
+            <path d="M122.431 3.00001C122.512 3.00009 122.591 3.01613 122.665 3.04719C122.739 3.07825 122.806 3.12376 122.862 3.18097C122.978 3.29602 123.043 3.45217 123.043 3.61515V30.4599C123.043 30.5401 123.027 30.6195 122.996 30.6935C122.965 30.7674 122.92 30.8344 122.862 30.8905C122.748 31.0054 122.593 31.0715 122.431 31.075H118.878C118.735 31.0732 118.599 31.022 118.49 30.9303C118.379 30.8387 118.305 30.7103 118.28 30.5684L117.817 28.155C117.109 29.1035 116.229 29.9101 115.222 30.5323C113.94 31.2707 112.474 31.6284 110.995 31.5635C109.195 31.5881 107.425 31.104 105.889 30.1668C104.385 29.2323 103.157 27.9164 102.327 26.353C101.437 24.6597 100.988 22.7694 101.021 20.8567C100.985 18.9506 101.434 17.0666 102.327 15.3821C103.157 13.8306 104.386 12.5289 105.889 11.6117C107.429 10.6851 109.198 10.2087 110.995 10.2368C112.38 10.2035 113.755 10.4973 115.005 11.0944C116.127 11.6477 117.087 12.4816 117.792 13.515V3.61515C117.791 3.5343 117.806 3.45413 117.839 3.37998C117.868 3.3053 117.912 3.23751 117.969 3.18097C118.025 3.1235 118.093 3.07795 118.168 3.04707C118.243 3.01555 118.323 2.99952 118.403 3.00001H122.431ZM112.135 14.8463C110.586 14.8463 109.098 15.453 107.991 16.5364C107.44 17.1196 107.012 17.8074 106.732 18.559C106.453 19.3069 106.324 20.1024 106.352 20.9001C106.326 21.7051 106.456 22.5075 106.735 23.263C107.017 24.0141 107.444 24.7025 107.991 25.2892C108.518 25.845 109.156 26.2836 109.864 26.5767C110.572 26.8697 111.333 27.0105 112.099 26.9898V26.9717C112.877 27.0006 113.651 26.8635 114.372 26.5697C115.093 26.2758 115.743 25.832 116.279 25.2675C117.32 24.0514 117.893 22.503 117.893 20.9019C117.893 19.3009 117.32 17.7525 116.279 16.5364C115.171 15.453 113.684 14.8464 112.135 14.8463Z" fill="currentColor"/>
+            <path d="M50.0159 11.0907C51.1714 10.4953 52.4586 10.2015 53.7581 10.2367C56.8946 10.2367 59.1168 11.4537 60.4246 13.8877C61.1664 12.7584 62.1874 11.8398 63.3886 11.2209C64.6422 10.5611 66.0402 10.2229 67.4565 10.2367C70.1105 10.2367 72.1422 11.0303 73.5512 12.6175C74.9602 14.2048 75.6684 16.5327 75.6757 19.6011V30.4707C75.6751 30.6336 75.6104 30.7899 75.4945 30.9049C75.4384 30.9621 75.3713 31.0075 75.2975 31.0386C75.2237 31.0696 75.1444 31.0857 75.0639 31.0858H71.0394C70.8772 31.0839 70.7222 31.0183 70.6076 30.9033C70.4935 30.7882 70.4289 30.6329 70.4276 30.4707V20.075C70.4276 18.3237 70.094 16.9826 69.4255 16.0514C68.757 15.1203 67.728 14.6547 66.3385 14.6547C65.6877 14.6273 65.0399 14.7512 64.4452 15.0166C63.8539 15.2895 63.3326 15.6943 62.9218 16.1998C62.0628 17.2395 61.6345 18.6868 61.637 20.5418V30.4561C61.6365 30.6192 61.5715 30.7753 61.456 30.8904C61.3999 30.9478 61.3329 30.9933 61.259 31.0244C61.185 31.0555 61.1056 31.0714 61.0253 31.0713H57.0262C56.8644 31.0704 56.7095 31.0053 56.5955 30.8904C56.4813 30.7745 56.4165 30.6188 56.4145 30.4561V20.075C56.4145 18.3237 56.0743 16.9826 55.3939 16.0514C54.7135 15.1203 53.664 14.6547 52.2453 14.6547C51.6015 14.6359 50.9621 14.7672 50.3778 15.0383C49.7922 15.3093 49.2769 15.7117 48.8722 16.2143C48.0133 17.2539 47.5838 18.7013 47.5838 20.5563V30.4561C47.5804 30.6185 47.5158 30.7737 47.4029 30.8904C47.2889 31.0053 47.134 31.0704 46.9722 31.0713H42.9622C42.8011 31.0701 42.6467 31.0066 42.5315 30.894C42.4194 30.7781 42.3549 30.6246 42.3506 30.4635V11.3222C42.351 11.1592 42.416 11.0031 42.5315 10.888C42.647 10.7754 42.8009 10.7107 42.9622 10.7071H46.4511C46.5973 10.7068 46.7388 10.7594 46.8491 10.8555C46.9581 10.9482 47.0311 11.0763 47.0554 11.2173L47.4174 13.4535C48.0784 12.4662 48.9704 11.6552 50.0159 11.0907Z" fill="currentColor"/>
+            <path d="M133.781 11.0906C134.937 10.4955 136.224 10.2018 137.523 10.2367C140.66 10.2367 142.882 11.4536 144.19 13.8876C144.932 12.7583 145.953 11.8398 147.154 11.2209C148.407 10.5613 149.805 10.2231 151.222 10.2367C153.876 10.2367 155.907 11.0303 157.316 12.6176C158.725 14.2048 159.434 16.5327 159.441 19.6011V30.4706C159.44 30.6336 159.376 30.7898 159.26 30.9048C159.204 30.9622 159.137 31.0078 159.063 31.0389C158.989 31.0699 158.91 31.0859 158.829 31.0858H154.819C154.658 31.0848 154.503 31.0197 154.389 30.9048C154.276 30.7881 154.211 30.633 154.207 30.4706V20.075C154.207 18.3237 153.874 16.9825 153.209 16.0514C152.543 15.1203 151.513 14.6547 150.118 14.6547C149.467 14.6319 148.82 14.7609 148.227 15.0316C147.635 15.3023 147.114 15.7072 146.705 16.2142C145.846 17.2539 145.417 18.7012 145.417 20.5563V30.4561C145.416 30.6184 145.353 30.7741 145.239 30.8904C145.125 31.0058 144.968 31.0709 144.805 31.0712H140.795C140.632 31.0709 140.476 31.0058 140.361 30.8904C140.248 30.7736 140.183 30.6185 140.18 30.4561V20.075C140.18 18.3237 139.839 16.9825 139.159 16.0514C138.479 15.1203 137.429 14.6547 136.011 14.6547C135.366 14.637 134.726 14.7686 134.141 15.0391C133.556 15.3097 133.041 15.7119 132.638 16.2142C131.784 17.2539 131.354 18.7012 131.349 20.5563V30.4561C131.348 30.6184 131.284 30.7738 131.169 30.8888C131.055 31.0038 130.9 31.0694 130.738 31.0712H126.727C126.566 31.0701 126.412 31.0065 126.297 30.8939C126.185 30.7781 126.12 30.6245 126.116 30.4634V11.3222C126.116 11.1592 126.181 11.003 126.297 10.888C126.412 10.7759 126.566 10.7114 126.727 10.7071H130.216C130.362 10.7068 130.504 10.7594 130.614 10.8554C130.725 10.9471 130.798 11.0757 130.821 11.2172L131.183 13.4534C131.843 12.4662 132.736 11.6551 133.781 11.0906Z" fill="currentColor"/>
+            <path d="M24.0991 3.24596C26.0597 3.63474 27.8246 4.69174 29.0925 6.23655C30.3604 7.78136 31.0528 9.71826 31.0515 11.7166V19.8434H25.8544C25.7308 19.8426 25.6125 19.7932 25.5251 19.706C25.4802 19.6629 25.4446 19.6112 25.4204 19.554C25.3961 19.4967 25.3837 19.4352 25.3839 19.373V11.6623C25.3844 11.5389 25.3605 11.4167 25.3136 11.3026C25.2667 11.1884 25.1978 11.0847 25.1107 10.9973C25.0236 10.9099 24.92 10.8405 24.8061 10.7932C24.6922 10.7459 24.5699 10.7215 24.4465 10.7215H20.6972C20.4477 10.7228 20.2088 10.8215 20.0312 10.9965C19.9439 11.084 19.8746 11.1878 19.8274 11.3021C19.7802 11.4163 19.756 11.5387 19.7562 11.6623V19.373C19.7562 19.4348 19.7441 19.4961 19.7205 19.5532C19.697 19.6103 19.6623 19.6622 19.6186 19.706C19.5294 19.7928 19.4102 19.842 19.2857 19.8434H11.5877C11.464 19.8429 11.3415 19.867 11.2271 19.9141C11.1127 19.9612 11.0088 20.0304 10.9213 20.1179C10.8338 20.2054 10.7645 20.3093 10.7174 20.4236C10.6703 20.538 10.6463 20.6605 10.6468 20.7842V24.5365C10.6463 24.6601 10.6703 24.7827 10.7174 24.897C10.7645 25.0114 10.8338 25.1153 10.9213 25.2028C11.0088 25.2902 11.1127 25.3595 11.2271 25.4066C11.3415 25.4537 11.464 25.4777 11.5877 25.4773H19.2857C19.4102 25.4786 19.5294 25.5278 19.6186 25.6148C19.6623 25.6585 19.697 25.7104 19.7205 25.7675C19.7441 25.8246 19.7562 25.8858 19.7562 25.9476V31.1292H11.642C9.34987 31.1292 7.15164 30.2188 5.53085 28.5984C3.91006 26.9779 2.99951 24.7801 2.99951 22.4885C2.99951 20.1968 3.91006 17.9991 5.53085 16.3786C7.15164 14.7581 9.34987 13.8478 11.642 13.8478H13.7737V11.7202C13.7739 10.4429 14.0573 9.18156 14.6035 8.0269C15.1497 6.87225 15.9452 5.85302 16.9326 5.0426C17.9201 4.23218 19.075 3.65071 20.3142 3.34004C21.5533 3.02938 22.846 2.99725 24.0991 3.24596ZM25.3912 31.1292V26.1032C25.3921 25.9375 25.4584 25.7788 25.5756 25.6617C25.6928 25.5444 25.8515 25.4782 26.0173 25.4773H31.0551V31.1292H25.3912Z" fill="#C3C430"/>
+          </g>
+        </svg>
+        <p>The clinical operating system for Canadian community pharmacy — built so the work pharmacists already do finally gets recognized.</p>
+      </div>
+      <div class="foot__col">
+        <h4>Pharmacy</h4>
+        <ul>
+          <li><a href="/ca/pharmacy/independents">Independents</a></li>
+          <li><a href="/ca/pharmacy/enterprises">Enterprises</a></li>
+          <li><a href="/ca/pharmacy/networks">Networks</a></li>
+          <li><a href="/ca/pharmacy/specialty">Specialty</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="/ca/platform">MedMe Care Platform</a></li>
+          <li><a href="/ca/platform/scheduling-queuing">Scheduling &amp; Queuing</a></li>
+          <li><a href="/ca/platform/patient-intake">Patient Intake Form</a></li>
+          <li><a href="/ca/platform/assisted-documentation">Assisted Documentation</a></li>
+          <li><a href="/ca/platform/messaging-follow-ups">Messaging &amp; Follow-Ups</a></li>
+          <li><a href="/ca/platform/ai-clinical-assistant">AI Clinical Assistant</a></li>
+          <li><a href="/ca/platform/ai-assistants">AI Assistants</a></li>
+          <li><a href="/ca/platform/pms-integrations">PMS Integrations</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/ca/resources/blog">Blog</a></li>
+          <li><a href="/ca/resources/events">Events</a></li>
+          <li><a href="/ca/resources/white-papers">White Papers</a></li>
+          <li><a href="/ca/resources/webinars">Webinars</a></li>
+          <li><a href="/ca/resources/roi-calculator">ROI Calculator</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h4>Partners</h4>
+        <ul>
+          <li><a href="/ca/partners/provincial-associations">Provincial Associations</a></li>
+          <li><a href="/ca/pharmacy/networks">Networks</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/ca/about">About</a></li>
+          <li><a href="/ca/company/our-team">Our Team</a></li>
+          <li><a href="/company/careers">Career</a></li>
+          <li><a href="/ca/contact">Contact</a></li>
+          <li><a href="/legal">Legal</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h4>Customers</h4>
+        <ul>
+          <li><a href="/ca/customers">Case Studies</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot__region-row">
+      <span class="foot__region-label">Region</span>
+      <div class="foot__region-switch">
+        <a href="/us" class="foot__region-pill" hreflang="en-us" data-set-region="US">
+          <span class="foot__region-flag" aria-hidden="true">🇺🇸</span>
+          <span>United States</span>
+        </a>
+        <a href="/ca" class="foot__region-pill foot__region-pill--current" aria-current="page" data-set-region="CA">
+          <span class="foot__region-flag" aria-hidden="true">🇨🇦</span>
+          <span>Canada</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="foot__bot">
+      <div>© 2026 MedMe Health, Inc. · All rights reserved</div>
+      <div class="foot__legal-links">
+        <a href="/legal">Legal</a>
+        <a href="#" data-consent-reopen>Cookie preferences</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

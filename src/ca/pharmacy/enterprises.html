@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Enterprise Pharmacy — MedMe Health</title>
+<meta name="description" content="The clinical and billing platform for top-100 chains, regional groups, and health-system pharmacies. SSO, custom integrations, dedicated implementation." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/pharmacy/enterprise" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/brand.css?v=30" />
+<style>
+  .sol-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
+  .sol-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+  .sol-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
+  .sol-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .sol-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sol-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+  .sol-hero h1.h-display { margin: 0.5rem 0 1rem; }
+  .sol-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); margin: 0 0 1.75rem; }
+  .sol-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; }
+  .persona-card { background: #F5F7F8; border-radius: 18px; padding: 2rem; border: 1px solid rgba(6, 62, 84, 0.06); }
+  .persona-card__head { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(6, 62, 84, 0.08); }
+  .persona-card__avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--indigo-dark)); color: var(--matcha); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+  .persona-card__role { font-size: 0.8rem; color: rgba(6, 62, 84, 0.6); margin: 0 0 2px; }
+  .persona-card__name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--indigo); margin: 0; }
+  .persona-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.65rem; }
+  .persona-card li { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.9rem; color: var(--indigo); line-height: 1.5; }
+  .persona-card li::before { content: '\2713'; color: var(--matcha); font-weight: 700; font-size: 0.85rem; margin-top: 1px; }
+  @media (max-width: 880px) { .sol-hero__inner { grid-template-columns: 1fr; gap: 2rem; } }
+
+  .built-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+  .built-grid .h-card { padding: 1.75rem; }
+  .built-grid h3 { font-size: 1.15rem; margin: 0 0 0.5rem; color: var(--indigo); font-weight: 700; }
+  .built-grid p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
+  @media (max-width: 800px) { .built-grid { grid-template-columns: 1fr; } }
+
+  .scale-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+  .scale-stat { background: rgba(255, 247, 242, 0.04); border: 1px solid rgba(255, 247, 242, 0.12); border-radius: 14px; padding: 2rem; text-align: center; }
+  .scale-stat__num { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--matcha); letter-spacing: -0.022em; line-height: 1; margin-bottom: 0.5rem; }
+  .scale-stat__label { font-size: 0.9rem; color: rgba(255, 247, 242, 0.78); }
+  @media (max-width: 800px) { .scale-stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+{{> partials/util-bar-ca }}
+{{> partials/nav-ca }}
+<main id="main">
+
+<section class="sol-hero">
+  <div class="sol-hero__inner">
+    <div>
+      <div class="sol-hero__breadcrumb">
+        <a href="/ca">Home</a><span class="sep">/</span>
+        <a href="/ca/pharmacy/enterprise">Solutions</a><span class="sep">/</span>
+        <span>Enterprise</span>
+      </div>
+      <span class="kicker kicker--matcha">For enterprise pharmacy</span>
+      <h1 class="h-display">For chains, health systems,<br>and payvider partners.</h1>
+      <p class="sol-hero__lede">SSO, custom integrations, role-based access, and outcomes reporting at the scale top-100 chains and health-system pharmacies actually run. Dedicated implementation, dedicated clinical SMEs, dedicated success.</p>
+      <div class="sol-hero__cta">
+        <a class="btn btn-primary" href="/ca/contact">Talk to enterprise <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="/ca/customers">See customer stories</a>
+      </div>
+    </div>
+    <aside class="persona-card">
+      <div class="persona-card__head">
+        <div class="persona-card__avatar">RC</div>
+        <div>
+          <p class="persona-card__role">VP Clinical Services</p>
+          <p class="persona-card__name">Rebecca Chen, PharmD, MBA</p>
+        </div>
+      </div>
+      <ul>
+        <li>50&ndash;500+ retail locations across multiple states</li>
+        <li>Complex payer mix: commercial, Medicare, Medicaid MCO</li>
+        <li>SSO, audit logs, role-based access required</li>
+        <li>Existing biller and clearinghouse relationships</li>
+        <li>Reporting must roll up to board-level KPIs</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<section class="tile tile--dark" aria-label="At enterprise scale">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">At enterprise scale</span>
+      <h2 class="h-display">Numbers that change<br>at the chain level.</h2>
+    </div>
+    <div class="scale-stats">
+      <div class="scale-stat">
+        <div class="scale-stat__num">4.2M+ services</div>
+        <div class="scale-stat__label">Annual clinical reimbursement processed by our top-decile customers</div>
+      </div>
+      <div class="scale-stat">
+        <div class="scale-stat__num">99.7%</div>
+        <div class="scale-stat__label">SLA uptime, audited and reported monthly</div>
+      </div>
+      <div class="scale-stat">
+        <div class="scale-stat__num">60 days</div>
+        <div class="scale-stat__label">Median rollout from contract to first store live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURED CASE — Nova Scotia / PANS (CA-only L4 cross-link)
+     Per v11: PANS leads the CA Enterprises page; the deep-dive
+     lives at /ca/pharmacy/enterprises/nova-scotia-pans.
+     ============================================================ -->
+<section class="tile tile--light" aria-label="Featured: Nova Scotia / PANS">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker kicker--matcha">Featured</span>
+      <h2 class="h-display">Nova Scotia &amp; PANS:<br>province-wide clinical pharmacy.</h2>
+      <p class="lead">When Nova Scotia&rsquo;s Pharmacy Association of Nova Scotia (PANS) needed to scale province-wide service rollout, MedMe was the platform behind it. From minor ailments to test-and-treat to MedsCheck, every Nova Scotia pharmacy is now operating on the same workflow.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 2.5rem auto 0;">
+      <div style="background: #fff; border-radius: 14px; padding: 1.75rem; border: 1px solid rgba(6, 62, 84, 0.08); text-align: center;">
+        <div style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1;">300+</div>
+        <div style="font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); margin-top: 0.5rem;">Pharmacies live across Nova Scotia</div>
+      </div>
+      <div style="background: #fff; border-radius: 14px; padding: 1.75rem; border: 1px solid rgba(6, 62, 84, 0.08); text-align: center;">
+        <div style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1;">90 days</div>
+        <div style="font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); margin-top: 0.5rem;">From provincial agreement to first stores live</div>
+      </div>
+      <div style="background: #fff; border-radius: 14px; padding: 1.75rem; border: 1px solid rgba(6, 62, 84, 0.08); text-align: center;">
+        <div style="font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1;">12+</div>
+        <div style="font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); margin-top: 0.5rem;">Clinical services live on one workflow</div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a class="btn btn-primary" href="/ca/pharmacy/enterprises/nova-scotia-pans">Read the PANS deep-dive <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--dark" aria-label="What enterprise gets">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">What enterprise gets</span>
+      <h2 class="h-display">Capabilities priced<br>at chain scale.</h2>
+    </div>
+    <div class="built-grid">
+      <article class="h-card">
+        <h3>SSO, RBAC, audit logs</h3>
+        <p>Okta, Azure AD, Google Workspace, Ping. Role-based access down to the action level. Audit logs exportable to your SIEM.</p>
+      </article>
+      <article class="h-card">
+        <h3>Custom integrations</h3>
+        <p>Epic, Cerner, Allscripts, custom EHR bridges. RPA layers for legacy systems. Direct payer-channel connections for top-25 commercial plans.</p>
+      </article>
+      <article class="h-card">
+        <h3>Payvider contracting</h3>
+        <p>Outcomes reporting structured for risk-share agreements with payers. Quarterly performance reports built into the platform.</p>
+      </article>
+      <article class="h-card">
+        <h3>Multi-tier organization</h3>
+        <p>Region &rarr; district &rarr; store hierarchy with role-aware dashboards and budget rollups. Permissions inherit cleanly.</p>
+      </article>
+      <article class="h-card">
+        <h3>Dedicated team</h3>
+        <p>Named implementation lead, clinical SME, technical account manager, and 24&times;7 priority support. Quarterly business reviews.</p>
+      </article>
+      <article class="h-card">
+        <h3>HIPAA + SOC 2 + HITRUST</h3>
+        <p>HITRUST CSF certified. SOC 2 Type II audited. BAA signed at contract. We pass enterprise security reviews monthly.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--dark tile--prominent" aria-label="Get started">
+  <div class="tile__inner">
+    <div class="tile__head" style="text-align:center;">
+      <span class="kicker">Get started</span>
+      <h2 class="h-display">Talk to enterprise.<br>We'll start with your stack.</h2>
+      <p class="lead">30-minute discovery call. We map your existing tools, payer mix, and clinical lines &mdash; and propose an implementation that fits your fiscal year.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a class="btn btn-primary" href="/ca/contact">Book a discovery call <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="/ca/customers">See enterprise stories</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+{{> partials/footer-ca }}
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

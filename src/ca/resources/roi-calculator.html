@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reimbursement calculator — MedMe Health</title>
+<meta name="description" content="Run the math on what your Canadian pharmacy could capture in clinical service reimbursement. Service-mix slider, payer-mix breakdown, and a defensible per-code annual estimate." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/resources/calculator/" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/resources/calculator/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/brand.css" />
+<style>
+  .calc-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2rem; align-items: start; }
+  @media (max-width: 980px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-form, .calc-result { background: var(--white); border: 1px solid var(--indigo-08); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-soft); }
+  .calc-result { background: var(--indigo); color: var(--seashell); border: none; box-shadow: var(--shadow-deep); }
+  .calc-result h2, .calc-result h3 { color: var(--seashell); }
+  .calc-result .num-big { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--matcha); line-height: 1; letter-spacing: -0.02em; }
+  .calc-result .num-sub { color: rgba(255,247,242,0.85); font-size: var(--fs-small); margin-top: 0.5rem; }
+  .calc-row { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid rgba(255,247,242,0.15); font-size: var(--fs-small); }
+  .calc-row:last-child { border-bottom: none; }
+  .calc-row .left { color: rgba(255,247,242,0.85); }
+  .calc-row .left .code { font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--matcha); font-weight: 700; margin-right: 0.5rem; }
+  .calc-row .amt { font-weight: 700; color: var(--seashell); }
+  .slider-track { height: 6px; background: var(--indigo-08); border-radius: 999px; position: relative; margin-top: 0.75rem; }
+  .slider-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--matcha); border-radius: 999px; }
+  .slider-handle { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 50%; background: var(--indigo); border: 3px solid var(--matcha); }
+  .slider-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; }
+  .slider-row .lbl { font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--indigo); }
+  .slider-row .val { font-family: var(--font-display); font-weight: 600; color: var(--indigo); font-size: 1rem; }
+  .disclaimer { background: var(--indigo-04); border-left: 3px solid var(--matcha); padding: 1rem 1.25rem; font-size: var(--fs-small); color: var(--indigo-80); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+  .stat-callout { background: var(--matcha); color: var(--indigo); padding: 1.5rem; border-radius: var(--radius-md); margin: 1.5rem 0; }
+  .stat-callout .num { font-family: var(--font-display); font-weight: 600; font-size: 2rem; line-height: 1; }
+  .stat-callout p { margin: 0.5rem 0 0; font-size: var(--fs-small); }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+{{> partials/util-bar-ca }}
+
+{{> partials/nav-ca }}
+
+<main id="main">
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="page-hero__breadcrumb">
+      <a href="/ca">Home</a>
+      <span class="sep">/</span>
+      <a href="/ca/resources">Resources</a>
+      <span class="sep">/</span>
+      <span>Reimbursement calculator</span>
+    </div>
+    <div class="page-hero__content">
+      <span class="eyebrow eyebrow--matcha">Tool</span>
+      <h1>Run the math on what your pharmacy <span class="accent">could capture.</span></h1>
+      <p class="page-hero__lede">Drop in your store count and weekly clinical encounter volume. Adjust the service mix and payer mix to match your reality. Get a defensible per-code annual reimbursement estimate at your current capture rate vs. what's possible with full documentation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-seashell" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="calc-grid">
+      <div class="calc-form">
+        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Your pharmacy</h2>
+
+        <div class="field">
+          <label for="store-count">Store count</label>
+          <input id="store-count" type="number" value="6" min="1" max="500" />
+        </div>
+
+        <div class="field">
+          <label for="encounters">Weekly clinical encounters per store</label>
+          <input id="encounters" type="number" value="42" min="0" max="500" />
+        </div>
+
+        <div class="field">
+          <label for="capture">Estimated current capture rate</label>
+          <select id="capture">
+            <option>~10% (we're billing some vaccines)</option>
+            <option selected>~25% (we bill vax + a few Med review)</option>
+            <option>~50% (we have a clinical program)</option>
+            <option>~75% (we're optimized)</option>
+          </select>
+        </div>
+
+        <h3 style="font-size: 1.125rem; margin: 2rem 0 1rem;">Service mix</h3>
+
+        <div style="margin-bottom: 1.25rem;">
+          <div class="slider-row"><span class="lbl">Chronic Care Management (MedsCheck)</span><span class="val">28%</span></div>
+          <div class="slider-track"><div class="slider-fill" style="width: 28%;"></div><div class="slider-handle" style="left: 28%;"></div></div>
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <div class="slider-row"><span class="lbl">Medication Therapy Management (Med review)</span><span class="val">22%</span></div>
+          <div class="slider-track"><div class="slider-fill" style="width: 22%;"></div><div class="slider-handle" style="left: 22%;"></div></div>
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <div class="slider-row"><span class="lbl">Point-of-care testing (POCT)</span><span class="val">18%</span></div>
+          <div class="slider-track"><div class="slider-fill" style="width: 18%;"></div><div class="slider-handle" style="left: 18%;"></div></div>
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <div class="slider-row"><span class="lbl">Immunizations</span><span class="val">24%</span></div>
+          <div class="slider-track"><div class="slider-fill" style="width: 24%;"></div><div class="slider-handle" style="left: 24%;"></div></div>
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <div class="slider-row"><span class="lbl">Smoking cessation / tobacco counseling</span><span class="val">8%</span></div>
+          <div class="slider-track"><div class="slider-fill" style="width: 8%;"></div><div class="slider-handle" style="left: 8%;"></div></div>
+        </div>
+
+        <h3 style="font-size: 1.125rem; margin: 2rem 0 1rem;">Payer mix</h3>
+
+        <div class="field">
+          <label for="medicare">provincial billing share</label>
+          <input id="medicare" type="text" value="48%" />
+        </div>
+        <div class="field">
+          <label for="commercial">Commercial / employer share</label>
+          <input id="commercial" type="text" value="34%" />
+        </div>
+        <div class="field">
+          <label for="medicaid">Medicaid share</label>
+          <input id="medicaid" type="text" value="18%" />
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">Update estimate <span class="arrow">→</span></button>
+      </div>
+
+      <div class="calc-result">
+        <span class="eyebrow eyebrow--on-indigo" style="color: var(--matcha);">Annual estimate</span>
+        <div class="num-big">$1,284,000</div>
+        <p class="num-sub">Estimated annual reimbursement at full documentation across 6 stores · ~13,104 billable encounters per year.</p>
+
+        <h3 style="font-size: 1.125rem; margin: 2rem 0 1rem;">Monthly breakdown</h3>
+        <div class="calc-row"><span class="left">Estimated reimbursement</span><span class="amt">$107,000 / mo</span></div>
+        <div class="calc-row"><span class="left">Currently capturing (~25%)</span><span class="amt">$26,750 / mo</span></div>
+        <div class="calc-row"><span class="left">Gap to full capture</span><span class="amt" style="color: var(--matcha);">+$80,250 / mo</span></div>
+
+        <h3 style="font-size: 1.125rem; margin: 2rem 0 1rem;">Per-code line items</h3>
+        <div class="calc-row"><span class="left"><span class="code">MC-01</span>MedsCheck, 20+ min, primary practitioner</span><span class="amt">$298,400</span></div>
+        <div class="calc-row"><span class="left"><span class="code">99439</span>MedsCheck, each addn'l 20 min</span><span class="amt">$94,200</span></div>
+        <div class="calc-row"><span class="left"><span class="code">99605</span>Med review initial, 15 min</span><span class="amt">$186,800</span></div>
+        <div class="calc-row"><span class="left"><span class="code">99606</span>Med review follow-up, 15 min</span><span class="amt">$103,400</span></div>
+        <div class="calc-row"><span class="left"><span class="code">87880</span>Strep test (POCT)</span><span class="amt">$72,000</span></div>
+        <div class="calc-row"><span class="left"><span class="code">87804</span>Influenza test (POCT)</span><span class="amt">$58,200</span></div>
+        <div class="calc-row"><span class="left"><span class="code">90471</span>Immunization admin (1st)</span><span class="amt">$224,000</span></div>
+        <div class="calc-row"><span class="left"><span class="code">90472</span>Immunization admin (each addn'l)</span><span class="amt">$67,000</span></div>
+        <div class="calc-row"><span class="left"><span class="code">99406</span>Smoking cessation, 3-10 min</span><span class="amt">$48,000</span></div>
+        <div class="calc-row"><span class="left"><span class="code">MA-12</span>Behavioral health collab (Rural/FQHC)</span><span class="amt">$132,000</span></div>
+
+        <div class="stat-callout" style="margin-top: 2rem;">
+          <div class="num">$1.4M</div>
+          <p><strong>Whole Health Pharmacy unlocked $1.4M in year 1</strong> — across 8 stores in central Pennsylvania, billing MedsCheck, Med review, and POCT through MedMe in their first 12 months on the platform.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer" style="margin-top: 2.5rem;">
+      <strong>About this estimate.</strong> Figures are modeled from Health Canada 2026 Medicare Physician Fee Schedule national averages and adjusted by your stated payer mix. Actual reimbursement varies by MAC region, locality adjustment, individual payer contracts, and incident-to billing posture. Rural/FQHC pharmacies bill many of these codes through different mechanisms (MA-12, G0512). This calculator is a planning tool, not a guarantee — your real number depends on documentation discipline, denial-management practice, and the contracts you hold.
+    </div>
+  </div>
+</section>
+
+<section class="bg-indigo">
+  <div class="wrap">
+    <div class="section-head section-head--center" style="text-align: center;">
+      <span class="eyebrow eyebrow--matcha eyebrow--on-indigo" style="color: var(--matcha);">What changes the number</span>
+      <h2 style="text-align: center;">Three levers move this estimate by 30% or more.</h2>
+    </div>
+    <div class="features">
+      <div class="feature" style="background: var(--indigo-95); border-color: rgba(255,247,242,0.1);">
+        <div class="feature__icon" style="background: var(--matcha-20); color: var(--matcha);">1</div>
+        <h3 style="color: var(--seashell);">Documentation discipline</h3>
+        <p style="color: rgba(255,247,242,0.85);">Time-tracked MedsCheck in MedMe captures 40-60% more billable minutes than retroactive notes. The difference between MC-01 ($65) and 99491 ($82) plus add-ons is documentation, not effort.</p>
+      </div>
+      <div class="feature" style="background: var(--indigo-95); border-color: rgba(255,247,242,0.1);">
+        <div class="feature__icon" style="background: var(--matcha-20); color: var(--matcha);">2</div>
+        <h3 style="color: var(--seashell);">Incident-to billing posture</h3>
+        <p style="color: rgba(255,247,242,0.85);">Pharmacies billing under a supervising physician through incident-to or general supervision rules typically capture 2-3× more services. Provincial scope and provider-status changes are widening this lever in 2026.</p>
+      </div>
+      <div class="feature" style="background: var(--indigo-95); border-color: rgba(255,247,242,0.1);">
+        <div class="feature__icon" style="background: var(--matcha-20); color: var(--matcha);">3</div>
+        <h3 style="color: var(--seashell);">Denial management</h3>
+        <p style="color: rgba(255,247,242,0.85);">Industry-average pharmacy clinical-service denial rates run 18-24%. MedMe customers bring that to under 6% by surfacing denials in real time and pre-flagging documentation gaps before submission.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <div>
+      <h2>See your real number on a 20-minute call.</h2>
+      <p>Send us a week of your encounter volume. We'll back-of-envelope your annual reimbursement and walk through the codes that matter.</p>
+    </div>
+    <div class="cta-band__buttons">
+      <a class="btn btn-primary--accent" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
+      <a class="btn btn-ghost btn-ghost--on-indigo" href="/ca/resources/cpt-hcpcs-guide">Read the code guide</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+{{> partials/footer-ca }}
+</body>
+</html>

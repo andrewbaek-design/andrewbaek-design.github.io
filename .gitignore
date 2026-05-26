@@ -1,0 +1,65 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+.venv/
+venv/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+
+# Local-only artifacts
+.cache/
+dist/
+
+# ============================================================
+# Internal strategy + audit material — kept LOCAL only.
+# Do not commit any of the following to this repo.
+# ============================================================
+
+# Strategy briefs
+MASTER.md
+MASTER_REFERENCE.md
+WEBSITE_LAYOUT_STRATEGY.md
+WEBSITE_STRATEGY_SYNTHESIS.md
+PROD_IMPROVEMENT_AUDIT.md
+
+# Audit reports (01–13 numbered files)
+01-overview.md
+02-pages.md
+04-cms-collections.md
+06-components.md
+07-scripts.md
+08-webhooks.md
+09-comments.md
+10-assets.md
+11-enterprise-config.md
+12-localization.md
+13-diff-v45-vs-prod.md
+
+# Audit data directories
+03-page-content/
+05-cms-items/
+
+# Inspiration / reference media — kept local
+inspiration.*
+*.mov
+*.mp4
+
+# Local Netlify folder
+.netlify

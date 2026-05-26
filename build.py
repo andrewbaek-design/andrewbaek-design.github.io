@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+"""
+build.py — Tiny template engine for the MedMe website mockup.
+
+Reads source templates from ./src/, expands partial includes
+from ./partials/, and writes finished HTML to the project root
+(overwriting mockup-*-homepage.html, etc.).
+
+USAGE
+-----
+    python3 build.py            # build everything in src/
+    python3 build.py --check    # build to stdout (no write), exit 1 if anything changed
+
+TEMPLATE SYNTAX
+---------------
+    {{> partials/nav-us }}      Inline the contents of partials/nav-us.html
+    {{ page.title }}            Substitute a variable from frontmatter
+    {{# ignored comment }}      Removed entirely
+
+Frontmatter (optional, at top of template):
+
+    ---
+    region: us
+    page.title: MedMe — United States
+    ---
+
+NOTES
+-----
+* Partials may include other partials. Cycles raise an error.
+* This file uses only the Python stdlib — no `pip install` needed.
+* Output is byte-identical to whatever the partial files contain, so
+  a partial-only edit produces a clean diff in the rendered HTML.
+"""
+
+from __future__ import annotations
+import re
+import sys
+from pathlib import Path
+
+INCLUDE_RE = re.compile(r"\{\{>\s*([^\s}]+)\s*\}\}")
+VAR_RE     = re.compile(r"\{\{\s*([a-zA-Z_][\w.]*)\s*\}\}")
+COMMENT_RE = re.compile(r"\{\{#[^}]*\}\}")
+MAX_INCLUDE_DEPTH = 50
+
+
+def parse_frontmatter(text: str) -> tuple[dict, str]:
+    """Pull a YAML-ish frontmatter block off the top, if present."""
+    if not text.startswith("---\n"):
+        return {}, text
+    end = text.find("\n---\n", 4)
+    if end == -1:
+        return {}, text
+    body  = text[end + 5:]
+    raw   = text[4:end]
+    data: dict = {}
+    for line in raw.strip().splitlines():
+        if ":" in line:
+            key, _, val = line.partition(":")
+            data[key.strip()] = val.strip()
+    return data, body
+
+
+def resolve_var(name: str, ctx: dict) -> str:
+    """Look up a dotted path against ctx. Missing keys return ''."""
+    if name in ctx:           # exact match wins (supports keys with dots)
+        return str(ctx[name])
+    parts = name.split(".")
+    val: object = ctx
+    for p in parts:
+        if isinstance(val, dict):
+            val = val.get(p, "")
+        else:
+            return ""
+    return str(val)
+
+
+def expand_includes(text: str, partials_dir: Path) -> str:
+    """Iteratively replace {{> partials/x }} with the contents of x.html."""
+    for _ in range(MAX_INCLUDE_DEPTH):
+        if not INCLUDE_RE.search(text):
+            return text
+
+        def _sub(m: re.Match) -> str:
+            name = m.group(1).strip()
+            # Tolerate both `partials/nav-us` and just `nav-us`
+            short = name.removeprefix("partials/")
+            path = partials_dir / f"{short}.html"
+            if not path.exists():
+                raise FileNotFoundError(f"Partial not found: {path}")
+            # Strip any trailing newlines so editor-added \n doesn't
+            # propagate as an extra blank line in the rendered HTML
+            return path.read_text(encoding="utf-8").rstrip("\n")
+
+        text = INCLUDE_RE.sub(_sub, text)
+    raise RuntimeError(
+        "Include depth exceeded — check for a circular partial reference"
+    )
+
+
+def build_one(template: Path, partials_dir: Path) -> str:
+    raw = template.read_text(encoding="utf-8")
+    vars_, body = parse_frontmatter(raw)
+    body = COMMENT_RE.sub("", body)
+    body = expand_includes(body, partials_dir)
+    body = VAR_RE.sub(lambda m: resolve_var(m.group(1).strip(), vars_), body)
+    return body
+
+
+def main(argv: list[str]) -> int:
+    root         = Path(__file__).parent.resolve()
+    src_dir      = root / "src"
+    partials_dir = root / "partials"
+    check_only   = "--check" in argv
+
+    if not src_dir.exists():
+        print(f"error: src/ not found at {src_dir}", file=sys.stderr)
+        return 1
+    if not partials_dir.exists():
+        print(f"error: partials/ not found at {partials_dir}", file=sys.stderr)
+        return 1
+
+    templates = sorted(src_dir.rglob("*.html"))   # recursive — supports nested directories
+    if not templates:
+        print("error: no *.html templates in src/", file=sys.stderr)
+        return 1
+
+    print(f"Building {len(templates)} template(s)…")
+    any_changed = False
+    for tpl in templates:
+        rel = tpl.relative_to(src_dir)
+        # Output non-index pages as <name>/index.html so clean URLs work
+        # under a static server (e.g. python -m http.server). Examples:
+        #   src/us/about.html         -> us/about/index.html        (URL: /us/about)
+        #   src/us/index.html         -> us/index.html              (URL: /us)
+        #   src/us/platform/ehr.html  -> us/platform/ehr/index.html (URL: /us/platform/ehr)
+        if rel.name == "index.html":
+            output_path = root / rel
+        else:
+            output_path = root / rel.parent / rel.stem / "index.html"
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            new = build_one(tpl, partials_dir)
+        except Exception as e:
+            print(f"  ✗ {tpl.name}: {e}", file=sys.stderr)
+            return 1
+
+        if check_only:
+            old = output_path.read_text(encoding="utf-8") if output_path.exists() else ""
+            if old != new:
+                any_changed = True
+                print(f"  Δ  {rel} (would change)")
+            else:
+                print(f"  =  {rel}")
+        else:
+            output_path.write_text(new, encoding="utf-8")
+            print(f"  ✓  {rel}")
+
+    if check_only and any_changed:
+        return 1
+    print("done.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

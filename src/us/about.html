@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About MedMe Health — Pharmacy EHR + Medical Billing</title>
+<meta name="description" content="MedMe is the pharmacy-specific EHR and medical billing platform. We help US community pharmacies turn clinical encounters into reimbursed care." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/about" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/about" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/brand.css?v=30" />
+<style>
+  .about-hero {
+    background: var(--seashell);
+    padding: 4rem 0 3rem;
+  }
+  .about-hero__inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+  .about-hero h1.h-display { margin: 0.5rem auto 1.25rem; max-width: 880px; }
+  .about-hero__lede {
+    font-size: 1.15rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.78);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .manifesto {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .manifesto p {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.55;
+    color: var(--seashell);
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    margin: 0 0 1.5rem;
+  }
+  .manifesto p:last-child { margin-bottom: 0; }
+  .manifesto .accent { color: var(--matcha); font-weight: 600; }
+  @media (max-width: 700px) {
+    .manifesto p { font-size: 1.2rem; }
+  }
+
+  .about-timeline {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .about-tl__year {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--matcha);
+    letter-spacing: -0.022em;
+    margin-bottom: 0.5rem;
+  }
+  .about-tl__title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--seashell);
+    margin: 0 0 0.5rem;
+  }
+  .about-tl__desc {
+    font-size: 0.9rem;
+    color: rgba(255, 247, 242, 0.7);
+    line-height: 1.55;
+    margin: 0;
+  }
+  @media (max-width: 800px) {
+    .about-timeline { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .team-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .team-avatar {
+    width: 84px; height: 84px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, var(--indigo), var(--indigo-dark));
+    color: var(--matcha);
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.6rem;
+  }
+  .team-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--indigo);
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .team-role {
+    font-size: 0.825rem;
+    color: rgba(6, 62, 84, 0.6);
+    margin: 0.25rem 0 0;
+  }
+  @media (max-width: 900px) {
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .investor-strip {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-top: 2.5rem;
+  }
+  .investor-strip__item {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: rgba(6, 62, 84, 0.55);
+    letter-spacing: -0.005em;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  .values-grid .h-card { padding: 2rem; }
+  .values-grid h3 {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .values-grid p { font-size: 0.95rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
+  @media (max-width: 800px) { .values-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+{{> partials/util-bar-us }}
+{{> partials/nav-us }}
+
+<main id="main">
+
+<section class="about-hero">
+  <div class="about-hero__inner">
+    <span class="kicker kicker--matcha">About MedMe Health</span>
+    <h1 class="h-display h-display--xl">Pharmacy is the most under-used<br>care setting in the US.</h1>
+    <p class="about-hero__lede">
+      We're building the platform that fixes it. Pharmacy-specific EHR, AI-drafted SOAP notes, and Medicare Part B billing &mdash; so the work pharmacists already do finally gets reimbursed.
+    </p>
+  </div>
+</section>
+
+<section class="tile tile--dark" aria-label="Our mission">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Our mission</span>
+      <h2 class="h-display">Help pharmacy do the clinical<br>work it's paid to do.</h2>
+    </div>
+    <div class="manifesto">
+      <p>The US pharmacy workforce already does counseling, immunization administration, chronic-care follow-up, transitions-of-care, and adherence monitoring. <span class="accent">Less than 20% of it gets billed.</span></p>
+      <p>The reason is not clinical capability. It's documentation, coding, eligibility, and claim infrastructure built for medical groups &mdash; not for community pharmacy.</p>
+      <p>MedMe ships the missing layer: an EHR pharmacists actually want to use, an AI scribe that drafts the note, and a billing engine that converts the encounter into a clean claim. <span class="accent">One platform, no swivel-chair.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--dark" aria-label="The journey">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Our journey</span>
+      <h2 class="h-display">Six years building<br>for pharmacy.</h2>
+    </div>
+    <div class="about-timeline">
+      <div>
+        <div class="about-tl__year">2020</div>
+        <h3 class="about-tl__title">Founded</h3>
+        <p class="about-tl__desc">Started in Toronto by Nick Hui, Rui Su, and Purya Sarmadi after the COVID immunization rollout exposed how little clinical software pharmacy actually had.</p>
+      </div>
+      <div>
+        <div class="about-tl__year">2022</div>
+        <h3 class="about-tl__title">EHR launches</h3>
+        <p class="about-tl__desc">Full pharmacy EHR + scheduling deployed across 4,500+ Canadian pharmacies. The first platform built end-to-end for clinical pharmacy services.</p>
+      </div>
+      <div>
+        <div class="about-tl__year">2024</div>
+        <h3 class="about-tl__title">US expansion</h3>
+        <p class="about-tl__desc">AI Scribe and Medical Billing launch for US community pharmacy. First 100 stores go live. $48M in clinical reimbursement processed in year one.</p>
+      </div>
+      <div>
+        <div class="about-tl__year">2026</div>
+        <h3 class="about-tl__title">Today</h3>
+        <p class="about-tl__desc">12M+ patients managed, 4,500+ pharmacies enrolled. Now serving independents, regional chains, top-100 systems, and payvider partners.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light" aria-label="What we believe">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">What we believe</span>
+      <h2 class="h-display">Pharmacy-shaped opinions<br>we ship into the product.</h2>
+    </div>
+    <div class="values-grid">
+      <article class="h-card">
+        <h3>Workflow first, features second</h3>
+        <p>The pharmacist's hour is the most expensive resource in the building. Every feature pays its rent in minutes saved per encounter, or it doesn't ship.</p>
+      </article>
+      <article class="h-card">
+        <h3>Clinical scope is a revenue strategy</h3>
+        <p>Reimbursement codes exist for the services pharmacy is already delivering. The job is to make billing trivial &mdash; not to convince pharmacists to do new clinical work.</p>
+      </article>
+      <article class="h-card">
+        <h3>Independents matter</h3>
+        <p>Most clinical pharmacy platforms target chains. We start with the 60% of US retail pharmacy that's independent &mdash; because that's where community care actually happens.</p>
+      </article>
+      <article class="h-card">
+        <h3>Operators set the roadmap</h3>
+        <p>Every quarter, top-decile customer operators tell us what's broken. We ship against their list, not ours. Our PRDs come from the field, not the conference room.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light" aria-label="Leadership">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Leadership</span>
+      <h2 class="h-display">Founders + operators<br>building this with you.</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">NH</div>
+        <h3 class="team-name">Nick Hui</h3>
+        <p class="team-role">Co-founder &amp; CEO</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">RS</div>
+        <h3 class="team-name">Rui Su</h3>
+        <p class="team-role">Co-founder &amp; CTO</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">PS</div>
+        <h3 class="team-name">Purya Sarmadi</h3>
+        <p class="team-role">Co-founder &amp; COO</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">JG</div>
+        <h3 class="team-name">Jenna Greene, PharmD</h3>
+        <p class="team-role">Chief Clinical Officer</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">MC</div>
+        <h3 class="team-name">Marcus Chen</h3>
+        <p class="team-role">VP, Engineering</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">AL</div>
+        <h3 class="team-name">Aisha Laghari</h3>
+        <p class="team-role">VP, Revenue</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">DT</div>
+        <h3 class="team-name">Diego Torres</h3>
+        <p class="team-role">VP, Product</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">SK</div>
+        <h3 class="team-name">Sara Kim, PharmD</h3>
+        <p class="team-role">Head of US Implementation</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light" aria-label="Backed by" style="padding-top: 0;">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Backed by</span>
+      <h2 class="h-display">Operators who've built<br>at healthcare scale.</h2>
+      <p class="lead">Capital and counsel from investors who've shipped clinical software, run pharmacy chains, and stood up payer partnerships.</p>
+    </div>
+    <div class="investor-strip">
+      <span class="investor-strip__item">Y Combinator</span>
+      <span class="investor-strip__item">McKesson Ventures</span>
+      <span class="investor-strip__item">Optum Ventures</span>
+      <span class="investor-strip__item">Founders Fund</span>
+      <span class="investor-strip__item">Initialized Capital</span>
+      <span class="investor-strip__item">Ribbit Capital</span>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--dark tile--prominent" aria-label="Join us">
+  <div class="tile__inner">
+    <div class="tile__head" style="text-align:center;">
+      <span class="kicker">Talk to us</span>
+      <h2 class="h-display">Want to see what MedMe<br>looks like in your pharmacy?</h2>
+      <p class="lead">15 minutes, customized to your service mix and store count. We'll show you the unlock and leave you with a written estimate either way.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="/company/careers">See open roles</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+{{> partials/footer-us }}
+<script src="/assets/site.js" defer></script>
+
+</body>
+</html>
