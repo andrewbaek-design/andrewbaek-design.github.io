@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=34">
+<link rel="stylesheet" href="/assets/brand.css?v=38">
 
 <script type="application/ld+json">
 {
@@ -368,7 +368,7 @@
   .tile--dark .h-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 247, 242, 0.30);
+    border-color: rgba(250, 249, 245, 0.30);
   }
 
   /* Bottom fade-out is handled by the .visual-frame mask-image (above),
@@ -755,13 +755,10 @@
     border-radius: 18px;
   }
   .mockup-host .sched-book {
-    left: 0; width: 880px;
-    padding: 30px 32px 28px;
+    left: 0; right: 0;
+    padding: 30px 48px 32px;
   }
-  .mockup-host .sched-locator {
-    right: 0; width: 290px;
-    padding: 24px 20px 20px;
-  }
+  /* .sched-locator removed from DOM 2026-05-26 — calendar view full-width */
 
   /* Left card — header */
   .mockup-host .sched-book-title {
@@ -839,36 +836,44 @@
   /* 7-day grid */
   .mockup-host .sched-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    margin: 0 auto;
+    /* Fade the left/right edges so the visible 5-day strip implies a
+       larger calendar continuing offscreen on both sides. */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+    padding: 0 24px;
   }
   .mockup-host .sched-col {
     display: flex; flex-direction: column;
-    gap: 9px;
+    gap: 14px;
   }
   .mockup-host .sched-col-head {
     text-align: center;
-    margin-bottom: 4px;
+    margin-bottom: 14px;
   }
   .mockup-host .sched-col-date {
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
     color: #386576;
-    margin-bottom: 1px;
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
   }
   .mockup-host .sched-col-day {
-    font-size: 14px;
+    font-size: 22px;
     font-weight: 700;
     color: #042B3B;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.008em;
+    line-height: 1;
   }
 
   .mockup-host .sched-slot {
     background: #fff;
-    border: 1px solid #DCE4E8;
+    border: 1.5px solid #DCE4E8;
     border-radius: 999px;
-    padding: 10px 4px;
-    font-size: 11.5px;
+    padding: 18px 14px;
+    font-size: 17px;
     font-weight: 600;
     color: #042B3B;
     font-family: inherit;
@@ -885,12 +890,47 @@
     background: #042B3B;
     border-color: #042B3B;
     color: #fff;
-    animation: sched-slot-pop 0.5s ease-out;
+    animation: sched-slot-pop 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 2;
   }
   @keyframes sched-slot-pop {
-    0%   { transform: scale(0.92); box-shadow: 0 0 0 0 rgba(4, 43, 59, 0); }
-    50%  { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(4, 43, 59, 0.18); }
-    100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(4, 43, 59, 0); }
+    0%   { transform: scale(0.65); box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); }
+    32%  { transform: scale(1.28); box-shadow: 0 0 0 14px rgba(195, 196, 48, 0.35), 0 10px 28px rgba(4, 43, 59, 0.35); }
+    60%  { transform: scale(0.96); box-shadow: 0 0 0 6px rgba(195, 196, 48, 0.18), 0 4px 14px rgba(4, 43, 59, 0.18); }
+    100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); }
+  }
+
+  /* Zoom-in on the grid card after the click — focal moment before the
+     pane transitions to Intake. Transform-origin is set inline by JS so
+     the zoom centers on whichever slot was booked. */
+  .mockup-host .sched-grid-card {
+    transition: transform 1.1s cubic-bezier(0.4, 0.0, 0.2, 1.0);
+    transform-origin: var(--zoom-x, 50%) var(--zoom-y, 50%);
+    will-change: transform;
+  }
+  .mockup-host .sched-grid-card.is-zooming {
+    transform: scale(1.85);
+  }
+  /* Cursor hides during the zoom — it was positioned at the pre-scale
+     coordinates and would visually drift mid-zoom otherwise. */
+  .mockup-host.is-zooming .cursor {
+    opacity: 0;
+    transition: opacity 0.25s ease-out;
+  }
+  /* During zoom, non-target slots + column headers fade out to focus
+     attention on the booked slot. Smooth transition both ways. */
+  .mockup-host .sched-slot,
+  .mockup-host .sched-col-head,
+  .mockup-host .sched-grid-nav {
+    transition: opacity 0.55s ease-out;
+  }
+  .mockup-host.is-zooming .sched-slot:not(.is-booked) {
+    opacity: 0.12;
+  }
+  .mockup-host.is-zooming .sched-col-head,
+  .mockup-host.is-zooming .sched-grid-nav {
+    opacity: 0.25;
   }
 
   /* Right card — Store Locator */
@@ -1136,6 +1176,750 @@
     font-family: inherit;
     cursor: pointer;
     letter-spacing: 0.005em;
+  }
+
+  /* ============================================================
+     INTAKE MINIMAL — conceptual reduction (2026-05-26) to match
+     the Scheduler's level of abstraction. Single-column 3-field
+     form, big fields, fade edges, centered.
+     ============================================================ */
+  .mockup-host .intake-body--minimal {
+    background: transparent;
+    padding: 48px 32px;
+    top: 0;             /* overrides the original top:56px (no topbar now) */
+    display: flex;
+    justify-content: center;
+  }
+  .mockup-host .intake-card-left--minimal {
+    flex: 0 1 640px;
+    max-width: 640px;
+    width: 100%;
+  }
+  .mockup-host .intake-h1--minimal {
+    margin: 0 0 32px;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    color: var(--indigo);
+    text-align: left;
+  }
+  .mockup-host .intake-form--minimal {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+  }
+  .mockup-host .intake-field--big {
+    height: 84px;
+    padding: 22px 24px 14px;
+    border-width: 1.5px;
+    border-radius: 10px;
+    background: #fff;
+    transition: opacity 0.55s ease-out;
+  }
+  .mockup-host .intake-field--big .intake-field-label {
+    top: 10px; left: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 4px;
+  }
+  .mockup-host .intake-field--big .intake-field-value {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 14px;
+    letter-spacing: -0.005em;
+  }
+  .mockup-host .intake-field--big.is-typing .intake-field-value::after {
+    height: 22px;
+    width: 2px;
+  }
+  .mockup-host .intake-cta--big {
+    margin-top: 28px;
+    padding: 22px 56px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 999px;
+    letter-spacing: 0;
+    transition: opacity 0.55s ease-out, transform 0.18s ease-out, box-shadow 0.18s ease-out;
+  }
+
+  /* Field auto-fill animation — matcha glow + slight scale pop when each
+     field reveals its value. Lasts 600ms then settles. */
+  .mockup-host .intake-field--big {
+    transition: border-color 0.45s ease-out, box-shadow 0.45s ease-out, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .mockup-host .intake-field--big .intake-field-value {
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+  }
+  .mockup-host .intake-field--big.is-filling {
+    border-color: var(--matcha);
+    box-shadow: 0 0 0 4px rgba(195, 196, 48, 0.30), 0 6px 18px rgba(195, 196, 48, 0.18);
+    transform: scale(1.02);
+  }
+  .mockup-host .intake-field--big.is-filling .intake-field-value {
+    animation: intake-value-pop 0.5s ease-out;
+  }
+  @keyframes intake-value-pop {
+    0%   { opacity: 0; transform: translateY(6px); }
+    60%  { opacity: 1; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .mockup-host .intake-field--big.is-filled {
+    border-color: rgba(4, 43, 59, 0.20);
+  }
+
+  /* CTA pulse — matcha glow burst at the moment of "submission" before
+     the pane transitions to the next workflow stage. */
+  .mockup-host .intake-cta--big.is-pulsing {
+    animation: intake-cta-pulse 0.9s ease-out;
+  }
+  @keyframes intake-cta-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
+    30%  { box-shadow: 0 0 0 14px rgba(195, 196, 48, 0.35), 0 8px 28px rgba(4, 43, 59, 0.35); transform: scale(1.04); }
+    100% { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
+  }
+
+  /* "Appointment booked!" confirmation popup — pops in centered over the
+     intake form when Continue fires, holds, then fades as the pane flips. */
+  .mockup-host .intake-popup {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+    z-index: 10;
+  }
+  .mockup-host .intake-popup.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: intake-popup-bounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes intake-popup-bounce {
+    0%   { transform: scale(0.55); }
+    65%  { transform: scale(1.10); }
+    100% { transform: scale(1); }
+  }
+  .mockup-host .intake-popup__inner {
+    background: #fff;
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: 28px;
+    padding: 64px 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    box-shadow: 0 40px 80px rgba(6, 62, 84, 0.30), 0 8px 22px rgba(6, 62, 84, 0.14);
+  }
+  .mockup-host .intake-popup__check {
+    width: 104px; height: 104px;
+    border-radius: 50%;
+    background: var(--matcha);
+    color: var(--indigo);
+    display: grid;
+    place-items: center;
+    animation: intake-popup-check 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+  }
+  .mockup-host .intake-popup__check svg { width: 56px; height: 56px; }
+  @keyframes intake-popup-check {
+    0%   { transform: scale(0); }
+    70%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+  .mockup-host .intake-popup__title {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.015em;
+  }
+
+  /* ============================================================
+     AI CLINICAL ASSISTANT (Documentation) — conceptual minimal layout.
+     Single centered column: Scribe card (button + timer + waveform)
+     → live transcription card → 4 consult fields in a 2x2 grid.
+     Matches Scheduler/Intake level of abstraction.
+     ============================================================ */
+  .mockup-host .doc-minimal {
+    position: absolute;
+    inset: 0;
+    padding: 34px 56px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  /* Top row — scribe card (left, fixed) + transcript chat (right, flex). */
+  .mockup-host .doc-top-row {
+    display: flex;
+    gap: 24px;
+    flex: 0 0 auto;
+    align-items: stretch;
+  }
+  .mockup-host .doc-scribe-wrap {
+    flex: 0 0 340px;
+  }
+  .mockup-host .doc-minimal .scribe-card {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+    border-radius: 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .mockup-host .doc-minimal .scribe-title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+
+  /* BIG centered wave — the focal element of the scribe card. */
+  .mockup-host .doc-minimal .scribe-wave-big {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 16px 0 12px;
+  }
+  .mockup-host .doc-minimal .scribe-wave-big .wave {
+    display: inline-flex;
+    align-items: center;
+    height: 88px;
+    gap: 5px;
+  }
+  .mockup-host .doc-minimal .scribe-wave-big .wave i {
+    display: block;
+    width: 5px;
+    height: 12px;
+    background: rgba(195, 196, 48, 0.85);
+    border-radius: 2.5px;
+  }
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i {
+    animation: doc-wave-huge 0.9s ease-in-out infinite;
+  }
+  /* Staggered delays for an organic, undulating wave. 18 bars, 3-step cycle */
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i:nth-child(3n+1) { animation-delay: 0s; }
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i:nth-child(3n+2) { animation-delay: .15s; }
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i:nth-child(3n+3) { animation-delay: .30s; }
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i:nth-child(2) { animation-delay: .08s; }
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i:nth-child(5) { animation-delay: .22s; }
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i:nth-child(11) { animation-delay: .05s; }
+  .mockup-host .doc-minimal .scribe-wave-big .wave.live i:nth-child(14) { animation-delay: .26s; }
+  @keyframes doc-wave-huge {
+    0%, 100% { height: 12px; }
+    50%      { height: 78px; }
+  }
+
+  /* Timer row, below wave, above button. */
+  .mockup-host .doc-minimal .scribe-meta-row {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .mockup-host .doc-minimal .timer {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .mockup-host .doc-minimal .scribe-btn {
+    margin-top: 0;
+    height: 52px;
+    font-size: 15px;
+    width: 100%;
+  }
+  .mockup-host .doc-minimal .scribe-btn .tri {
+    border-width: 8px 0 8px 12px;
+  }
+
+  /* Transcript chat panel */
+  .mockup-host .doc-trans-card {
+    background: #fff;
+    border: 1px solid rgba(6, 62, 84, 0.10);
+    border-radius: 14px;
+    padding: 18px 22px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .mockup-host .doc-trans-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(6, 62, 84, 0.55);
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .mockup-host .doc-chat {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    overflow: hidden;
+    position: relative;
+  }
+  .mockup-host .doc-chat-placeholder {
+    color: rgba(6, 62, 84, 0.32);
+    font-style: italic;
+    font-size: 14px;
+    transition: opacity 0.3s ease-out;
+  }
+  .mockup-host .doc-chat-placeholder.is-hidden { opacity: 0; }
+  .mockup-host .doc-bubble {
+    max-width: 78%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+    transition: opacity 0.45s ease-out, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .mockup-host .doc-bubble.is-on {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .mockup-host .doc-bubble--left {
+    align-self: flex-start;
+    background: rgba(6, 62, 84, 0.07);
+    color: var(--indigo);
+    border-bottom-left-radius: 4px;
+  }
+  .mockup-host .doc-bubble--right {
+    align-self: flex-end;
+    background: var(--indigo);
+    color: var(--seashell);
+    border-bottom-right-radius: 4px;
+  }
+  .mockup-host .doc-bubble-speaker {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+    color: rgba(6, 62, 84, 0.55);
+  }
+  .mockup-host .doc-bubble--right .doc-bubble-speaker {
+    color: var(--matcha);
+  }
+  .mockup-host .doc-bubble-text { display: block; }
+
+  /* Consult fields — Intake-style floating label, big value */
+  .mockup-host .doc-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    flex: 0 0 auto;
+  }
+  .mockup-host .doc-field {
+    background: #fff;
+    border: 1.5px solid rgba(6, 62, 84, 0.12);
+    border-radius: 10px;
+    padding: 22px 24px 14px;
+    position: relative;
+    min-height: 86px;
+    box-sizing: border-box;
+    transition: border-color 0.45s ease-out, box-shadow 0.45s ease-out, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .mockup-host .doc-field-label {
+    position: absolute;
+    top: 10px;
+    left: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: rgba(6, 62, 84, 0.62);
+    background: #fff;
+    padding: 0 3px;
+    text-transform: none;
+  }
+  .mockup-host .doc-field-value {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+    margin-top: 16px;
+    min-height: 28px;
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+  }
+  /* Typing state — matcha border glow + blinking caret cursor. */
+  .mockup-host .doc-field.is-typing {
+    border-color: var(--matcha);
+    box-shadow: 0 0 0 3px rgba(195, 196, 48, 0.22), 0 4px 14px rgba(195, 196, 48, 0.14);
+  }
+  .mockup-host .doc-field.is-typing .doc-field-value::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 22px;
+    background: var(--indigo);
+    margin-left: 3px;
+    vertical-align: -3px;
+    animation: doc-caret 0.65s steps(2) infinite;
+  }
+  @keyframes doc-caret {
+    50% { opacity: 0; }
+  }
+  .mockup-host .doc-field.is-filled {
+    border-color: rgba(4, 43, 59, 0.20);
+  }
+
+  /* Consult completed popup */
+  .mockup-host .doc-popup {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+    z-index: 10;
+  }
+  .mockup-host .doc-popup.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: doc-popup-bounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes doc-popup-bounce {
+    0%   { transform: scale(0.55); }
+    65%  { transform: scale(1.10); }
+    100% { transform: scale(1); }
+  }
+  .mockup-host .doc-popup__inner {
+    background: #fff;
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: 28px;
+    padding: 56px 88px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    box-shadow: 0 40px 80px rgba(6, 62, 84, 0.30), 0 8px 22px rgba(6, 62, 84, 0.14);
+  }
+  .mockup-host .doc-popup__check {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: var(--matcha);
+    color: var(--indigo);
+    display: grid;
+    place-items: center;
+    animation: doc-popup-check 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+  }
+  .mockup-host .doc-popup__check svg { width: 52px; height: 52px; }
+  @keyframes doc-popup-check {
+    0%   { transform: scale(0); }
+    70%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+  .mockup-host .doc-popup__title {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.015em;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mockup-host .doc-popup.is-visible { animation: none; }
+    .mockup-host .doc-popup__check { animation: none; }
+  }
+
+  /* ============================================================
+     MEDICAL BILLING — conceptual minimal layout. Vertical stack:
+     claim header → 2 CPT code rows (auto-typing) → total counter
+     → Submit button → Paid popup. Same level of abstraction as
+     the other conceptual panes.
+     ============================================================ */
+  .mockup-host .bill-minimal {
+    position: absolute;
+    inset: 0;
+    padding: 38px 96px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .mockup-host .bill-card {
+    background: #fff;
+    border: 1px solid rgba(6, 62, 84, 0.10);
+    border-radius: 14px;
+    padding: 20px 26px;
+  }
+  .mockup-host .bill-claim-header {
+    text-align: left;
+    background: transparent;
+    border: 0;
+    padding: 4px 6px 8px;
+    box-shadow: none;
+  }
+  .mockup-host .bill-claim-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    background: rgba(195, 196, 48, 0.22);
+    padding: 5px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .mockup-host .bill-claim-patient {
+    margin: 0 0 4px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--indigo);
+  }
+  .mockup-host .bill-claim-sub {
+    font-size: 14px;
+    color: rgba(6, 62, 84, 0.62);
+  }
+
+  /* CPT code rows — start empty, reveal via JS with Intake-style glow pop */
+  .mockup-host .bill-codes-card {
+    padding: 14px 36px;
+  }
+  .mockup-host .bill-code-row {
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px dashed rgba(6, 62, 84, 0.10);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out,
+                background 0.45s ease-out, box-shadow 0.45s ease-out, border-color 0.45s ease-out;
+  }
+  .mockup-host .bill-code-row:last-child { border-bottom: 0; }
+  .mockup-host .bill-code-row.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .mockup-host .bill-code-row.is-filling {
+    background: rgba(195, 196, 48, 0.12);
+    box-shadow: inset 4px 0 0 var(--matcha);
+  }
+  .mockup-host .bill-code-row.is-filling .bill-code-tag,
+  .mockup-host .bill-code-row.is-filling .bill-code-desc,
+  .mockup-host .bill-code-row.is-filling .bill-code-amt {
+    animation: bill-value-pop 0.5s ease-out;
+  }
+  @keyframes bill-value-pop {
+    0%   { opacity: 0; transform: translateY(6px); }
+    60%  { opacity: 1; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .mockup-host .bill-code-tag {
+    display: inline-block;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--indigo);
+    background: rgba(6, 62, 84, 0.06);
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .mockup-host .bill-code-desc {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.005em;
+  }
+  .mockup-host .bill-code-amt {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--indigo);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.015em;
+  }
+
+  /* Total row */
+  .mockup-host .bill-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 20px 30px;
+    background: var(--indigo);
+    color: #fff;
+    border-radius: 14px;
+  }
+  .mockup-host .bill-total-label {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+  }
+  .mockup-host .bill-total-amt {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+  }
+
+  /* CTA */
+  .mockup-host .bill-cta-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+  }
+  /* Same as Intake "Continue" big button — full styling, not piggy-backed
+     on .pill so we get pure white text instead of seashell. */
+  .mockup-host .bill-submit {
+    position: relative;
+    background: var(--indigo);
+    color: #fff;
+    border: 0;
+    padding: 22px 56px;
+    border-radius: 999px;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 0;
+    transition: opacity 0.55s ease-out, transform 0.18s ease-out, box-shadow 0.18s ease-out;
+  }
+  .mockup-host .bill-submit.is-pulsing {
+    animation: bc-cta-pulse 0.9s ease-out;
+  }
+  @keyframes bc-cta-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
+    30%  { box-shadow: 0 0 0 14px rgba(195, 196, 48, 0.35), 0 8px 28px rgba(4, 43, 59, 0.35); transform: scale(1.04); }
+    100% { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
+  }
+
+  /* "Paid" confirmation popup */
+  .mockup-host .bill-popup {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+    z-index: 10;
+  }
+  .mockup-host .bill-popup.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: bc-popup-bounce 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes bc-popup-bounce {
+    0%   { transform: scale(0.55); }
+    65%  { transform: scale(1.10); }
+    100% { transform: scale(1); }
+  }
+  .mockup-host .bill-popup__inner {
+    background: #fff;
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: 28px;
+    padding: 56px 88px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    box-shadow: 0 40px 80px rgba(6, 62, 84, 0.30), 0 8px 22px rgba(6, 62, 84, 0.14);
+  }
+  .mockup-host .bill-popup__check {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    background: var(--matcha);
+    color: var(--indigo);
+    display: grid;
+    place-items: center;
+    animation: bc-popup-check 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+  }
+  .mockup-host .bill-popup__check svg { width: 52px; height: 52px; }
+  @keyframes bc-popup-check {
+    0%   { transform: scale(0); }
+    70%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+  .mockup-host .bill-popup__title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .mockup-host .bill-popup__amount {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--matcha);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mockup-host .bill-popup.is-visible { animation: none; }
+    .mockup-host .bill-popup__check { animation: none; }
+    .mockup-host .bill-submit.is-pulsing { animation: none; }
+    .mockup-host .bill-code-row { transition: none; }
+  }
+
+  /* Directional push transition. Outgoing pane slides off in the
+     workflow direction (left for forward, right for backward) while
+     scaling down to 0.95. Incoming pane enters from the opposite side.
+     Direction toggles via [data-push-direction] on .visual-wrap. */
+  .visual-frame { overflow: hidden; }
+  /* Softer pane transition — shorter slide distance, gentler quint
+     ease, slightly longer duration. Outgoing pane fades from underneath
+     instead of being an opaque overlay so the cross-fade reads as one
+     continuous motion. */
+  .mockup-pane--active {
+    animation: pane-push-in-forward 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-push-direction="backward"] .mockup-pane--active {
+    animation: pane-push-in-backward 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes pane-push-in-forward {
+    0%   { opacity: 0; transform: translateX(36px); }
+    60%  { opacity: 1; }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pane-push-in-backward {
+    0%   { opacity: 0; transform: translateX(-36px); }
+    60%  { opacity: 1; }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  .mockup-pane.is-leaving {
+    display: block;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 1;
+    pointer-events: none;
+    animation: pane-push-out-forward 0.75s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  }
+  [data-push-direction="backward"] .mockup-pane.is-leaving {
+    animation: pane-push-out-backward 0.75s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  }
+  @keyframes pane-push-out-forward {
+    0%   { opacity: 1; transform: translateX(0) scale(1); }
+    100% { opacity: 0; transform: translateX(-28px) scale(0.98); }
+  }
+  @keyframes pane-push-out-backward {
+    0%   { opacity: 1; transform: translateX(0) scale(1); }
+    100% { opacity: 0; transform: translateX(28px) scale(0.98); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mockup-pane--active { animation: none; }
+    .mockup-pane.is-leaving { animation: none; opacity: 0; }
+    .mockup-host .intake-popup.is-visible { animation: none; }
+    .mockup-host .intake-popup__check { animation: none; }
   }
 
   /* Right summary card */
@@ -1475,240 +2259,11 @@
     border-radius: 2px;
   }
 
-  /* ============================================================
-     MEDICAL BILLING MOCKUP — pharmacist-facing claims dashboard.
-     Top bar with title + stat pills, left claim queue, main claim
-     detail panel with codes + total + submit. Aligned with the
-     other tab mockups: Montserrat, #042B3B navy, light gray bg.
-     ============================================================ */
-  .mockup-host .bill-topbar {
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 64px;
-    background: #fff;
-    border-bottom: 1px solid rgba(4, 43, 59, 0.06);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 28px;
-    z-index: 2;
-  }
-  .mockup-host .bill-topbar-title {
-    margin: 0;
-    font-size: 18px; font-weight: 800;
-    color: #042B3B;
-    letter-spacing: -0.012em;
-  }
-  .mockup-host .bill-topbar-stats {
-    display: flex; gap: 14px;
-  }
-  .mockup-host .bill-stat {
-    background: #F5F7F8;
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 12px;
-    color: #386576;
-    display: inline-flex; align-items: baseline; gap: 6px;
-  }
-  .mockup-host .bill-stat b {
-    font-size: 13px; font-weight: 700;
-    color: #042B3B;
-  }
-
-  .mockup-host .bill-body {
-    position: absolute;
-    top: 64px; left: 0; right: 0; bottom: 0;
-    background: #F5F7F8;
-    padding: 22px;
-    display: flex;
-    gap: 18px;
-  }
-
-  /* Left sidebar — claim queue */
-  .mockup-host .bill-side {
-    width: 280px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 18px 18px;
-    flex-shrink: 0;
-    overflow: hidden;
-  }
-  .mockup-host .bill-side-title {
-    margin: 0 0 12px;
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #386576;
-  }
-  .mockup-host .bill-queue {
-    list-style: none; margin: 0; padding: 0;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .mockup-host .bill-queue-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: rgba(4, 43, 59, 0.025);
-    border: 1px solid transparent;
-    transition: background 0.3s ease, border-color 0.3s ease;
-  }
-  .mockup-host .bill-queue-item--ready {
-    background: rgba(195, 196, 48, 0.12);
-    border-color: rgba(195, 196, 48, 0.42);
-  }
-  .mockup-host .bill-queue-item--active {
-    background: rgba(4, 43, 59, 0.07);
-    border-color: rgba(4, 43, 59, 0.18);
-  }
-  .mockup-host .bill-queue-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: rgba(4, 43, 59, 0.30);
-    flex-shrink: 0;
-  }
-  .mockup-host .bill-queue-item--ready .bill-queue-dot { background: var(--lime); }
-  .mockup-host .bill-queue-item--active .bill-queue-dot { background: #042B3B; }
-  .mockup-host .bill-queue-item--paid .bill-queue-dot { background: #2F7D5B; }
-  .mockup-host .bill-queue-info { flex: 1; min-width: 0; }
-  .mockup-host .bill-queue-name {
-    font-size: 13px; font-weight: 600;
-    color: #042B3B;
-    line-height: 1.2;
-  }
-  .mockup-host .bill-queue-meta {
-    font-size: 11px;
-    color: #386576;
-    margin-top: 2px;
-  }
-
-  /* Main panel — current claim detail */
-  .mockup-host .bill-main {
-    flex: 1; min-width: 0;
-    background: #fff;
-    border-radius: 12px;
-    padding: 26px 30px;
-    display: flex; flex-direction: column;
-    overflow: hidden;
-  }
-  .mockup-host .bill-main-head {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-  .mockup-host .bill-claim-id {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #386576;
-    margin: 0 0 4px;
-  }
-  .mockup-host .bill-claim-title {
-    margin: 0;
-    font-size: 22px;
-    font-weight: 800;
-    color: #042B3B;
-    letter-spacing: -0.012em;
-  }
-  .mockup-host .bill-claim-sub {
-    margin: 4px 0 0;
-    font-size: 13px;
-    color: #386576;
-  }
-  .mockup-host .bill-claim-status {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(195, 196, 48, 0.18);
-    border: 1px solid rgba(195, 196, 48, 0.4);
-    color: #042B3B;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .mockup-host .bill-claim-status::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--lime);
-  }
-
-  .mockup-host .bill-codes {
-    border-top: 1px solid rgba(4, 43, 59, 0.08);
-    border-bottom: 1px solid rgba(4, 43, 59, 0.08);
-  }
-  .mockup-host .bill-code-row {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(4, 43, 59, 0.06);
-  }
-  .mockup-host .bill-code-row:last-child { border-bottom: 0; }
-  .mockup-host .bill-code-row-left {
-    display: flex; align-items: center; gap: 12px;
-  }
-  .mockup-host .bill-code-tag {
-    background: var(--matcha);
-    color: var(--indigo);
-    padding: 4px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-  }
-  .mockup-host .bill-code-desc {
-    font-size: 14px;
-    color: #042B3B;
-    font-weight: 500;
-  }
-  .mockup-host .bill-code-amt {
-    font-size: 15px;
-    font-weight: 700;
-    color: #042B3B;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .mockup-host .bill-total-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 0 22px;
-  }
-  .mockup-host .bill-total-label {
-    font-size: 15px;
-    font-weight: 700;
-    color: #042B3B;
-  }
-  .mockup-host .bill-total-amt {
-    font-size: 26px;
-    font-weight: 800;
-    color: #042B3B;
-    letter-spacing: -0.012em;
-    font-variant-numeric: tabular-nums;
-  }
-  .mockup-host .bill-foot {
-    display: flex; align-items: center; gap: 14px;
-    margin-top: auto;
-  }
-  .mockup-host .bill-submit {
-    background: #042B3B;
-    color: #fff;
-    border: 0;
-    padding: 12px 22px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: background 0.18s ease;
-  }
-  .mockup-host .bill-submit:hover { background: #073e54; }
-  .mockup-host .bill-foot-meta {
-    font-size: 12px;
-    color: #386576;
-  }
 
   .mockup-host .cursor { position: absolute; width: 16px; height: 20px; left: 0; top: 0; z-index: 50; pointer-events: none; transition: transform 1s cubic-bezier(.5,.05,.2,1); will-change: transform; filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
-  .mockup-host .ripple { position: absolute; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #073e54; transform: translate(-50%,-50%) scale(.4); opacity: 0; left: 8px; top: 10px; }
-  .mockup-host .ripple.go { animation: m-ripple .6s ease-out; }
-  @keyframes m-ripple { 0% { transform: translate(-50%,-50%) scale(.3); opacity: .7; } 100% { transform: translate(-50%,-50%) scale(2.2); opacity: 0; } }
+  .mockup-host .ripple { position: absolute; width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--matcha); transform: translate(-50%,-50%) scale(.4); opacity: 0; left: 8px; top: 10px; }
+  .mockup-host .ripple.go { animation: m-ripple 0.95s ease-out; }
+  @keyframes m-ripple { 0% { transform: translate(-50%,-50%) scale(.2); opacity: .95; border-width: 4px; } 60% { opacity: .55; } 100% { transform: translate(-50%,-50%) scale(4); opacity: 0; border-width: 1px; } }
 
   @media (max-width: 760px) {
     .visual-wrap { padding: 0 18px; margin-top: 40px; }
@@ -1738,14 +2293,14 @@
   .tile-story__avatar {
     width: 44px; height: 44px;
     border-radius: 50%;
-    background: rgba(255,247,242,0.16);
+    background: rgba(250,249,245,0.16);
     color: var(--seashell);
     display: grid; place-items: center;
     font-family: var(--font-display); font-weight: 600;
   }
   .tile-story__who { text-align: left; }
   .tile-story__name { font-weight: 600; }
-  .tile-story__role { font-size: var(--apple-caption); color: rgba(255,247,242,0.7); }
+  .tile-story__role { font-size: var(--apple-caption); color: rgba(250,249,245,0.7); }
   .tile-story__metrics {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1764,7 +2319,7 @@
   .tile-story__metric .label {
     margin-top: 0.4rem;
     font-size: var(--apple-caption);
-    color: rgba(255,247,242,0.7);
+    color: rgba(250,249,245,0.7);
     line-height: 1.35;
   }
   @media (max-width: 720px) {
@@ -1870,25 +2425,25 @@
      seashell fill so they still read as form fields. */
   .tile--dark .calc-card {
     background: var(--indigo-dark);
-    border-color: rgba(255, 247, 242, 0.10);
+    border-color: rgba(250, 249, 245, 0.10);
   }
-  .tile--dark .calc-card__field label { color: rgba(255, 247, 242, 0.78); }
+  .tile--dark .calc-card__field label { color: rgba(250, 249, 245, 0.78); }
   .tile--dark .calc-card__input-wrap {
-    background: rgba(255, 247, 242, 0.06);
-    border-color: rgba(255, 247, 242, 0.16);
+    background: rgba(250, 249, 245, 0.06);
+    border-color: rgba(250, 249, 245, 0.16);
   }
   .tile--dark .calc-card__input-wrap input { color: var(--seashell); }
-  .tile--dark .calc-card__input-wrap span { color: rgba(255, 247, 242, 0.5); }
+  .tile--dark .calc-card__input-wrap span { color: rgba(250, 249, 245, 0.5); }
   .tile--dark .calc-card__input-wrap:focus-within {
     border-color: var(--matcha);
     box-shadow: 0 0 0 3px rgba(195, 196, 48, 0.18);
   }
   .tile--dark .calc-card__result {
-    border-top-color: rgba(255, 247, 242, 0.16);
+    border-top-color: rgba(250, 249, 245, 0.16);
   }
-  .tile--dark .calc-card__result .label { color: rgba(255, 247, 242, 0.7); }
+  .tile--dark .calc-card__result .label { color: rgba(250, 249, 245, 0.7); }
   .tile--dark .calc-card__result .value { color: var(--matcha); }
-  .tile--dark .calc-card__result .delta { color: rgba(255, 247, 242, 0.55); }
+  .tile--dark .calc-card__result .delta { color: rgba(250, 249, 245, 0.55); }
 
   /* ============================================================
      PLATFORM CARD MOTION GRAPHICS — small CSS-only animations
@@ -2004,7 +2559,7 @@
     gap: 0.5rem;
   }
   .h-card--feature h3 { color: var(--seashell); margin-top: 0; }
-  .h-card--feature p { color: rgba(255, 247, 242, 0.8); }
+  .h-card--feature p { color: rgba(250, 249, 245, 0.8); }
   .h-card--feature .feat-list { color: #FFFFFF; }
   .h-card--feature .feat-list li::before { background: var(--matcha); }
   /* Medical Billing pill: matcha solid since the card itself is dark navy */
@@ -2052,8 +2607,8 @@
     position: relative;
     padding: 10px 14px;
     border-radius: 10px;
-    background: rgba(255, 247, 242, 0.08);
-    border: 1px solid rgba(255, 247, 242, 0.12);
+    background: rgba(250, 249, 245, 0.08);
+    border: 1px solid rgba(250, 249, 245, 0.12);
     opacity: 0;
     transform: translateX(-8px);
     animation: fa-bill-step-in 9s ease-in-out infinite;
@@ -2079,7 +2634,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255, 247, 242, 0.65);
+    color: rgba(250, 249, 245, 0.65);
     margin-bottom: 10px;
   }
   .fa-bill-pill {
@@ -2107,7 +2662,7 @@
   .fa-bill-chip {
     display: inline-flex; align-items: center; gap: 7px;
     padding: 6px 11px;
-    background: rgba(255, 247, 242, 0.10);
+    background: rgba(250, 249, 245, 0.10);
     border-radius: 7px;
     font-size: 13px;
     color: var(--seashell);
@@ -2123,7 +2678,7 @@
   }
   .fa-bill-claim {
     margin-top: 4px;
-    background: rgba(255, 247, 242, 0.04);
+    background: rgba(250, 249, 245, 0.04);
     border-radius: 7px;
     padding: 10px 14px;
     font-size: 13px;
@@ -2131,14 +2686,14 @@
   .fa-bill-claim-row {
     display: flex; justify-content: space-between;
     padding: 5px 0;
-    border-bottom: 1px dashed rgba(255, 247, 242, 0.10);
+    border-bottom: 1px dashed rgba(250, 249, 245, 0.10);
     color: var(--seashell);
   }
   .fa-bill-claim-total {
     display: flex; justify-content: space-between;
     margin-top: 8px;
     padding-top: 8px;
-    border-top: 1px solid rgba(255, 247, 242, 0.20);
+    border-top: 1px solid rgba(250, 249, 245, 0.20);
     color: var(--matcha);
     font-weight: 700;
     font-size: 14.5px;
@@ -2454,12 +3009,12 @@
      a navy surface. Matcha accents stay as-is.
      ============================================================ */
   .tile--dark .fa-bill-row {
-    background: rgba(255, 247, 242, 0.06);
+    background: rgba(250, 249, 245, 0.06);
     color: var(--seashell);
   }
-  .tile--dark .fa-bill-code { background: rgba(255, 247, 242, 0.14); color: var(--seashell); }
+  .tile--dark .fa-bill-code { background: rgba(250, 249, 245, 0.14); color: var(--seashell); }
   @keyframes fa-bill-flash-dark {
-    0%, 14%, 30%, 100% { background: rgba(255, 247, 242, 0.06); box-shadow: none; }
+    0%, 14%, 30%, 100% { background: rgba(250, 249, 245, 0.06); box-shadow: none; }
     18%, 26% {
       background: rgba(195, 196, 48, 0.28);
       box-shadow: 0 0 0 1px rgba(195, 196, 48, 0.55);
@@ -2472,7 +3027,7 @@
   }
 
   .tile--dark .fa-ehr-letter { color: var(--seashell); }
-  .tile--dark .fa-ehr-bar { background: rgba(255, 247, 242, 0.10); }
+  .tile--dark .fa-ehr-bar { background: rgba(250, 249, 245, 0.10); }
 
   .tile--dark .feat-anim--scribe .fa-wave i { background: var(--seashell); }
   .tile--dark .feat-anim--scribe .fa-wave i:nth-child(5),
@@ -2481,19 +3036,19 @@
   .tile--dark .feat-anim--scribe .fa-wave i:nth-child(8),
   .tile--dark .feat-anim--scribe .fa-wave i:nth-child(9) { background: var(--matcha); }
 
-  .tile--dark .feat-anim--sched .fa-grid i { background: rgba(255, 247, 242, 0.10); }
-  .tile--dark .feat-anim--sched .fa-grid i.booked { background: rgba(255, 247, 242, 0.28); }
+  .tile--dark .feat-anim--sched .fa-grid i { background: rgba(250, 249, 245, 0.10); }
+  .tile--dark .feat-anim--sched .fa-grid i.booked { background: rgba(250, 249, 245, 0.28); }
   .tile--dark .feat-anim--sched .fa-grid i.new { background: var(--matcha); }
 
   .tile--dark .feat-anim--analytics .fa-bars i { background: var(--seashell); }
   .tile--dark .feat-anim--analytics .fa-bars i:nth-child(5) { background: var(--matcha); }
 
   .tile--dark .feat-anim--integrations .fa-hub::before,
-  .tile--dark .feat-anim--integrations .fa-hub::after { background: rgba(255, 247, 242, 0.18); }
-  .tile--dark .fa-int-node { background: rgba(255, 247, 242, 0.35); }
+  .tile--dark .feat-anim--integrations .fa-hub::after { background: rgba(250, 249, 245, 0.18); }
+  .tile--dark .fa-int-node { background: rgba(250, 249, 245, 0.35); }
   @keyframes fa-int-pulse-dark {
     0%, 100% {
-      background: rgba(255, 247, 242, 0.35);
+      background: rgba(250, 249, 245, 0.35);
       transform: translate(-50%, -50%) scale(1);
     }
     50% {
@@ -2751,7 +3306,7 @@
     flex-direction: column;
     gap: 0.4rem;
     font-size: 0.875rem;
-    color: rgba(255, 247, 242, 0.72);
+    color: rgba(250, 249, 245, 0.72);
   }
   .tile--light .feat-list { color: rgba(6, 62, 84, 0.72); }
   .feat-list li {
@@ -2871,6 +3426,228 @@
     text-transform: uppercase;
     color: var(--indigo);
     margin-bottom: 0.5rem;
+  }
+
+  /* ============================================================
+     Tab bar hidden — the hero mockups now auto-rotate full-frame
+     without manual tab controls. The .tab-bar markup stays in the
+     DOM so the existing rotation JS keeps cycling through panes
+     (tabs are still toggled, just invisibly).
+     ============================================================ */
+  .tab-bar-wrap { display: none !important; }
+
+  /* ============================================================
+     GLOBAL WORKFLOW INDICATOR — sits above the mockup frame,
+     shows the 4 workflow stages with active state updating as
+     the rotation cycles through panes.
+     ============================================================ */
+  .hero-workflow {
+    max-width: 1100px;
+    margin: 0 auto 1.75rem;
+    padding: 0 1rem;
+  }
+  .hw-stages {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    justify-content: space-between;
+  }
+  .hw-stage {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(6, 62, 84, 0.42);
+    transition: color 0.45s ease-out;
+    flex: 0 0 auto;
+  }
+  .hw-stage .hw-dot {
+    position: relative;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: rgba(6, 62, 84, 0.18);
+    transition: background 0.45s ease-out, box-shadow 0.45s ease-out, transform 0.45s ease-out;
+    flex-shrink: 0;
+  }
+  .hw-stage .hw-label {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    transition: color 0.45s ease-out;
+  }
+  .hw-stage.is-done {
+    color: rgba(6, 62, 84, 0.78);
+  }
+  .hw-stage.is-done .hw-dot {
+    background: var(--matcha);
+    opacity: 0.55;
+  }
+  .hw-stage.is-active {
+    color: var(--indigo);
+  }
+  .hw-stage.is-active .hw-dot {
+    background: var(--matcha);
+    transform: scale(1.4);
+    box-shadow: 0 0 0 5px rgba(195, 196, 48, 0.25);
+  }
+  .hw-stage.is-active .hw-label {
+    font-weight: 700;
+  }
+  .hw-arrow {
+    flex: 1 1 auto;
+    height: 2px;
+    background: linear-gradient(to right, rgba(6, 62, 84, 0.12) 0%, rgba(6, 62, 84, 0.18) 50%, rgba(6, 62, 84, 0.12) 100%);
+    margin: 0 14px;
+    transition: background 0.45s ease-out;
+  }
+  /* Filled arrow when both flanking stages are done/active */
+  .hw-arrow.is-traveled {
+    background: linear-gradient(to right, rgba(195, 196, 48, 0.55) 0%, rgba(195, 196, 48, 0.55) 100%);
+  }
+  /* Billing → Paid arrow has its own JS-driven progress fill that
+     advances continuously during the Medical Billing animation. The
+     --bill-progress var is updated by the billing tick(). */
+  .hw-arrow[data-arrow="paid"] {
+    background: linear-gradient(to right,
+      rgba(195, 196, 48, 0.55) 0%,
+      rgba(195, 196, 48, 0.55) var(--bill-progress, 0%),
+      rgba(6, 62, 84, 0.12) var(--bill-progress, 0%),
+      rgba(6, 62, 84, 0.12) 100%);
+    transition: background 0.08s linear;
+  }
+  /* Get Paid stage — checkmark icon appears when the stage activates. */
+  .hw-stage[data-pane-key="paid"] .hw-dot-check {
+    display: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--matcha);
+    color: var(--indigo);
+    align-items: center;
+    justify-content: center;
+    margin-right: -12px;     /* aligns roughly with where the .hw-dot was, since dot has its own margin via gap */
+  }
+  .hw-stage[data-pane-key="paid"] .hw-dot-check svg {
+    width: 14px; height: 14px;
+  }
+  .hw-stage[data-pane-key="paid"].is-active .hw-dot,
+  .hw-stage[data-pane-key="paid"].is-done   .hw-dot { display: none; }
+  .hw-stage[data-pane-key="paid"].is-active .hw-dot-check,
+  .hw-stage[data-pane-key="paid"].is-done   .hw-dot-check {
+    display: inline-flex;
+    margin-right: 0;
+    box-shadow: 0 0 0 5px rgba(195, 196, 48, 0.25);
+    animation: hw-check-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes hw-check-pop {
+    0%   { transform: scale(0); }
+    70%  { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  /* ============================================================
+     HERO PIPELINE — single conceptual motion graphic that replaced
+     the legacy 5-tab mockup carousel. Four stages animate in turn
+     across a 16s loop: Scheduling → Intake → AI Clinical Assistant
+     → Medical Billing. Uses abstracted SVG icons (no literal product
+     UI) per Christine's competitive-sensitivity direction.
+     Legacy mockups still live in src under .legacy-mockups[hidden]
+     and can be restored by removing the `hidden` attribute.
+     ============================================================ */
+  .hero-pipeline { padding: 3.5rem 0 2rem; }
+  .hp-wrap { max-width: 1240px; margin: 0 auto; padding: 0 2rem; }
+  .hp-flow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .hp-stage {
+    flex: 0 0 auto;
+    width: 18%;
+    min-width: 170px;
+    background: #fff;
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: 18px;
+    padding: 26px 18px 22px;
+    text-align: center;
+    color: var(--indigo);
+    box-shadow: 0 1px 0 rgba(6, 62, 84, 0.04);
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.6s ease;
+    animation: hp-stage-flash 16s ease-in-out infinite;
+  }
+  .hp-stage[data-stage="1"] { animation-delay: 0s; }
+  .hp-stage[data-stage="2"] { animation-delay: 4s; }
+  .hp-stage[data-stage="3"] { animation-delay: 8s; }
+  .hp-stage[data-stage="4"] { animation-delay: 12s; }
+  @keyframes hp-stage-flash {
+    0%, 4%    { transform: translateY(0); box-shadow: 0 1px 0 rgba(6, 62, 84, 0.04); border-color: rgba(6, 62, 84, 0.08); }
+    10%, 22%  { transform: translateY(-6px); box-shadow: 0 18px 36px rgba(6, 62, 84, 0.14), 0 0 0 4px rgba(195, 196, 48, 0.20); border-color: rgba(195, 196, 48, 0.45); }
+    28%, 100% { transform: translateY(0); box-shadow: 0 1px 0 rgba(6, 62, 84, 0.04); border-color: rgba(6, 62, 84, 0.08); }
+  }
+  .hp-icon { margin: 0 auto 14px; width: 56px; height: 56px; color: var(--indigo); }
+  .hp-icon svg { display: block; width: 100%; height: 100%; }
+  .hp-label {
+    font-family: var(--font-display);
+    font-size: 15px; font-weight: 700;
+    letter-spacing: -0.005em;
+    color: var(--indigo);
+    margin-bottom: 4px;
+  }
+  .hp-sub {
+    font-size: 12.5px;
+    color: rgba(6, 62, 84, 0.55);
+    line-height: 1.4;
+  }
+  .hp-arrow {
+    flex: 1 1 auto;
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(6, 62, 84, 0.20) 20%, rgba(6, 62, 84, 0.20) 80%, transparent);
+    align-self: flex-start;
+    margin-top: 55px;
+    position: relative;
+    overflow: visible;
+  }
+  .hp-pulse {
+    position: absolute;
+    top: -4px; left: -8px;
+    width: 10px; height: 10px;
+    background: var(--matcha);
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow: 0 0 0 3px rgba(195, 196, 48, 0.25);
+    animation: hp-pulse-travel 16s linear infinite;
+  }
+  .hp-pulse[data-pulse="1"] { animation-delay: 3s; }
+  .hp-pulse[data-pulse="2"] { animation-delay: 7s; }
+  .hp-pulse[data-pulse="3"] { animation-delay: 11s; }
+  @keyframes hp-pulse-travel {
+    0%   { left: -8px; opacity: 0; }
+    2%   { opacity: 1; }
+    6%   { left: calc(100% + 8px); opacity: 0; }
+    100% { left: calc(100% + 8px); opacity: 0; }
+  }
+  @media (max-width: 880px) {
+    .hp-flow { flex-direction: column; gap: 1.25rem; align-items: center; }
+    .hp-stage { width: 100%; max-width: 360px; }
+    .hp-arrow {
+      width: 2px; height: 36px;
+      background: linear-gradient(to bottom, transparent, rgba(6, 62, 84, 0.20) 20%, rgba(6, 62, 84, 0.20) 80%, transparent);
+      margin: 0 auto;
+    }
+    .hp-pulse { top: -8px; left: -4px; animation-name: hp-pulse-travel-v; }
+    @keyframes hp-pulse-travel-v {
+      0%   { top: -8px; opacity: 0; }
+      2%   { opacity: 1; }
+      6%   { top: calc(100% + 8px); opacity: 0; }
+      100% { top: calc(100% + 8px); opacity: 0; }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hp-stage { animation: none; }
+    .hp-pulse { animation: none; opacity: 0; }
   }
 </style>
 </head>
@@ -3191,20 +3968,113 @@
 <!-- ============= 1. HERO (centered headline + AI-scribe mockup) ============= -->
 <section class="hero-end" aria-label="Hero">
   <div class="tile__inner">
+    <span class="kicker" style="text-transform: none; color: var(--matcha); letter-spacing: 0;"><span aria-hidden="true" style="display: inline-block; width: 0.45em; height: 0.45em; background: var(--matcha); border-radius: 50%; margin-right: 0.55em; vertical-align: 0.08em;"></span>North America's Pharmacy Clinical Services Platform</span>
     <h1>
-      <span>From appointment to paid claim,</span>
-      <span>in one pharmacy&#8209;built workflow.</span>
+      <span>The end-to-end platform for <span style="color: var(--matcha); display: inline;">pharmacy clinical services</span>.</span>
+      <span>From launch to reimbursement.</span>
     </h1>
     <p class="sub">
-      <span>The pharmacy-specific EHR that turns every clinical encounter into a clean Medicare Part&nbsp;B claim &mdash;</span>
-      <span>so pharmacists get paid for the work they do.</span>
+      <span>MedMe gives pharmacies the infrastructure to launch, scale, and get paid for clinical services.</span>
+      <span>AI-native, modular, API-driven &mdash; built for how pharmacy actually works.</span>
     </p>
     <div class="cta-row">
-      <a class="btn btn-primary btn--lg" href="pages/us/contact.html">Book a demo <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-primary btn--lg" href="pages/us/contact.html">Book a 20-Min Demo <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
 
+<!-- ============= 1a. HERO PIPELINE (abstract icon graphic — hidden; superseded by the auto-rotating full-frame legacy mockups below. Restore by removing `hidden`. ============= -->
+<section class="hero-pipeline" aria-label="MedMe workflow pipeline" hidden>
+  <div class="hp-wrap">
+    <div class="hp-flow">
+      <!-- Stage 1 — Scheduling & Queuing -->
+      <div class="hp-stage" data-stage="1">
+        <div class="hp-icon">
+          <svg viewBox="0 0 56 56" aria-hidden="true">
+            <rect x="9" y="11" width="38" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="9" y1="18" x2="47" y2="18" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="14" y="23" width="6" height="6" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="22" y="23" width="6" height="6" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="30" y="23" width="6" height="6" rx="1" fill="var(--matcha)"/>
+            <rect x="38" y="23" width="4" height="6" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="14" y="31" width="6" height="6" rx="1" fill="var(--matcha)"/>
+            <rect x="22" y="31" width="6" height="6" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="30" y="31" width="6" height="6" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="38" y="31" width="4" height="6" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="14" y="39" width="6" height="4" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="22" y="39" width="6" height="4" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="30" y="39" width="6" height="4" rx="1" fill="currentColor" opacity="0.18"/>
+            <rect x="38" y="39" width="4" height="4" rx="1" fill="currentColor" opacity="0.18"/>
+          </svg>
+        </div>
+        <div class="hp-label">Scheduling &amp; Queuing</div>
+        <div class="hp-sub">Online booking, walk-in queue</div>
+      </div>
+
+      <div class="hp-arrow" aria-hidden="true"><div class="hp-pulse" data-pulse="1"></div></div>
+
+      <!-- Stage 2 — Patient Intake Form -->
+      <div class="hp-stage" data-stage="2">
+        <div class="hp-icon">
+          <svg viewBox="0 0 56 56" aria-hidden="true">
+            <rect x="10" y="9" width="36" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="14" y1="17" x2="42" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+            <line x1="14" y1="17" x2="34" y2="17" stroke="var(--matcha)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="25" x2="42" y2="25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+            <line x1="14" y1="25" x2="28" y2="25" stroke="var(--matcha)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="33" x2="42" y2="33" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+            <line x1="14" y1="33" x2="24" y2="33" stroke="var(--matcha)" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="41" x2="42" y2="41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+          </svg>
+        </div>
+        <div class="hp-label">Patient Intake Form</div>
+        <div class="hp-sub">Digital, pre-visit</div>
+      </div>
+
+      <div class="hp-arrow" aria-hidden="true"><div class="hp-pulse" data-pulse="2"></div></div>
+
+      <!-- Stage 3 — AI Clinical Assistant -->
+      <div class="hp-stage" data-stage="3">
+        <div class="hp-icon">
+          <svg viewBox="0 0 56 56" aria-hidden="true">
+            <rect x="16" y="8" width="24" height="12" rx="3" fill="var(--matcha)"/>
+            <text x="28" y="17" text-anchor="middle" font-size="8.5" font-weight="800" font-family="Montserrat, sans-serif" fill="var(--indigo)" letter-spacing="0.6">AI</text>
+            <rect x="13" y="32" width="3" height="8" rx="1.5" fill="currentColor" opacity="0.45"/>
+            <rect x="19" y="28" width="3" height="16" rx="1.5" fill="currentColor" opacity="0.65"/>
+            <rect x="25" y="24" width="3" height="24" rx="1.5" fill="var(--indigo)"/>
+            <rect x="31" y="26" width="3" height="20" rx="1.5" fill="currentColor" opacity="0.65"/>
+            <rect x="37" y="30" width="3" height="12" rx="1.5" fill="currentColor" opacity="0.45"/>
+            <rect x="43" y="34" width="3" height="4" rx="1.5" fill="currentColor" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="hp-label">AI Clinical Assistant</div>
+        <div class="hp-sub">Captures, drafts, signs</div>
+      </div>
+
+      <div class="hp-arrow" aria-hidden="true"><div class="hp-pulse" data-pulse="3"></div></div>
+
+      <!-- Stage 4 — Medical Billing -->
+      <div class="hp-stage" data-stage="4">
+        <div class="hp-icon">
+          <svg viewBox="0 0 56 56" aria-hidden="true">
+            <rect x="10" y="11" width="32" height="34" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="14" y1="19" x2="38" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+            <line x1="14" y1="25" x2="34" y2="25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+            <line x1="14" y1="31" x2="30" y2="31" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+            <line x1="14" y1="37" x2="26" y2="37" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+            <circle cx="42" cy="40" r="10" fill="var(--matcha)"/>
+            <path d="M 37.5 40 L 41 43.5 L 47 37" stroke="var(--indigo)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="hp-label">Medical Billing</div>
+        <div class="hp-sub">Coded, submitted, paid</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= LEGACY MOCKUPS (now ACTIVE — auto-rotate, tab bar hidden via .tab-bar-wrap { display: none }) ============= -->
+<div class="legacy-mockups">
 <div class="tab-bar-wrap">
   <div class="tab-bar" role="tablist" aria-label="Product mockup tabs">
     <button class="tab tab--active"   type="button" data-tab="scheduling"    role="tab" aria-selected="true">Scheduling &amp; Queueing</button>
@@ -3216,8 +4086,44 @@
 </div>
 
 <div class="visual-wrap" aria-hidden="true">
+  <!-- Global workflow indicator — visualizes the 4-stage process as the
+       mockup rotation cycles. Active stage updates from the rotation
+       activate() hook below. -->
+  <div class="hero-workflow" aria-hidden="true">
+    <div class="hw-stages">
+      <div class="hw-stage is-active" data-pane-key="scheduling">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Scheduling</span>
+      </div>
+      <div class="hw-arrow"></div>
+      <div class="hw-stage" data-pane-key="intake">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Patient Intake</span>
+      </div>
+      <div class="hw-arrow"></div>
+      <div class="hw-stage" data-pane-key="documentation">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Consult Complete</span>
+      </div>
+      <div class="hw-arrow"></div>
+      <div class="hw-stage" data-pane-key="billing">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Medical Billing</span>
+      </div>
+      <div class="hw-arrow" data-arrow="paid"></div>
+      <div class="hw-stage" data-pane-key="paid">
+        <span class="hw-dot"></span>
+        <span class="hw-dot-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </span>
+        <span class="hw-label">Get Paid</span>
+      </div>
+    </div>
+  </div>
   <div class="visual-halo"></div>
-  <div class="visual-frame">
+  <div class="visual-frame"></div>
 
     <!-- ===== PANE: Scheduling & Queueing ===== -->
     <div class="mockup-pane mockup-pane--active" data-pane="scheduling" role="tabpanel">
@@ -3226,129 +4132,65 @@
 
           <!-- LEFT CARD — MedMe Pharmacy booking widget -->
           <section class="sched-book" aria-label="Booking widget">
-            <h2 class="sched-book-title">MedMe Pharmacy</h2>
-            <div class="sched-book-divider"></div>
-
-            <div class="sched-radios" role="radiogroup" aria-label="Visit type">
-              <span class="sched-radio" role="radio" aria-checked="false">
-                <span class="sched-radio-circle"></span>
-                <span>Walk-in</span>
-              </span>
-              <span class="sched-radio sched-radio--active" role="radio" aria-checked="true">
-                <span class="sched-radio-circle"></span>
-                <span>Book Appointment</span>
-              </span>
-            </div>
 
             <div class="sched-grid-card">
               <div class="sched-grid-nav">
                 <button class="sched-nav-arrow" type="button" aria-label="Previous week">&#x2039;</button>
-                <span class="sched-nav-label">Wed Aug 13 - Tue Aug 19</span>
+                <span class="sched-nav-label">This week</span>
                 <button class="sched-nav-arrow" type="button" aria-label="Next week">&#x203A;</button>
               </div>
 
               <div class="sched-grid">
                 <div class="sched-col">
-                  <div class="sched-col-head"><div class="sched-col-date">Aug 13</div><div class="sched-col-day">Today</div></div>
-                  <button class="sched-slot" type="button">8:00 AM</button>
-                  <button class="sched-slot" type="button">8:15 AM</button>
-                  <button class="sched-slot" type="button">8:30 AM</button>
-                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 11</div><div class="sched-col-day">Mon</div></div>
                   <button class="sched-slot" type="button">9:00 AM</button>
                   <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 12</div><div class="sched-col-day">Tue</div></div>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 13</div><div class="sched-col-day">Wed</div></div>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button" id="schTargetSlot">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
                 </div>
                 <div class="sched-col">
                   <div class="sched-col-head"><div class="sched-col-date">Aug 14</div><div class="sched-col-day">Thu</div></div>
-                  <button class="sched-slot" type="button">8:00 AM</button>
-                  <button class="sched-slot" type="button">8:15 AM</button>
-                  <button class="sched-slot" type="button">8:30 AM</button>
-                  <button class="sched-slot" type="button">8:45 AM</button>
-                  <button class="sched-slot" type="button" id="schTargetSlot">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:00 AM</button>
                   <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
                 </div>
                 <div class="sched-col">
                   <div class="sched-col-head"><div class="sched-col-date">Aug 15</div><div class="sched-col-day">Fri</div></div>
-                  <button class="sched-slot" type="button">8:00 AM</button>
-                  <button class="sched-slot" type="button">8:15 AM</button>
-                  <button class="sched-slot" type="button">8:30 AM</button>
-                  <button class="sched-slot" type="button">8:45 AM</button>
                   <button class="sched-slot" type="button">9:00 AM</button>
                   <button class="sched-slot" type="button">9:15 AM</button>
-                </div>
-                <div class="sched-col">
-                  <div class="sched-col-head"><div class="sched-col-date">Aug 16</div><div class="sched-col-day">Sat</div></div>
-                  <button class="sched-slot" type="button">8:00 AM</button>
-                  <button class="sched-slot" type="button">8:15 AM</button>
-                  <button class="sched-slot" type="button">8:30 AM</button>
-                  <button class="sched-slot" type="button">8:45 AM</button>
-                  <button class="sched-slot" type="button">9:00 AM</button>
-                  <button class="sched-slot" type="button">9:15 AM</button>
-                </div>
-                <div class="sched-col">
-                  <div class="sched-col-head"><div class="sched-col-date">Aug 17</div><div class="sched-col-day">Sun</div></div>
-                  <button class="sched-slot" type="button">8:00 AM</button>
-                  <button class="sched-slot" type="button">8:15 AM</button>
-                  <button class="sched-slot" type="button">8:30 AM</button>
-                  <button class="sched-slot" type="button">8:45 AM</button>
-                  <button class="sched-slot" type="button">9:00 AM</button>
-                  <button class="sched-slot" type="button">9:15 AM</button>
-                </div>
-                <div class="sched-col">
-                  <div class="sched-col-head"><div class="sched-col-date">Aug 18</div><div class="sched-col-day">Mon</div></div>
-                  <button class="sched-slot" type="button">8:00 AM</button>
-                  <button class="sched-slot" type="button">8:15 AM</button>
-                  <button class="sched-slot" type="button">8:30 AM</button>
-                  <button class="sched-slot" type="button">8:45 AM</button>
-                  <button class="sched-slot" type="button">9:00 AM</button>
-                  <button class="sched-slot" type="button">9:15 AM</button>
-                </div>
-                <div class="sched-col">
-                  <div class="sched-col-head"><div class="sched-col-date">Aug 19</div><div class="sched-col-day">Tue</div></div>
-                  <button class="sched-slot" type="button">8:00 AM</button>
-                  <button class="sched-slot" type="button">8:15 AM</button>
-                  <button class="sched-slot" type="button">8:30 AM</button>
-                  <button class="sched-slot" type="button">8:45 AM</button>
-                  <button class="sched-slot" type="button">9:00 AM</button>
-                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- RIGHT CARD — Store Locator -->
-          <section class="sched-locator" aria-label="Store locator">
-            <h3 class="sched-locator-title">Store Locator</h3>
-            <div class="sched-map">
-              <svg class="sched-map-bg" viewBox="0 0 250 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <!-- park blocks -->
-                <ellipse cx="170" cy="120" rx="70" ry="55" fill="rgba(150, 188, 140, 0.30)"/>
-                <ellipse cx="40" cy="270" rx="55" ry="40" fill="rgba(150, 188, 140, 0.22)"/>
-                <ellipse cx="200" cy="380" rx="45" ry="35" fill="rgba(150, 188, 140, 0.18)"/>
-                <!-- subtle building blocks -->
-                <rect x="80" y="30" width="40" height="30" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
-                <rect x="20" y="180" width="50" height="35" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
-                <rect x="140" y="220" width="45" height="40" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
-                <rect x="90" y="320" width="50" height="35" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
-                <!-- roads -->
-                <path d="M-10 90 Q70 100 130 80 T260 100"  stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
-                <path d="M-10 210 Q90 195 160 215 T260 215" stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
-                <path d="M50 -10 Q60 130 50 240 T70 490"     stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
-                <path d="M180 -10 Q170 140 195 260 T205 490" stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
-                <!-- river -->
-                <path d="M-15 340 Q60 320 130 345 T265 360" stroke="rgba(120, 175, 205, 0.55)" stroke-width="22" fill="none" stroke-linecap="round"/>
-              </svg>
-
-              <div class="sched-pin" style="left:42%; top:24%;">
-                <svg viewBox="0 0 24 32" fill="none"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="#042B3B"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>
-              </div>
-              <div class="sched-pin sched-pin--active" style="left:58%; top:44%;">
-                <svg viewBox="0 0 24 32" fill="none"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="#042B3B"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>
-              </div>
-              <div class="sched-pin" style="left:64%; top:82%;">
-                <svg viewBox="0 0 24 32" fill="none"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="#042B3B"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>
-              </div>
-            </div>
-          </section>
+          <!-- Store Locator removed per direction 2026-05-26 — calendar view is the sole focus of the Scheduling mockup. -->
 
           <div class="cursor" id="schCursor">
             <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
@@ -3366,129 +4208,45 @@
       <div class="mockup-host" id="intakeHost">
         <div class="frame-inner" id="intakeFrame">
 
-          <!-- Top header with logo -->
-          <div class="intake-topbar">
-            <div class="intake-logo"><svg viewBox="0 0 190 39" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedMe">
-          <g>
-            <path d="M83.2942 11.6621C84.985 10.7174 86.8984 10.2439 88.835 10.2908C90.6783 10.2542 92.4978 10.7074 94.1081 11.6042C95.6073 12.4489 96.8456 13.6893 97.6873 15.19C98.554 16.7363 98.9987 18.4834 98.9761 20.2557V21.1857C98.9792 21.3417 98.9706 21.4977 98.9505 21.6524C98.9432 21.8095 98.8755 21.9577 98.7614 22.0662C98.6474 22.1747 98.4961 22.2351 98.3387 22.235H83.5004C83.5162 22.9344 83.6712 23.6237 83.9554 24.2629C84.2402 24.902 84.6489 25.4783 85.1582 25.9583C86.1463 26.8564 87.4419 27.3408 88.7771 27.3116C89.7219 27.3419 90.6545 27.0898 91.4554 26.5878C92.0538 26.2024 92.5503 25.6787 92.9028 25.0609C92.9522 24.9611 93.0291 24.8772 93.1236 24.8185C93.2188 24.7608 93.3273 24.7283 93.4384 24.7244H97.5171C97.6184 24.7247 97.7178 24.7496 97.8068 24.7968C97.8971 24.8452 97.974 24.9147 98.0313 24.9994C98.0868 25.0843 98.1216 25.1809 98.1326 25.2816C98.1399 25.3825 98.1252 25.4838 98.0893 25.5784C97.6989 26.5426 97.156 27.4381 96.4826 28.2306C95.5915 29.2858 94.4795 30.132 93.2249 30.7092C91.8262 31.3338 90.305 31.6391 88.7734 31.6029C86.882 31.6367 85.0131 31.1857 83.3448 30.2931C81.7852 29.4366 80.4994 28.1572 79.6351 26.6024C78.7098 24.9234 78.2438 23.0299 78.2853 21.1133C78.2505 19.1585 78.7067 17.2263 79.6137 15.494C80.4591 13.8987 81.7339 12.5715 83.2942 11.6621ZM92.1288 15.7364C91.2059 14.943 90.022 14.5201 88.8051 14.5494C87.5895 14.5331 86.4013 14.9143 85.4223 15.6351C84.386 16.4478 83.7096 17.6335 83.537 18.9386H93.6232C93.6061 18.3322 93.467 17.7353 93.2145 17.1837C92.9559 16.6317 92.5862 16.139 92.1288 15.7364Z" fill="currentColor"/>
-            <path d="M166.839 11.6625C168.529 10.7185 170.441 10.2449 172.376 10.2912C174.219 10.2546 176.038 10.7079 177.649 11.6047C179.148 12.4483 180.386 13.6891 181.225 15.1905C182.094 16.7357 182.54 18.4833 182.517 20.2562V21.1861C182.52 21.3422 182.512 21.4982 182.491 21.6529C182.484 21.81 182.416 21.9582 182.302 22.0667C182.189 22.1752 182.037 22.2356 181.88 22.2354H167.041C167.057 22.9349 167.212 23.6242 167.497 24.2633C167.781 24.9025 168.19 25.4787 168.699 25.9587C169.687 26.8571 170.983 27.3416 172.318 27.312C173.263 27.3418 174.195 27.0899 174.996 26.5883C175.594 26.2029 176.091 25.6791 176.443 25.0613C176.493 24.9616 176.57 24.8776 176.664 24.819C176.76 24.7616 176.868 24.7293 176.98 24.7249H181.062C181.163 24.7247 181.262 24.7496 181.351 24.7972C181.441 24.8457 181.518 24.9152 181.576 24.9999C181.633 25.084 181.668 25.1812 181.677 25.2824C181.687 25.3836 181.67 25.4856 181.63 25.5788C181.242 26.5436 180.701 27.4393 180.027 28.2311C179.137 29.2874 178.025 30.1338 176.77 30.7096C175.371 31.3342 173.85 31.6395 172.318 31.6034C170.426 31.6371 168.557 31.1862 166.889 30.2935C165.329 29.4361 164.042 28.1571 163.176 26.6028C162.253 24.9229 161.789 23.0298 161.83 21.1137C161.793 19.1588 162.25 17.2261 163.158 15.4945C164.003 13.8991 165.278 12.5719 166.839 11.6625ZM175.705 15.7369C174.781 14.9421 173.594 14.5191 172.376 14.55C171.156 14.5306 169.963 14.912 168.981 15.6355C167.945 16.4482 167.269 17.6339 167.095 18.9391H177.2C177.183 18.3326 177.044 17.7357 176.791 17.1842C176.533 16.6322 176.163 16.1395 175.705 15.7369Z" fill="currentColor"/>
-            <path d="M122.431 3.00001C122.512 3.00009 122.591 3.01613 122.665 3.04719C122.739 3.07825 122.806 3.12376 122.862 3.18097C122.978 3.29602 123.043 3.45217 123.043 3.61515V30.4599C123.043 30.5401 123.027 30.6195 122.996 30.6935C122.965 30.7674 122.92 30.8344 122.862 30.8905C122.748 31.0054 122.593 31.0715 122.431 31.075H118.878C118.735 31.0732 118.599 31.022 118.49 30.9303C118.379 30.8387 118.305 30.7103 118.28 30.5684L117.817 28.155C117.109 29.1035 116.229 29.9101 115.222 30.5323C113.94 31.2707 112.474 31.6284 110.995 31.5635C109.195 31.5881 107.425 31.104 105.889 30.1668C104.385 29.2323 103.157 27.9164 102.327 26.353C101.437 24.6597 100.988 22.7694 101.021 20.8567C100.985 18.9506 101.434 17.0666 102.327 15.3821C103.157 13.8306 104.386 12.5289 105.889 11.6117C107.429 10.6851 109.198 10.2087 110.995 10.2368C112.38 10.2035 113.755 10.4973 115.005 11.0944C116.127 11.6477 117.087 12.4816 117.792 13.515V3.61515C117.791 3.5343 117.806 3.45413 117.839 3.37998C117.868 3.3053 117.912 3.23751 117.969 3.18097C118.025 3.1235 118.093 3.07795 118.168 3.04707C118.243 3.01555 118.323 2.99952 118.403 3.00001H122.431ZM112.135 14.8463C110.586 14.8463 109.098 15.453 107.991 16.5364C107.44 17.1196 107.012 17.8074 106.732 18.559C106.453 19.3069 106.324 20.1024 106.352 20.9001C106.326 21.7051 106.456 22.5075 106.735 23.263C107.017 24.0141 107.444 24.7025 107.991 25.2892C108.518 25.845 109.156 26.2836 109.864 26.5767C110.572 26.8697 111.333 27.0105 112.099 26.9898V26.9717C112.877 27.0006 113.651 26.8635 114.372 26.5697C115.093 26.2758 115.743 25.832 116.279 25.2675C117.32 24.0514 117.893 22.503 117.893 20.9019C117.893 19.3009 117.32 17.7525 116.279 16.5364C115.171 15.453 113.684 14.8464 112.135 14.8463Z" fill="currentColor"/>
-            <path d="M50.0159 11.0907C51.1714 10.4953 52.4586 10.2015 53.7581 10.2367C56.8946 10.2367 59.1168 11.4537 60.4246 13.8877C61.1664 12.7584 62.1874 11.8398 63.3886 11.2209C64.6422 10.5611 66.0402 10.2229 67.4565 10.2367C70.1105 10.2367 72.1422 11.0303 73.5512 12.6175C74.9602 14.2048 75.6684 16.5327 75.6757 19.6011V30.4707C75.6751 30.6336 75.6104 30.7899 75.4945 30.9049C75.4384 30.9621 75.3713 31.0075 75.2975 31.0386C75.2237 31.0696 75.1444 31.0857 75.0639 31.0858H71.0394C70.8772 31.0839 70.7222 31.0183 70.6076 30.9033C70.4935 30.7882 70.4289 30.6329 70.4276 30.4707V20.075C70.4276 18.3237 70.094 16.9826 69.4255 16.0514C68.757 15.1203 67.728 14.6547 66.3385 14.6547C65.6877 14.6273 65.0399 14.7512 64.4452 15.0166C63.8539 15.2895 63.3326 15.6943 62.9218 16.1998C62.0628 17.2395 61.6345 18.6868 61.637 20.5418V30.4561C61.6365 30.6192 61.5715 30.7753 61.456 30.8904C61.3999 30.9478 61.3329 30.9933 61.259 31.0244C61.185 31.0555 61.1056 31.0714 61.0253 31.0713H57.0262C56.8644 31.0704 56.7095 31.0053 56.5955 30.8904C56.4813 30.7745 56.4165 30.6188 56.4145 30.4561V20.075C56.4145 18.3237 56.0743 16.9826 55.3939 16.0514C54.7135 15.1203 53.664 14.6547 52.2453 14.6547C51.6015 14.6359 50.9621 14.7672 50.3778 15.0383C49.7922 15.3093 49.2769 15.7117 48.8722 16.2143C48.0133 17.2539 47.5838 18.7013 47.5838 20.5563V30.4561C47.5804 30.6185 47.5158 30.7737 47.4029 30.8904C47.2889 31.0053 47.134 31.0704 46.9722 31.0713H42.9622C42.8011 31.0701 42.6467 31.0066 42.5315 30.894C42.4194 30.7781 42.3549 30.6246 42.3506 30.4635V11.3222C42.351 11.1592 42.416 11.0031 42.5315 10.888C42.647 10.7754 42.8009 10.7107 42.9622 10.7071H46.4511C46.5973 10.7068 46.7388 10.7594 46.8491 10.8555C46.9581 10.9482 47.0311 11.0763 47.0554 11.2173L47.4174 13.4535C48.0784 12.4662 48.9704 11.6552 50.0159 11.0907Z" fill="currentColor"/>
-            <path d="M133.781 11.0906C134.937 10.4955 136.224 10.2018 137.523 10.2367C140.66 10.2367 142.882 11.4536 144.19 13.8876C144.932 12.7583 145.953 11.8398 147.154 11.2209C148.407 10.5613 149.805 10.2231 151.222 10.2367C153.876 10.2367 155.907 11.0303 157.316 12.6176C158.725 14.2048 159.434 16.5327 159.441 19.6011V30.4706C159.44 30.6336 159.376 30.7898 159.26 30.9048C159.204 30.9622 159.137 31.0078 159.063 31.0389C158.989 31.0699 158.91 31.0859 158.829 31.0858H154.819C154.658 31.0848 154.503 31.0197 154.389 30.9048C154.276 30.7881 154.211 30.633 154.207 30.4706V20.075C154.207 18.3237 153.874 16.9825 153.209 16.0514C152.543 15.1203 151.513 14.6547 150.118 14.6547C149.467 14.6319 148.82 14.7609 148.227 15.0316C147.635 15.3023 147.114 15.7072 146.705 16.2142C145.846 17.2539 145.417 18.7012 145.417 20.5563V30.4561C145.416 30.6184 145.353 30.7741 145.239 30.8904C145.125 31.0058 144.968 31.0709 144.805 31.0712H140.795C140.632 31.0709 140.476 31.0058 140.361 30.8904C140.248 30.7736 140.183 30.6185 140.18 30.4561V20.075C140.18 18.3237 139.839 16.9825 139.159 16.0514C138.479 15.1203 137.429 14.6547 136.011 14.6547C135.366 14.637 134.726 14.7686 134.141 15.0391C133.556 15.3097 133.041 15.7119 132.638 16.2142C131.784 17.2539 131.354 18.7012 131.349 20.5563V30.4561C131.348 30.6184 131.284 30.7738 131.169 30.8888C131.055 31.0038 130.9 31.0694 130.738 31.0712H126.727C126.566 31.0701 126.412 31.0065 126.297 30.8939C126.185 30.7781 126.12 30.6245 126.116 30.4634V11.3222C126.116 11.1592 126.181 11.003 126.297 10.888C126.412 10.7759 126.566 10.7114 126.727 10.7071H130.216C130.362 10.7068 130.504 10.7594 130.614 10.8554C130.725 10.9471 130.798 11.0757 130.821 11.2172L131.183 13.4534C131.843 12.4662 132.736 11.6551 133.781 11.0906Z" fill="currentColor"/>
-            <path d="M24.0991 3.24596C26.0597 3.63474 27.8246 4.69174 29.0925 6.23655C30.3604 7.78136 31.0528 9.71826 31.0515 11.7166V19.8434H25.8544C25.7308 19.8426 25.6125 19.7932 25.5251 19.706C25.4802 19.6629 25.4446 19.6112 25.4204 19.554C25.3961 19.4967 25.3837 19.4352 25.3839 19.373V11.6623C25.3844 11.5389 25.3605 11.4167 25.3136 11.3026C25.2667 11.1884 25.1978 11.0847 25.1107 10.9973C25.0236 10.9099 24.92 10.8405 24.8061 10.7932C24.6922 10.7459 24.5699 10.7215 24.4465 10.7215H20.6972C20.4477 10.7228 20.2088 10.8215 20.0312 10.9965C19.9439 11.084 19.8746 11.1878 19.8274 11.3021C19.7802 11.4163 19.756 11.5387 19.7562 11.6623V19.373C19.7562 19.4348 19.7441 19.4961 19.7205 19.5532C19.697 19.6103 19.6623 19.6622 19.6186 19.706C19.5294 19.7928 19.4102 19.842 19.2857 19.8434H11.5877C11.464 19.8429 11.3415 19.867 11.2271 19.9141C11.1127 19.9612 11.0088 20.0304 10.9213 20.1179C10.8338 20.2054 10.7645 20.3093 10.7174 20.4236C10.6703 20.538 10.6463 20.6605 10.6468 20.7842V24.5365C10.6463 24.6601 10.6703 24.7827 10.7174 24.897C10.7645 25.0114 10.8338 25.1153 10.9213 25.2028C11.0088 25.2902 11.1127 25.3595 11.2271 25.4066C11.3415 25.4537 11.464 25.4777 11.5877 25.4773H19.2857C19.4102 25.4786 19.5294 25.5278 19.6186 25.6148C19.6623 25.6585 19.697 25.7104 19.7205 25.7675C19.7441 25.8246 19.7562 25.8858 19.7562 25.9476V31.1292H11.642C9.34987 31.1292 7.15164 30.2188 5.53085 28.5984C3.91006 26.9779 2.99951 24.7801 2.99951 22.4885C2.99951 20.1968 3.91006 17.9991 5.53085 16.3786C7.15164 14.7581 9.34987 13.8478 11.642 13.8478H13.7737V11.7202C13.7739 10.4429 14.0573 9.18156 14.6035 8.0269C15.1497 6.87225 15.9452 5.85302 16.9326 5.0426C17.9201 4.23218 19.075 3.65071 20.3142 3.34004C21.5533 3.02938 22.846 2.99725 24.0991 3.24596ZM25.3912 31.1292V26.1032C25.3921 25.9375 25.4584 25.7788 25.5756 25.6617C25.6928 25.5444 25.8515 25.4782 26.0173 25.4773H31.0551V31.1292H25.3912Z" fill="#C3C430"/>
-          </g>
-        </svg></div>
+          <div class="intake-body intake-body--minimal">
+            <div class="intake-card-left intake-card-left--minimal">
+
+              <div class="intake-form intake-form--minimal">
+                <div class="intake-fields-row row-1">
+                  <div class="intake-field intake-field--big" id="fldFirstName">
+                    <span class="intake-field-label">Full Name</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+                <div class="intake-fields-row row-1">
+                  <div class="intake-field intake-field--big" id="fldDOB">
+                    <span class="intake-field-label">Date of Birth</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+                <div class="intake-fields-row row-1">
+                  <div class="intake-field intake-field--big" id="fldPhone">
+                    <span class="intake-field-label">Phone</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+
+                <button class="intake-cta intake-cta--big" type="button" id="intakeCta">Continue</button>
+              </div>
+
+            </div>
           </div>
 
-          <div class="intake-body">
-            <!-- LEFT: form section -->
-            <div class="intake-card-left">
-              <h2 class="intake-h1">Contact Information</h2>
-
-              <!-- 8-step horizontal indicator. Steps 1=done, 2=active, 3-8=pending -->
-              <div class="intake-steps" id="intakeSteps">
-                <span class="intake-step is-done"></span>
-                <span class="intake-step-line is-done"></span>
-                <span class="intake-step is-active"></span>
-                <span class="intake-step-line"><span class="fill" id="intakeProgress"></span></span>
-                <span class="intake-step"></span>
-                <span class="intake-step-line"></span>
-                <span class="intake-step"></span>
-                <span class="intake-step-line"></span>
-                <span class="intake-step"></span>
-                <span class="intake-step-line"></span>
-                <span class="intake-step"></span>
-                <span class="intake-step-line"></span>
-                <span class="intake-step"></span>
-                <span class="intake-step-line"></span>
-                <span class="intake-step"></span>
+          <!-- Confirmation popup — appears when Continue is "clicked." -->
+          <div class="intake-popup" id="intakePopup" aria-hidden="true">
+            <div class="intake-popup__inner">
+              <div class="intake-popup__check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
               </div>
-
-              <!-- Inner white form card -->
-              <div class="intake-form">
-                <h3 class="intake-form-h">Personal Information for individual(s) receiving service</h3>
-                <p class="intake-form-sub">Please enter the required information for yourself and anyone else in your booking.</p>
-
-                <div class="intake-fields-row row-2-1">
-                  <div class="intake-field" id="fldFirstName">
-                    <span class="intake-field-label">First Name *</span>
-                    <div class="intake-field-value"></div>
-                  </div>
-                  <div class="intake-field" id="fldLastName">
-                    <span class="intake-field-label">Last Name *</span>
-                    <div class="intake-field-value"></div>
-                  </div>
-                </div>
-                <div class="intake-fields-row row-half">
-                  <div class="intake-field" id="fldDOB">
-                    <span class="intake-field-label">Date of Birth (YYYY-MM-DD) *</span>
-                    <div class="intake-field-value"></div>
-                    <span class="intake-field-icon" aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="intake-section-h">Address</div>
-                <div class="intake-fields-row row-1">
-                  <div class="intake-field" id="fldAddress">
-                    <span class="intake-field-label">Continue</span>
-                    <div class="intake-field-value"></div>
-                    <span class="intake-field-icon" aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
-                    </span>
-                  </div>
-                </div>
-                <div class="intake-fields-row row-3">
-                  <div class="intake-field" id="fldCity">
-                    <span class="intake-field-label">City *</span>
-                    <div class="intake-field-value"></div>
-                  </div>
-                  <div class="intake-field" id="fldProvince">
-                    <span class="intake-field-label">Province *</span>
-                    <div class="intake-field-value"></div>
-                    <span class="intake-field-icon" aria-hidden="true">
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 5 6 8 9 5"/></svg>
-                    </span>
-                  </div>
-                  <div class="intake-field" id="fldPostal">
-                    <span class="intake-field-label">Postal Code *</span>
-                    <div class="intake-field-value"></div>
-                  </div>
-                </div>
-
-                <button class="intake-cta" type="button" id="intakeCta">Continue</button>
-              </div>
+              <div class="intake-popup__title">Appointment booked!</div>
             </div>
-
-            <!-- RIGHT: booking summary -->
-            <aside class="intake-card-right">
-              <h3 class="intake-summary-title">Flu Shot (Regular)</h3>
-              <div class="intake-summary-row">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                <span>Sun Nov 30, 8:30AM</span>
-              </div>
-              <div class="intake-summary-row">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Approximately 15 minutes</span>
-              </div>
-              <div class="intake-summary-row">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span>1 person</span>
-              </div>
-              <div class="intake-summary-row">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>MedMe Pharmacy<br>175 Bloor Street East<br>Toronto, ON M4W 3R8</span>
-              </div>
-              <div class="intake-summary-divider"></div>
-              <ul class="intake-vsteps" id="intakeVSteps">
-                <li class="intake-vstep is-active"><span class="intake-vstep-dot"></span>Contact Information</li>
-                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Medical Information</li>
-                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Flu Screening</li>
-                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Consent</li>
-                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Review and Submit</li>
-              </ul>
-            </aside>
           </div>
 
         </div>
@@ -3500,113 +4258,61 @@
       <div class="mockup-host" id="billHost">
         <div class="frame-inner" id="billFrame">
 
-          <!-- Top bar — title + stats -->
-          <header class="bill-topbar">
-            <h1 class="bill-topbar-title">Claims</h1>
-            <div class="bill-topbar-stats">
-              <span class="bill-stat"><b>96%</b> First-pass</span>
-              <span class="bill-stat"><b>14 days</b> Avg payment</span>
-              <span class="bill-stat"><b>12</b> Pending</span>
+          <div class="bill-minimal">
+            <!-- Claim header — patient + service + coverage -->
+            <div class="bill-card bill-claim-header">
+              <div class="bill-claim-tag">Auto-coded from encounter note</div>
+              <h2 class="bill-claim-patient">Sophia Ramirez</h2>
+              <div class="bill-claim-sub">Annual MTM Review &middot; Medicare Part&nbsp;B</div>
             </div>
-          </header>
 
-          <div class="bill-body">
-            <!-- LEFT: Claim queue -->
-            <aside class="bill-side">
-              <h3 class="bill-side-title">Claim queue</h3>
-              <ul class="bill-queue">
-                <li class="bill-queue-item bill-queue-item--ready">
-                  <span class="bill-queue-dot"></span>
-                  <div class="bill-queue-info">
-                    <div class="bill-queue-name">Maria R.</div>
-                    <div class="bill-queue-meta">Ready</div>
-                  </div>
-                </li>
-                <li class="bill-queue-item bill-queue-item--active">
-                  <span class="bill-queue-dot"></span>
-                  <div class="bill-queue-info">
-                    <div class="bill-queue-name">David K.</div>
-                    <div class="bill-queue-meta">Building</div>
-                  </div>
-                </li>
-                <li class="bill-queue-item">
-                  <span class="bill-queue-dot"></span>
-                  <div class="bill-queue-info">
-                    <div class="bill-queue-name">Sarah L.</div>
-                    <div class="bill-queue-meta">Draft</div>
-                  </div>
-                </li>
-                <li class="bill-queue-item bill-queue-item--paid">
-                  <span class="bill-queue-dot"></span>
-                  <div class="bill-queue-info">
-                    <div class="bill-queue-name">James T.</div>
-                    <div class="bill-queue-meta">Paid</div>
-                  </div>
-                </li>
-                <li class="bill-queue-item bill-queue-item--paid">
-                  <span class="bill-queue-dot"></span>
-                  <div class="bill-queue-info">
-                    <div class="bill-queue-name">Aisha B.</div>
-                    <div class="bill-queue-meta">Paid</div>
-                  </div>
-                </li>
-                <li class="bill-queue-item bill-queue-item--paid">
-                  <span class="bill-queue-dot"></span>
-                  <div class="bill-queue-info">
-                    <div class="bill-queue-name">Carlos M.</div>
-                    <div class="bill-queue-meta">Paid</div>
-                  </div>
-                </li>
-              </ul>
-            </aside>
-
-            <!-- MAIN: Claim detail -->
-            <main class="bill-main">
-              <div class="bill-main-head">
-                <div>
-                  <div class="bill-claim-id">Claim 0428-0115</div>
-                  <h2 class="bill-claim-title">David Kim</h2>
-                  <p class="bill-claim-sub">Medicare Part B &middot; CCM follow-up</p>
-                </div>
-                <span class="bill-claim-status">Auto-coded from encounter note</span>
+            <!-- Auto-coded CPT rows — type in sequentially -->
+            <div class="bill-card bill-codes-card">
+              <div class="bill-code-row" id="bcRow1">
+                <span class="bill-code-tag" id="bcTag1"></span>
+                <span class="bill-code-desc" id="bcDesc1"></span>
+                <span class="bill-code-amt" id="bcAmt1"></span>
               </div>
-
-              <div class="bill-codes">
-                <div class="bill-code-row">
-                  <span class="bill-code-row-left">
-                    <span class="bill-code-tag">99490</span>
-                    <span class="bill-code-desc">CCM (20+ min)</span>
-                  </span>
-                  <span class="bill-code-amt">$67.21</span>
-                </div>
-                <div class="bill-code-row">
-                  <span class="bill-code-row-left">
-                    <span class="bill-code-tag">G0511</span>
-                    <span class="bill-code-desc">RHC / FQHC visit</span>
-                  </span>
-                  <span class="bill-code-amt">$77.94</span>
-                </div>
-                <div class="bill-code-row">
-                  <span class="bill-code-row-left">
-                    <span class="bill-code-tag">99607</span>
-                    <span class="bill-code-desc">MTM add&rsquo;l</span>
-                  </span>
-                  <span class="bill-code-amt">$15.84</span>
-                </div>
+              <div class="bill-code-row" id="bcRow2">
+                <span class="bill-code-tag" id="bcTag2"></span>
+                <span class="bill-code-desc" id="bcDesc2"></span>
+                <span class="bill-code-amt" id="bcAmt2"></span>
               </div>
+            </div>
 
-              <div class="bill-total-row">
-                <span class="bill-total-label">Claim total</span>
-                <span class="bill-total-amt">$160.99</span>
-              </div>
+            <!-- Total — counts up live -->
+            <div class="bill-total">
+              <span class="bill-total-label">Claim total</span>
+              <span class="bill-total-amt" id="bcTotal">$0.00</span>
+            </div>
 
-              <div class="bill-foot">
-                <button class="bill-submit" type="button">Submit to payer <span>&rarr;</span></button>
-                <span class="bill-foot-meta">Eligibility verified &middot; modifiers applied</span>
+            <!-- Submit button + meta -->
+            <div class="bill-cta-wrap">
+              <button class="bill-submit" type="button" id="bcSubmit">
+                Submit to Payer
+              </button>
+            </div>
+
+            <!-- Paid confirmation popup -->
+            <div class="bill-popup" id="bcPopup" aria-hidden="true">
+              <div class="bill-popup__inner">
+                <div class="bill-popup__check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <div class="bill-popup__title">Claim Submitted</div>
+                <div class="bill-popup__amount" id="bcPopupAmt">Paid &middot; $107.00</div>
               </div>
-            </main>
+            </div>
           </div>
 
+          <div class="cursor" id="bcCursor">
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
+              <path d="M2 1.5l14.5 9.4-6.4 1.6-2.6 6.5L2 1.5z" fill="#0c1217" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            <span class="ripple" id="bcRipple"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -3758,135 +4464,124 @@
     <div class="mockup-pane" data-pane="documentation" role="tabpanel">
       <div class="mockup-host" id="mockupHost">
         <div class="frame-inner" id="frame">
-        <aside class="side">
-          <h2>Medication Review &ndash;<br>Ontario</h2>
-          <div class="scribe-card">
-            <div class="scribe-title">Clinical Assistant</div>
-            <div class="scribe-row">
-              <span class="timer" id="timer">00:00</span>
-              <span class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+
+          <div class="doc-minimal">
+            <!-- Top row: Scribe card (left) + chat transcript (right) -->
+            <div class="doc-top-row">
+              <div class="doc-scribe-wrap">
+                <div class="scribe-card">
+                  <div class="scribe-title">Clinical Assistant (AI Scribe)</div>
+                  <div class="scribe-wave-big">
+                    <span class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <div class="scribe-meta-row">
+                    <span class="timer" id="timer">00:00</span>
+                  </div>
+                  <button class="scribe-btn" id="scribeBtn" type="button">
+                    <span class="tri" id="tri"></span><span id="scribeLabel">Start Scribe</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="doc-trans-card">
+                <div class="doc-trans-label">Live transcription</div>
+                <div class="doc-chat" id="docChat">
+                  <div class="doc-chat-placeholder" id="transPh">Transcription will appear here&hellip;</div>
+                  <div class="doc-bubble doc-bubble--left" data-bubble="1">
+                    <span class="doc-bubble-speaker">Patient</span>
+                    <span class="doc-bubble-text">I'm on metformin and lisinopril. I forget the evening doses sometimes.</span>
+                  </div>
+                  <div class="doc-bubble doc-bubble--right" data-bubble="2">
+                    <span class="doc-bubble-speaker">Pharmacist</span>
+                    <span class="doc-bubble-text">How often? Any side effects with the lisinopril?</span>
+                  </div>
+                  <div class="doc-bubble doc-bubble--left" data-bubble="3">
+                    <span class="doc-bubble-speaker">Patient</span>
+                    <span class="doc-bubble-text">Twice a week or so. I get an occasional dry cough.</span>
+                  </div>
+                  <div class="doc-bubble doc-bubble--right" data-bubble="4">
+                    <span class="doc-bubble-speaker">Pharmacist</span>
+                    <span class="doc-bubble-text">Let's switch you to morning doses and set up a pillbox. I'll note the cough.</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="scribe-bar"><i id="barFill"></i></div>
-            <button class="scribe-btn" id="scribeBtn" type="button">
-              <span class="tri" id="tri"></span><span id="scribeLabel">Start Scribe</span>
-            </button>
-          </div>
-          <nav class="nav-list">
-            <a class="active" href="#">Contact Information</a>
-            <a href="#">Medical Information</a>
-            <a href="#">MedsCheck Patient Intake</a>
-            <a href="#">MedsCheck Patient's Conse&hellip;</a>
-            <a href="#">Clinical Need for Service &amp; S&hellip;</a>
-            <a href="#">Prescriptions</a>
-            <a href="#">OTCs &amp; NHPSs</a>
-            <a href="#">Patient Medical History &amp; All&hellip;</a>
-            <a href="#">Lifestyle</a>
-          </nav>
-        </aside>
 
-        <div class="top">
-          <button class="pill" id="populate" type="button">Populate fields</button>
-          <div class="spacer"></div>
-          <button class="pill ghost" type="button">Hide transcription and notes</button>
-          <span class="x"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-        </div>
-
-        <main class="main">
-          <h3 class="h-mo-2">Contact Information</h3>
-          <h4 class="h-mo-3">Personal Information</h4>
-          <div class="row">
-            <div class="field" id="f-first" data-target="Sophia"><span class="label">First Name *</span><span class="val"><span class="typed"></span></span></div>
-            <div class="field" id="f-last" data-target="Ramirez"><span class="label">Last Name *</span><span class="val"><span class="typed"></span></span></div>
-          </div>
-          <div class="row">
-            <div class="field" id="f-dob" data-target="1993-02-01" style="max-width:340px">
-              <span class="label">Date of Birth (YYYY-MM-DD) *</span>
-              <span class="val"><span class="typed"></span></span>
-              <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            <!-- Consult fields (Intake-style: floating label + big value) -->
+            <div class="doc-fields" id="docFields">
+              <div class="doc-field" id="f-reason">
+                <span class="doc-field-label">Reason for Visit</span>
+                <div class="doc-field-value"></div>
+              </div>
+              <div class="doc-field" id="f-assessment">
+                <span class="doc-field-label">Assessment</span>
+                <div class="doc-field-value"></div>
+              </div>
+              <div class="doc-field" id="f-plan">
+                <span class="doc-field-label">Plan</span>
+                <div class="doc-field-value"></div>
+              </div>
+              <div class="doc-field" id="f-followup">
+                <span class="doc-field-label">Follow-up</span>
+                <div class="doc-field-value"></div>
+              </div>
             </div>
           </div>
 
-          <h4 class="h-mo-3" style="margin-top:24px">Home address</h4>
-          <div class="row">
-            <div class="field" id="f-street" data-target="118 Queen Street West">
-              <span class="placeholder">Street address *</span>
-              <span class="val"><span class="typed"></span></span>
-              <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+          <!-- Consult completed confirmation popup -->
+          <div class="doc-popup" id="docPopup" aria-hidden="true">
+            <div class="doc-popup__inner">
+              <div class="doc-popup__check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div class="doc-popup__title">Consult completed</div>
             </div>
           </div>
-          <div class="row">
-            <div class="field" id="f-apt" data-target="Apt 402">
-              <span class="placeholder">Apartment, suite, etc.</span>
-              <span class="val"><span class="typed"></span></span>
-            </div>
-          </div>
-          <div class="row grid-3" style="display:grid">
-            <div class="field" id="f-city" data-target="Toronto"><span class="placeholder">City *</span><span class="val"><span class="typed"></span></span></div>
-            <div class="field" id="f-prov" data-target="Ontario">
-              <span class="placeholder">Province *</span>
-              <span class="val"><span class="typed"></span></span>
-              <span class="icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            </div>
-            <div class="field" id="f-post" data-target="M5H 2N2"><span class="placeholder">Postal Code *</span><span class="val"><span class="typed"></span></span></div>
-          </div>
 
-          <div class="footer-row"><button class="btn-cont" id="continue" type="button">Continue</button></div>
-        </main>
-
-        <aside class="rside">
-          <h4>Transcription</h4>
-          <div class="trans">
-            <div class="placeholder" id="transPh">Transcription text here&hellip;</div>
-            <div class="stream" id="stream" style="display:none"></div>
+          <div class="cursor" id="cursor">
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
+              <path d="M2 1.5l14.5 9.4-6.4 1.6-2.6 6.5L2 1.5z" fill="#0c1217" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            <span class="ripple" id="ripple"></span>
           </div>
-          <div class="notes-h">Notes</div>
-          <div class="note-field" id="noteField">
-            <span class="placeholder" id="notePh">Enter notes here</span>
-            <span id="noteVal" style="display:none"></span>
-          </div>
-          <button class="add" id="addBtn" type="button">Add</button>
-        </aside>
-
-        <div class="cursor" id="cursor">
-          <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
-            <path d="M2 1.5l14.5 9.4-6.4 1.6-2.6 6.5L2 1.5z" fill="#0c1217" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
-          </svg>
-          <span class="ripple" id="ripple"></span>
         </div>
       </div>
-    </div>
     </div>
     <!-- end pane: scribe -->
 
   </div>
 </div>
+</div>
+<!-- end .legacy-mockups -->
 
 <!-- ============= 1b. TRUSTED BY US PHARMACY LEADERS (indigo tile + logo marquee + KPI stats) ============= -->
 <section class="trust" aria-label="Customer trust">
   <div class="wrap">
     <div class="trust__top">
       <div class="trust__label">
-        <span class="eyebrow">Trusted by US pharmacy leaders</span>
-        <div class="stat-line">From single-store independents to top-100 chains &mdash; documenting clinical work and turning it into clean claims.</div>
+        <span class="eyebrow">Trusted across U.S. pharmacy</span>
+        <div class="stat-line">From single-store independents to top-100 chains.</div>
       </div>
     </div>
-    <div class="trust__logos" role="list" aria-label="Customer logos">
+    <div class="trust__logos" role="list" aria-label="Customer segments">
       <div class="trust__logos-track" data-marquee>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">CVS Health</span></div>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark trust__wordmark--script">Walgreens</span></div>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark trust__wordmark--bold">Walmart Pharmacy</span></div>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark trust__wordmark--bold">COSTCO</span></div>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Kroger</span></div>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark trust__wordmark--bold">Rite Aid</span></div>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Publix Pharmacy</span></div>
-        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark trust__wordmark--bold">Albertsons</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Top-100 retail chain</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Multi-state regional</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">9-store specialty group</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Independent network</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Rural pharmacy cooperative</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Hospital outpatient pharmacy</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Long-term care partner</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">State pharmacy association</span></div>
       </div>
     </div>
     <div class="trust__stats">
       <div class="trust__stat"><div class="num"><span data-count="4500" data-suffix="+">0</span></div><div class="label">Pharmacies</div></div>
       <div class="trust__stat"><div class="num"><span data-count="12" data-suffix="M+">0M+</span></div><div class="label">Patients</div></div>
       <div class="trust__stat"><div class="num"><span data-count="25" data-suffix="M+">0M+</span></div><div class="label">Clinical services</div></div>
-      <div class="trust__stat"><div class="num"><span data-count="25" data-suffix="">0</span></div><div class="label">States</div></div>
+      <div class="trust__stat"><div class="num"><span data-count="16" data-suffix="">0</span></div><div class="label">States</div></div>
     </div>
   </div>
 </section>
@@ -4430,56 +5125,29 @@
   window.addEventListener('load', fitMockup);
 
   function $(id){ return document.getElementById(id); }
-  var TOTAL = 16000;
 
+  /* Conceptual AI Clinical Assistant animation (rewrote 2026-05-26).
+     Flow: cursor → Start Scribe → wave + transcription → 4 consult
+     fields reveal one-by-one → brief hold → loop. */
+  /* Documentation timing tightened so popup fires before the 10s rotation
+     timer can cut the pane off, and so heroAdvance() can fire at ~9.7s
+     to hand off cleanly to Billing with full hold time on the popup. */
+  var TOTAL = 11000;
   var SEQ = {
-    cursorToScribe:   { at: 300,   dur: 900 },
-    clickScribe:      { at: 1200 },
-    recordWindow:     { from: 1300, to: 6800 },
-    cursorToPopulate: { at: 6800,  dur: 800 },
-    clickPopulate:    { at: 7600 },
-    fill: [
-      { id: 'f-first',  at: 7800 },
-      { id: 'f-last',   at: 8200 },
-      { id: 'f-dob',    at: 8600 },
-      { id: 'f-street', at: 9100 },
-      { id: 'f-apt',    at: 9550 },
-      { id: 'f-city',   at: 10000 },
-      { id: 'f-prov',   at: 10400 },
-      { id: 'f-post',   at: 10800 }
-    ],
-    cursorToNote:     { at: 11200, dur: 700 },
-    typeNote:         { from: 11900, to: 13200 },
-    cursorToContinue: { at: 13400, dur: 700 },
-    pulseContinue:    { at: 14100 }
+    cursorToScribe:  { at: 300,   dur: 900 },
+    clickScribe:     { at: 1200 },
+    recordWindow:    { from: 1300, to: 6500 },
+    bubbleRevealAt:  [1500, 2700, 3900, 5000],   /* 4 chat bubbles stagger */
+    fieldsRevealAt:  [6700, 7200, 7700, 8200],   /* 500ms staggered per field */
+    popupAt:         8800,                        /* "Consult completed" popup */
+    advanceAt:       9700                         /* heroAdvance → Billing */
   };
-
-  var TRANS = [
-    { t: "Patient: ", speaker: true },
-    { t: "Hi, I'm Sophia Ramirez. " },
-    { t: "My date of birth is February 1st, 1993. " },
-    { t: "I live at 118 Queen Street West, Apartment 402, in Toronto, Ontario — " },
-    { t: "postal code M5H 2N2. " },
-    { t: "\nPharmacist: ", speaker: true },
-    { t: "Thanks Sophia. I'll book a follow-up next month." }
+  var FIELDS = [
+    { id: 'f-reason',     text: 'Annual MTM review' },
+    { id: 'f-assessment', text: 'Adherence gap; ACE-I cough' },
+    { id: 'f-plan',       text: 'Switch to AM dosing; pillbox' },
+    { id: 'f-followup',   text: '30 days' }
   ];
-
-  /* Build the transcription DOM safely (no innerHTML for user-style strings) */
-  (function(){
-    var stream = $('stream');
-    if (!stream) return;
-    TRANS.forEach(function(tok){
-      var wrap = tok.speaker ? document.createElement('span') : stream;
-      if (tok.speaker) { wrap.className = 'speaker'; stream.appendChild(wrap); }
-      tok.t.split('').forEach(function(c){
-        var node = document.createElement('span');
-        if (c === '\n') { node.appendChild(document.createElement('br')); }
-        else if (c === ' ') { node.appendChild(document.createTextNode(' ')); }
-        else { node.textContent = c; }
-        wrap.appendChild(node);
-      });
-    });
-  })();
 
   function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
 
@@ -4509,37 +5177,52 @@
 
   var step = -1;
   var clicked = {};
-
-  function reset(){
+  var wasHidden = true;
+  var startTime = 0;
+  function reset(now){
     step = -1;
+    docAdvanced = false;
+    startTime = now || performance.now();
     clicked = {};
     $('scribeBtn').classList.remove('recording','pressed');
     $('scribeLabel').textContent = 'Start Scribe';
     $('wave').classList.remove('live');
-    $('barFill').style.width = '0%';
     $('timer').textContent = '00:00';
-    $('populate').classList.remove('flash');
-    $('continue').classList.remove('pulse');
-    $('stream').style.display = 'none';
-    $('transPh').style.display = 'block';
-    document.querySelectorAll('#stream span').forEach(function(s){ s.classList.remove('on'); });
-    SEQ.fill.forEach(function(it){
-      var f = $(it.id); if (!f) return;
-      f.classList.remove('lit','has-val','filled');
-      var typed = f.querySelector('.typed');
-      typed.textContent = '';
-      typed.classList.remove('caret');
+    var ph = $('transPh');
+    if (ph) ph.classList.remove('is-hidden');
+    document.querySelectorAll('.doc-bubble').forEach(function(b){ b.classList.remove('is-on'); });
+    FIELDS.forEach(function(f){
+      var fld = $(f.id); if (!fld) return;
+      fld.classList.remove('is-filling', 'is-filled', 'is-typing');
+      var v = fld.querySelector('.doc-field-value');
+      if (v) v.textContent = '';
     });
-    $('notePh').style.display = 'block';
-    $('noteVal').style.display = 'none';
-    $('noteVal').textContent = '';
-    $('noteField').classList.remove('lit');
+    var dp = $('docPopup');
+    if (dp) dp.classList.remove('is-visible');
   }
 
-  function tick(now){
-    var t = now % TOTAL;
+  /* Per-field typing duration; same window for every field so the rhythm
+     is consistent regardless of text length. */
+  var FIELD_TYPE_MS = 500;
+  var docAdvanced = false;
 
-    if (t < 200 && step !== 0) { reset(); step = 0; moveInstant(60, 540); }
+  function tick(now){
+    /* Skip while the pane is display:none (zero dimensions). When it
+       becomes visible, reset so the animation starts fresh, not mid-loop. */
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+
+    if (t < 200 && step !== 0) { reset(now); step = 0; moveInstant(60, 540); }
 
     if (t >= SEQ.cursorToScribe.at && step === 0) {
       moveCursor($('scribeBtn'), SEQ.cursorToScribe.dur); step = 1;
@@ -4556,68 +5239,63 @@
         $('wave').classList.add('live');
       }, 180);
     }
-    if (t >= SEQ.cursorToPopulate.at && step === 1) {
-      moveCursor($('populate'), SEQ.cursorToPopulate.dur); step = 2;
-    }
-    if (t >= SEQ.clickPopulate.at && !clicked.populate) {
-      clicked.populate = true;
-      ripple();
-      $('populate').classList.add('flash');
-    }
-    if (t >= SEQ.cursorToNote.at && step === 2) {
-      moveCursor($('addBtn'), SEQ.cursorToNote.dur); step = 3;
-    }
-    if (t >= SEQ.cursorToContinue.at && step === 3) {
-      moveCursor($('continue'), SEQ.cursorToContinue.dur); step = 4;
-    }
-    if (t >= SEQ.pulseContinue.at && !clicked.cont) {
-      clicked.cont = true;
-      ripple();
-      $('continue').classList.add('pulse');
-    }
 
     var rw = SEQ.recordWindow;
     if (t >= rw.from) {
       var e = Math.min(rw.to, t) - rw.from;
       $('timer').textContent = fmt(Math.min(22, Math.floor(e / 1000 * 4)));
-      $('barFill').style.width = (15 + Math.min(1, e / (rw.to - rw.from)) * 70) + '%';
-      var stream = $('stream');
-      var spans = stream.querySelectorAll('span:not(.speaker)');
-      if (stream.style.display !== 'block') {
-        stream.style.display = 'block';
-        $('transPh').style.display = 'none';
+      /* Hide placeholder once recording starts. */
+      var ph = $('transPh');
+      if (ph && !ph.classList.contains('is-hidden')) ph.classList.add('is-hidden');
+      /* Stagger-reveal chat bubbles at scheduled times. */
+      for (var bi = 0; bi < SEQ.bubbleRevealAt.length; bi++) {
+        if (t >= SEQ.bubbleRevealAt[bi]) {
+          var bub = document.querySelector('[data-bubble="' + (bi + 1) + '"]');
+          if (bub) bub.classList.add('is-on');
+        }
       }
-      var p = Math.min(1, (t - rw.from) / (rw.to - rw.from - 200));
-      var upto = Math.floor(p * spans.length);
-      for (var i = 0; i < spans.length; i++) {
-        if (i < upto) spans[i].classList.add('on');
+    }
+    /* Stop the wave + label once the record window ends. */
+    if (t >= rw.to && clicked.scribe && step === 1) {
+      $('scribeBtn').classList.remove('recording');
+      $('scribeLabel').textContent = 'Start Scribe';
+      $('wave').classList.remove('live');
+      step = 2;
+    }
+
+    /* Type each consult field character-by-character. Per-field window
+     is FIELD_TYPE_MS; before/after the window the field is empty/full. */
+    for (var fi = 0; fi < SEQ.fieldsRevealAt.length; fi++) {
+      var fStart = SEQ.fieldsRevealAt[fi];
+      var f      = FIELDS[fi];
+      if (!f) continue;
+      var fld    = $(f.id); if (!fld) continue;
+      var v      = fld.querySelector('.doc-field-value');
+      if (t < fStart) continue;
+      var elapsed = t - fStart;
+      var p       = Math.min(1, elapsed / FIELD_TYPE_MS);
+      var n       = Math.floor(p * f.text.length);
+      if (v) v.textContent = f.text.substring(0, n);
+      if (p < 1) {
+        fld.classList.add('is-typing');
+        fld.classList.remove('is-filled');
+      } else {
+        fld.classList.remove('is-typing');
+        fld.classList.add('is-filled');
       }
     }
 
-    SEQ.fill.forEach(function(item){
-      var f = $(item.id); if (!f) return;
-      var target = f.dataset.target;
-      var DUR = 380;
-      if (t >= item.at) {
-        f.classList.add('lit','has-val','filled');
-        var typed = f.querySelector('.typed');
-        var p = Math.min(1, (t - item.at) / DUR);
-        var n = Math.floor(p * target.length);
-        typed.textContent = target.slice(0, n);
-        if (p < 1) typed.classList.add('caret'); else typed.classList.remove('caret');
-        if (t - item.at > 700) f.classList.remove('lit');
-      }
-    });
+    /* "Consult completed" popup — pops after the 4th field finishes typing. */
+    if (t >= SEQ.popupAt) {
+      var dp2 = $('docPopup');
+      if (dp2 && !dp2.classList.contains('is-visible')) dp2.classList.add('is-visible');
+    }
 
-    if (t >= SEQ.typeNote.from) {
-      var txt = "Schedule MedsCheck follow-up in 4 weeks";
-      var pn = Math.min(1, (t - SEQ.typeNote.from) / (SEQ.typeNote.to - SEQ.typeNote.from));
-      var nn = Math.floor(pn * txt.length);
-      $('notePh').style.display = 'none';
-      var v = $('noteVal');
-      v.style.display = 'inline';
-      v.textContent = txt.slice(0, nn);
-      $('noteField').classList.add('lit');
+    /* heroAdvance → Billing once popup has held briefly. Prevents the
+       10s rotation timer from cutting off mid-popup. */
+    if (t >= SEQ.advanceAt && !docAdvanced) {
+      docAdvanced = true;
+      if (typeof window.heroAdvance === 'function') window.heroAdvance();
     }
 
     requestAnimationFrame(tick);
@@ -4796,6 +5474,8 @@
     slotHover:    { at: 2000 },
     clickSlot:    { at: 3300 },
     slotBooked:   { at: 3400 },
+    zoomIn:       { at: 3700 },     /* grid zooms in on the booked slot */
+    advanceToIntake: { at: 5200 },  /* click → intake transition trigger */
     reset:        { at: 7500 }
   };
 
@@ -4828,12 +5508,21 @@
   var wasHidden = true;
   var startTime = 0;
 
+  var advanced = false;
+
   function reset(now) {
     step = 0;
     clicked = {};
+    advanced = false;
+    window.__schedZoomed = false;
     startTime = now || performance.now();
     var slot = $('schTargetSlot');
     if (slot) slot.classList.remove('is-hover', 'is-booked');
+    var card = host.querySelector('.sched-grid-card');
+    if (card) card.classList.remove('is-zooming');
+    host.classList.remove('is-zooming');
+    var cur = $('schCursor');
+    if (cur) { cur.style.transition = ''; cur.style.opacity = '1'; }
     moveInstant(80, 580);
   }
 
@@ -4876,9 +5565,41 @@
       slot.classList.add('is-booked');
       step = 3;
     }
-    if (t >= SEQ.reset.at && step === 3) {
+    /* Zoom-in: pin transform-origin to the booked slot's center, then
+       add the .is-zooming class so the CSS transition kicks in. Cursor
+       fades as part of the same beat. */
+    if (t >= SEQ.zoomIn.at && step === 3 && !window.__schedZoomed) {
+      window.__schedZoomed = true;
+      var card = host.querySelector('.sched-grid-card');
       var s = $('schTargetSlot');
-      if (s) s.classList.remove('is-booked');
+      if (card && s) {
+        var cRect = card.getBoundingClientRect();
+        var sRect = s.getBoundingClientRect();
+        if (cRect.width > 0) {
+          var ox = ((sRect.left + sRect.width / 2) - cRect.left) / cRect.width * 100;
+          var oy = ((sRect.top + sRect.height / 2) - cRect.top) / cRect.height * 100;
+          card.style.setProperty('--zoom-x', ox + '%');
+          card.style.setProperty('--zoom-y', oy + '%');
+          card.classList.add('is-zooming');
+          host.classList.add('is-zooming');
+        }
+      }
+    }
+    /* Click → intake transition: ~1.5s after the zoom begins, ask the
+       rotation system to advance. The pane fades to Intake. */
+    if (t >= SEQ.advanceToIntake.at && step === 3 && !advanced) {
+      advanced = true;
+      if (typeof window.heroAdvance === 'function') {
+        window.heroAdvance();
+      }
+    }
+    if (t >= SEQ.reset.at && step === 3) {
+      var s2 = $('schTargetSlot');
+      if (s2) s2.classList.remove('is-booked');
+      var card2 = host.querySelector('.sched-grid-card');
+      if (card2) card2.classList.remove('is-zooming');
+      host.classList.remove('is-zooming');
+      window.__schedZoomed = false;
       step = 4;
     }
 
@@ -4913,65 +5634,73 @@
 
   function $(id) { return document.getElementById(id); }
 
+  /* Abstract placeholder data — conceptual intake, not a real patient.
+     "Sophia Ramirez" matches the patient name used in the AI Clinical
+     Assistant mockup for narrative continuity across the workflow. */
   var FIELDS = [
-    { id: 'fldFirstName', text: 'Jane' },
-    { id: 'fldLastName',  text: 'Doe' },
-    { id: 'fldDOB',       text: '1993-02-01' },
-    { id: 'fldAddress',   text: '311-38 Cameron Street' },
-    { id: 'fldCity',      text: 'Toronto' },
-    { id: 'fldProvince',  text: 'Ontario' },
-    { id: 'fldPostal',    text: 'M5T 0C3' }
+    { id: 'fldFirstName', text: 'Sophia Ramirez' },
+    { id: 'fldDOB',       text: '1985-04-12' },
+    { id: 'fldPhone',     text: '555-555-0100' }
   ];
-  var TOTAL_CHARS = FIELDS.reduce(function (a, f) { return a + f.text.length; }, 0);
+  /* Field-by-field reveal — replaced the slow char-by-char typing with a
+     punchier sequential animation where each field auto-fills + gets a
+     brief matcha highlight pulse, then transitions to the CTA pulse,
+     then heroAdvance() back to Scheduling. */
+  var TOTAL       = 7500;
+  var FIELD_REVEAL_AT = [500, 1100, 1700];   /* when each field auto-fills */
+  var CTA_PULSE_AT    = 2900;                /* CTA button pulses */
+  var ADVANCE_AT      = 4200;                /* heroAdvance back to Scheduling */
+  var RESET_AT        = 6800;                /* fade out before loop restart */
 
-  var TOTAL       = 14000;
-  var TYPE_START  = 900;
-  var TYPE_END    = 8700;
-  var CTA_START   = 9200;
-  var CTA_END     = 10100;
-  var CLICK       = 10300;
-  var ADVANCE     = 10500;
-  var RESET_VIS   = 12800;
-
-  var step = -1;
-  var typedIdx = -1;
-  var clicked = false;
+  var revealed = [];
+  var ctaPulsed = false;
+  var advanced = false;
   var wasHidden = true;
   var startTime = 0;
 
-  function setStepsBaseline() {
-    var steps = host.querySelectorAll('.intake-step');
-    var lines = host.querySelectorAll('.intake-step-line');
-    steps.forEach(function (s, i) {
-      s.classList.remove('is-done', 'is-active');
-      if (i === 0) s.classList.add('is-done');
-      if (i === 1) s.classList.add('is-active');
-    });
-    lines.forEach(function (l, i) {
-      l.classList.toggle('is-done', i === 0);
-    });
-    var vsteps = host.querySelectorAll('.intake-vstep');
-    vsteps.forEach(function (v, i) {
-      v.classList.remove('is-done', 'is-active');
-      if (i === 0) v.classList.add('is-active');
-    });
-  }
-
   function reset(now) {
-    step = 0;
-    typedIdx = -1;
-    clicked = false;
+    revealed = [false, false, false];
+    ctaPulsed = false;
+    advanced = false;
     startTime = now || performance.now();
     FIELDS.forEach(function (f) {
       var fld = $(f.id);
       if (!fld) return;
-      fld.classList.remove('is-typing');
+      fld.classList.remove('is-typing', 'is-filling', 'is-filled');
       var v = fld.querySelector('.intake-field-value');
       if (v) v.textContent = '';
     });
-    var prog = $('intakeProgress');
-    if (prog) prog.style.width = '0%';
-    setStepsBaseline();
+    var cta = $('intakeCta');
+    if (cta) cta.classList.remove('is-pulsing');
+    var popup = $('intakePopup');
+    if (popup) popup.classList.remove('is-visible');
+  }
+
+  function fillField(idx) {
+    var f = FIELDS[idx];
+    if (!f) return;
+    var fld = $(f.id);
+    if (!fld) return;
+    var v = fld.querySelector('.intake-field-value');
+    if (v) v.textContent = f.text;
+    fld.classList.add('is-filling');
+    /* Filling glow lasts 600ms, then settles to filled state. */
+    setTimeout(function () {
+      fld.classList.remove('is-filling');
+      fld.classList.add('is-filled');
+    }, 600);
+  }
+
+  function pulseCta() {
+    var cta = $('intakeCta');
+    if (!cta) return;
+    cta.classList.add('is-pulsing');
+    /* Pop the confirmation popup ~250ms after the CTA pulse begins so
+       the eye registers the click first, then the result. */
+    setTimeout(function () {
+      var popup = $('intakePopup');
+      if (popup) popup.classList.add('is-visible');
+    }, 250);
   }
 
   function tick(now) {
@@ -4987,72 +5716,26 @@
     }
     var t = (now - startTime) % TOTAL;
     if (t < 0) t = 0;
-    if (t < 200 && step !== 0) reset(now);
+    if (t < 100 && (revealed[0] || revealed[1] || revealed[2])) reset(now);
 
-    if (t >= TYPE_START && t < TYPE_END) {
-      var pct = (t - TYPE_START) / (TYPE_END - TYPE_START);
-      if (pct < 0) pct = 0;
-      if (pct > 1) pct = 1;
-      var targetChars = Math.floor(pct * TOTAL_CHARS);
-
-      var consumed = 0;
-      var currentTypingIdx = -1;
-      for (var i = 0; i < FIELDS.length; i++) {
-        var f = FIELDS[i];
-        var fld = $(f.id);
-        if (!fld) continue;
-        var v = fld.querySelector('.intake-field-value');
-        var avail = targetChars - consumed;
-        if (avail <= 0) {
-          if (v) v.textContent = '';
-          fld.classList.remove('is-typing');
-          consumed += 0;
-          continue;
-        }
-        if (avail >= f.text.length) {
-          if (v) v.textContent = f.text;
-          fld.classList.remove('is-typing');
-          consumed += f.text.length;
-        } else {
-          if (v) v.textContent = f.text.substring(0, avail);
-          fld.classList.add('is-typing');
-          currentTypingIdx = i;
-          consumed = targetChars;
-          break;
-        }
+    /* Reveal each field once when its scheduled time passes. */
+    for (var i = 0; i < FIELD_REVEAL_AT.length; i++) {
+      if (t >= FIELD_REVEAL_AT[i] && !revealed[i]) {
+        revealed[i] = true;
+        fillField(i);
       }
-      var prog = $('intakeProgress');
-      if (prog) prog.style.width = (pct * 100) + '%';
-    } else if (t >= TYPE_END) {
-      var allDone = $('intakeProgress');
-      if (allDone) allDone.style.width = '100%';
-      FIELDS.forEach(function (f) {
-        var fld = $(f.id);
-        if (fld) fld.classList.remove('is-typing');
-        var v = fld && fld.querySelector('.intake-field-value');
-        if (v && v.textContent !== f.text) v.textContent = f.text;
-      });
     }
 
-    if (t >= CTA_START && step === 0) {
-      step = 1;
+    if (t >= CTA_PULSE_AT && !ctaPulsed) {
+      ctaPulsed = true;
+      pulseCta();
     }
-    if (t >= CLICK && !clicked) {
-      clicked = true;
-    }
-    if (t >= ADVANCE && step === 1) {
-      var steps = host.querySelectorAll('.intake-step');
-      var lines = host.querySelectorAll('.intake-step-line');
-      if (steps[1]) { steps[1].classList.remove('is-active'); steps[1].classList.add('is-done'); }
-      if (lines[1]) { lines[1].classList.add('is-done'); }
-      if (steps[2]) { steps[2].classList.add('is-active'); }
-      var vsteps = host.querySelectorAll('.intake-vstep');
-      if (vsteps[0]) { vsteps[0].classList.remove('is-active'); vsteps[0].classList.add('is-done'); }
-      if (vsteps[1]) { vsteps[1].classList.add('is-active'); }
-      step = 2;
-    }
-    if (t >= RESET_VIS && step === 2) {
-      step = 3;
+
+    if (t >= ADVANCE_AT && !advanced) {
+      advanced = true;
+      if (typeof window.heroAdvance === 'function') {
+        window.heroAdvance();
+      }
     }
 
     requestAnimationFrame(tick);
@@ -5061,14 +5744,20 @@
 })();
 
 /* ============================================================
-   Medical Billing pane — fits the 1192x656 frame to the host.
-   No motion graphic (static dashboard).
+   Medical Billing — conceptual motion graphic. Sequence:
+   1. Code rows fade/slide in
+   2. Each code row types its CPT tag + description + amount
+   3. Total counts up from $0 to claim total
+   4. Cursor moves to Submit button, clicks (ripple + pulse)
+   5. "Paid" popup appears with the deposited amount
+   6. Hold, then loop
    ============================================================ */
 (function () {
   'use strict';
   var host = document.getElementById('billHost');
   var inner = document.getElementById('billFrame');
   if (!host || !inner) return;
+
   function fit() {
     var r = host.getBoundingClientRect();
     var s = Math.min(r.width / 1192, r.height / 656);
@@ -5077,6 +5766,189 @@
   window.addEventListener('resize', fit);
   requestAnimationFrame(function () { requestAnimationFrame(fit); });
   window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+
+  var TOTAL = 11000;
+  var SEQ = {
+    row1At:          800,    /* row 1 reveal + matcha glow + value-pop */
+    row2At:          1600,   /* row 2 reveal */
+    totalCountStart: 2500,
+    totalCountEnd:   3300,
+    cursorToSubmit:  { at: 3700, dur: 900 },
+    clickSubmit:     { at: 4700 },
+    popupAt:         5000,
+    advanceAt:       9500,   /* heroAdvance → Scheduling (next loop) */
+    holdUntilLoop:   10500
+  };
+  var REVEAL_GLOW_MS = 600;
+  var billAdvanced = false;
+
+  var ROW_DATA = [
+    { row: 'bcRow1', tag: '99605', desc: 'MTM Initial · 15 min', amt: '$63.00' },
+    { row: 'bcRow2', tag: '99606', desc: 'MTM Additional · 15 min', amt: '$44.00' }
+  ];
+  var CLAIM_TOTAL = 107;
+  var rowsRevealed = [false, false];
+
+  function moveCursor(target, dur) {
+    dur = dur || 800;
+    var cur = $('bcCursor');
+    var fr = inner.getBoundingClientRect();
+    var r = target.getBoundingClientRect();
+    var m = new DOMMatrixReadOnly(getComputedStyle(inner).transform);
+    var sx = m.a, sy = m.d;
+    var fx = (r.left - fr.left) / sx + r.width / sx / 2 - 6;
+    var fy = (r.top - fr.top) / sy + r.height / sy / 2 - 4;
+    cur.style.transition = 'transform ' + dur + 'ms cubic-bezier(.5,.05,.2,1)';
+    cur.style.transform = 'translate(' + fx + 'px,' + fy + 'px)';
+  }
+  function moveInstant(x, y) {
+    var c = $('bcCursor');
+    c.style.transition = 'none';
+    c.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+  function ripple() {
+    var r = $('bcRipple');
+    r.classList.remove('go');
+    void r.offsetWidth;
+    r.classList.add('go');
+  }
+
+  var step = -1;
+  var clicked = {};
+  var wasHidden = true;
+  var startTime = 0;
+
+  function reset(now) {
+    step = 0;
+    clicked = {};
+    rowsRevealed = [false, false];
+    billAdvanced = false;
+    startTime = now || performance.now();
+    ROW_DATA.forEach(function (r, idx) {
+      var row = $(r.row);
+      if (row) row.classList.remove('is-visible', 'is-filling');
+      var n = idx + 1;
+      var tag = $('bcTag' + n);  if (tag)  tag.textContent  = '';
+      var desc = $('bcDesc' + n); if (desc) desc.textContent = '';
+      var amt = $('bcAmt' + n);  if (amt)  amt.textContent  = '';
+    });
+    var total = $('bcTotal'); if (total) total.textContent = '$0.00';
+    var sub = $('bcSubmit');  if (sub)  sub.classList.remove('is-pulsing');
+    var pop = $('bcPopup');   if (pop)  pop.classList.remove('is-visible');
+    /* Reset Get Paid workflow stage + progress arrow when billing loops. */
+    var paidStage = document.querySelector('.hw-stage[data-pane-key="paid"]');
+    if (paidStage) paidStage.classList.remove('is-active', 'is-done');
+    var paidArrow = document.querySelector('.hw-arrow[data-arrow="paid"]');
+    if (paidArrow) paidArrow.style.setProperty('--bill-progress', '0%');
+    moveInstant(40, 100);
+  }
+
+  /* Intake-style reveal — set text instantly, add .is-filling glow, then
+     remove it after the value-pop animation completes. */
+  function revealRow(idx) {
+    var data = ROW_DATA[idx];
+    var n = idx + 1;
+    var row = $(data.row);
+    if (!row) return;
+    $('bcTag'  + n).textContent = data.tag;
+    $('bcDesc' + n).textContent = data.desc;
+    $('bcAmt'  + n).textContent = data.amt;
+    row.classList.add('is-visible', 'is-filling');
+    setTimeout(function () {
+      row.classList.remove('is-filling');
+    }, REVEAL_GLOW_MS);
+  }
+
+  function tick(now) {
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+    if (t < 100 && step !== 0) reset(now);
+
+    /* Reveal each row once at its scheduled time (Intake-style: instant
+       text fill + matcha glow + value-pop animation). */
+    if (t >= SEQ.row1At && !rowsRevealed[0]) {
+      rowsRevealed[0] = true;
+      revealRow(0);
+    }
+    if (t >= SEQ.row2At && !rowsRevealed[1]) {
+      rowsRevealed[1] = true;
+      revealRow(1);
+    }
+
+    /* Total counts up */
+    var totalEl = $('bcTotal');
+    if (totalEl) {
+      if (t < SEQ.totalCountStart) {
+        totalEl.textContent = '$0.00';
+      } else if (t >= SEQ.totalCountEnd) {
+        totalEl.textContent = '$' + CLAIM_TOTAL.toFixed(2);
+      } else {
+        var tp = (t - SEQ.totalCountStart) / (SEQ.totalCountEnd - SEQ.totalCountStart);
+        var v = CLAIM_TOTAL * tp;
+        totalEl.textContent = '$' + v.toFixed(2);
+      }
+    }
+
+    /* Cursor → Submit button */
+    if (t >= SEQ.cursorToSubmit.at && step === 0) {
+      var sub = $('bcSubmit');
+      if (sub) moveCursor(sub, SEQ.cursorToSubmit.dur);
+      step = 1;
+    }
+    /* Click + pulse */
+    if (t >= SEQ.clickSubmit.at && !clicked.submit) {
+      clicked.submit = true;
+      ripple();
+      var sub2 = $('bcSubmit');
+      if (sub2) sub2.classList.add('is-pulsing');
+    }
+    /* Workflow indicator — progress bar between Medical Billing and
+       Get Paid fills continuously from 0 → 100% during the billing
+       animation. Reaches 100% at popupAt. */
+    var paidArrow = document.querySelector('.hw-arrow[data-arrow="paid"]');
+    if (paidArrow) {
+      var progress = Math.min(100, (t / SEQ.popupAt) * 100);
+      paidArrow.style.setProperty('--bill-progress', progress + '%');
+    }
+
+    /* Paid popup + Get Paid stage activation */
+    if (t >= SEQ.popupAt && !clicked.popup) {
+      clicked.popup = true;
+      var pop = $('bcPopup');
+      if (pop) pop.classList.add('is-visible');
+      /* Light up the Get Paid stage with check-pop animation. */
+      var paidStage = document.querySelector('.hw-stage[data-pane-key="paid"]');
+      if (paidStage) paidStage.classList.add('is-active');
+      /* Mark Medical Billing as done too (since we've moved past it). */
+      var billingStage = document.querySelector('.hw-stage[data-pane-key="billing"]');
+      if (billingStage) {
+        billingStage.classList.remove('is-active');
+        billingStage.classList.add('is-done');
+      }
+    }
+
+    /* heroAdvance → Scheduling so the next cycle gets a fresh 10s window
+       and the rotation timer doesn't fire mid-popup. */
+    if (t >= SEQ.advanceAt && !billAdvanced) {
+      billAdvanced = true;
+      if (typeof window.heroAdvance === 'function') window.heroAdvance();
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();
 
 /* ============================================================
@@ -5164,15 +6036,21 @@
    ============================================================ */
 (function(){
   'use strict';
-  var tabs = document.querySelectorAll('.tab[data-tab]');
+  // Full 4-pane rotation (Messaging excluded entirely — not part of the
+  // schedule → intake → consult → billing → paid workflow narrative).
+  var tabs = document.querySelectorAll(
+    '.tab[data-tab="scheduling"], .tab[data-tab="intake"], ' +
+    '.tab[data-tab="documentation"], .tab[data-tab="billing"]'
+  );
   var panes = document.querySelectorAll('.mockup-pane[data-pane]');
 
-  function activate(key){
+  function doSwap(key){
     tabs.forEach(function(t){
       var on = t.getAttribute('data-tab') === key;
       t.classList.toggle('tab--active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
     });
+
     panes.forEach(function(p){
       p.classList.toggle('mockup-pane--active', p.getAttribute('data-pane') === key);
     });
@@ -5181,11 +6059,11 @@
        While display:none, the host had zero dimensions and the inner
        1192×656 frame's scale collapsed. */
     function refit(hostId, innerId) {
-      var host = document.getElementById(hostId);
+      var hostEl = document.getElementById(hostId);
       var inner = document.getElementById(innerId);
-      if (!host || !inner) return;
+      if (!hostEl || !inner) return;
       requestAnimationFrame(function(){
-        var r = host.getBoundingClientRect();
+        var r = hostEl.getBoundingClientRect();
         var s = Math.min(r.width / 1192, r.height / 656);
         if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
       });
@@ -5195,6 +6073,74 @@
     if (key === 'intake')        refit('intakeHost', 'intakeFrame');
     if (key === 'messaging')     refit('msgHost', 'msgFrame');
     if (key === 'billing')       refit('billHost', 'billFrame');
+
+    /* Global workflow indicator — mark stages as done/active/pending
+       based on the active pane's position in the workflow. The 5th
+       stage "Get Paid" doesn't have a pane; its active state is set
+       by the Billing animation when the popup fires. activate() here
+       resets it whenever any pane (other than billing) takes focus. */
+    var WF_ORDER = ['scheduling', 'intake', 'documentation', 'billing'];
+    var activeIdx = WF_ORDER.indexOf(key);
+    if (activeIdx === -1) return;
+    var stages = document.querySelectorAll('.hw-stage');
+    var arrows = document.querySelectorAll('.hw-arrow');
+    stages.forEach(function(stage, i){
+      /* Skip the Get Paid stage — its state is managed by the billing
+         animation, not by which pane is active. */
+      if (stage.getAttribute('data-pane-key') === 'paid') {
+        /* When leaving billing for any earlier pane, clear paid state. */
+        if (key !== 'billing') stage.classList.remove('is-active', 'is-done');
+        return;
+      }
+      stage.classList.toggle('is-active', i === activeIdx);
+      stage.classList.toggle('is-done',   i <  activeIdx);
+    });
+    arrows.forEach(function(arrow, i){
+      /* The last arrow (data-arrow="paid") gets its fill from billing's
+         tick(). activate() just resets it when leaving billing. */
+      if (arrow.getAttribute('data-arrow') === 'paid') {
+        if (key !== 'billing') arrow.style.setProperty('--bill-progress', '0%');
+        return;
+      }
+      arrow.classList.toggle('is-traveled', i < activeIdx);
+    });
+  }
+
+  /* Directional push transition. Determine workflow direction from the
+     pane order, set [data-push-direction] on .visual-wrap so CSS picks
+     the right keyframes, mark the outgoing pane as .is-leaving (becomes
+     an absolute overlay that slides off + scales down), then doSwap()
+     activates the new pane which slides in from the opposite side. */
+  var PUSH_MS = 650;
+  var WF_ORDER = ['scheduling', 'intake', 'documentation', 'billing'];
+  function activate(key) {
+    var visualWrap = document.querySelector('.visual-wrap');
+    var prevActive = document.querySelector('.mockup-pane--active');
+    var prevKey = prevActive ? prevActive.getAttribute('data-pane') : null;
+
+    if (!prevActive || prevKey === key) {
+      doSwap(key);
+      return;
+    }
+
+    /* Set direction so CSS uses the right in/out keyframes. */
+    var fromIdx = WF_ORDER.indexOf(prevKey);
+    var toIdx   = WF_ORDER.indexOf(key);
+    var direction = (toIdx > fromIdx || toIdx === -1) ? 'forward' : 'backward';
+    if (visualWrap) visualWrap.setAttribute('data-push-direction', direction);
+
+    /* Clear any stale .is-leaving (rapid back-to-back transitions). */
+    panes.forEach(function(p){ p.classList.remove('is-leaving'); });
+
+    /* Mark outgoing pane as leaving BEFORE doSwap so it keeps display:block
+       via the .is-leaving rule even after losing .mockup-pane--active. */
+    prevActive.classList.add('is-leaving');
+
+    doSwap(key);
+
+    setTimeout(function(){
+      prevActive.classList.remove('is-leaving');
+    }, PUSH_MS);
   }
 
   /* ----------------------------------------------------------
@@ -5204,6 +6150,13 @@
      - Pauses when the browser tab is hidden.
      - Stops permanently once the user clicks a tab.
      ---------------------------------------------------------- */
+  /* Rotation unlocked 2026-05-26 — full 4-pane cycle:
+     Scheduling → Patient Intake → Consult Complete (Documentation) →
+     Medical Billing → back to Scheduling. Get Paid is shown as the
+     5th workflow stage but doesn't have its own pane (it's the final
+     state inside the Billing animation). */
+  var ROTATE_ENABLED = true;
+
   var ROTATE_MS    = 10000;
   var rotateTimer  = null;
   var userTouched  = false;
@@ -5232,6 +6185,7 @@
     }
   }
   function startRotation() {
+    if (!ROTATE_ENABLED) return;
     if (rotateTimer || userTouched) return;
     if (tabBar) tabBar.classList.add('is-rotating');
     rotateTimer = setInterval(advance, ROTATE_MS);
@@ -5241,14 +6195,33 @@
     if (tabBar) tabBar.classList.remove('is-rotating');
   }
 
-  if (tabBar && 'IntersectionObserver' in window) {
+  /* Public hook: per-pane animations can call this to advance to the next
+     pane "early" (e.g. Scheduling fires this when the user-cursor clicks
+     a slot, transitioning to Intake immediately rather than waiting for
+     the 10s rotation tick). Resets the rotation timer so the new pane
+     gets its full 10s window. */
+  window.heroAdvance = function () {
+    if (!ROTATE_ENABLED) return;
+    if (userTouched || !inView) return;
+    if (rotateTimer) { clearInterval(rotateTimer); rotateTimer = null; }
+    advance();
+    if (inView && !userTouched) {
+      rotateTimer = setInterval(advance, ROTATE_MS);
+    }
+  };
+
+  /* Observe the visible mockup frame (tab bar is now display:none, so
+     observing it would never report intersecting). Falls back to the
+     tab bar if visual-wrap isn't present. */
+  var observerTarget = document.querySelector('.visual-wrap') || tabBar;
+  if (observerTarget && 'IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         inView = e.isIntersecting;
         if (inView && !userTouched) startRotation();
         else stopRotation();
       });
-    }, { threshold: 0.3 }).observe(tabBar);
+    }, { threshold: 0.3 }).observe(observerTarget);
   } else {
     inView = true;
     startRotation();
