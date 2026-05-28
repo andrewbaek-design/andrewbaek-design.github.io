@@ -17,7 +17,7 @@ page.title: MedMe — United States Homepage Mockup
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=38">
+<link rel="stylesheet" href="/assets/brand.css?v=41">
 
 <script type="application/ld+json">
 {
@@ -1880,25 +1880,37 @@ page.title: MedMe — United States Homepage Mockup
      scaling down to 0.95. Incoming pane enters from the opposite side.
      Direction toggles via [data-push-direction] on .visual-wrap. */
   .visual-frame { overflow: hidden; }
-  /* Softer pane transition — shorter slide distance, gentler quint
-     ease, slightly longer duration. Outgoing pane fades from underneath
-     instead of being an opaque overlay so the cross-fade reads as one
-     continuous motion. */
+  /* ============================================================
+     Pane transition — gentle crossfade with a small directional
+     rise. Earlier versions used a 36px horizontal slide + scale
+     on the outgoing pane, which read as "jumpy" because the two
+     directions of motion (in/out) fought each other and the
+     refit() resize inside the new pane could pop mid-animation.
+     New behavior:
+       - Same duration & easing for in/out (no mismatch)
+       - Pure vertical drift of 10px (subtle, like Linear/Stripe)
+       - No outgoing scale — feels more like a soft swap
+       - Outgoing pane fades while new pane rises into place
+     The horizontal direction (data-push-direction) still nudges
+     the rise slightly left/right (≤4px) so forward vs. backward
+     navigation reads, without the heavy slide.
+     ============================================================ */
   .mockup-pane--active {
-    animation: pane-push-in-forward 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: pane-fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  [data-push-direction="backward"] .mockup-pane--active {
-    animation: pane-push-in-backward 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  [data-push-direction="forward"]  .mockup-pane--active { animation-name: pane-fade-in-forward; }
+  [data-push-direction="backward"] .mockup-pane--active { animation-name: pane-fade-in-backward; }
+  @keyframes pane-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes pane-push-in-forward {
-    0%   { opacity: 0; transform: translateX(36px); }
-    60%  { opacity: 1; }
-    100% { opacity: 1; transform: translateX(0); }
+  @keyframes pane-fade-in-forward {
+    from { opacity: 0; transform: translate(4px, 10px); }
+    to   { opacity: 1; transform: translate(0, 0); }
   }
-  @keyframes pane-push-in-backward {
-    0%   { opacity: 0; transform: translateX(-36px); }
-    60%  { opacity: 1; }
-    100% { opacity: 1; transform: translateX(0); }
+  @keyframes pane-fade-in-backward {
+    from { opacity: 0; transform: translate(-4px, 10px); }
+    to   { opacity: 1; transform: translate(0, 0); }
   }
   .mockup-pane.is-leaving {
     display: block;
@@ -1906,18 +1918,11 @@ page.title: MedMe — United States Homepage Mockup
     top: 0; left: 0; right: 0;
     z-index: 1;
     pointer-events: none;
-    animation: pane-push-out-forward 0.75s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+    animation: pane-fade-out 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-  [data-push-direction="backward"] .mockup-pane.is-leaving {
-    animation: pane-push-out-backward 0.75s cubic-bezier(0.4, 0, 0.6, 1) forwards;
-  }
-  @keyframes pane-push-out-forward {
-    0%   { opacity: 1; transform: translateX(0) scale(1); }
-    100% { opacity: 0; transform: translateX(-28px) scale(0.98); }
-  }
-  @keyframes pane-push-out-backward {
-    0%   { opacity: 1; transform: translateX(0) scale(1); }
-    100% { opacity: 0; transform: translateX(28px) scale(0.98); }
+  @keyframes pane-fade-out {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-6px); }
   }
   @media (prefers-reduced-motion: reduce) {
     .mockup-pane--active { animation: none; }
@@ -5634,17 +5639,22 @@ page.title: MedMe — United States Homepage Mockup
     });
 
     /* Re-fit motion-graphic mockups when their pane becomes active.
-       While display:none, the host had zero dimensions and the inner
-       1192×656 frame's scale collapsed. */
+       While display:none the host had zero dimensions and the inner
+       1192×656 frame's scale collapsed. We run the resize SYNCHRONOUSLY
+       on the same frame as the class toggle so the new pane lands
+       pre-scaled and the user never sees a mid-animation pop. The
+       second rAF is a safety net for layout that hasn't settled. */
     function refit(hostId, innerId) {
       var hostEl = document.getElementById(hostId);
       var inner = document.getElementById(innerId);
       if (!hostEl || !inner) return;
-      requestAnimationFrame(function(){
+      function apply() {
         var r = hostEl.getBoundingClientRect();
         var s = Math.min(r.width / 1192, r.height / 656);
         if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
-      });
+      }
+      apply();
+      requestAnimationFrame(apply);
     }
     if (key === 'documentation') refit('mockupHost', 'frame');
     if (key === 'scheduling')    refit('schedHost', 'schedFrame');
@@ -5689,6 +5699,9 @@ page.title: MedMe — United States Homepage Mockup
      the right keyframes, mark the outgoing pane as .is-leaving (becomes
      an absolute overlay that slides off + scales down), then doSwap()
      activates the new pane which slides in from the opposite side. */
+  /* Must match the longer of the two pane animations (.6s in / .6s out).
+     +50ms safety margin guarantees the .is-leaving overlay is removed
+     after its fade-out keyframe has fully painted. */
   var PUSH_MS = 650;
   var WF_ORDER = ['scheduling', 'intake', 'documentation', 'billing'];
   function activate(key) {

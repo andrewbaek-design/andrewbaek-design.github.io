@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=38">
+<link rel="stylesheet" href="/assets/brand.css?v=41">
 
 <script type="application/ld+json">
 {
@@ -1876,25 +1876,37 @@
      scaling down to 0.95. Incoming pane enters from the opposite side.
      Direction toggles via [data-push-direction] on .visual-wrap. */
   .visual-frame { overflow: hidden; }
-  /* Softer pane transition — shorter slide distance, gentler quint
-     ease, slightly longer duration. Outgoing pane fades from underneath
-     instead of being an opaque overlay so the cross-fade reads as one
-     continuous motion. */
+  /* ============================================================
+     Pane transition — gentle crossfade with a small directional
+     rise. Earlier versions used a 36px horizontal slide + scale
+     on the outgoing pane, which read as "jumpy" because the two
+     directions of motion (in/out) fought each other and the
+     refit() resize inside the new pane could pop mid-animation.
+     New behavior:
+       - Same duration & easing for in/out (no mismatch)
+       - Pure vertical drift of 10px (subtle, like Linear/Stripe)
+       - No outgoing scale — feels more like a soft swap
+       - Outgoing pane fades while new pane rises into place
+     The horizontal direction (data-push-direction) still nudges
+     the rise slightly left/right (≤4px) so forward vs. backward
+     navigation reads, without the heavy slide.
+     ============================================================ */
   .mockup-pane--active {
-    animation: pane-push-in-forward 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: pane-fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  [data-push-direction="backward"] .mockup-pane--active {
-    animation: pane-push-in-backward 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  [data-push-direction="forward"]  .mockup-pane--active { animation-name: pane-fade-in-forward; }
+  [data-push-direction="backward"] .mockup-pane--active { animation-name: pane-fade-in-backward; }
+  @keyframes pane-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-  @keyframes pane-push-in-forward {
-    0%   { opacity: 0; transform: translateX(36px); }
-    60%  { opacity: 1; }
-    100% { opacity: 1; transform: translateX(0); }
+  @keyframes pane-fade-in-forward {
+    from { opacity: 0; transform: translate(4px, 10px); }
+    to   { opacity: 1; transform: translate(0, 0); }
   }
-  @keyframes pane-push-in-backward {
-    0%   { opacity: 0; transform: translateX(-36px); }
-    60%  { opacity: 1; }
-    100% { opacity: 1; transform: translateX(0); }
+  @keyframes pane-fade-in-backward {
+    from { opacity: 0; transform: translate(-4px, 10px); }
+    to   { opacity: 1; transform: translate(0, 0); }
   }
   .mockup-pane.is-leaving {
     display: block;
@@ -1902,18 +1914,11 @@
     top: 0; left: 0; right: 0;
     z-index: 1;
     pointer-events: none;
-    animation: pane-push-out-forward 0.75s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+    animation: pane-fade-out 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-  [data-push-direction="backward"] .mockup-pane.is-leaving {
-    animation: pane-push-out-backward 0.75s cubic-bezier(0.4, 0, 0.6, 1) forwards;
-  }
-  @keyframes pane-push-out-forward {
-    0%   { opacity: 1; transform: translateX(0) scale(1); }
-    100% { opacity: 0; transform: translateX(-28px) scale(0.98); }
-  }
-  @keyframes pane-push-out-backward {
-    0%   { opacity: 1; transform: translateX(0) scale(1); }
-    100% { opacity: 0; transform: translateX(28px) scale(0.98); }
+  @keyframes pane-fade-out {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-6px); }
   }
   @media (prefers-reduced-motion: reduce) {
     .mockup-pane--active { animation: none; }
@@ -3764,20 +3769,20 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Pharmacy</button>
           <div class="nav__dropdown" role="menu">
             <a href="/us/pharmacy/independents" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◇</span>
-              <span><span class="nav__dropdown-title">Independents</span><span class="nav__dropdown-desc">Single-store and small-group operators</span></span>
+              <span class="nav__dropdown-title">Independents</span>
+              <span class="nav__dropdown-desc">Single-store and small-group operators</span>
             </a>
             <a href="/us/pharmacy/enterprises" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◆</span>
-              <span><span class="nav__dropdown-title">Enterprises</span><span class="nav__dropdown-desc">Regional chains, top-100, health systems</span></span>
+              <span class="nav__dropdown-title">Enterprises</span>
+              <span class="nav__dropdown-desc">Regional chains, top-100, health systems</span>
             </a>
             <a href="/us/pharmacy/networks" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">⌬</span>
-              <span><span class="nav__dropdown-title">Networks</span><span class="nav__dropdown-desc">Banners, Co-ops &amp; PSAOs</span></span>
+              <span class="nav__dropdown-title">Networks</span>
+              <span class="nav__dropdown-desc">Banners, Co-ops &amp; PSAOs</span>
             </a>
             <a href="/us/pharmacy/specialty" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◈</span>
-              <span><span class="nav__dropdown-title">Specialty</span><span class="nav__dropdown-desc">Specialty pharmacies and payvider partners</span></span>
+              <span class="nav__dropdown-title">Specialty</span>
+              <span class="nav__dropdown-desc">Specialty pharmacies and payvider partners</span>
             </a>
           </div>
         </li>
@@ -3787,89 +3792,48 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Platform</button>
           <div class="nav__dropdown nav__dropdown--mega" role="menu">
             <div class="nav__dropdown-group">
-              <h4 class="nav__dropdown-group-label">Pharmacy EHR</h4>
-              <a href="/us/platform" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⊟</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Pharmacy EHR</span>
-                  <span class="nav__dropdown-tile-desc">Platform overview</span>
-                </span>
-              </a>
+              <a href="/us/platform" class="nav__dropdown-group-label" role="menuitem">Pharmacy EHR</a>
               <a href="/us/platform/scheduling-queuing" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">↻</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Scheduling &amp; Queuing</span>
-                  <span class="nav__dropdown-tile-desc">Online booking + eligibility + intake</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Scheduling &amp; Queueing</span>
+                <span class="nav__dropdown-tile-desc">Multi-calendar booking with patient flow visibility</span>
               </a>
               <a href="/us/platform/patient-intake" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">✎</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Patient Intake Form</span>
-                  <span class="nav__dropdown-tile-desc">Pre-visit data capture, prefilled</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Patient Intake Forms</span>
+                <span class="nav__dropdown-tile-desc">Info, consent, and eligibility before the consult</span>
               </a>
               <a href="/us/platform/assisted-documentation" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⌘</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Assisted Documentation</span>
-                  <span class="nav__dropdown-tile-desc">SOAP, care plans, transitions-of-care</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Assisted Documentation</span>
+                <span class="nav__dropdown-tile-desc">Finish notes during the visit, not after</span>
               </a>
               <a href="/us/platform/messaging-follow-ups" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">✉</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Messaging &amp; Follow-Ups</span>
-                  <span class="nav__dropdown-tile-desc">Multi-channel patient messaging</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Messaging &amp; Follow-Ups</span>
+                <span class="nav__dropdown-tile-desc">Automated SMS and email for reminders and campaigns</span>
               </a>
               <a href="/us/platform/ai-clinical-assistant" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">★</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">AI Clinical Assistant <em class="nav__tag">Add-on</em></span>
-                  <span class="nav__dropdown-tile-desc">AI Scribe + code suggestion</span>
-                </span>
+                <span class="nav__dropdown-tile-title">AI Clinical Assistant <em class="nav__tag">Add-on</em></span>
+                <span class="nav__dropdown-tile-desc">AI Scribe — real-time notes and care plans</span>
               </a>
               <a href="/us/platform/medical-billing" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">$</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Medical Billing Suite <em class="nav__tag">Add-on</em></span>
-                  <span class="nav__dropdown-tile-desc">Encounters into clean Part B claims</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Medical Billing Suite <em class="nav__tag">Add-on</em></span>
+                <span class="nav__dropdown-tile-desc">Capture revenue tied to clinical services</span>
               </a>
             </div>
             <div class="nav__dropdown-group">
-              <h4 class="nav__dropdown-group-label">AI Assistants</h4>
-              <a href="/us/platform/ai-assistants" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">◎</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">AI Assistants</span>
-                  <span class="nav__dropdown-tile-desc">Overview</span>
-                </span>
-              </a>
+              <a href="/us/platform/ai-assistants" class="nav__dropdown-group-label" role="menuitem">AI Assistants</a>
               <a href="/us/platform/ai-assistants/patient-concierge" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">☎</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Patient Concierge</span>
-                  <span class="nav__dropdown-tile-desc">Inbound triage, outreach, rebooking</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Patient Concierge</span>
+                <span class="nav__dropdown-tile-desc">Your pharmacy&rsquo;s front desk, automated</span>
               </a>
               <a href="/us/platform/ai-assistants/admin-clerk" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⚙</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Admin Clerk <em class="nav__tag nav__tag--new">New</em></span>
-                  <span class="nav__dropdown-tile-desc">PMS bridge + back-office tasks</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Admin Clerk <em class="nav__tag nav__tag--new">New</em></span>
+                <span class="nav__dropdown-tile-desc">Repetitive admin tasks, eliminated via RPA</span>
               </a>
             </div>
             <div class="nav__dropdown-group">
               <h4 class="nav__dropdown-group-label">Foundation</h4>
               <a href="/us/platform/pms-integrations" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⚙</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">PMS Integrations</span>
-                  <span class="nav__dropdown-tile-desc">PioneerRx, BestRx, McKesson, clearinghouses</span>
-                </span>
+                <span class="nav__dropdown-tile-title">PMS Integrations</span>
+                <span class="nav__dropdown-tile-desc">Two-way sync with your pharmacy management system</span>
               </a>
             </div>
           </div>
@@ -3880,24 +3844,24 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Resources</button>
           <div class="nav__dropdown" role="menu">
             <a href="/us/resources/blog" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">✎</span>
-              <span><span class="nav__dropdown-title">Blog</span><span class="nav__dropdown-desc">Stories from clinical pharmacy</span></span>
+              <span class="nav__dropdown-title">Blog</span>
+              <span class="nav__dropdown-desc">Stories from clinical pharmacy</span>
             </a>
             <a href="/us/resources/events" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◉</span>
-              <span><span class="nav__dropdown-title">Events</span><span class="nav__dropdown-desc">Conferences, dinners, in-person</span></span>
+              <span class="nav__dropdown-title">Events</span>
+              <span class="nav__dropdown-desc">Conferences, dinners, in-person</span>
             </a>
             <a href="/us/resources/white-papers" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">≣</span>
-              <span><span class="nav__dropdown-title">White Papers</span><span class="nav__dropdown-desc">Research and policy briefs</span></span>
+              <span class="nav__dropdown-title">White Papers</span>
+              <span class="nav__dropdown-desc">Research and policy briefs</span>
             </a>
             <a href="/us/resources/webinars" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">▷</span>
-              <span><span class="nav__dropdown-title">Webinars</span><span class="nav__dropdown-desc">Live + on-demand sessions</span></span>
+              <span class="nav__dropdown-title">Webinars</span>
+              <span class="nav__dropdown-desc">Live + on-demand sessions</span>
             </a>
             <a href="/us/resources/roi-calculator" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">∑</span>
-              <span><span class="nav__dropdown-title">ROI Calculator</span><span class="nav__dropdown-desc">Estimate your annual Part B unlock</span></span>
+              <span class="nav__dropdown-title">ROI Calculator</span>
+              <span class="nav__dropdown-desc">Estimate your annual Part B unlock</span>
             </a>
           </div>
         </li>
@@ -3907,16 +3871,16 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Partners</button>
           <div class="nav__dropdown" role="menu">
             <a href="/us/partners/pharmacy-associations" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◇</span>
-              <span><span class="nav__dropdown-title">Pharmacy Associations</span><span class="nav__dropdown-desc">State & national association partnerships</span></span>
+              <span class="nav__dropdown-title">Pharmacy Associations</span>
+              <span class="nav__dropdown-desc">State &amp; national association partnerships</span>
             </a>
             <a href="/us/pharmacy/networks" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">⌬</span>
-              <span><span class="nav__dropdown-title">Networks <em class="nav__tag nav__tag--ref">ref</em></span><span class="nav__dropdown-desc">See Pharmacy → Networks</span></span>
+              <span class="nav__dropdown-title">Networks <em class="nav__tag nav__tag--ref">ref</em></span>
+              <span class="nav__dropdown-desc">See Pharmacy → Networks</span>
             </a>
             <a href="/us/pharmacy/multi-store" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◆</span>
-              <span><span class="nav__dropdown-title">Multi-store <em class="nav__tag nav__tag--ref">ref</em></span><span class="nav__dropdown-desc">See Pharmacy → Multi-store</span></span>
+              <span class="nav__dropdown-title">Multi-store <em class="nav__tag nav__tag--ref">ref</em></span>
+              <span class="nav__dropdown-desc">See Pharmacy → Multi-store</span>
             </a>
           </div>
         </li>
@@ -6056,17 +6020,22 @@
     });
 
     /* Re-fit motion-graphic mockups when their pane becomes active.
-       While display:none, the host had zero dimensions and the inner
-       1192×656 frame's scale collapsed. */
+       While display:none the host had zero dimensions and the inner
+       1192×656 frame's scale collapsed. We run the resize SYNCHRONOUSLY
+       on the same frame as the class toggle so the new pane lands
+       pre-scaled and the user never sees a mid-animation pop. The
+       second rAF is a safety net for layout that hasn't settled. */
     function refit(hostId, innerId) {
       var hostEl = document.getElementById(hostId);
       var inner = document.getElementById(innerId);
       if (!hostEl || !inner) return;
-      requestAnimationFrame(function(){
+      function apply() {
         var r = hostEl.getBoundingClientRect();
         var s = Math.min(r.width / 1192, r.height / 656);
         if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
-      });
+      }
+      apply();
+      requestAnimationFrame(apply);
     }
     if (key === 'documentation') refit('mockupHost', 'frame');
     if (key === 'scheduling')    refit('schedHost', 'schedFrame');
@@ -6111,6 +6080,9 @@
      the right keyframes, mark the outgoing pane as .is-leaving (becomes
      an absolute overlay that slides off + scales down), then doSwap()
      activates the new pane which slides in from the opposite side. */
+  /* Must match the longer of the two pane animations (.6s in / .6s out).
+     +50ms safety margin guarantees the .is-leaving overlay is removed
+     after its fade-out keyframe has fully painted. */
   var PUSH_MS = 650;
   var WF_ORDER = ['scheduling', 'intake', 'documentation', 'billing'];
   function activate(key) {

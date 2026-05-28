@@ -4,56 +4,268 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>For Pharmacy Networks — MedMe Health</title>
-<meta name="description" content="Unlock your member data, standardize the clinical workflow across stores, and run commercial models that fit your network — member discount, volume rebate, or network-paid subscription." />
+<meta name="description" content="One platform for banners, co-ops, and PSAOs. Unlock your member data, standardize the clinical workflow across stores, and run the commercial model that fits your network." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/pharmacy/networks" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/pharmacy/networks" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=38" />
+<link rel="stylesheet" href="/assets/brand.css?v=41" />
 <style>
-  /* TODO: content pass — replace stub hero with full page structure. */
-  .stub-hero { background: var(--seashell, #FAF9F5); padding: 3.5rem 0 2.5rem; }
-  .stub-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
-  .stub-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .stub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .stub-hero__breadcrumb a:hover { color: var(--indigo, #063E54); }
-  .stub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .stub-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 880px; }
-  .stub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 720px; margin: 0 auto 2rem; }
-  .stub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .stub-todo { max-width: 720px; margin: 2rem auto 0; padding: 1.25rem 1.5rem; background: rgba(195, 196, 48, 0.12); border: 1px dashed rgba(195, 196, 48, 0.55); border-radius: 12px; color: #5a5b14; font-size: 0.875rem; line-height: 1.55; text-align: left; }
-  .stub-todo b { color: var(--indigo, #063E54); font-weight: 700; }
-  .legal-hub-list { max-width: 760px; margin: 2.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 2rem; }
-  .legal-hub-card { background: #fff; border: 1px solid rgba(6, 62, 84, 0.08); border-radius: 12px; padding: 1.5rem; text-decoration: none; color: inherit; transition: border-color .18s ease, transform .18s ease; display: block; }
-  .legal-hub-card:hover { border-color: rgba(6, 62, 84, 0.25); transform: translateY(-2px); }
-  .legal-hub-card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; font-weight: 700; color: var(--indigo, #063E54); }
-  .legal-hub-card p { margin: 0; font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); line-height: 1.5; }
-  @media (max-width: 600px) { .legal-hub-list { grid-template-columns: 1fr; } }
+  /* ============================================================
+     NETWORKS — solution page for banners, co-ops & PSAOs.
+     Reuses the .sol-hero / .persona-card / .built-grid pattern
+     established on Enterprises + Independents.
+     ============================================================ */
+  .sol-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
+  .sol-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+  .sol-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
+  .sol-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .sol-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sol-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+  .sol-hero h1.h-display { margin: 0.5rem 0 1rem; }
+  .sol-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); margin: 0 0 1.75rem; }
+  .sol-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; }
+
+  .persona-card { background: #F5F7F8; border-radius: 18px; padding: 2rem; border: 1px solid rgba(6, 62, 84, 0.06); }
+  .persona-card__head { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(6, 62, 84, 0.08); }
+  .persona-card__avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--indigo-dark)); color: var(--matcha); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+  .persona-card__role { font-size: 0.8rem; color: rgba(6, 62, 84, 0.6); margin: 0 0 2px; }
+  .persona-card__name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--indigo); margin: 0; }
+  .persona-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.65rem; }
+  .persona-card li { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.9rem; color: var(--indigo); line-height: 1.5; }
+  .persona-card li::before { content: '\2713'; color: var(--matcha); font-weight: 700; font-size: 0.85rem; margin-top: 1px; }
+  @media (max-width: 880px) { .sol-hero__inner { grid-template-columns: 1fr; gap: 2rem; } }
+
+  /* Three pillars */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+  .pillar { background: rgba(250, 249, 245, 0.04); border: 1px solid rgba(250, 249, 245, 0.12); border-radius: 14px; padding: 2rem; }
+  .pillar__num { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--matcha); margin-bottom: 0.75rem; }
+  .pillar h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--seashell); margin: 0 0 0.6rem; letter-spacing: -0.012em; }
+  .pillar p { font-size: 0.92rem; color: rgba(250, 249, 245, 0.78); line-height: 1.55; margin: 0; }
+  @media (max-width: 880px) { .pillars { grid-template-columns: 1fr; } }
+
+  /* Ways we work grid */
+  .built-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+  .built-grid .h-card { padding: 1.75rem; }
+  .built-grid h3 { font-size: 1.1rem; margin: 0 0 0.5rem; color: var(--indigo); font-weight: 700; }
+  .built-grid p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
+  @media (max-width: 900px) { .built-grid { grid-template-columns: 1fr; } }
+
+  /* Commercial models */
+  .models { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+  .model-card { background: #fff; border-radius: 16px; border: 1px solid rgba(6, 62, 84, 0.10); padding: 2rem; display: flex; flex-direction: column; }
+  .model-card__tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(6, 62, 84, 0.55); margin-bottom: 0.5rem; }
+  .model-card h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--indigo); margin: 0 0 0.6rem; letter-spacing: -0.012em; }
+  .model-card p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
+  @media (max-width: 880px) { .models { grid-template-columns: 1fr; } }
+
+  /* Member data dashboard placeholder graphic */
+  .rollup-graphic { background: rgba(250, 249, 245, 0.04); border: 1px solid rgba(250, 249, 245, 0.12); border-radius: 14px; padding: 1.75rem; margin-top: 2.5rem; max-width: 920px; margin-left: auto; margin-right: auto; }
+  .rollup-graphic__bars { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; align-items: end; height: 140px; }
+  .rollup-graphic__bar { background: linear-gradient(180deg, var(--matcha), rgba(195, 196, 48, 0.4)); border-radius: 4px 4px 0 0; }
+  .rollup-graphic__caption { text-align: center; font-size: 0.85rem; color: rgba(250, 249, 245, 0.7); margin-top: 1rem; }
+
+  /* Story quote */
+  .story { background: #fff; border-radius: 18px; border: 1px solid rgba(6, 62, 84, 0.08); padding: 2.5rem 3rem; margin-top: 2.5rem; max-width: 920px; margin-left: auto; margin-right: auto; }
+  .story__quote { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.45; color: var(--indigo); font-weight: 500; letter-spacing: -0.012em; margin: 0 0 1.25rem; }
+  .story__author { font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); }
+  .story__author b { color: var(--indigo); font-weight: 600; }
+  .story__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(6, 62, 84, 0.08); }
+  .story__stat .num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.012em; }
+  .story__stat .lbl { font-size: 0.8rem; color: rgba(6, 62, 84, 0.65); margin-top: 0.25rem; }
+  @media (max-width: 700px) { .story { padding: 2rem 1.5rem; } .story__stats { grid-template-columns: 1fr; gap: 1rem; } }
 </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
 {{> partials/util-bar-us }}
 {{> partials/nav-us }}
-
 <main id="main">
-<section class="stub-hero">
-  <div class="stub-hero__inner">
-    <div class="stub-hero__breadcrumb"><a href="/us">Home</a><span class="sep">/</span><a href="/us/pharmacy/networks">Pharmacy</a><span class="sep">/</span><span>Networks</span></div>
-    <span class="kicker kicker--matcha">For banners, co-ops &amp; PSAOs</span>
-    <h1 class="h-display h-display--xl">One platform for the whole network.<br>Visible, standardized, flexible.</h1>
-    <p class="stub-hero__lede">Unlock your member data, standardize the clinical workflow across stores, and run commercial models that fit your network &mdash; member discount, volume rebate, or network-paid subscription.</p>
-    <div class="stub-hero__cta">
-      <a class="btn btn-primary" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
+
+<!-- ============= HERO ============= -->
+<section class="sol-hero">
+  <div class="sol-hero__inner">
+    <div>
+      <div class="sol-hero__breadcrumb">
+        <a href="/us">Home</a><span class="sep">/</span>
+        <a href="/us/pharmacy/networks">Pharmacy</a><span class="sep">/</span>
+        <span>Networks</span>
+      </div>
+      <span class="kicker kicker--matcha">For banners, co-ops &amp; PSAOs</span>
+      <h1 class="h-display">One platform<br>for the whole network.</h1>
+      <p class="sol-hero__lede">Unlock your member data, standardize the clinical workflow across every store, and run the commercial model that fits your network. MedMe gives banners, co-ops, and PSAOs the visibility and leverage that fragmented point solutions never could.</p>
+      <div class="sol-hero__cta">
+        <a class="btn btn-primary" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="/us/customers">See customer stories</a>
+      </div>
     </div>
-    <!-- TODO: content pass — full page sections go here. -->
-    <div class="stub-todo">
-      <b>Stub page.</b> Full content lands during the per-page content pass. Hero copy and breadcrumb are wired to v11 naming — body sections, mocks, and CTAs to follow.
-    </div>
-    
+    <aside class="persona-card">
+      <div class="persona-card__head">
+        <div class="persona-card__avatar">JM</div>
+        <div>
+          <p class="persona-card__role">VP, Pharmacy Services</p>
+          <p class="persona-card__name">Janelle Morris</p>
+        </div>
+      </div>
+      <ul>
+        <li>200&ndash;2,000 member stores under one banner or co-op</li>
+        <li>Members run different PMSs and clinical tools today</li>
+        <li>No line of sight into member-level clinical activity</li>
+        <li>Wants to launch network-wide service programs</li>
+        <li>Needs a commercial model members will actually adopt</li>
+      </ul>
+    </aside>
   </div>
 </section>
-</main>
 
+<!-- ============= THREE PILLARS (dark) ============= -->
+<section class="tile tile--dark" aria-label="What networks get">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Why networks choose MedMe</span>
+      <h2 class="h-display">Visibility, standardization,<br>commercial flexibility.</h2>
+      <p class="lead">The three things a network needs that store-by-store software can't give you: one view across all members, one clinical standard, and a commercial model that works for your structure.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar__num">01 / Visibility</div>
+        <h3>Unlock your member data</h3>
+        <p>Network-wide dashboards roll up clinical activity, service volume, and revenue across every member store &mdash; the data you've never been able to see because it lived in a dozen disconnected systems.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__num">02 / Standardization</div>
+        <h3>One clinical standard</h3>
+        <p>Standardized intake forms, documentation templates, and service workflows across the network. New programs launch once, centrally, and propagate to every member in days &mdash; not store-by-store over months.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__num">03 / Flexibility</div>
+        <h3>The commercial model that fits</h3>
+        <p>Member discount, volume rebate, or network-paid subscription &mdash; structure the economics the way your network actually works. Members adopt because the math works for them, not because you mandate it.</p>
+      </div>
+    </div>
+    <!-- TODO: replace placeholder bar graphic with real member-data aggregation dashboard -->
+    <div class="rollup-graphic" aria-hidden="true">
+      <div class="rollup-graphic__bars">
+        <div class="rollup-graphic__bar" style="height: 45%"></div>
+        <div class="rollup-graphic__bar" style="height: 62%"></div>
+        <div class="rollup-graphic__bar" style="height: 38%"></div>
+        <div class="rollup-graphic__bar" style="height: 78%"></div>
+        <div class="rollup-graphic__bar" style="height: 55%"></div>
+        <div class="rollup-graphic__bar" style="height: 88%"></div>
+        <div class="rollup-graphic__bar" style="height: 70%"></div>
+        <div class="rollup-graphic__bar" style="height: 95%"></div>
+      </div>
+      <div class="rollup-graphic__caption">Network rollup &mdash; clinical service volume across all member stores, refreshed daily.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= WAYS WE WORK (light) ============= -->
+<section class="tile tile--light" aria-label="Ways we work with networks">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Ways we work with networks</span>
+      <h2 class="h-display">From program launch<br>to member education.</h2>
+    </div>
+    <div class="built-grid">
+      <article class="h-card">
+        <h3>Network-wide MTMS rollouts</h3>
+        <p>Launch a medication-therapy-management program across every member at once. Standardized protocols, shared training, central reporting &mdash; live in weeks.</p>
+      </article>
+      <article class="h-card">
+        <h3>Test-and-treat expansion</h3>
+        <p>When a new test-and-treat authority lands, onboard the whole network with one playbook. Members start delivering the day the rules change.</p>
+      </article>
+      <article class="h-card">
+        <h3>Standardized forms</h3>
+        <p>One set of intake and consent forms across the network. Consistent data, consistent patient experience, consistent compliance posture.</p>
+      </article>
+      <article class="h-card">
+        <h3>White-label patient experience</h3>
+        <p>Your brand on the booking, intake, and follow-up touchpoints. Patients see your banner, not ours.</p>
+      </article>
+      <article class="h-card">
+        <h3>Member education</h3>
+        <p>Onboarding, certification, and ongoing enablement for member pharmacists &mdash; run centrally so every store delivers to the same standard.</p>
+      </article>
+      <article class="h-card">
+        <h3>Member-data aggregation</h3>
+        <p>Clinical and financial data rolled up to the network level, with member-level drill-down. Negotiate with payers and manufacturers from a position of data.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= COMMERCIAL MODELS (light) ============= -->
+<section class="tile tile--light" aria-label="Commercial models" style="padding-top: 0;">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Three commercial models</span>
+      <h2 class="h-display">Structure the economics<br>your way.</h2>
+      <p class="lead">We've worked with networks of every shape. Pick the model that gets your members to yes.</p>
+    </div>
+    <div class="models">
+      <div class="model-card">
+        <div class="model-card__tag">Model 1</div>
+        <h3>Member discount</h3>
+        <p>The network negotiates a preferred rate; members subscribe directly at the discounted price. Lowest lift for the network office, fastest to stand up.</p>
+      </div>
+      <div class="model-card">
+        <div class="model-card__tag">Model 2</div>
+        <h3>Volume rebate</h3>
+        <p>Members subscribe at standard rates; the network earns a rebate scaled to total adoption. Aligns the network's incentive with member uptake.</p>
+      </div>
+      <div class="model-card">
+        <div class="model-card__tag">Model 3</div>
+        <h3>Network-paid subscription</h3>
+        <p>The network funds the platform centrally as a member benefit. Maximum adoption, fully standardized, and the strongest data position network-wide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= STORY (dark) ============= -->
+<section class="tile tile--dark" aria-label="Network story">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">From the field</span>
+      <h2 class="h-display">A national banner,<br>standardized in one quarter.</h2>
+    </div>
+    <div class="story" style="background: rgba(250, 249, 245, 0.04); border-color: rgba(250, 249, 245, 0.12);">
+      <p class="story__quote" style="color: var(--seashell);">&ldquo;We'd tried to roll out a network-wide clinical program twice before and it died in the member stores both times &mdash; too many tools, no standard, no data. With MedMe, we launched once from head office and watched adoption climb week over week. For the first time we can actually see what our members are delivering.&rdquo;</p>
+      <div class="story__author" style="color: rgba(250, 249, 245, 0.7);">
+        <b style="color: var(--seashell);">Network Pharmacy Lead</b> &middot; PharmaChoice-style banner (representative)
+      </div>
+      <div class="story__stats">
+        <div class="story__stat"><div class="num" style="color: var(--matcha);">3 weeks</div><div class="lbl" style="color: rgba(250,249,245,0.7);">From program launch to first member live</div></div>
+        <div class="story__stat"><div class="num" style="color: var(--matcha);">84%</div><div class="lbl" style="color: rgba(250,249,245,0.7);">Member adoption within the first quarter</div></div>
+        <div class="story__stat"><div class="num" style="color: var(--matcha);">1 dashboard</div><div class="lbl" style="color: rgba(250,249,245,0.7);">Network-wide view, replacing 12 disconnected ones</div></div>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top: 1.5rem; font-size: 0.875rem; color: rgba(250, 249, 245, 0.7);">
+      Plus: network members get access to the <b style="color: var(--seashell);">MedMe Impact Fund</b> &mdash; reinvesting platform proceeds into community-pharmacy research and clinical-service advocacy.
+      <!-- TODO: confirm Impact Fund public-facing wording with Christine -->
+    </p>
+  </div>
+</section>
+
+<!-- ============= FINAL CTA (dark prominent) ============= -->
+<section class="tile tile--dark tile--prominent" aria-label="Get started">
+  <div class="tile__inner">
+    <div class="tile__head" style="text-align:center;">
+      <span class="kicker">Get started</span>
+      <h2 class="h-display">Let's talk about<br>your network.</h2>
+      <p class="lead">A 30-minute conversation with our partnerships team. We'll map your member base, the PMSs in play, and the commercial model that gets you to network-wide adoption.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a class="btn btn-primary" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="/us/customers">See customer stories</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
 {{> partials/footer-us }}
 <script src="/assets/site.js" defer></script>
 </body>

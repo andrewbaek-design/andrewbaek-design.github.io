@@ -967,22 +967,30 @@ footer.site-footer {
   pointer-events: auto;
 }
 
+/* All dropdowns anchor to the nav container (not the individual trigger)
+   so they appear in the SAME horizontal position regardless of which
+   trigger is hovered. Linear-style consistent panel placement. */
+.nav .wrap { position: relative; }
+.nav__item-group { position: static; }
+
 .nav__dropdown {
   position: absolute;
   top: calc(100% + 0.5rem);
-  left: -1rem;
+  left: 50%;
   background: var(--white);
   border: 1px solid var(--indigo-08);
   border-radius: var(--radius-md);
   box-shadow: 0 16px 48px rgba(6, 62, 84, 0.15);
-  padding: 0.5rem;
+  padding: 0.85rem;
   display: grid;
-  gap: 0.15rem;
-  min-width: 340px;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem 0.5rem;
+  width: 640px;
+  max-width: calc(100vw - 4rem);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  transform: translate(-50%, -8px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
   z-index: 200;
 }
 .nav__item-group:hover .nav__dropdown,
@@ -990,22 +998,20 @@ footer.site-footer {
 .nav__item-group[aria-expanded="true"] .nav__dropdown {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translate(-50%, 0);
 }
 
 /* ============================================================
-   NAV DROPDOWN ITEMS (flat-list, used by AI Assistants /
-   Solutions / Customers / Resources — anything that isn't
-   the Platform mega-menu)
-   Each item has: icon-box + (title block + description block).
-   Without display:block on title/desc the spans render inline
-   and the labels run together as one string.
+   NAV DROPDOWN ITEMS (flat-list, used by Pharmacy / Resources /
+   Partners — anything that isn't the Platform mega-menu).
+   Linear-style: text-only, no leading icon. Title block above,
+   short description below. Icon spans (.nav__dropdown-icon) are
+   intentionally not styled — if any markup still emits one it
+   stays hidden via the rule below.
    ============================================================ */
 .nav__dropdown-link {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 0.65rem 0.75rem;
+  display: block;
+  padding: 0.6rem 0.75rem;
   border-radius: 8px;
   color: var(--indigo);
   font-size: var(--fs-small);
@@ -1015,33 +1021,59 @@ footer.site-footer {
   transition: background 0.15s ease;
 }
 .nav__dropdown-link:hover { background: var(--matcha-08); }
-.nav__dropdown-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
-  background: var(--matcha-08);
+.nav__dropdown-icon { display: none; }
+.nav__dropdown-title {
+  display: block;
   color: var(--indigo);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background 0.2s, color 0.2s;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.25;
 }
-.nav__dropdown-link:hover .nav__dropdown-icon {
-  background: var(--matcha);
-  color: var(--indigo);
-}
-.nav__dropdown-title { display: block; color: var(--indigo); }
 .nav__dropdown-desc {
   display: block;
-  font-size: var(--fs-micro);
+  font-size: 0.78rem;
   color: var(--indigo-80);
   font-weight: 500;
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
   line-height: 1.4;
+}
+
+/* ============================================================
+   NAV PILL TAGS — "Add-on" / "New" / "ref" badges that sit
+   inline next to a title. Visually explicit pill, normal-case,
+   small. Variants differ only in color so the meaning reads
+   at a glance.
+   ============================================================ */
+.nav__tag {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.45rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.62rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  /* Default = Add-on: matcha fill, indigo text */
+  background: var(--matcha);
+  color: var(--indigo);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.nav__tag--new {
+  /* New: indigo fill, seashell text — louder, signals fresh */
+  background: var(--indigo);
+  color: var(--seashell);
+}
+.nav__tag--ref {
+  /* ref: outlined, low-key — "this lives elsewhere" */
+  background: transparent;
+  color: var(--indigo-80);
+  border-color: var(--indigo-12);
+  font-weight: 600;
 }
 
 /* ============================================================
@@ -1178,25 +1210,38 @@ footer.site-footer {
   max-width: 920px;
 }
 .nav__dropdown-group { display: flex; flex-direction: column; gap: 0.25rem; }
+/* Title-Case group label in matcha. Same explicit line-height &
+   margin on every element (h4, a) so the three headers
+   (Pharmacy EHR / AI Assistants / Foundation) baseline-align
+   horizontally across the mega menu columns. */
 .nav__dropdown-group-label {
+  display: block;
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  text-transform: none;
+  letter-spacing: 0.005em;
+  line-height: 1.3;
   color: var(--matcha);
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.55rem;
   padding-bottom: 0.4rem;
   border-bottom: 1px solid var(--indigo-12);
 }
+/* When the group label is itself a link to the section overview page. */
+a.nav__dropdown-group-label {
+  text-decoration: none;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+a.nav__dropdown-group-label:hover {
+  color: var(--indigo);
+  border-bottom-color: var(--matcha);
+}
 .nav__dropdown-tile {
-  display: flex;
-  gap: 0.7rem;
-  padding: 0.6rem 0.65rem;
+  display: block;
+  padding: 0.6rem 0.7rem;
   border-radius: 8px;
   text-decoration: none;
   color: var(--indigo);
-  align-items: flex-start;
   transition: background 0.15s, transform 0.15s;
 }
 .nav__dropdown-tile:hover, .nav__dropdown-tile:focus-visible {
@@ -1204,23 +1249,7 @@ footer.site-footer {
   transform: translateX(2px);
   outline: none;
 }
-.nav__dropdown-tile-icon {
-  width: 30px; height: 30px;
-  border-radius: 6px;
-  background: rgba(6, 62, 84, 0.06);
-  color: var(--indigo);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-  font-weight: 700;
-  flex-shrink: 0;
-  transition: background 0.15s, color 0.15s;
-}
-.nav__dropdown-tile:hover .nav__dropdown-tile-icon {
-  background: var(--matcha);
-  color: var(--indigo);
-}
+.nav__dropdown-tile-icon { display: none; }
 .nav__dropdown-tile-title {
   display: block;
   font-size: 0.875rem;
@@ -1231,9 +1260,12 @@ footer.site-footer {
 .nav__dropdown-tile-desc {
   display: block;
   font-size: 0.78rem;
+  font-weight: 500;     /* match .nav__dropdown-desc so the
+                            description weight reads consistently
+                            across simple and mega dropdowns. */
   color: var(--indigo-80);
-  margin-top: 0.15rem;
-  line-height: 1.35;
+  margin-top: 0.2rem;
+  line-height: 1.4;
 }
 
 /* ============================================================

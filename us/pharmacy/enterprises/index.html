@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=30" />
+<link rel="stylesheet" href="/assets/brand.css?v=41" />
 <style>
   .sol-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
   .sol-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
@@ -154,20 +154,20 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Pharmacy</button>
           <div class="nav__dropdown" role="menu">
             <a href="/us/pharmacy/independents" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◇</span>
-              <span><span class="nav__dropdown-title">Independents</span><span class="nav__dropdown-desc">Single-store and small-group operators</span></span>
+              <span class="nav__dropdown-title">Independents</span>
+              <span class="nav__dropdown-desc">Single-store and small-group operators</span>
             </a>
             <a href="/us/pharmacy/enterprises" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◆</span>
-              <span><span class="nav__dropdown-title">Enterprises</span><span class="nav__dropdown-desc">Regional chains, top-100, health systems</span></span>
+              <span class="nav__dropdown-title">Enterprises</span>
+              <span class="nav__dropdown-desc">Regional chains, top-100, health systems</span>
             </a>
             <a href="/us/pharmacy/networks" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">⌬</span>
-              <span><span class="nav__dropdown-title">Networks</span><span class="nav__dropdown-desc">Banners, Co-ops &amp; PSAOs</span></span>
+              <span class="nav__dropdown-title">Networks</span>
+              <span class="nav__dropdown-desc">Banners, Co-ops &amp; PSAOs</span>
             </a>
             <a href="/us/pharmacy/specialty" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◈</span>
-              <span><span class="nav__dropdown-title">Specialty</span><span class="nav__dropdown-desc">Specialty pharmacies and payvider partners</span></span>
+              <span class="nav__dropdown-title">Specialty</span>
+              <span class="nav__dropdown-desc">Specialty pharmacies and payvider partners</span>
             </a>
           </div>
         </li>
@@ -177,89 +177,48 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Platform</button>
           <div class="nav__dropdown nav__dropdown--mega" role="menu">
             <div class="nav__dropdown-group">
-              <h4 class="nav__dropdown-group-label">Pharmacy EHR</h4>
-              <a href="/us/platform" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⊟</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Pharmacy EHR</span>
-                  <span class="nav__dropdown-tile-desc">Platform overview</span>
-                </span>
-              </a>
+              <a href="/us/platform" class="nav__dropdown-group-label" role="menuitem">Pharmacy EHR</a>
               <a href="/us/platform/scheduling-queuing" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">↻</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Scheduling &amp; Queuing</span>
-                  <span class="nav__dropdown-tile-desc">Online booking + eligibility + intake</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Scheduling &amp; Queueing</span>
+                <span class="nav__dropdown-tile-desc">Multi-calendar booking with patient flow visibility</span>
               </a>
               <a href="/us/platform/patient-intake" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">✎</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Patient Intake Form</span>
-                  <span class="nav__dropdown-tile-desc">Pre-visit data capture, prefilled</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Patient Intake Forms</span>
+                <span class="nav__dropdown-tile-desc">Info, consent, and eligibility before the consult</span>
               </a>
               <a href="/us/platform/assisted-documentation" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⌘</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Assisted Documentation</span>
-                  <span class="nav__dropdown-tile-desc">SOAP, care plans, transitions-of-care</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Assisted Documentation</span>
+                <span class="nav__dropdown-tile-desc">Finish notes during the visit, not after</span>
               </a>
               <a href="/us/platform/messaging-follow-ups" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">✉</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Messaging &amp; Follow-Ups</span>
-                  <span class="nav__dropdown-tile-desc">Multi-channel patient messaging</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Messaging &amp; Follow-Ups</span>
+                <span class="nav__dropdown-tile-desc">Automated SMS and email for reminders and campaigns</span>
               </a>
               <a href="/us/platform/ai-clinical-assistant" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">★</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">AI Clinical Assistant <em class="nav__tag">Add-on</em></span>
-                  <span class="nav__dropdown-tile-desc">AI Scribe + code suggestion</span>
-                </span>
+                <span class="nav__dropdown-tile-title">AI Clinical Assistant <em class="nav__tag">Add-on</em></span>
+                <span class="nav__dropdown-tile-desc">AI Scribe — real-time notes and care plans</span>
               </a>
               <a href="/us/platform/medical-billing" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">$</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Medical Billing Suite <em class="nav__tag">Add-on</em></span>
-                  <span class="nav__dropdown-tile-desc">Encounters into clean Part B claims</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Medical Billing Suite <em class="nav__tag">Add-on</em></span>
+                <span class="nav__dropdown-tile-desc">Capture revenue tied to clinical services</span>
               </a>
             </div>
             <div class="nav__dropdown-group">
-              <h4 class="nav__dropdown-group-label">AI Assistants</h4>
-              <a href="/us/platform/ai-assistants" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">◎</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">AI Assistants</span>
-                  <span class="nav__dropdown-tile-desc">Overview</span>
-                </span>
-              </a>
+              <a href="/us/platform/ai-assistants" class="nav__dropdown-group-label" role="menuitem">AI Assistants</a>
               <a href="/us/platform/ai-assistants/patient-concierge" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">☎</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Patient Concierge</span>
-                  <span class="nav__dropdown-tile-desc">Inbound triage, outreach, rebooking</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Patient Concierge</span>
+                <span class="nav__dropdown-tile-desc">Your pharmacy&rsquo;s front desk, automated</span>
               </a>
               <a href="/us/platform/ai-assistants/admin-clerk" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⚙</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">Admin Clerk <em class="nav__tag nav__tag--new">New</em></span>
-                  <span class="nav__dropdown-tile-desc">PMS bridge + back-office tasks</span>
-                </span>
+                <span class="nav__dropdown-tile-title">Admin Clerk <em class="nav__tag nav__tag--new">New</em></span>
+                <span class="nav__dropdown-tile-desc">Repetitive admin tasks, eliminated via RPA</span>
               </a>
             </div>
             <div class="nav__dropdown-group">
               <h4 class="nav__dropdown-group-label">Foundation</h4>
               <a href="/us/platform/pms-integrations" class="nav__dropdown-tile" role="menuitem">
-                <span class="nav__dropdown-tile-icon" aria-hidden="true">⚙</span>
-                <span>
-                  <span class="nav__dropdown-tile-title">PMS Integrations</span>
-                  <span class="nav__dropdown-tile-desc">PioneerRx, BestRx, McKesson, clearinghouses</span>
-                </span>
+                <span class="nav__dropdown-tile-title">PMS Integrations</span>
+                <span class="nav__dropdown-tile-desc">Two-way sync with your pharmacy management system</span>
               </a>
             </div>
           </div>
@@ -270,24 +229,24 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Resources</button>
           <div class="nav__dropdown" role="menu">
             <a href="/us/resources/blog" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">✎</span>
-              <span><span class="nav__dropdown-title">Blog</span><span class="nav__dropdown-desc">Stories from clinical pharmacy</span></span>
+              <span class="nav__dropdown-title">Blog</span>
+              <span class="nav__dropdown-desc">Stories from clinical pharmacy</span>
             </a>
             <a href="/us/resources/events" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◉</span>
-              <span><span class="nav__dropdown-title">Events</span><span class="nav__dropdown-desc">Conferences, dinners, in-person</span></span>
+              <span class="nav__dropdown-title">Events</span>
+              <span class="nav__dropdown-desc">Conferences, dinners, in-person</span>
             </a>
             <a href="/us/resources/white-papers" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">≣</span>
-              <span><span class="nav__dropdown-title">White Papers</span><span class="nav__dropdown-desc">Research and policy briefs</span></span>
+              <span class="nav__dropdown-title">White Papers</span>
+              <span class="nav__dropdown-desc">Research and policy briefs</span>
             </a>
             <a href="/us/resources/webinars" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">▷</span>
-              <span><span class="nav__dropdown-title">Webinars</span><span class="nav__dropdown-desc">Live + on-demand sessions</span></span>
+              <span class="nav__dropdown-title">Webinars</span>
+              <span class="nav__dropdown-desc">Live + on-demand sessions</span>
             </a>
             <a href="/us/resources/roi-calculator" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">∑</span>
-              <span><span class="nav__dropdown-title">ROI Calculator</span><span class="nav__dropdown-desc">Estimate your annual Part B unlock</span></span>
+              <span class="nav__dropdown-title">ROI Calculator</span>
+              <span class="nav__dropdown-desc">Estimate your annual Part B unlock</span>
             </a>
           </div>
         </li>
@@ -297,16 +256,16 @@
           <button type="button" class="nav__item-trigger" aria-haspopup="true" aria-expanded="false">Partners</button>
           <div class="nav__dropdown" role="menu">
             <a href="/us/partners/pharmacy-associations" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◇</span>
-              <span><span class="nav__dropdown-title">Pharmacy Associations</span><span class="nav__dropdown-desc">State & national association partnerships</span></span>
+              <span class="nav__dropdown-title">Pharmacy Associations</span>
+              <span class="nav__dropdown-desc">State &amp; national association partnerships</span>
             </a>
             <a href="/us/pharmacy/networks" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">⌬</span>
-              <span><span class="nav__dropdown-title">Networks <em class="nav__tag nav__tag--ref">ref</em></span><span class="nav__dropdown-desc">See Pharmacy → Networks</span></span>
+              <span class="nav__dropdown-title">Networks <em class="nav__tag nav__tag--ref">ref</em></span>
+              <span class="nav__dropdown-desc">See Pharmacy → Networks</span>
             </a>
             <a href="/us/pharmacy/multi-store" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-icon" aria-hidden="true">◆</span>
-              <span><span class="nav__dropdown-title">Multi-store <em class="nav__tag nav__tag--ref">ref</em></span><span class="nav__dropdown-desc">See Pharmacy → Multi-store</span></span>
+              <span class="nav__dropdown-title">Multi-store <em class="nav__tag nav__tag--ref">ref</em></span>
+              <span class="nav__dropdown-desc">See Pharmacy → Multi-store</span>
             </a>
           </div>
         </li>
