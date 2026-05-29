@@ -17,7 +17,7 @@ page.title: MedMe — United States Homepage Mockup
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=47">
+<link rel="stylesheet" href="/assets/brand.css?v=48">
 
 <script type="application/ld+json">
 {
@@ -320,6 +320,16 @@ page.title: MedMe — United States Homepage Mockup
   }
 
   /* ====== MOCKUP PANES (one visible at a time) ====== */
+  /* .mockup-stack — positioning anchor for the 5 .mockup-pane children.
+     The active pane sits in normal flow and gives the stack its height
+     via aspect-ratio. The outgoing pane (.is-leaving) is absolutely
+     positioned with top:0 — anchored to THIS stack, not to .visual-wrap
+     above it, so the fade-out can no longer bleed up over the
+     .hero-workflow chip strip ("ghost bar" overlay). */
+  .mockup-stack {
+    position: relative;
+    width: 100%;
+  }
   .mockup-pane {
     display: none;
     position: relative;
@@ -3509,6 +3519,39 @@ page.title: MedMe — United States Homepage Mockup
     transform: scale(1.4);
     box-shadow: 0 0 0 5px rgba(195, 196, 48, 0.25);
   }
+  /* ============================================================
+     ACTIVE-DOT PULSE — soft matcha ghost ring radiates outward
+     and fades, infinite, ~1.6s. The dot itself stays crisp; only
+     a ::after layer expands behind it. Linear-style cue that the
+     active stage is "live." Respects prefers-reduced-motion.
+     ============================================================ */
+  .hw-stage.is-active .hw-dot::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 50%;
+    background: var(--matcha);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.55;
+    animation: hw-dot-pulse 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes hw-dot-pulse {
+    0%   { transform: scale(1);   opacity: 0.55; }
+    80%  { transform: scale(2.6); opacity: 0; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hw-stage.is-active .hw-dot::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
   .hw-stage.is-active .hw-label {
     font-weight: 700;
   }
@@ -3837,6 +3880,14 @@ page.title: MedMe — United States Homepage Mockup
   </div>
   <div class="visual-halo"></div>
   <div class="visual-frame"></div>
+
+  <!-- .mockup-stack wraps the 5 mockup panes so .is-leaving (which is
+       position: absolute; top: 0) anchors to the panes' own slot, not
+       to the top of .visual-wrap. Without this wrapper, the outgoing
+       pane teleports over the .hero-workflow chip strip during the
+       0.6s cross-fade and reads as a "ghost bar" floating above the
+       carousel. -->
+  <div class="mockup-stack">
 
     <!-- ===== PANE: Scheduling & Queueing ===== -->
     <div class="mockup-pane mockup-pane--active" data-pane="scheduling" role="tabpanel">
@@ -4246,8 +4297,9 @@ page.title: MedMe — United States Homepage Mockup
     </div>
     <!-- end pane: scribe -->
 
+  </div><!-- end .mockup-stack -->
+
   </div>
-</div>
 </div>
 <!-- end .legacy-mockups -->
 
