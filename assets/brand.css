@@ -2501,8 +2501,65 @@ a.nav__dropdown-group-label:hover {
   flex-wrap: wrap;
   gap: 0.75rem;
   align-items: center;
+  /* New stacking context so .pulse-rings can sit BELOW the button
+     via z-index: -1 without escaping behind the section bg. */
+  position: relative;
+  isolation: isolate;
 }
 .pill-cta-row--center { justify-content: center; width: 100%; }
+
+/* ============================================================
+   PULSE RINGS — concentric matcha rings emanating from a CTA.
+   Drop a <span class="pulse-rings"> with 4 .pulse-ring children
+   inside a .pill-cta-row to get the radar/sonar effect behind the
+   pill button. Each ring starts small + faint, expands to ~3.5×
+   while fading out. Staggered animation-delays give a continuous
+   ripple.
+
+   Color: matcha. Designed for .tile--navy surfaces where the
+   matcha-on-indigo contrast pops; degrades gracefully on light
+   surfaces too. Honors prefers-reduced-motion.
+
+   The parent .tile--navy gets overflow: hidden so the rings clip
+   cleanly at the section boundary instead of bleeding upward
+   into the section above.
+   ============================================================ */
+.tile--navy { overflow: hidden; }
+.pulse-rings {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.pulse-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 240px;
+  margin: -120px 0 0 -120px;
+  border-radius: 50%;
+  border: 1.5px solid var(--matcha);
+  opacity: 0;
+  transform: scale(0.4);
+  animation: pulse-ring 5s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  will-change: transform, opacity;
+}
+.pulse-ring:nth-child(1) { animation-delay: 0s; }
+.pulse-ring:nth-child(2) { animation-delay: 1.25s; }
+.pulse-ring:nth-child(3) { animation-delay: 2.5s; }
+.pulse-ring:nth-child(4) { animation-delay: 3.75s; }
+@keyframes pulse-ring {
+  0%   { opacity: 0;    transform: scale(0.4); }
+  10%  { opacity: 0.45; }
+  100% { opacity: 0;    transform: scale(3.5); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring { animation: none; opacity: 0; }
+}
 
 /* Inline text link */
 .alink {
