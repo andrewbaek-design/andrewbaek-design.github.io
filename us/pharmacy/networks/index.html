@@ -42,7 +42,7 @@
   .sub-hero__text {
     text-align: center;
     max-width: 760px;
-    margin: 2.5rem auto 0;
+    margin: 1rem auto 0;
     position: relative;
   }
   .sub-hero h1.h-display {
@@ -66,8 +66,8 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-  @media (max-width: 980px) { .sub-hero__text { margin-top: 2rem; } }
-  @media (max-width: 640px) { .sub-hero__text { margin-top: 1.5rem; } }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: 0.75rem; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: 0.5rem; } }
 
   /* ====== HERO ROLLUP GRAPHIC ====================================
      A 6x4 grid of small member-store dots flowing rightward into
@@ -147,14 +147,14 @@
   }
   @media (max-width: 980px) {
     .sub-hero__visual { margin-inline: calc(-1 * var(--tile-pad-x)); }
-    .hero-roll .roll-card-label { font-size: 17px; }
-    .hero-roll .roll-card-stat { font-size: 15px; }
+    .hero-roll .roll-card-label { font-size: 15px; }
+    .hero-roll .roll-card-stat { font-size: 13px; }
   }
   @media (max-width: 700px) {
     .sub-hero { padding-inline: 0.5rem; }
     .sub-hero__visual { margin-inline: 0; }
-    .hero-roll .roll-card-label { font-size: 21px; }
-    .hero-roll .roll-card-stat { font-size: 18px; }
+    .hero-roll .roll-card-label { font-size: 17px; }
+    .hero-roll .roll-card-stat { font-size: 14px; }
   }
 
   /* ====== VALUE TO NETWORK: 3-feature card grid w/ motion ======= */
@@ -298,6 +298,240 @@
     .feat-vis .vis-bar,
     .feat-std .std-step,
     .feat-comm .comm-tag { animation: none; opacity: 1; transform: none; }
+  }
+
+  /* ====== NCAP PARTNER CASE STUDY =============================== */
+  .case-banner {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0 1.5rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .case-banner { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+  .case-banner__brand { display: flex; flex-direction: column; gap: 4px; }
+  .case-banner__brand-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(6, 62, 84, 0.5);
+    letter-spacing: 0.06em;
+    text-transform: none;
+  }
+  .case-banner__brand-pair {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .case-banner__brand-pair .x {
+    color: var(--matcha);
+    margin: 0 0.25rem;
+    font-weight: 400;
+  }
+  .case-banner__brand-sub {
+    font-size: 0.85rem;
+    color: rgba(6, 62, 84, 0.62);
+  }
+  .case-banner__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid rgba(6, 62, 84, 0.08);
+  }
+  @media (max-width: 800px) {
+    .case-banner__stats { padding-left: 0; border-left: 0; border-top: 1px solid rgba(6, 62, 84, 0.08); padding-top: 1.25rem; }
+  }
+  .case-banner__stat { display: flex; flex-direction: column; gap: 2px; }
+  .case-banner__stat-val {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .case-banner__stat-lbl {
+    font-size: 0.78rem;
+    color: rgba(6, 62, 84, 0.55);
+    line-height: 1.35;
+  }
+
+  /* Service-focus pill row */
+  .case-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+  .case-services__title {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(6, 62, 84, 0.55);
+    letter-spacing: 0.04em;
+    margin-right: 0.25rem;
+  }
+  .case-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(195, 196, 48, 0.12);
+    border: 1px solid rgba(195, 196, 48, 0.28);
+    color: var(--indigo);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+  }
+  .case-pill i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--matcha);
+    display: inline-block;
+  }
+
+  /* 4-step process timeline (horizontal on desktop, stacked on mobile) */
+  .case-timeline { position: relative; margin-bottom: 2rem; }
+  .case-timeline__title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: rgba(6, 62, 84, 0.6);
+    letter-spacing: 0.04em;
+    margin: 0 0 1.5rem;
+    text-align: center;
+  }
+  .case-timeline__steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    position: relative;
+  }
+  /* Decorative horizontal line connecting the step badges. */
+  .case-timeline__steps::before {
+    content: "";
+    position: absolute;
+    top: 44px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 2px;
+    background: linear-gradient(90deg,
+      rgba(195, 196, 48, 0.4) 0%,
+      rgba(195, 196, 48, 0.8) 50%,
+      rgba(195, 196, 48, 0.4) 100%);
+    z-index: 0;
+  }
+  /* Matcha pulse traveling along the line. */
+  .case-timeline__steps::after {
+    content: "";
+    position: absolute;
+    top: 40px;
+    left: 12.5%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--matcha);
+    box-shadow: 0 0 0 3px rgba(195, 196, 48, 0.25);
+    z-index: 1;
+    animation: case-pulse-travel 6s linear infinite;
+  }
+  @keyframes case-pulse-travel {
+    0%   { left: 12.5%; opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { left: 87.5%; opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-timeline__steps::after { animation: none; opacity: 0; display: none; }
+  }
+  @media (max-width: 1000px) {
+    .case-timeline__steps { grid-template-columns: repeat(2, 1fr); }
+    .case-timeline__steps::before, .case-timeline__steps::after { display: none; }
+  }
+  @media (max-width: 600px) {
+    .case-timeline__steps { grid-template-columns: 1fr; }
+  }
+  .case-step {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .case-step:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .case-step__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+  .case-step__phase {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--indigo);
+    background: rgba(195, 196, 48, 0.14);
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+    align-self: flex-start;
+    width: fit-content;
+  }
+  .case-step h4 {
+    margin: 0 0 0.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .case-step p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.5;
+  }
+
+  /* Closing playbook card, navy dark mode at the foot of the
+     case study. Replaces the previous member-pricing callout +
+     standalone closing line. */
+  .case-close-card {
+    background: var(--indigo);
+    border: 1px solid rgba(195, 196, 48, 0.35);
+    border-radius: var(--radius-lg);
+    padding: 2rem 2.25rem;
+    margin: 2rem 0 0;
+    text-align: center;
+  }
+  .case-close-card p {
+    margin: 0 auto;
+    color: var(--seashell);
+    font-size: 1.1rem;
+    line-height: 1.55;
+    font-weight: 700;
+    max-width: 760px;
+    text-wrap: pretty;
   }
 
   /* ====== NAVY STORY (member benefit + 4 commercial models) ===== */
@@ -657,26 +891,31 @@
           <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="1.2s" />
         </circle>
 
-        <!-- Right side: rollup card -->
+        <!-- Right side: rollup card. Card box is intentionally wider
+             and taller than the original so the inner stat labels
+             never run past its right edge at the mobile breakpoints
+             where in-SVG font-size scales up. Center stays at x=575. -->
         <g>
-          <rect class="roll-card-ring" x="430" y="150" width="290" height="160" rx="16" />
-          <rect class="roll-card" x="430" y="150" width="290" height="160" rx="16" />
-          <text x="575" y="184" class="roll-card-label">Network Rollup</text>
-          <text x="575" y="206" class="roll-card-stat">All Members, This Month</text>
+          <rect class="roll-card-ring" x="410" y="140" width="330" height="180" rx="16" />
+          <rect class="roll-card"      x="410" y="140" width="330" height="180" rx="16" />
+          <text x="575" y="180" class="roll-card-label">Network Rollup</text>
+          <text x="575" y="204" class="roll-card-stat">All Members</text>
 
-          <!-- Stat bars inside the card -->
-          <rect class="roll-bar-bg" x="460" y="226" width="230" height="6" rx="3" />
-          <rect class="roll-bar"    x="460" y="226" width="190" height="6" rx="3" />
-          <text x="460" y="250" class="roll-card-stat" text-anchor="start">142 active members</text>
+          <!-- Stat bars inside the card. Labels centered under their
+               respective bar so the longest string (8,420 services)
+               can never sit closer to one edge than the other. -->
+          <rect class="roll-bar-bg" x="440" y="234" width="270" height="6" rx="3" />
+          <rect class="roll-bar"    x="440" y="234" width="220" height="6" rx="3" />
+          <text x="575" y="260" class="roll-card-stat">142 members</text>
 
-          <rect class="roll-bar-bg" x="460" y="262" width="230" height="6" rx="3" />
-          <rect class="roll-bar"    x="460" y="262" width="160" height="6" rx="3" />
-          <text x="460" y="286" class="roll-card-stat" text-anchor="start">8,420 services delivered</text>
+          <rect class="roll-bar-bg" x="440" y="278" width="270" height="6" rx="3" />
+          <rect class="roll-bar"    x="440" y="278" width="190" height="6" rx="3" />
+          <text x="575" y="304" class="roll-card-stat">8,420 services</text>
         </g>
       </svg>
     </div>
     <div class="sub-hero__text">
-      <h1 class="h-display">The clinical services platform<br>your members will actually use.</h1>
+      <h1 class="h-display">The clinical services<br>platform your members<br>will actually use.</h1>
       <p class="sub-hero__lede">MedMe gives pharmacy networks a platform members adopt, and gives the central organization the cross-network reporting that strengthens its value to membership.</p>
       <div class="sub-hero__cta">
         <a class="pill pill--solid" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
@@ -724,7 +963,86 @@
   </div>
 </section>
 
-<!-- ============= 3. NAVY STORY (member benefit + 4 commercial models) ============= -->
+<!-- ============= 3. NCAP CASE STUDY (partner playbook + pilot process) ============= -->
+<section class="tile tile--light" aria-label="Partner case study: NCAP medical billing pilot">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Partner Case Study</span>
+      <h2 class="h-display">How we partnered with NCAP<br>to launch statewide medical billing.</h2>
+      <p class="lead">When the North Carolina Association of Pharmacists wanted to help member pharmacies build sustainable revenue beyond dispensing, they partnered with MedMe to run a four-month medical billing pilot, protocol-aligned, member-priced, and built around the workflow their pharmacies actually run. This is the partnership playbook we run with banners, co-ops, and PSAOs.</p>
+    </div>
+
+    <!-- Partnership banner: who, what scope, key facts -->
+    <div class="case-banner">
+      <div class="case-banner__brand">
+        <span class="case-banner__brand-label">Partnership</span>
+        <span class="case-banner__brand-pair">NCAP<span class="x">×</span>MedMe</span>
+        <span class="case-banner__brand-sub">North Carolina Association of Pharmacists, in partnership with MedMe Health.</span>
+      </div>
+      <div class="case-banner__stats">
+        <div class="case-banner__stat">
+          <span class="case-banner__stat-val">4 mo</span>
+          <span class="case-banner__stat-lbl">Pilot duration, post-go-live</span>
+        </div>
+        <div class="case-banner__stat">
+          <span class="case-banner__stat-val">3</span>
+          <span class="case-banner__stat-lbl">Statewide-protocol services in scope</span>
+        </div>
+        <div class="case-banner__stat">
+          <span class="case-banner__stat-val">$0</span>
+          <span class="case-banner__stat-lbl">Platform fee for members during the pilot</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service-focus pill row -->
+    <div class="case-services">
+      <span class="case-services__title">Services in scope:</span>
+      <span class="case-pill"><i></i>Hormonal Contraceptives</span>
+      <span class="case-pill"><i></i>Nicotine Replacement Therapy</span>
+      <span class="case-pill"><i></i>Influenza Test-and-Treat</span>
+    </div>
+
+    <!-- 4-step pilot process timeline -->
+    <div class="case-timeline">
+      <p class="case-timeline__title">The pilot process, step by step</p>
+      <div class="case-timeline__steps">
+        <article class="case-step">
+          <span class="case-step__num">01</span>
+          <span class="case-step__phase">Pre-launch</span>
+          <h4>Onboarding</h4>
+          <p>Payer review, billing setup, EDI enrollment, and finalized go-live date. Workflow configuration shaped around the statewide protocols. Two to four weeks.</p>
+        </article>
+        <article class="case-step">
+          <span class="case-step__num">02</span>
+          <span class="case-step__phase">Month 1</span>
+          <h4>Go-live and ramp-up</h4>
+          <p>Pharmacies launch services and begin delivering appointments through MedMe workflows. Scheduler, intake, documentation, and billing all live from day one.</p>
+        </article>
+        <article class="case-step">
+          <span class="case-step__num">03</span>
+          <span class="case-step__phase">Months 2 and 3</span>
+          <h4>Evaluation and optimization</h4>
+          <p>Track utilization, claim submission performance, and pharmacy feedback. Optimize documentation and billing rules to improve results across the cohort.</p>
+        </article>
+        <article class="case-step">
+          <span class="case-step__num">04</span>
+          <span class="case-step__phase">Month 4</span>
+          <h4>Outcomes and scaling</h4>
+          <p>Consolidate outcomes and ROI insights, share back with NCAP, and align on next steps for scaling services and onboarding additional sites across the network.</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- Dark closing card: how this partnership pattern reads for
+         other banners, co-ops, and PSAOs. -->
+    <div class="case-close-card">
+      <p>The same partnership pattern, shared protocols, member-priced billing, and a structured pilot path from go-live to scale, is how we work with banners, co-ops, and PSAOs across North America.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. NAVY STORY (member benefit + 4 commercial models) ============= -->
 <section class="tile tile--navy" aria-label="A member benefit, not just a vendor">
   <div class="story-bg-pattern" aria-hidden="true"></div>
   <div class="tile__inner">
