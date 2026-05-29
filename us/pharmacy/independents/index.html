@@ -3,288 +3,212 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>For Independent US Pharmacies, MedMe Health</title>
-<meta name="description" content="The clinical platform built for community pharmacy owners. EHR, scheduler, AI Scribe, and optional Medical Billing, flat per-store pricing, 30-day go-live." />
-<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/pharmacy/independent" />
+<title>For Independent Pharmacies, MedMe Health</title>
+<meta name="description" content="MedMe is how an independent pharmacy launches a real clinical services program, from credentialing through to paid claims, without hiring IT, building infrastructure, or assembling a billing operation." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/pharmacy/independents" />
 <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=60" />
 <style>
   /* ============================================================
-     SOLUTION PAGE, shared design pattern across /us/pharmacy/*
-     Different from Product pages: leads with audience persona,
-     then "what's included" + persona-specific stories + pricing
-     callouts.
+     INDEPENDENTS sub-page. Leans on the front-page design system
+     (.tile, .tile__head, .h-card, .h-display, .kicker, .hero-pill,
+     .pill, .tile--navy, .pulse-rings) for everything except this
+     page's two unique pieces: the 2-column hero layout and the
+     UI-panel mockup visual on the right side of the hero.
      ============================================================ */
-  .sol-hero {
+
+  /* ====== HERO: 2-column (text left, UI panel right) ============ */
+  .sub-hero {
     background: var(--seashell);
-    padding: 3.5rem 0 2rem;
+    /* Side padding-inline matches .tile sections so the hero's
+       content area aligns horizontally with everything below. */
+    padding: 3.5rem 1.5rem 3rem;
+    position: relative;
   }
-  .sol-hero__inner {
-    max-width: 1080px;
+  .sub-hero__inner {
+    max-width: var(--container);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding-inline: var(--tile-pad-x);
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 4rem;
+    align-items: center;
+  }
+  .sub-hero__text { text-align: left; }
+  .sub-hero__breadcrumb {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.55);
+    margin-bottom: 1.25rem;
+  }
+  .sub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; transition: color 0.18s; }
+  .sub-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sub-hero__breadcrumb .sep { margin: 0 0.45rem; opacity: 0.4; }
+  .sub-hero h1.h-display {
+    /* Match the homepage hero h1 sizing so the two heroes feel
+       the same weight: clamp(28px, 4.4vw, 54px), line 1.08,
+       letter-spacing -0.028em. The base .h-display is sized for
+       section headings, which would read smaller here. */
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem 0 1rem;
+    text-align: left;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 0 1.75rem;
+    max-width: 540px;
+  }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; }
+
+  /* ====== UI PANEL MOCKUP (right column of hero) ================ */
+  .ui-panel {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(6, 62, 84, 0.10);
+    padding: 18px 0 14px;
+    box-shadow: 0 14px 40px rgba(6, 62, 84, 0.10);
+    overflow: hidden;
+  }
+  .ui-panel-bar {
+    display: flex;
+    gap: 7px;
+    padding: 0 18px 14px;
+    border-bottom: 1px solid rgba(6, 62, 84, 0.08);
+  }
+  .ui-panel-bar .dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: rgba(6, 62, 84, 0.14);
+  }
+  .ui-panel-bar .dot.green { background: var(--matcha); }
+  .ui-row {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    border-bottom: 1px solid rgba(6, 62, 84, 0.05);
+    font-size: 14px;
+  }
+  .ui-row:last-child { border-bottom: 0; }
+  .ui-row-label { color: var(--indigo); font-weight: 500; }
+  .ui-tag {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: rgba(6, 62, 84, 0.08);
+    color: var(--indigo);
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+  .ui-tag.alt {
+    background: rgba(195, 196, 48, 0.20);
+    color: var(--indigo);
+  }
+  @media (max-width: 980px) {
+    .sub-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  /* ====== HOW IT WORKS: 6-feature card grid ===================== */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .feature-grid { grid-template-columns: 1fr; } }
+  .feature {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .feature:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(6, 62, 84, 0.08);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .feature-num {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--matcha);
+    margin-bottom: 0.75rem;
+  }
+  .feature h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin: 0 0 0.6rem;
+    color: var(--indigo);
+    letter-spacing: -0.005em;
+  }
+  .feature p {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+  }
+
+  /* ====== STORY / VALUE-BLOCKS: 2-column ======================== */
+  .story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
     gap: 3rem;
     align-items: center;
   }
-  .sol-hero__breadcrumb {
-    font-size: 13px;
-    color: rgba(6, 62, 84, 0.55);
-    margin-bottom: 1.5rem;
-  }
-  .sol-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .sol-hero__breadcrumb a:hover { color: var(--indigo); }
-  .sol-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .sol-hero h1.h-display { margin: 0.5rem 0 1rem; }
-  .sol-hero__lede {
-    font-size: 1.1rem;
-    line-height: 1.55;
-    color: rgba(6, 62, 84, 0.78);
-    margin: 0 0 1.75rem;
-  }
-  .sol-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; }
-
-  /* Visual side, persona profile card */
-  .persona-card {
-    background: #F5F7F8;
-    border-radius: 18px;
-    padding: 2rem;
-    border: 1px solid rgba(6, 62, 84, 0.06);
-  }
-  .persona-card__head {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 1.25rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(6, 62, 84, 0.08);
-  }
-  .persona-card__avatar {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--indigo), var(--indigo-dark));
-    color: var(--matcha);
-    display: grid; place-items: center;
+  @media (max-width: 980px) { .story-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  .story-quote {
     font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.1rem;
-  }
-  .persona-card__role { font-size: 0.8rem; color: rgba(6, 62, 84, 0.6); margin: 0 0 2px; }
-  .persona-card__name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--indigo); margin: 0; }
-  .persona-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.65rem; }
-  .persona-card li {
-    display: flex; align-items: flex-start; gap: 0.65rem;
-    font-size: 0.9rem;
-    color: var(--indigo);
-    line-height: 1.5;
-  }
-  .persona-card li::before {
-    content: '\2713';
-    color: var(--matcha);
-    font-weight: 700;
-    font-size: 0.85rem;
-    margin-top: 1px;
-  }
-  @media (max-width: 880px) {
-    .sol-hero__inner { grid-template-columns: 1fr; gap: 2rem; }
-  }
-
-  /* Tier comparison */
-  .tier-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-  .tier-card {
-    background: #fff;
-    border-radius: 18px;
-    border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 2rem;
-    display: flex; flex-direction: column;
-  }
-  .tier-card--current {
-    background: var(--indigo);
-    border-color: var(--indigo);
-    color: var(--seashell);
-    position: relative;
-  }
-  .tier-card--current h3 { color: var(--seashell); }
-  .tier-card--current p { color: rgba(250, 249, 245, 0.78); }
-  .tier-card--current ul li { color: var(--seashell); }
-  .tier-card--current ul li::before { background: var(--matcha); }
-  .tier-card--current .tier-badge {
-    position: absolute;
-    top: 1rem; right: 1rem;
-    background: var(--matcha);
-    color: var(--indigo);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 999px;
-  }
-  .tier-card__eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(6, 62, 84, 0.55);
-    margin-bottom: 0.5rem;
-  }
-  .tier-card--current .tier-card__eyebrow { color: rgba(250, 249, 245, 0.6); }
-  .tier-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--indigo);
-    margin: 0 0 0.75rem;
-    letter-spacing: -0.012em;
-  }
-  .tier-card p {
-    font-size: 0.9rem;
-    color: rgba(6, 62, 84, 0.7);
-    line-height: 1.5;
-    margin: 0 0 1.25rem;
-  }
-  .tier-card ul {
-    list-style: none;
-    padding: 0; margin: 0 0 1.25rem;
-    flex: 1;
-    display: flex; flex-direction: column;
-    gap: 0.55rem;
-  }
-  .tier-card li {
-    font-size: 0.875rem;
-    color: var(--indigo);
-    line-height: 1.45;
-    display: flex; align-items: flex-start; gap: 0.6rem;
-  }
-  .tier-card li::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--indigo);
-    margin-top: 0.5rem;
-    flex-shrink: 0;
-  }
-  .tier-card__cta { margin-top: auto; }
-  @media (max-width: 900px) {
-    .tier-row { grid-template-columns: 1fr; }
-  }
-
-  /* Built-for-you cards */
-  .built-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-  .built-grid .h-card { padding: 1.75rem; }
-  .built-grid h3 {
-    font-size: 1.15rem;
-    margin: 0 0 0.5rem;
-    color: var(--indigo);
-    font-weight: 700;
-    letter-spacing: -0.005em;
-  }
-  .built-grid p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
-  @media (max-width: 800px) { .built-grid { grid-template-columns: 1fr; } }
-
-  /* Timeline (go-live plan) */
-  .timeline {
-    margin-top: 2.5rem;
-    max-width: 880px;
-    margin-left: auto; margin-right: auto;
-    position: relative;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    left: 20px;
-    width: 2px;
-    background: rgba(6, 62, 84, 0.12);
-  }
-  .timeline__step {
-    position: relative;
-    padding-left: 60px;
-    padding-bottom: 1.75rem;
-  }
-  .timeline__step:last-child { padding-bottom: 0; }
-  .timeline__dot {
-    position: absolute;
-    left: 12px;
-    top: 4px;
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    background: var(--indigo);
-    border: 3px solid #fff;
-    box-shadow: 0 0 0 2px var(--indigo);
-  }
-  .timeline__date {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(6, 62, 84, 0.55);
-    margin-bottom: 0.25rem;
-  }
-  .timeline__title {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--indigo);
-    margin: 0 0 0.5rem;
-    letter-spacing: -0.005em;
-  }
-  .timeline__desc {
-    font-size: 0.9rem;
-    color: rgba(6, 62, 84, 0.7);
-    line-height: 1.55;
-    margin: 0;
-  }
-
-  /* Customer band */
-  .customer-band {
-    background: #fff;
-    border-radius: 18px;
-    border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 2.5rem 3rem;
-    margin-top: 2.5rem;
-    max-width: 920px;
-    margin-left: auto; margin-right: auto;
-  }
-  .customer-band__quote {
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    line-height: 1.45;
-    color: var(--indigo);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.4;
     font-weight: 500;
-    letter-spacing: -0.012em;
-    margin: 0 0 1.25rem;
-  }
-  .customer-band__author {
-    font-size: 0.875rem;
-    color: rgba(6, 62, 84, 0.7);
-    display: flex; align-items: center; gap: 0.75rem;
-  }
-  .customer-band__author b { color: var(--indigo); font-weight: 600; }
-
-  /* FAQ */
-  .faq-list { max-width: 820px; margin: 2.5rem auto 0; }
-  .faq-item { border-bottom: 1px solid rgba(6, 62, 84, 0.08); padding: 1.25rem 0; }
-  .faq-q {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 600;
     color: var(--indigo);
-    margin: 0 0 0.5rem;
-    cursor: pointer;
+    letter-spacing: -0.012em;
+    margin: 1rem 0 1.25rem;
   }
-  .faq-a { font-size: 0.95rem; color: rgba(6, 62, 84, 0.75); line-height: 1.6; margin: 0; }
+  .story-attribution {
+    font-size: 0.875rem;
+    color: rgba(6, 62, 84, 0.65);
+  }
+  .value-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  @media (max-width: 600px) { .value-blocks { grid-template-columns: 1fr; } }
+  .value-block {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.4rem;
+  }
+  .value-block h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+    color: var(--indigo);
+    letter-spacing: -0.005em;
+  }
+  .value-block p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(6, 62, 84, 0.72);
+  }
 </style>
 </head>
 <body>
@@ -559,229 +483,124 @@
 
 <main id="main">
 
-<!-- ============= HERO ============= -->
-<section class="sol-hero">
-  <div class="sol-hero__inner">
-    <div>
-      <div class="sol-hero__breadcrumb">
-        <a href="/us">Home</a><span class="sep">/</span>
-        <a href="/us/pharmacy/independent">Solutions</a><span class="sep">/</span>
-        <span>Independents</span>
+<!-- ============= 1. SUB-HERO (2-column: text left, UI panel right) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__text">
+      <div class="sub-hero__breadcrumb">
+        <a href="/us">Home</a><span class="sep">/</span><a href="/us/pharmacy/independents">Pharmacy</a><span class="sep">/</span><span>Independents</span>
       </div>
-      <span class="kicker kicker--matcha">For independent pharmacy owners</span>
-      <h1 class="h-display">Built for the operator<br>who owns the floor.</h1>
-      <p class="sol-hero__lede">
-        You run the pharmacy. You hire the techs. You sign the lease. MedMe gives you one platform, EHR, scheduling, AI Scribe, optional Medical Billing, with flat per-store pricing and a 30-day go-live. No IT team required.
-      </p>
-      <div class="sol-hero__cta">
-        <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/us/pricing">See pricing</a>
+      <span class="hero-pill">
+        <span class="hero-pill__dot" aria-hidden="true"></span>
+        For Independent Pharmacies
+      </span>
+      <h1 class="h-display">Launch clinical services.<br>Start getting paid for them.</h1>
+      <p class="sub-hero__lede">MedMe is how an independent pharmacy launches a real clinical services program, from credentialing through to paid claims, without hiring IT, building infrastructure, or assembling a billing operation.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
       </div>
     </div>
-    <aside class="persona-card">
-      <div class="persona-card__head">
-        <div class="persona-card__avatar">DW</div>
-        <div>
-          <p class="persona-card__role">Independent owner</p>
-          <p class="persona-card__name">Devin Wong, PharmD</p>
-        </div>
-      </div>
-      <ul>
-        <li>1&ndash;3 retail locations, 2&ndash;6 pharmacists per shift</li>
-        <li>Already running PioneerRx / BestRx / Liberty Software</li>
-        <li>Doing CCM, MTM, immunizations, mostly unbilled</li>
-        <li>No clinical IT team, no dedicated biller</li>
-        <li>Needs to be live in under 45 days</li>
-      </ul>
-    </aside>
-  </div>
-</section>
-
-<!-- ============= TIER PICKER (light) ============= -->
-<section class="tile tile--light" aria-label="Pick your starting point">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Pick your starting point</span>
-      <h2 class="h-display">Three ways independents<br>start with MedMe.</h2>
-      <p class="lead">Pick the tier that matches your service mix today. Upgrade later when you're ready, no migration, no contract change.</p>
-    </div>
-    <div class="tier-row">
-      <div class="tier-card">
-        <div class="tier-card__eyebrow">Tier 1</div>
-        <h3>Clinical Starter</h3>
-        <p>For pharmacies running immunizations + simple consults today.</p>
-        <ul>
-          <li>EHR + SOAP templates</li>
-          <li>Online scheduling + intake forms</li>
-          <li>Immunization records + state registry submission</li>
-          <li>Patient portal + reminders</li>
-        </ul>
-        <div class="tier-card__cta">
-          <a href="/us/pricing" class="pill pill--solid">See Starter pricing</a>
-        </div>
-      </div>
-      <div class="tier-card tier-card--current">
-        <span class="tier-badge">Most popular</span>
-        <div class="tier-card__eyebrow">Tier 2</div>
-        <h3>Clinical + Billing</h3>
-        <p>For pharmacies ready to capture Medicare Part B revenue.</p>
-        <ul>
-          <li>Everything in Clinical Starter</li>
-          <li>AI Scribe drafts every SOAP note</li>
-          <li>CPT/HCPCS auto-coding from the encounter</li>
-          <li>837P claim submission + denial queue</li>
-          <li>Clinical-to-revenue dashboards</li>
-        </ul>
-        <div class="tier-card__cta">
-          <a href="/us/pricing" class="pill pill--solid">See Clinical+Billing pricing</a>
-        </div>
-      </div>
-      <div class="tier-card">
-        <div class="tier-card__eyebrow">Tier 3</div>
-        <h3>Full Platform</h3>
-        <p>For independents expanding into specialty or rural-health.</p>
-        <ul>
-          <li>Everything in Clinical + Billing</li>
-          <li>RHC/FQHC billing module</li>
-          <li>Specialty therapy + prior-auth workflows</li>
-          <li>Payvider contracting + outcomes reporting</li>
-          <li>Dedicated implementation specialist</li>
-        </ul>
-        <div class="tier-card__cta">
-          <a href="/us/pricing" class="pill pill--solid">Talk to sales</a>
-        </div>
-      </div>
+    <div class="ui-panel" aria-hidden="true">
+      <div class="ui-panel-bar"><span class="dot"></span><span class="dot"></span><span class="dot green"></span></div>
+      <div class="ui-row"><span class="ui-row-label">Sarah K. &middot; MTM</span><span class="ui-tag">scheduled</span></div>
+      <div class="ui-row"><span class="ui-row-label">James T. &middot; Flu test+treat</span><span class="ui-tag alt">checked in</span></div>
+      <div class="ui-row"><span class="ui-row-label">Maria L. &middot; POCT + treat</span><span class="ui-tag">consult in progress</span></div>
+      <div class="ui-row"><span class="ui-row-label">Dan W. &middot; Smoking cessation</span><span class="ui-tag alt">documented</span></div>
+      <div class="ui-row"><span class="ui-row-label">Karen P. &middot; CCM follow-up</span><span class="ui-tag">claim paid</span></div>
     </div>
   </div>
 </section>
 
-<!-- ============= BUILT FOR YOU (dark) ============= -->
-<section class="tile tile--light" aria-label="Built for the way independents work">
+<!-- ============= 2. HOW IT WORKS (6 features in a 3-col grid) ============= -->
+<section class="tile tile--light" aria-label="How it works">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Built for the way you work</span>
-      <h2 class="h-display">No clinical IT team?<br>No problem.</h2>
-      <p class="lead">Every assumption in MedMe is built around owner-operators. The platform installs itself. Your staff learns it in an afternoon.</p>
+      <span class="kicker">How It Works</span>
+      <h2 class="h-display">One platform.<br>The whole clinical journey.</h2>
+      <p class="lead">From the first booked appointment through to reimbursement on a paid claim, MedMe handles the complete workflow.</p>
     </div>
-    <div class="built-grid">
-      <article class="h-card">
-        <h3>30-day go-live, guaranteed</h3>
-        <p>From contract to first billable encounter in under 30 days. Faster customers were live in 11. We handle the clearinghouse credentialing and Part B enrollment paperwork.</p>
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="feature-num">01 / Schedule</div>
+        <h3>Patient booking that drives demand</h3>
+        <p>Online scheduling, walk-in queueing, multi-service booking, reminders. Reserve with Google integration drives net-new patient volume.</p>
       </article>
-      <article class="h-card">
-        <h3>Flat per-store pricing</h3>
-        <p>One predictable monthly fee per location. No per-encounter charges, no per-claim fees, no surprise overages. You see the bill every month before you see your revenue.</p>
+      <article class="feature">
+        <div class="feature-num">02 / Intake</div>
+        <h3>Digital intake &amp; eligibility</h3>
+        <p>Patients complete intake forms before they arrive. Eligibility checked upfront. Less time at the counter, more time on care.</p>
       </article>
-      <article class="h-card">
-        <h3>Sits next to your PMS</h3>
-        <p>PioneerRx, BestRx, Liberty, McKesson, Computer-Rx, all pre-integrated. Your dispensing workflow doesn't change. MedMe just adds the clinical and billing layer on top.</p>
+      <article class="feature">
+        <div class="feature-num">03 / Consult</div>
+        <h3>AI Scribe + Clinical Assistant</h3>
+        <p>SOAP notes drafted from consult audio. Drug information and clinical protocols surfaced in context.</p>
       </article>
-      <article class="h-card">
-        <h3>Live human support</h3>
-        <p>Pharmacy-trained support team based in the US. Phone, chat, or email, median response under 2 minutes. Owners can call us directly during enrollment.</p>
+      <article class="feature">
+        <div class="feature-num">04 / Document</div>
+        <h3>Pre-configured for every service</h3>
+        <p>30+ clinical services configured out of the box, vaccines, MTM, POCT, test-and-treat, smoking cessation, and more.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-num">05 / Follow Up</div>
+        <h3>Patient retention built in</h3>
+        <p>Automated follow-up messages, care plans, secure communications. Repeat visits become routine.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-num">06 / Get Paid</div>
+        <h3>Medical billing, end to end</h3>
+        <p>Credentialing, payer contracting, claim scrubbing, denial management. We handle the operational layer that historically kept independents out of medical billing.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= GO-LIVE TIMELINE (light) ============= -->
-<section class="tile tile--light" aria-label="30-day go-live timeline">
+<!-- ============= 3. STORY (quote + 4 value blocks in 2-col split) ============= -->
+<section class="tile tile--light" aria-label="A clear path to reimbursement">
   <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Your first 30 days</span>
-      <h2 class="h-display">From signed contract<br>to first paid claim.</h2>
-    </div>
-    <div class="timeline">
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 1</div>
-        <h3 class="timeline__title">Kickoff + data setup</h3>
-        <p class="timeline__desc">30-minute kickoff with your implementation specialist. We sync patient records from your PMS, configure your service catalog, and set up your staff accounts.</p>
+    <div class="story-grid">
+      <div>
+        <span class="kicker">A Clear Path to Reimbursement</span>
+        <div class="story-quote">"We launched medical billing through MedMe. Six months in, clinical services revenue is a real line item on our P&amp;L."</div>
+        <div class="story-attribution">Independent pharmacy owner, US Southeast</div>
       </div>
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 2</div>
-        <h3 class="timeline__title">Training + dry runs</h3>
-        <p class="timeline__desc">2-hour live training for the whole team. Each pharmacist runs three test encounters with realistic patient data. We watch, coach, and adjust templates.</p>
-      </div>
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 3</div>
-        <h3 class="timeline__title">First live encounters</h3>
-        <p class="timeline__desc">You start booking and documenting real patients. AI Scribe drafts SOAP notes. Eligibility and codes are confirmed but claims are held for review.</p>
-      </div>
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 4</div>
-        <h3 class="timeline__title">First claims submitted</h3>
-        <p class="timeline__desc">After implementation review, MedMe starts pushing 837Ps to your clearinghouse. First ERAs typically arrive in 7&ndash;14 days. You're billing.</p>
+      <div class="value-blocks">
+        <div class="value-block">
+          <h4>Credentialing handled</h4>
+          <p>NPI, PECOS, state Medicaid, payer contracting, managed by our RCM team.</p>
+        </div>
+        <div class="value-block">
+          <h4>Claims scrubbed</h4>
+          <p>Every claim runs through our rule engine before submission.</p>
+        </div>
+        <div class="value-block">
+          <h4>Denials worked</h4>
+          <p>Our team investigates denials, calls payers, and learns the rules so they don't repeat.</p>
+        </div>
+        <div class="value-block">
+          <h4>Honest timelines</h4>
+          <p>Platform onboards quickly. Medical billing takes months to credential properly. We set the expectation upfront.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= CUSTOMER PROOF (dark) ============= -->
-<section class="tile tile--light" aria-label="Customer proof">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">From the field</span>
-      <h2 class="h-display">What independents say<br>after 90 days.</h2>
+<!-- ============= 4. FINAL CTA (navy + pulse rings) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Book a demo">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Ready to Launch?</span>
+      <h2 class="h-display">Let's run the numbers<br>on your pharmacy.</h2>
+      <p class="lead">20-minute screen-share, no prep on your side. We'll walk through your service mix, run the math live, and leave you with a written estimate either way.</p>
     </div>
-    <div class="customer-band" style="background: rgba(250, 249, 245, 0.04); border-color: rgba(250, 249, 245, 0.12);">
-      <p class="customer-band__quote" style="color: var(--seashell);">&ldquo;We're a 3-store independent. I'd been told MedMe was 'enterprise.' That's not what we found. Setup was four weeks. Our pharmacists love it. And we captured $186K in CCM and MTM revenue in the first quarter that we'd been leaving on the table for two years.&rdquo;</p>
-      <div class="customer-band__author" style="color: rgba(250, 249, 245, 0.7);">
-        <b style="color: var(--seashell);">Maya Patel, PharmD</b> &middot; Owner, Patel Family Pharmacy (3 stores, OH)
-      </div>
-    </div>
-    <div style="text-align:center; margin-top: 1.5rem;">
-      <a href="/us/customers" class="alink alink--on-dark">Browse all customer stories &rarr;</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============= FAQ (light) ============= -->
-<section class="tile tile--light" aria-label="Independent FAQ">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Frequently asked</span>
-      <h2 class="h-display">Common questions from<br>independent owners.</h2>
-    </div>
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary class="faq-q">Do I need to switch from PioneerRx?</summary>
-        <p class="faq-a">No. MedMe runs alongside your existing pharmacy management system. Your dispensing workflow stays exactly the same. MedMe handles the clinical encounter and medical billing side only.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Can I add billing later if I start with the Clinical Starter tier?</summary>
-        <p class="faq-a">Yes. Adding Medical Billing later is a single-toggle change. No data migration, no platform switch, no new contract. Your historical clinical data carries forward.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">How much does it cost per store?</summary>
-        <p class="faq-a">Flat monthly per location, billed quarterly or annually. The full breakdown is on our <a href="/us/pricing">pricing page</a>. Most independents pay back the platform fee on their first month's CCM billing alone.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">What if I have one tech who handles all my back-office work?</summary>
-        <p class="faq-a">That's most of our independent customers. MedMe is designed so a single non-clinical staff member can manage the queue, monitor claims, and handle denials. We train them directly.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Are there long-term contracts?</summary>
-        <p class="faq-a">12-month minimum term, renewing month-to-month afterward. We're confident enough in the platform that if you cancel in the first 90 days, we refund the implementation fee.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ============= FINAL CTA (dark prominent) ============= -->
-<section class="tile tile--light tile--prominent" aria-label="Get started">
-  <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Get started</span>
-      <h2 class="h-display">See it run<br>on your service mix.</h2>
-      <p class="lead">15-minute walkthrough customized to a 1&ndash;3 store independent. We'll run your numbers live and leave you with a written estimate.</p>
-      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/us/resources/calculator">Run the calculator</a>
-      </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -876,6 +695,5 @@
   </div>
 </footer>
 <script src="/assets/site.js" defer></script>
-
 </body>
 </html>
