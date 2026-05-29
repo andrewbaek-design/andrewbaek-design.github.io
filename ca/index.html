@@ -2841,7 +2841,8 @@
     margin-top: auto;
     padding-top: 1.5rem;
   }
-  .audience-card__cta .pill { width: 100%; }
+  /* width: 100% override removed so .pill uses its natural auto-width
+     from the global design token. */
   .audience-card ul {
     margin: 0.75rem 0 1.5rem;
     padding: 0;
@@ -3765,12 +3766,6 @@
         </div>
         <h3>Patient Concierge</h3>
         <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
-        <ul class="feat-list">
-          <li>Provincial PIN auto-coding from the encounter note</li>
-          <li>Time tracking + modifier rules for incident-to billing</li>
-          <li>Eligibility checks at booking, 24/7 in the background</li>
-          <li>Denial routing back into the queue with the fix highlighted</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform">Learn more</a>
         </div>
@@ -3786,10 +3781,6 @@
         </div>
         <h3>MedMe Care Platform</h3>
         <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows, all pharmacy-tuned, no generic-EHR shoehorning.</p>
-        <ul class="feat-list">
-          <li>Pharmacy-specific templates for MedsCheck, Med review, immunizations, POCT</li>
-          <li>Care plans + adherence tracking baked into the encounter</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform">Learn more</a>
         </div>
@@ -3802,10 +3793,6 @@
         </div>
         <h3>Clinical Assistant</h3>
         <p>Captures the conversation, drafts the SOAP note, and suggests codes. Pharmacist reviews and signs in seconds.</p>
-        <ul class="feat-list">
-          <li>Pharmacy-specific transcription model</li>
-          <li>One-click sign-off</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform/ai-clinical-assistant">Learn more</a>
         </div>
@@ -3821,10 +3808,6 @@
         </div>
         <h3>Scheduler &amp; intake</h3>
         <p>Online booking, walk-in queueing, real-time eligibility, and intake forms that flow into the encounter.</p>
-        <ul class="feat-list">
-          <li>Self-serve booking + automated reminders</li>
-          <li>Pre-visit intake auto-fills from Rx record</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform/scheduling-queuing">Learn more</a>
         </div>
@@ -3837,10 +3820,6 @@
         </div>
         <h3>Outcomes &amp; analytics</h3>
         <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive, with the math already done.</p>
-        <ul class="feat-list">
-          <li>Per-store + per-pharmacist productivity dashboards</li>
-          <li>Reimbursement trending + denial root-cause analysis</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform">Learn more</a>
         </div>
@@ -3861,10 +3840,6 @@
         </div>
         <h3>Integrations</h3>
         <p>Works with Kroll, Fillware, BD, Telus, Liberty, and the major billing clearinghouses. Open API for everything else.</p>
-        <ul class="feat-list">
-          <li>Native Rx-system + clearinghouse connectors</li>
-          <li>SSO, audit logs, SOC 2 Type II</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform/pms-integrations">Learn more</a>
         </div>
@@ -4139,12 +4114,14 @@
 </main>
 
 <!--
-  CA footer, locked to sitemap v11 (CA branch).
-  Mirrors US v11 layout, with CA-specific labels:
-   - "MedMe Care Platform" instead of "Pharmacy EHR"
+  CA footer.
+  Columns: Platform / Resources / Partners / Company.
+  Pharmacy + Customers columns retired 2026-05-29.
+  Under Platform: MedMe Care Platform overview + AI Assistants
+  links retired (the individual modules carry the story).
+  CA-specific labels retained:
    - No Medical Billing Suite link
    - "Provincial Associations" instead of "Pharmacy Associations"
-   - "Banners & Co-ops" subtext under Networks
 -->
 <footer class="site-footer" role="contentinfo">
   <div class="wrap">
@@ -4163,24 +4140,13 @@
         <p>The clinical operating system for Canadian community pharmacy, built so the work pharmacists already do finally gets recognized.</p>
       </div>
       <div class="foot__col">
-        <h4>Pharmacy</h4>
-        <ul>
-          <li><a href="/ca/pharmacy/independents">Independents</a></li>
-          <li><a href="/ca/pharmacy/enterprises">Enterprises</a></li>
-          <li><a href="/ca/pharmacy/networks">Networks</a></li>
-          <li><a href="/ca/pharmacy/specialty">Specialty</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
         <h4>Platform</h4>
         <ul>
-          <li><a href="/ca/platform">MedMe Care Platform</a></li>
           <li><a href="/ca/platform/scheduling-queuing">Scheduling &amp; Queuing</a></li>
           <li><a href="/ca/platform/patient-intake">Patient Intake Form</a></li>
           <li><a href="/ca/platform/assisted-documentation">Assisted Documentation</a></li>
           <li><a href="/ca/platform/messaging-follow-ups">Messaging &amp; Follow-Ups</a></li>
           <li><a href="/ca/platform/ai-clinical-assistant">AI Clinical Assistant</a></li>
-          <li><a href="/ca/platform/ai-assistants">AI Assistants</a></li>
           <li><a href="/ca/platform/pms-integrations">PMS Integrations</a></li>
         </ul>
       </div>
@@ -4209,12 +4175,6 @@
           <li><a href="/company/careers">Career</a></li>
           <li><a href="/ca/contact">Contact</a></li>
           <li><a href="/legal">Legal</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
-        <h4>Customers</h4>
-        <ul>
-          <li><a href="/ca/customers">Case Studies</a></li>
         </ul>
       </div>
     </div>

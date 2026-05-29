@@ -2845,7 +2845,8 @@ page.title: MedMe, Canada Homepage
     margin-top: auto;
     padding-top: 1.5rem;
   }
-  .audience-card__cta .pill { width: 100%; }
+  /* width: 100% override removed so .pill uses its natural auto-width
+     from the global design token. */
   .audience-card ul {
     margin: 0.75rem 0 1.5rem;
     padding: 0;
@@ -3487,12 +3488,6 @@ page.title: MedMe, Canada Homepage
         </div>
         <h3>Patient Concierge</h3>
         <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
-        <ul class="feat-list">
-          <li>Provincial PIN auto-coding from the encounter note</li>
-          <li>Time tracking + modifier rules for incident-to billing</li>
-          <li>Eligibility checks at booking, 24/7 in the background</li>
-          <li>Denial routing back into the queue with the fix highlighted</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform">Learn more</a>
         </div>
@@ -3508,10 +3503,6 @@ page.title: MedMe, Canada Homepage
         </div>
         <h3>MedMe Care Platform</h3>
         <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows, all pharmacy-tuned, no generic-EHR shoehorning.</p>
-        <ul class="feat-list">
-          <li>Pharmacy-specific templates for MedsCheck, Med review, immunizations, POCT</li>
-          <li>Care plans + adherence tracking baked into the encounter</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform">Learn more</a>
         </div>
@@ -3524,10 +3515,6 @@ page.title: MedMe, Canada Homepage
         </div>
         <h3>Clinical Assistant</h3>
         <p>Captures the conversation, drafts the SOAP note, and suggests codes. Pharmacist reviews and signs in seconds.</p>
-        <ul class="feat-list">
-          <li>Pharmacy-specific transcription model</li>
-          <li>One-click sign-off</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform/ai-clinical-assistant">Learn more</a>
         </div>
@@ -3543,10 +3530,6 @@ page.title: MedMe, Canada Homepage
         </div>
         <h3>Scheduler &amp; intake</h3>
         <p>Online booking, walk-in queueing, real-time eligibility, and intake forms that flow into the encounter.</p>
-        <ul class="feat-list">
-          <li>Self-serve booking + automated reminders</li>
-          <li>Pre-visit intake auto-fills from Rx record</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform/scheduling-queuing">Learn more</a>
         </div>
@@ -3559,10 +3542,6 @@ page.title: MedMe, Canada Homepage
         </div>
         <h3>Outcomes &amp; analytics</h3>
         <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive, with the math already done.</p>
-        <ul class="feat-list">
-          <li>Per-store + per-pharmacist productivity dashboards</li>
-          <li>Reimbursement trending + denial root-cause analysis</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform">Learn more</a>
         </div>
@@ -3583,10 +3562,6 @@ page.title: MedMe, Canada Homepage
         </div>
         <h3>Integrations</h3>
         <p>Works with Kroll, Fillware, BD, Telus, Liberty, and the major billing clearinghouses. Open API for everything else.</p>
-        <ul class="feat-list">
-          <li>Native Rx-system + clearinghouse connectors</li>
-          <li>SSO, audit logs, SOC 2 Type II</li>
-        </ul>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform/pms-integrations">Learn more</a>
         </div>
