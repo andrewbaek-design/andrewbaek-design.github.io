@@ -14,15 +14,22 @@
 <style>
   /* ============================================================
      ENTERPRISES sub-page. Leans on the front-page design system
-     (.tile, .tile__head, .h-card, .h-display, .kicker, .hero-pill,
-     .pill, .tile--navy) plus the independents sub-hero pattern.
-     Page-specific bits: network topology hero motion graphic,
-     per-card motion in the Strategic Partner grid, animated tier
-     tiles in the Modular Architecture section, value-blocks on
-     the navy operations band.
+     (.tile, .tile__head, .h-display, .kicker, .pill, .tile--navy)
+     plus the independents sub-hero pattern.
+
+     Hero: A reporting-dashboard mockup sits as a faded background
+     above the headline. Mirrors the Looker-style enterprise
+     reporting view Christine flagged as the visual reference for
+     this page (filter pills, two stat tiles, two pie charts, a
+     monthly bar chart). The mockup fades to transparent at the
+     bottom; the headline rises into that fade via negative margin.
+
+     Sections: Strategic Partnership, Modular Architecture (4
+     tiers), Interoperability and Future-Forward (4 cards), Rollout
+     Playbook (3 case patterns), Navy Operations (3 value blocks).
      ============================================================ */
 
-  /* ====== HERO: stacked (motion graphic above text) ============= */
+  /* ====== HERO: dashboard mockup as faded BG above text ========= */
   .sub-hero {
     background: var(--seashell);
     padding: 2rem 1.5rem 3.5rem;
@@ -35,16 +42,31 @@
     padding-inline: var(--tile-pad-x);
     position: relative;
   }
-  .sub-hero__visual {
+  .sub-hero__bg {
     position: relative;
-    max-width: 1080px;
+    max-width: 1120px;
     margin: 0 auto;
+    /* Fade the bottom 55% of the mockup to transparent so the
+       headline rises out of it cleanly. */
+    -webkit-mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 45%,
+                          rgba(0, 0, 0, 0) 95%);
+            mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 45%,
+                          rgba(0, 0, 0, 0) 95%);
+    pointer-events: none;
   }
   .sub-hero__text {
     text-align: center;
     max-width: 760px;
-    margin: 2.5rem auto 0;
+    /* Negative margin pulls the headline UP into the dashboard's
+       fade zone; the dashboard is set to fade ~45% down so the
+       headline naturally sits in the transparent area. */
+    margin: -140px auto 0;
     position: relative;
+    z-index: 2;
   }
   .sub-hero h1.h-display {
     font-size: clamp(28px, 4.4vw, 54px);
@@ -67,89 +89,274 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-  @media (max-width: 980px) { .sub-hero__text { margin-top: 2rem; } }
-  @media (max-width: 640px) { .sub-hero__text { margin-top: 1.5rem; } }
+  @media (max-width: 980px) {
+    .sub-hero__text { margin-top: -90px; }
+  }
+  @media (max-width: 640px) {
+    .sub-hero__text { margin-top: -60px; }
+  }
 
-  /* ====== HERO NETWORK TOPOLOGY GRAPHIC =========================
-     Central HQ node with six regional store clusters radiating
-     out. Hairline spokes link each cluster to HQ. Matcha pulses
-     travel INWARD (clusters reporting up to HQ) on staggered
-     loops, signalling the cross-network rollup story. Reduced-
-     motion respected via JS pauseAnimations + CSS display:none. */
-  .hero-net {
-    position: relative;
-    width: 100%;
-    max-width: 820px;
-    margin: 0 auto;
-    aspect-ratio: 800 / 440;
+  /* ====== DASHBOARD MOCKUP (decorative) =========================
+     Mirrors the Looker Studio "Pharmacy Network Usage Data" panel
+     Christine referenced in the meeting: filter row + two stat
+     tiles + two donut charts + a monthly bar chart. Subtle
+     animations keep it feeling live without competing with the
+     headline text rising into its fade zone. */
+  .dash {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: 16px;
+    padding: 20px 22px;
+    font-family: var(--font-display);
+    color: var(--indigo);
+    box-shadow: 0 12px 40px rgba(6, 62, 84, 0.06);
+  }
+  .dash__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(6, 62, 84, 0.08);
+  }
+  .dash__title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .dash__brand {
+    display: inline-flex;
+    align-items: center;
+    color: var(--indigo);
+    height: 22px;
+  }
+  .dash__brand svg {
+    height: 22px;
+    width: auto;
     display: block;
   }
-  .hero-net .net-spoke {
-    stroke: rgba(6, 62, 84, 0.16);
-    stroke-width: 1.25;
-    fill: none;
+  /* Filter row: 4 dropdown pills + a yellow "Save Filters" button */
+  .dash__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
   }
-  .hero-net .net-pulse { fill: var(--matcha); }
-  .hero-net .net-cluster circle {
-    fill: var(--white);
-    stroke: rgba(6, 62, 84, 0.14);
-    stroke-width: 1.5;
-  }
-  .hero-net .net-cluster text {
-    fill: var(--indigo);
-    font-family: var(--font-display);
+  .dash__pill {
+    background: rgba(6, 62, 84, 0.05);
+    border: 1px solid rgba(6, 62, 84, 0.1);
+    border-radius: 999px;
+    padding: 6px 14px;
     font-size: 12px;
-    font-weight: 600;
-    text-anchor: middle;
-    dominant-baseline: central;
-    letter-spacing: -0.005em;
+    font-weight: 500;
+    color: var(--indigo);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  .hero-net .net-cluster .net-cluster-count {
-    fill: rgba(6, 62, 84, 0.55);
+  .dash__pill::after {
+    content: "▾";
     font-size: 10px;
+    opacity: 0.5;
+  }
+  .dash__pill-save {
+    background: var(--matcha);
+    color: var(--indigo);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: auto;
+  }
+  /* Top grid: stat tiles left, donut block right */
+  .dash__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .dash__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .dash__stat {
+    background: rgba(6, 62, 84, 0.04);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .dash__stat-label {
+    font-size: 11px;
+    color: rgba(6, 62, 84, 0.55);
+    font-weight: 500;
+    text-transform: none;
+  }
+  .dash__stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--indigo);
+  }
+  .dash__pies {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .dash__pie-block {
+    background: rgba(6, 62, 84, 0.04);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .dash__pie-title {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.65);
+    font-weight: 600;
+  }
+  .dash__pie-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .dash__pie {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+  }
+  .dash__pie circle {
+    fill: transparent;
+    stroke-width: 32;
+    transform-origin: 50px 50px;
+    transform: rotate(-90deg);
+    animation: dash-pie-breathe 6s ease-in-out infinite;
+  }
+  .dash__pie circle:nth-of-type(1) { animation-delay: 0s; }
+  .dash__pie circle:nth-of-type(2) { animation-delay: 0.4s; }
+  .dash__pie circle:nth-of-type(3) { animation-delay: 0.8s; }
+  .dash__pie circle:nth-of-type(4) { animation-delay: 1.2s; }
+  .dash__pie circle:nth-of-type(5) { animation-delay: 1.6s; }
+  @keyframes dash-pie-breathe {
+    0%, 100% { stroke-width: 32; }
+    50%      { stroke-width: 34; }
+  }
+  .dash__pie-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(6, 62, 84, 0.72);
     font-weight: 500;
   }
-  .hero-net .net-hq circle.net-hq__bg {
-    fill: var(--indigo);
-    stroke: var(--indigo);
+  .dash__pie-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
-  .hero-net .net-hq circle.net-hq__ring {
-    fill: none;
-    stroke: var(--matcha);
-    stroke-width: 1.5;
-    transform-box: fill-box;
-    transform-origin: center;
-    opacity: 0;
-    animation: net-hq-ring 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  .dash__pie-legend i {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    display: inline-block;
+    flex-shrink: 0;
   }
-  .hero-net .net-hq text {
-    fill: var(--seashell);
-    font-family: var(--font-display);
-    font-weight: 700;
+  /* Monthly bar chart at the bottom */
+  .dash__chart {
+    background: rgba(6, 62, 84, 0.04);
+    border-radius: 12px;
+    padding: 16px 18px 14px;
+  }
+  .dash__chart-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .dash__chart-title {
     font-size: 13px;
-    text-anchor: middle;
+    font-weight: 600;
+    color: var(--indigo);
   }
-  @keyframes net-hq-ring {
-    0%   { opacity: 0.55; transform: scale(1); }
-    100% { opacity: 0;    transform: scale(2.3); }
+  .dash__chart-legend {
+    display: flex;
+    gap: 14px;
+    font-size: 10px;
+    color: rgba(6, 62, 84, 0.6);
+    font-weight: 500;
   }
+  .dash__chart-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .dash__chart-legend i {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+  .dash__bars {
+    display: flex;
+    align-items: flex-end;
+    height: 96px;
+    gap: 4px;
+  }
+  .dash__bar-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    flex: 1;
+  }
+  .dash__bar {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    animation: dash-bar-rise 4s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  .dash__bar--patients { background: var(--indigo); }
+  .dash__bar--appts    { background: var(--matcha); }
+  @keyframes dash-bar-rise {
+    0%, 100% { transform: scaleY(0.9); }
+    50%      { transform: scaleY(1); }
+  }
+  /* Stagger every group's bar animation so the chart feels alive */
+  .dash__bar-group:nth-child(1)  .dash__bar { animation-delay: 0s; }
+  .dash__bar-group:nth-child(2)  .dash__bar { animation-delay: 0.06s; }
+  .dash__bar-group:nth-child(3)  .dash__bar { animation-delay: 0.12s; }
+  .dash__bar-group:nth-child(4)  .dash__bar { animation-delay: 0.18s; }
+  .dash__bar-group:nth-child(5)  .dash__bar { animation-delay: 0.24s; }
+  .dash__bar-group:nth-child(6)  .dash__bar { animation-delay: 0.30s; }
+  .dash__bar-group:nth-child(7)  .dash__bar { animation-delay: 0.36s; }
+  .dash__bar-group:nth-child(8)  .dash__bar { animation-delay: 0.42s; }
+  .dash__bar-group:nth-child(9)  .dash__bar { animation-delay: 0.48s; }
+  .dash__bar-group:nth-child(10) .dash__bar { animation-delay: 0.54s; }
+  .dash__bar-group:nth-child(11) .dash__bar { animation-delay: 0.60s; }
+  .dash__bar-group:nth-child(12) .dash__bar { animation-delay: 0.66s; }
+  .dash__bar-group:nth-child(13) .dash__bar { animation-delay: 0.72s; }
+  .dash__bar-group:nth-child(14) .dash__bar { animation-delay: 0.78s; }
+  .dash__bar-group:nth-child(15) .dash__bar { animation-delay: 0.84s; }
+  .dash__bar-group:nth-child(16) .dash__bar { animation-delay: 0.90s; }
   @media (prefers-reduced-motion: reduce) {
-    .hero-net .net-hq circle.net-hq__ring,
-    .hero-net .net-pulse { animation: none; opacity: 0; display: none; }
+    .dash__pie circle,
+    .dash__bar { animation: none; }
   }
-  @media (max-width: 980px) {
-    .sub-hero__visual { margin-inline: calc(-1 * var(--tile-pad-x)); }
-    .hero-net .net-cluster .net-cluster-name { font-size: 16px; }
-    .hero-net .net-cluster .net-cluster-count { font-size: 13px; }
-    .hero-net .net-hq text { font-size: 17px; }
+  @media (max-width: 900px) {
+    .dash { padding: 14px 16px; }
+    .dash__grid { grid-template-columns: 1fr; }
+    .dash__pies { grid-template-columns: 1fr 1fr; }
+    .dash__stats { flex-direction: row; }
+    .dash__pill-save { margin-left: 0; }
   }
-  @media (max-width: 700px) {
-    .sub-hero { padding-inline: 0.5rem; }
-    .sub-hero__visual { margin-inline: 0; }
-    .hero-net .net-cluster .net-cluster-name { font-size: 20px; }
-    .hero-net .net-cluster .net-cluster-count { font-size: 15px; }
-    .hero-net .net-hq text { font-size: 21px; }
-    .hero-net .net-cluster circle { stroke-width: 2; }
+  @media (max-width: 640px) {
+    .dash__title { font-size: 13px; }
+    .dash__stat-value { font-size: 26px; }
+    .dash__pie { width: 110px; height: 110px; }
+    .dash__pie-legend { font-size: 11px; }
+    .dash__bars { height: 70px; }
   }
 
   /* ====== STRATEGIC PARTNER: 3-feature card grid w/ per-card motion */
@@ -291,6 +498,8 @@
     border-radius: var(--radius-lg);
     padding: 1.5rem;
     transition: transform 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
   }
   .tier:hover {
     transform: translateY(-3px);
@@ -309,7 +518,15 @@
     font-weight: 600;
     color: var(--indigo);
   }
-  .tier p { margin: 0; font-size: 0.92rem; color: rgba(6, 62, 84, 0.72); line-height: 1.5; }
+  .tier p { margin: 0 0 0.6rem; font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.5; }
+  .tier__detail {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: rgba(6, 62, 84, 0.55);
+    font-family: ui-monospace, "JetBrains Mono", monospace;
+    padding-top: 0.6rem;
+    border-top: 1px dashed rgba(6, 62, 84, 0.1);
+  }
   .tier__motion {
     width: 100%;
     height: 80px;
@@ -446,23 +663,26 @@
     .tm-rpa-sweep { animation: none; opacity: 1; }
   }
 
-  /* ====== INTEROPERABILITY: 3 value blocks (light tile) ========= */
+  /* ====== INTEROPERABILITY (Future-Forward) ===================== */
   .interop-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
-  @media (max-width: 900px) { .interop-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .interop-grid { grid-template-columns: 1fr; } }
   .interop-card {
     background: var(--white);
     border: 1px solid rgba(6, 62, 84, 0.08);
     border-radius: var(--radius-lg);
-    padding: 1.75rem;
+    padding: 1.5rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   .interop-card__badge {
     display: inline-flex;
     align-items: center;
+    align-self: flex-start;
     gap: 6px;
     background: rgba(195, 196, 48, 0.12);
     color: var(--indigo);
@@ -475,122 +695,95 @@
   }
   .interop-card h3 {
     margin: 0 0 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--indigo);
-  }
-  .interop-card p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; }
-
-  /* ====== NAVY STORY (enterprise operations) =================== */
-  .tile--navy { position: relative; overflow: hidden; }
-  .tile--navy .tile__inner { position: relative; z-index: 1; }
-  .story-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-  @media (max-width: 980px) { .story-grid { grid-template-columns: 1fr; gap: 2rem; } }
-  .story-quote {
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2vw, 1.6rem);
-    line-height: 1.4;
-    font-weight: 500;
-    color: var(--seashell);
     letter-spacing: -0.012em;
-    margin: 1rem 0 1.25rem;
   }
-  .story-quote p { margin: 0; }
-  .story-attribution {
-    font-size: 0.875rem;
-    color: rgba(250, 249, 245, 0.60);
-    margin: 0;
-  }
-  .story-cta { margin-top: 1.75rem; }
-  .value-blocks {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .interop-card p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; font-size: 0.95rem; }
+  .interop-footer {
+    margin-top: 2.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--indigo);
+    border: 1px solid rgba(195, 196, 48, 0.35);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     gap: 1.25rem;
   }
-  @media (max-width: 600px) { .value-blocks { grid-template-columns: 1fr; } }
-  .value-block {
-    background: rgba(250, 249, 245, 0.06);
-    border: 1px solid rgba(250, 249, 245, 0.12);
-    border-radius: 14px;
-    padding: 1.25rem;
-    transition: border-color 0.6s ease, box-shadow 0.6s ease;
-    animation: value-block-light 6s ease-in-out infinite;
-  }
-  .value-block:nth-child(1) { animation-delay: 0s; }
-  .value-block:nth-child(2) { animation-delay: 1.5s; }
-  .value-block:nth-child(3) { animation-delay: 3s; }
-  .value-block:nth-child(4) { animation-delay: 4.5s; }
-  @keyframes value-block-light {
-    0%, 18%, 100% { border-color: rgba(250, 249, 245, 0.12); box-shadow: none; }
-    6%, 12%       { border-color: var(--matcha); box-shadow: 0 0 0 1px rgba(195, 196, 48, 0.35), 0 8px 28px rgba(195, 196, 48, 0.18); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .value-block { animation: none; }
-  }
-  .value-block__icon {
-    display: inline-flex;
-    width: 32px;
-    height: 32px;
-    align-items: center;
-    justify-content: center;
-    background: rgba(195, 196, 48, 0.18);
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-  }
-  .value-block__icon svg { width: 18px; height: 18px; stroke: var(--matcha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .value-block h4 {
-    margin: 0 0 0.4rem;
+  .interop-footer__text {
+    margin: 0;
     color: var(--seashell);
     font-size: 1.05rem;
-    font-weight: 600;
+    font-weight: 500;
+    max-width: 640px;
+    text-wrap: pretty;
   }
-  .value-block p {
-    margin: 0;
-    color: rgba(250, 249, 245, 0.65);
-    font-size: 0.9rem;
-    line-height: 1.5;
+  /* Scoped pill override: the .pill--solid default is dark-on-light
+     (indigo bg, seashell text). Inside the navy interop-footer it
+     should match the .tile--navy treatment, matcha fill on dark. */
+  .interop-footer .pill--solid {
+    background: var(--matcha);
+    color: var(--indigo);
+    border-color: var(--matcha);
+    box-shadow: none;
+  }
+  .interop-footer .pill--solid:hover {
+    background: transparent;
+    color: var(--matcha);
+    border-color: var(--matcha);
   }
 
-  /* Faint navy bg pattern: dot grid + diagonal scan wave. */
-  .story-bg-pattern {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.08) 1.5px, transparent 1.6px);
-    background-size: 38px 38px;
-    background-position: center;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  /* ====== ROLLOUT PLAYBOOK (case patterns) ====================== */
+  .rollout-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
   }
-  .story-bg-pattern::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.32) 1.8px, transparent 1.9px);
-    background-size: 38px 38px;
-    background-position: center;
-    -webkit-mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
-            mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
-    -webkit-mask-size: 220% 220%;
-            mask-size: 220% 220%;
-    -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-    animation: ent-dot-scan 7s linear infinite;
+  @media (max-width: 900px) { .rollout-grid { grid-template-columns: 1fr; } }
+  .rollout-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
   }
-  @keyframes ent-dot-scan {
-    from { -webkit-mask-position: 160% 160%; mask-position: 160% 160%; }
-    to   { -webkit-mask-position: -60% -60%; mask-position: -60% -60%; }
+  .rollout-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
   }
-  @media (prefers-reduced-motion: reduce) {
-    .story-bg-pattern::before { animation: none; opacity: 0; }
+  .rollout-card__shape {
+    width: 100%;
+    height: 56px;
+    margin-bottom: 1.1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
   }
+  .rollout-card__shape svg { width: 100%; height: 100%; display: block; }
+  .rollout-card__shape .rs-dot { fill: var(--matcha); }
+  .rollout-card__shape .rs-dim { fill: rgba(195, 196, 48, 0.25); }
+  .rollout-card__shape .rs-line { stroke: rgba(6, 62, 84, 0.12); stroke-width: 1; fill: none; }
+  .rollout-card h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .rollout-card__sub {
+    margin: 0 0 0.75rem;
+    font-size: 0.78rem;
+    color: rgba(6, 62, 84, 0.55);
+    font-family: ui-monospace, "JetBrains Mono", monospace;
+    letter-spacing: 0.02em;
+  }
+  .rollout-card p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; font-size: 0.95rem; }
+
 </style>
 </head>
 <body>
@@ -598,86 +791,102 @@
 
 <main id="main">
 
-<!-- ============= 1. SUB-HERO (stacked, network topology above text) ============= -->
+<!-- ============= 1. SUB-HERO (dashboard mockup as faded BG above text) ============= -->
 <section class="sub-hero" aria-label="Hero">
   <div class="sub-hero__inner">
-    <div class="sub-hero__visual">
-      <svg class="hero-net" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagram: head office at the center, connected to six regional pharmacy clusters: Northeast, Mid-Atlantic, Southeast, Midwest, Mountain, and West. Data flows inward from each region to head office.">
-
-        <!-- Spokes from each regional cluster to HQ -->
-        <line class="net-spoke" x1="400" y1="220" x2="610" y2="120" />
-        <line class="net-spoke" x1="400" y1="220" x2="660" y2="270" />
-        <line class="net-spoke" x1="400" y1="220" x2="540" y2="380" />
-        <line class="net-spoke" x1="400" y1="220" x2="260" y2="380" />
-        <line class="net-spoke" x1="400" y1="220" x2="140" y2="270" />
-        <line class="net-spoke" x1="400" y1="220" x2="190" y2="120" />
-
-        <!-- Matcha pulses traveling INWARD (clusters reporting to HQ) -->
-        <circle r="4" cx="610" cy="120" class="net-pulse">
-          <animateMotion dur="2.6s" repeatCount="indefinite" begin="0s"   path="M 0,0 L -210,100" />
-          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.6s" repeatCount="indefinite" begin="0s" />
-        </circle>
-        <circle r="4" cx="660" cy="270" class="net-pulse">
-          <animateMotion dur="2.6s" repeatCount="indefinite" begin="0.4s" path="M 0,0 L -260,-50" />
-          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.6s" repeatCount="indefinite" begin="0.4s" />
-        </circle>
-        <circle r="4" cx="540" cy="380" class="net-pulse">
-          <animateMotion dur="2.6s" repeatCount="indefinite" begin="0.8s" path="M 0,0 L -140,-160" />
-          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.6s" repeatCount="indefinite" begin="0.8s" />
-        </circle>
-        <circle r="4" cx="260" cy="380" class="net-pulse">
-          <animateMotion dur="2.6s" repeatCount="indefinite" begin="1.2s" path="M 0,0 L 140,-160" />
-          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.6s" repeatCount="indefinite" begin="1.2s" />
-        </circle>
-        <circle r="4" cx="140" cy="270" class="net-pulse">
-          <animateMotion dur="2.6s" repeatCount="indefinite" begin="1.6s" path="M 0,0 L 260,-50" />
-          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.6s" repeatCount="indefinite" begin="1.6s" />
-        </circle>
-        <circle r="4" cx="190" cy="120" class="net-pulse">
-          <animateMotion dur="2.6s" repeatCount="indefinite" begin="2.0s" path="M 0,0 L 210,100" />
-          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.6s" repeatCount="indefinite" begin="2.0s" />
-        </circle>
-
-        <!-- Six regional clusters -->
-        <g class="net-cluster">
-          <circle cx="610" cy="120" r="20" />
-          <text x="610" y="86"  class="net-cluster-name">Northeast</text>
-          <text x="610" y="102" class="net-cluster-count">412 stores</text>
-        </g>
-        <g class="net-cluster">
-          <circle cx="660" cy="270" r="20" />
-          <text x="660" y="304" class="net-cluster-name">Mid-Atlantic</text>
-          <text x="660" y="320" class="net-cluster-count">298 stores</text>
-        </g>
-        <g class="net-cluster">
-          <circle cx="540" cy="380" r="20" />
-          <text x="540" y="414" class="net-cluster-name">Southeast</text>
-          <text x="540" y="430" class="net-cluster-count">521 stores</text>
-        </g>
-        <g class="net-cluster">
-          <circle cx="260" cy="380" r="20" />
-          <text x="260" y="414" class="net-cluster-name">Midwest</text>
-          <text x="260" y="430" class="net-cluster-count">347 stores</text>
-        </g>
-        <g class="net-cluster">
-          <circle cx="140" cy="270" r="20" />
-          <text x="140" y="304" class="net-cluster-name">Mountain</text>
-          <text x="140" y="320" class="net-cluster-count">196 stores</text>
-        </g>
-        <g class="net-cluster">
-          <circle cx="190" cy="120" r="20" />
-          <text x="190" y="86"  class="net-cluster-name">West</text>
-          <text x="190" y="102" class="net-cluster-count">385 stores</text>
-        </g>
-
-        <!-- Central HQ (drawn last so it sits on top) -->
-        <g class="net-hq">
-          <circle class="net-hq__ring" cx="400" cy="220" r="62" />
-          <circle class="net-hq__bg"   cx="400" cy="220" r="62" />
-          <text x="400" y="214" text-anchor="middle">Head</text>
-          <text x="400" y="232" text-anchor="middle">Office</text>
-        </g>
-      </svg>
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="dash">
+        <div class="dash__head">
+          <span class="dash__title">Pharmacy Network Usage Data</span>
+          <span class="dash__brand">{{> partials/logo-medme }}</span>
+        </div>
+        <div class="dash__filters">
+          <span class="dash__pill">Region</span>
+          <span class="dash__pill">Jan 2026, May 2026</span>
+          <span class="dash__pill">Created By</span>
+          <span class="dash__pill">Service Type</span>
+          <span class="dash__pill-save">Save Filters</span>
+        </div>
+        <div class="dash__grid">
+          <div class="dash__stats">
+            <div class="dash__stat">
+              <span class="dash__stat-label"># of Appointments</span>
+              <span class="dash__stat-value">2,981</span>
+            </div>
+            <div class="dash__stat">
+              <span class="dash__stat-label"># of Patients</span>
+              <span class="dash__stat-value">3,207</span>
+            </div>
+          </div>
+          <div class="dash__pies">
+            <div class="dash__pie-block">
+              <span class="dash__pie-title">Appointments by Region</span>
+              <div class="dash__pie-row">
+                <svg viewBox="0 0 100 100" class="dash__pie">
+                  <circle cx="50" cy="50" r="16" stroke="#C3C430" stroke-dasharray="35 100"          stroke-dashoffset="0"   />
+                  <circle cx="50" cy="50" r="16" stroke="#063e54" stroke-dasharray="20 100"          stroke-dashoffset="-35" />
+                  <circle cx="50" cy="50" r="16" stroke="#8a8b1c" stroke-dasharray="18 100"          stroke-dashoffset="-55" />
+                  <circle cx="50" cy="50" r="16" stroke="#1c5f7a" stroke-dasharray="15 100"          stroke-dashoffset="-73" />
+                  <circle cx="50" cy="50" r="16" stroke="#92a4ad" stroke-dasharray="12 100"          stroke-dashoffset="-88" />
+                </svg>
+                <div class="dash__pie-legend">
+                  <span><i style="background:#C3C430"></i>Northeast</span>
+                  <span><i style="background:#063e54"></i>Mid-Atlantic</span>
+                  <span><i style="background:#8a8b1c"></i>Southeast</span>
+                  <span><i style="background:#1c5f7a"></i>Midwest</span>
+                  <span><i style="background:#92a4ad"></i>West</span>
+                </div>
+              </div>
+            </div>
+            <div class="dash__pie-block">
+              <span class="dash__pie-title">Patients by Region</span>
+              <div class="dash__pie-row">
+                <svg viewBox="0 0 100 100" class="dash__pie">
+                  <circle cx="50" cy="50" r="16" stroke="#C3C430" stroke-dasharray="30 100"          stroke-dashoffset="0"   />
+                  <circle cx="50" cy="50" r="16" stroke="#063e54" stroke-dasharray="24 100"          stroke-dashoffset="-30" />
+                  <circle cx="50" cy="50" r="16" stroke="#8a8b1c" stroke-dasharray="20 100"          stroke-dashoffset="-54" />
+                  <circle cx="50" cy="50" r="16" stroke="#1c5f7a" stroke-dasharray="14 100"          stroke-dashoffset="-74" />
+                  <circle cx="50" cy="50" r="16" stroke="#92a4ad" stroke-dasharray="12 100"          stroke-dashoffset="-88" />
+                </svg>
+                <div class="dash__pie-legend">
+                  <span><i style="background:#C3C430"></i>Northeast</span>
+                  <span><i style="background:#063e54"></i>Mid-Atlantic</span>
+                  <span><i style="background:#8a8b1c"></i>Southeast</span>
+                  <span><i style="background:#1c5f7a"></i>Midwest</span>
+                  <span><i style="background:#92a4ad"></i>West</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dash__chart">
+          <div class="dash__chart-head">
+            <span class="dash__chart-title">Total Appointments</span>
+            <div class="dash__chart-legend">
+              <span><i style="background:var(--indigo)"></i># of Patients</span>
+              <span><i style="background:var(--matcha)"></i># of Appointments</span>
+            </div>
+          </div>
+          <div class="dash__bars">
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:42%"></span><span class="dash__bar dash__bar--appts" style="height:56%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:54%"></span><span class="dash__bar dash__bar--appts" style="height:68%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:38%"></span><span class="dash__bar dash__bar--appts" style="height:50%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:60%"></span><span class="dash__bar dash__bar--appts" style="height:78%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:48%"></span><span class="dash__bar dash__bar--appts" style="height:62%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:66%"></span><span class="dash__bar dash__bar--appts" style="height:84%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:52%"></span><span class="dash__bar dash__bar--appts" style="height:70%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:72%"></span><span class="dash__bar dash__bar--appts" style="height:92%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:58%"></span><span class="dash__bar dash__bar--appts" style="height:74%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:64%"></span><span class="dash__bar dash__bar--appts" style="height:82%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:46%"></span><span class="dash__bar dash__bar--appts" style="height:58%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:68%"></span><span class="dash__bar dash__bar--appts" style="height:86%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:54%"></span><span class="dash__bar dash__bar--appts" style="height:68%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:62%"></span><span class="dash__bar dash__bar--appts" style="height:80%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:48%"></span><span class="dash__bar dash__bar--appts" style="height:60%"></span></div>
+            <div class="dash__bar-group"><span class="dash__bar dash__bar--patients" style="height:70%"></span><span class="dash__bar dash__bar--appts" style="height:90%"></span></div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="sub-hero__text">
       <h1 class="h-display">Your strategic partner<br>for clinical services at scale.</h1>
@@ -695,7 +904,7 @@
     <div class="tile__head">
       <span class="kicker">Strategic Partnership, Not Vendor Relationship</span>
       <h2 class="h-display">Built end-to-end for pharmacy.<br>AI-native by design. Modular by intention.</h2>
-      <p class="lead">We have operated alongside enterprise pharmacy networks for years. The platform reflects that. The relationship does too: dedicated implementation, clinical, and engineering leads on every enterprise account, with a roadmap shaped by enterprise customer input.</p>
+      <p class="lead">We have operated alongside enterprise pharmacy networks for years, and the platform reflects that. The relationship does too: dedicated implementation, clinical, and engineering leads on every enterprise account, with a roadmap shaped by enterprise customer input.</p>
     </div>
     <div class="feature-grid">
       <article class="feature">
@@ -734,20 +943,20 @@
           <span class="tick"></span><span class="tick-line"></span>
           <span class="tick"></span>
         </div>
-        <h3>Operating experience across enterprise pharmacy</h3>
-        <p>The only platform with a working playbook for clinical services rollout across the largest pharmacy networks in North America.</p>
+        <h3>The enterprise playbook, already written</h3>
+        <p>The only platform with a working playbook for clinical services rollout across the largest pharmacy networks in North America, refined across years of enterprise launches.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 3. MODULAR ARCHITECTURE (4 integration tiers) ============= -->
+<!-- ============= 3. MODULAR ARCHITECTURE (4 integration tiers, expanded copy) ============= -->
 <section class="tile tile--light" aria-label="Modular architecture">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Modular Architecture</span>
-      <h2 class="h-display">Adopt what you need.<br>Integrate with what you have.</h2>
-      <p class="lead">MedMe is built API-first with multiple integration tiers, so enterprises can adopt specific modules without replacing the rest of their stack.</p>
+      <h2 class="h-display">Adopt what you need.<br>Integrate with what you already run.</h2>
+      <p class="lead">MedMe is built API-first across four integration tiers, so enterprises can adopt specific modules without replacing the rest of their stack. Pick the tier that fits each system you connect.</p>
     </div>
     <div class="tier-grid">
       <article class="tier">
@@ -758,8 +967,9 @@
           <span class="tm-embed-row"></span>
         </div>
         <div class="tier__num">Tier 01</div>
-        <h3>Embedded UI</h3>
-        <p>iframe, webview, SDKs. Zero-touch deployment.</p>
+        <h3>Drop MedMe into your existing UI</h3>
+        <p>Iframe, webview, and SDK embedding so the platform shows up inside the tools your pharmacists already open every day. Zero-touch deployment, no separate login.</p>
+        <span class="tier__detail">iframe, webview, JS SDK</span>
       </article>
       <article class="tier">
         <div class="tier__motion tm-api" aria-hidden="true">
@@ -768,8 +978,9 @@
           <div>&nbsp;&nbsp;"status":<span class="tm-api-cursor"></span></div>
         </div>
         <div class="tier__num">Tier 02</div>
-        <h3>Application APIs</h3>
-        <p>REST, FHIR, HL7 v2, webhooks. Modern connectivity.</p>
+        <h3>Integrate through modern APIs</h3>
+        <p>REST and FHIR endpoints, HL7 v2 messages, webhooks, and a documented developer portal. Build straight against the same APIs the product itself uses.</p>
+        <span class="tier__detail">REST, FHIR, HL7 v2, webhooks</span>
       </article>
       <article class="tier">
         <div class="tier__motion tm-data" aria-hidden="true">
@@ -785,8 +996,9 @@
           </div>
         </div>
         <div class="tier__num">Tier 03</div>
-        <h3>Data feeds</h3>
-        <p>Real-time data lake, SQL, CSV exports, SFTP.</p>
+        <h3>Stream data into your warehouse</h3>
+        <p>Real-time data lake, scheduled SQL exports, CSV, and SFTP. Pipe clinical and operational data into your existing reporting stack so head office sees one source of truth.</p>
+        <span class="tier__detail">Data lake, SQL, CSV, SFTP</span>
       </article>
       <article class="tier">
         <div class="tier__motion tm-rpa" aria-hidden="true">
@@ -798,84 +1010,128 @@
           <div class="tm-rpa-sweep"></div>
         </div>
         <div class="tier__num">Tier 04</div>
-        <h3>Legacy systems</h3>
-        <p>Admin Clerk uses RPA to connect to PMS without APIs.</p>
+        <h3>Connect even where no API exists</h3>
+        <p>Our Admin Clerk agent uses RPA to operate against PMS, payer portals, and legacy systems that were never designed for integration. If a human can use it, the agent can too.</p>
+        <span class="tier__detail">RPA, virtual agents, screen automation</span>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 4. INTEROPERABILITY (3 value blocks, light) ============= -->
-<section class="tile tile--light" aria-label="Interoperability">
+<!-- ============= 4. INTEROPERABILITY (future-forward, 4 cards) ============= -->
+<section class="tile tile--light" aria-label="Interoperability and future-forward">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Interoperable Pharmacy EHR</span>
-      <h2 class="h-display">Built for the next generation<br>of pharmacy interoperability.</h2>
-      <p class="lead">MedMe is the pharmacy clinical services platform being deployed as an interoperable EHR under federally funded rural health programs, with a Surescripts QHIN integration in active development, supporting medication history retrieval at point of care.</p>
+      <span class="kicker">Interoperability and Future-Forward</span>
+      <h2 class="h-display">Built for what enterprise pharmacy<br>is becoming next.</h2>
+      <p class="lead">Interoperability is not a settled requirement for most enterprises yet. For the ones thinking ahead, MedMe is already deployed as an interoperable pharmacy EHR, federated through QHIN, and in active early-state implementations of the federal Rural Health Transformation Program.</p>
     </div>
     <div class="interop-grid">
       <article class="interop-card">
         <span class="interop-card__badge">QHIN</span>
         <h3>QHIN-integrated</h3>
-        <p>Surescripts integration in active development, pulling federated medication history into the clinical workflow.</p>
+        <p>Federated medication history retrieval at point of care, through a Qualified Health Information Network exchange. The pharmacist sees the patient's full medication picture, not just what your PMS knows.</p>
       </article>
       <article class="interop-card">
         <span class="interop-card__badge">RHTP</span>
         <h3>RHTP-ready</h3>
-        <p>Deployed as the interoperable EHR for federally funded Rural Health Transformation Program implementations.</p>
+        <p>Deployed as the interoperable pharmacy EHR inside early-state implementations of the federally funded Rural Health Transformation Program. Built to scale to the next states approving funding.</p>
       </article>
       <article class="interop-card">
         <span class="interop-card__badge">FHIR</span>
-        <h3>FHIR-native</h3>
-        <p>Structured clinical data exchange built around FHIR, ready for the interoperability requirements of every payer and program.</p>
+        <h3>FHIR-native data model</h3>
+        <p>Structured clinical data exchange built around FHIR. Ready for the interoperability requirements of every payer, state HIE, and reporting program.</p>
+      </article>
+      <article class="interop-card">
+        <span class="interop-card__badge">PARTNERSHIPS</span>
+        <h3>In partnership with leading pharmacy associations</h3>
+        <p>Working alongside national pharmacy associations to define what a pharmacy EHR should mean for US community pharmacy. Endorsed by associations across multiple states.</p>
+      </article>
+    </div>
+    <div class="interop-footer">
+      <p class="interop-footer__text">Thinking about interoperability, QHIN, or how to take part in a Rural Health Transformation Program implementation? Talk to us.</p>
+      <a class="pill pill--solid" href="/us/contact">Talk to our enterprise team <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. ROLLOUT PLAYBOOK (case patterns) ============= -->
+<section class="tile tile--light" aria-label="Rollout playbook">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Rollout Playbook</span>
+      <h2 class="h-display">Three rollout patterns,<br>tuned to how your network actually moves.</h2>
+      <p class="lead">We have rolled out clinical services platforms across enterprise pharmacy networks in three distinct ways, from a single-state pilot to a thousand-store cutover in a single weekend. Pick the pattern that fits your change-management appetite.</p>
+    </div>
+    <div class="rollout-grid">
+      <article class="rollout-card">
+        <div class="rollout-card__shape" aria-hidden="true">
+          <svg viewBox="0 0 200 56" preserveAspectRatio="xMidYMid meet">
+            <line class="rs-line" x1="10" y1="28" x2="190" y2="28" />
+            <circle class="rs-dot" cx="30" cy="28" r="6" />
+            <circle class="rs-dim" cx="60" cy="28" r="4" />
+            <circle class="rs-dim" cx="90" cy="28" r="4" />
+            <circle class="rs-dim" cx="120" cy="28" r="4" />
+            <circle class="rs-dim" cx="150" cy="28" r="4" />
+            <circle class="rs-dim" cx="180" cy="28" r="4" />
+          </svg>
+        </div>
+        <h3>Single-state pilot</h3>
+        <p class="rollout-card__sub">Lowest change-management lift</p>
+        <p>Stand up MedMe in one state or one operating region first. Validate the clinical workflow, the billing posture, and the patient-facing experience before any wider rollout decision gets made.</p>
+      </article>
+      <article class="rollout-card">
+        <div class="rollout-card__shape" aria-hidden="true">
+          <svg viewBox="0 0 200 56" preserveAspectRatio="xMidYMid meet">
+            <line class="rs-line" x1="10" y1="28" x2="190" y2="28" />
+            <circle class="rs-dot" cx="30" cy="28" r="6" />
+            <circle class="rs-dot" cx="60" cy="28" r="6" />
+            <circle class="rs-dot" cx="90" cy="28" r="6" />
+            <circle class="rs-dim" cx="120" cy="28" r="4" />
+            <circle class="rs-dim" cx="150" cy="28" r="4" />
+            <circle class="rs-dim" cx="180" cy="28" r="4" />
+          </svg>
+        </div>
+        <h3>Phased state-by-state</h3>
+        <p class="rollout-card__sub">Steady rollout, predictable load</p>
+        <p>Sequence the rollout state by state, region by region. Each wave benefits from the playbook the previous wave wrote. Operations, training, and clinical configuration move in lockstep with your team.</p>
+      </article>
+      <article class="rollout-card">
+        <div class="rollout-card__shape" aria-hidden="true">
+          <svg viewBox="0 0 200 56" preserveAspectRatio="xMidYMid meet">
+            <line class="rs-line" x1="10" y1="28" x2="190" y2="28" />
+            <circle class="rs-dot" cx="30" cy="28" r="6" />
+            <circle class="rs-dot" cx="60" cy="28" r="6" />
+            <circle class="rs-dot" cx="90" cy="28" r="6" />
+            <circle class="rs-dot" cx="120" cy="28" r="6" />
+            <circle class="rs-dot" cx="150" cy="28" r="6" />
+            <circle class="rs-dot" cx="180" cy="28" r="6" />
+          </svg>
+        </div>
+        <h3>Big-bang network cutover</h3>
+        <p class="rollout-card__sub">All-network at once</p>
+        <p>For the networks that want one date on the calendar: every store on the new platform on the same weekend. We have delivered this across networks of more than one thousand locations.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 5. NAVY STORY (enterprise operations + quote + value blocks) ============= -->
-<section class="tile tile--navy" aria-label="Built to operate at enterprise scale">
-  <div class="story-bg-pattern" aria-hidden="true"></div>
-  <div class="tile__inner">
-    <div class="story-grid">
-      <div>
-        <h2 class="kicker">Built to Operate at Enterprise Scale</h2>
-        <blockquote class="story-quote"><p>"MedMe didn't sell us software. They embedded with our clinical strategy team and built the rollout playbook with us, store by store, state by state."</p></blockquote>
-        <p class="story-attribution">Enterprise pharmacy network, North America</p>
-        <div class="story-cta">
-          <a class="pill pill--solid" href="/us/contact">Talk to our enterprise team <span class="arrow">→</span></a>
-        </div>
-      </div>
-      <div class="value-blocks">
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-          </span>
-          <h4>SOC 2 Type II, HIPAA</h4>
-          <p>Full compliance posture. BAA, DPA, zero-data-retention agreements with AI vendors.</p>
-        </div>
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h12"/><path d="M17 18l3 3 3-3"/></svg>
-          </span>
-          <h4>Pilot to state-by-state rollout</h4>
-          <p>Proven rollout methodology. Change management, clinical configuration, IT integration handled in lockstep with your team.</p>
-        </div>
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><circle cx="17" cy="6" r="2"/><path d="M17 14a3 3 0 0 1 3 3v2"/></svg>
-          </span>
-          <h4>Dedicated enterprise team</h4>
-          <p>Strategic account manager, clinical program lead, solutions engineer, and direct executive escalation.</p>
-        </div>
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-          </span>
-          <h4>Roadmap influence</h4>
-          <p>Quarterly roadmap reviews with enterprise customers. Your priorities shape the product.</p>
-        </div>
-      </div>
+<!-- ============= 6. CLOSING CTA (navy, centered, pulse-rings motion) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Talk to our enterprise team">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Get Started</span>
+      <h2 class="h-display">See how MedMe scales<br>with your network.</h2>
+      <p class="lead">30-minute conversation with our enterprise team. We will map your existing technology stack, payer relationships, and clinical service lines, and propose an implementation that fits your fiscal year.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Talk to our enterprise team <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -883,29 +1139,6 @@
 </main>
 
 {{> partials/footer-us }}
-<script>
-  /* Reduced-motion guard for SMIL animations in the hero network
-     graphic. CSS hides .net-pulse via display:none under
-     prefers-reduced-motion, but SMIL keeps the timeline running.
-     pauseAnimations() halts it entirely. */
-  (function () {
-    if (!window.matchMedia) return;
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function apply() {
-      if (!mq.matches) return;
-      document.querySelectorAll('.hero-net').forEach(function (svg) {
-        if (typeof svg.pauseAnimations === 'function') svg.pauseAnimations();
-      });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', apply);
-    } else {
-      apply();
-    }
-    if (mq.addEventListener) mq.addEventListener('change', apply);
-    else if (mq.addListener) mq.addListener(apply);
-  })();
-</script>
 <script src="/assets/site.js" defer></script>
 </body>
 </html>
