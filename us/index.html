@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=52">
+<link rel="stylesheet" href="/assets/brand.css?v=55">
 
 <script type="application/ld+json">
 {
@@ -200,7 +200,8 @@
   }
   .hero-end h1 {
     font-family: var(--font-display);
-    font-weight: 700;
+    /* Match the section .h-display weight (600) — was 700. */
+    font-weight: 600;
     font-size: clamp(28px, 4.4vw, 54px);
     line-height: 1.08;
     letter-spacing: -0.028em;
@@ -2368,6 +2369,154 @@
   @media (max-width: 560px) {
     .how-grid { grid-template-columns: 1fr; }
   }
+  /* 6-column variant for the Clinical Journey workflow (Schedule →
+     Intake → Consult → Document → Follow-up → Bill). Steps down to
+     3 cols on tablets, 2 on small tablets, 1 on phones. */
+  .how-grid--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.75rem; }
+  @media (max-width: 1100px) { .how-grid--6 { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 700px)  { .how-grid--6 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 460px)  { .how-grid--6 { grid-template-columns: 1fr; } }
+
+  /* 4-column tile-grid for the Segments + AI Agents sections.
+     (The brand.css base only ships --2 and --3 variants.) */
+  .tile-grid--4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
+  @media (max-width: 1100px) { .tile-grid--4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .tile-grid--4 { grid-template-columns: 1fr; } }
+
+  /* Segment + AI tag pills — small matcha-tinted chip at the top of
+     each card. Title Case (no uppercase per the site-wide rule). */
+  .seg-tag, .ai-tag {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(195, 196, 48, 0.18);
+    color: var(--indigo);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.9rem;
+  }
+  .ai-tag {
+    background: rgba(6, 62, 84, 0.06);
+    color: var(--indigo-80);
+  }
+
+  /* Segment card — anchor element styled as a card. Hover state
+     plays nicely with the .h-card base hover-lift. */
+  a.segment-card {
+    text-decoration: none;
+    color: var(--indigo);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  a.segment-card h3 { margin: 0; }
+  /* Hairline divider between heading and body copy on each segment. */
+  a.segment-card p {
+    margin: 0;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--indigo-08);
+    color: var(--indigo-80);
+  }
+  a.segment-card .alink { margin-top: auto; }
+
+  /* Segment icon — 44×44 rounded square with the seg-tag matcha tint
+     and the indigo stroke icon centered inside. Sits at the top of
+     each card above the segment tag pill. */
+  .segment-card__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(195, 196, 48, 0.18);
+    color: var(--indigo);
+    margin-bottom: 0.85rem;
+    flex-shrink: 0;
+  }
+  .segment-card__icon svg { width: 24px; height: 24px; display: block; }
+
+  /* Bottom-anchored pill button on each segment card. Inherits the
+     global .pill .pill--solid token; margin-top:auto pushes it to
+     the very bottom of the flex column so all 4 cards' buttons
+     baseline-align regardless of how long each body paragraph is. */
+  .segment-card__cta {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  /* AI-card navy treatment — applied per-box (.h-card--navy) so only
+     the cards turn navy, NOT the surrounding light tile. Tint hooks
+     for tag pill + body text inherit from the dark-card token set. */
+  .h-card.h-card--navy {
+    background: var(--indigo-95);
+    border-color: rgba(250, 249, 245, 0.10);
+    color: var(--seashell);
+  }
+  .h-card.h-card--navy h3 { color: var(--seashell); }
+  .h-card.h-card--navy p  { color: rgba(250, 249, 245, 0.78); }
+  .h-card.h-card--navy .ai-tag {
+    background: rgba(250, 249, 245, 0.10);
+    color: rgba(250, 249, 245, 0.85);
+  }
+  .h-card.h-card--navy .ai-card__icon {
+    background: rgba(195, 196, 48, 0.18);
+    color: var(--matcha);
+  }
+  /* AI-card icon container — same 44×44 footprint as the segment
+     icon, themed for the dark surface. */
+  .ai-card__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(6, 62, 84, 0.06);
+    color: var(--indigo);
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+  .ai-card__icon svg { width: 24px; height: 24px; display: block; }
+
+  /* AI cards become a flex column so the .ai-card__cta pill can
+     push to the bottom (margin-top: auto), keeping all three CTAs
+     baseline-aligned regardless of how long each paragraph runs. */
+  .ai-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .ai-card__cta {
+    align-self: flex-start;
+    margin-top: auto;          /* pushes pill to the bottom of the card */
+    text-decoration: none;
+  }
+  /* Inside a navy card, the indigo pill bg disappears against the
+     navy surface, so flip primary pills to matcha-on-indigo. */
+  .h-card--navy .pill--solid,
+  .h-card--navy .pill--solid:visited {
+    background: var(--matcha);
+    color: var(--indigo);
+    border-color: var(--matcha);
+  }
+  .h-card--navy .pill--solid:hover {
+    background: transparent;
+    color: var(--matcha);
+    border-color: var(--matcha);
+  }
+
+  /* "(AI Scribe)" suffix on the AI Clinical Assistant heading —
+     smaller, lighter, matcha-tinted so it reads as an alias and
+     doesn't compete with the primary product name. */
+  .ai-card__alias {
+    display: inline-block;
+    margin-left: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--matcha);
+    letter-spacing: 0;
+    vertical-align: middle;
+  }
   .how-step__num {
     width: 32px; height: 32px;
     border-radius: 50%;
@@ -2382,7 +2531,8 @@
 
   /* ====== CALCULATOR widget ====== */
   .calc-card {
-    max-width: 720px;
+    /* Full content-width — was capped at 720px. Now fills the .tile__inner. */
+    width: 100%;
     margin: 0 auto;
     background: var(--white);
     border: 1px solid var(--hairline);
@@ -2390,7 +2540,30 @@
     padding: clamp(1.5rem, 3vw, 2.5rem);
     text-align: left;
   }
-  .calc-card__field { margin-bottom: 1rem; }
+  /* 2-column split: input fields on the left, result + CTA on the right. */
+  .calc-card--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 2.5rem 3rem;
+    align-items: center;
+    padding: clamp(2rem, 3.5vw, 3rem);
+  }
+  .calc-card__inputs { display: flex; flex-direction: column; gap: 1rem; }
+  .calc-card__output {
+    display: flex; flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+  .calc-card__cta { margin: 0; }
+  @media (max-width: 800px) {
+    .calc-card--split {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .calc-card__output { align-items: stretch; text-align: center; }
+    .calc-card__cta { align-self: center; }
+  }
+  .calc-card__field { margin-bottom: 0; }   /* reset — gap on .calc-card__inputs handles spacing */
   .calc-card__field label {
     display: block;
     font-size: var(--apple-caption);
@@ -2425,16 +2598,21 @@
     color: rgba(6,62,84,0.5);
     font-weight: 500;
   }
+  /* Result block — now its own right column inside .calc-card--split.
+     No top border / no top margin (the column gap handles separation
+     from the inputs). Left-aligned to match the field labels on the
+     left column. */
   .calc-card__result {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--hairline);
-    text-align: center;
+    margin: 0;
+    padding: 0;
+    border-top: 0;
+    text-align: left;
+    width: 100%;
   }
   .calc-card__result .label {
     font-size: var(--apple-caption);
     color: rgba(6,62,84,0.6);
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.45rem;
   }
   .calc-card__result .value {
     font-family: var(--font-display);
@@ -2445,7 +2623,7 @@
     color: var(--indigo);
   }
   .calc-card__result .delta {
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
     font-size: var(--apple-fine);
     color: rgba(6,62,84,0.55);
   }
@@ -2642,8 +2820,9 @@
     position: relative;
     padding: 10px 14px;
     border-radius: 10px;
-    background: rgba(250, 249, 245, 0.08);
-    border: 1px solid rgba(250, 249, 245, 0.12);
+    /* Light-card variant (was seashell @ 8%/12% — invisible on white). */
+    background: rgba(6, 62, 84, 0.04);
+    border: 1px solid rgba(6, 62, 84, 0.08);
     opacity: 0;
     transform: translateX(-8px);
     animation: fa-bill-step-in 9s ease-in-out infinite;
@@ -2669,7 +2848,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(250, 249, 245, 0.65);
+    color: rgba(6, 62, 84, 0.55);
     margin-bottom: 10px;
   }
   .fa-bill-pill {
@@ -2680,7 +2859,7 @@
     border-radius: 999px;
     font-size: 14px;
     font-weight: 600;
-    color: var(--seashell);
+    color: var(--indigo);
   }
   .fa-bill-dot {
     width: 8px; height: 8px;
@@ -2697,10 +2876,10 @@
   .fa-bill-chip {
     display: inline-flex; align-items: center; gap: 7px;
     padding: 6px 11px;
-    background: rgba(250, 249, 245, 0.10);
+    background: rgba(6, 62, 84, 0.06);
     border-radius: 7px;
     font-size: 13px;
-    color: var(--seashell);
+    color: var(--indigo);
   }
   .fa-bill-chip b {
     font-size: 12px;
@@ -2713,7 +2892,7 @@
   }
   .fa-bill-claim {
     margin-top: 4px;
-    background: rgba(250, 249, 245, 0.04);
+    background: rgba(6, 62, 84, 0.03);
     border-radius: 7px;
     padding: 10px 14px;
     font-size: 13px;
@@ -2721,15 +2900,15 @@
   .fa-bill-claim-row {
     display: flex; justify-content: space-between;
     padding: 5px 0;
-    border-bottom: 1px dashed rgba(250, 249, 245, 0.10);
-    color: var(--seashell);
+    border-bottom: 1px dashed rgba(6, 62, 84, 0.10);
+    color: var(--indigo);
   }
   .fa-bill-claim-total {
     display: flex; justify-content: space-between;
     margin-top: 8px;
     padding-top: 8px;
-    border-top: 1px solid rgba(250, 249, 245, 0.20);
-    color: var(--matcha);
+    border-top: 1px solid rgba(6, 62, 84, 0.18);
+    color: var(--indigo);
     font-weight: 700;
     font-size: 14.5px;
   }
@@ -3326,7 +3505,52 @@
     .journey__icon { animation: none !important; }
   }
 
-  /* Card feature lists (more info per card) */
+  /* ============================================================
+     JOURNEY 6-STEP VARIANT — reuses .journey base styling but
+     expands to 6 columns with re-tuned line insets + pulse delays.
+     Used by The Clinical Journey section to render the full
+     Schedule → Intake → Consult → Document → Follow-up → Bill
+     lifecycle in the same animated flow-graphic style as the
+     existing 4-step Patient Journey.
+     ============================================================ */
+  .journey--6 .journey__steps { grid-template-columns: repeat(6, 1fr); }
+  .journey--6 .journey__line { left: 8.33%; right: 8.33%; }
+  .journey--6 .journey__step:nth-child(1) .journey__icon { animation-delay: 0s; }
+  .journey--6 .journey__step:nth-child(2) .journey__icon { animation-delay: 1.5s; }
+  .journey--6 .journey__step:nth-child(3) .journey__icon { animation-delay: 3.0s; }
+  .journey--6 .journey__step:nth-child(4) .journey__icon { animation-delay: 4.5s; }
+  .journey--6 .journey__step:nth-child(5) .journey__icon { animation-delay: 6.0s; }
+  .journey--6 .journey__step:nth-child(6) .journey__icon { animation-delay: 7.5s; }
+  @media (max-width: 1100px) {
+    .journey--6 .journey__steps { grid-template-columns: repeat(3, 1fr); gap: 2rem 1rem; }
+    .journey--6 .journey__line { display: none; }
+  }
+  @media (max-width: 600px) {
+    .journey--6 .journey__steps { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Problem-statement section — navy boxes with matcha headings. */
+  .problem-card h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--indigo);
+    margin: 0 0 0.6rem;
+    letter-spacing: -0.005em;
+  }
+  .problem-card p {
+    color: var(--indigo-80);
+    line-height: 1.5;
+    margin: 0;
+  }
+  /* When the card is .h-card--navy, the heading turns matcha and the
+     body re-tints to readable seashell. */
+  .h-card--navy.problem-card h3 { color: var(--matcha); }
+  .h-card--navy.problem-card p  { color: rgba(250, 249, 245, 0.82); }
+
+  /* Card feature lists (more info per card) — was seashell @ 72%
+     (designed for the retired dark-tile theme). Flipped to indigo
+     @ 72% so the bullets are visible on light tile surfaces. */
   .feat-list {
     list-style: none;
     margin: 0.5rem 0 1rem;
@@ -3335,9 +3559,9 @@
     flex-direction: column;
     gap: 0.4rem;
     font-size: 0.875rem;
-    color: rgba(250, 249, 245, 0.72);
+    color: rgba(6, 62, 84, 0.72);
   }
-  .tile--dark .feat-list { color: rgba(6, 62, 84, 0.72); }
+  .tile--dark .feat-list { color: rgba(6, 62, 84, 0.72); }   /* dead-code alias */
   .feat-list li {
     padding-left: 1.25rem;
     position: relative;
@@ -4616,7 +4840,81 @@
   </div>
 </section>
 
-<!-- ============= 3. PLATFORM (dark — Medical Billing card uses --indigo-dark) ============= -->
+<!-- ============= 3. PROBLEM STATEMENT (MedMe-specific, 2x2 grid) ============= -->
+<section class="tile tile--light" aria-label="Why pharmacies choose MedMe">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Why MedMe</span>
+      <h2 class="h-display">Pharmacy tech ends where<br>clinical work begins.</h2>
+      <p class="lead">Your dispensing stack is solid. The clinical side is where everything falls apart &mdash; and that's exactly where the growth is.</p>
+    </div>
+    <div class="tile-grid tile-grid--2 problem-grid">
+      <article class="h-card h-card--navy problem-card">
+        <h3>Clinical services live outside your tech stack</h3>
+        <p>Vaccines, MTM, point-of-care testing &mdash; your team is already delivering the work. But the documentation, scheduling, and follow-up live in spreadsheets, paper, and disconnected portals.</p>
+      </article>
+      <article class="h-card h-card--navy problem-card">
+        <h3>Your PMS dispenses; nothing else fits</h3>
+        <p>Your pharmacy management system runs the fill. It was never built for booking visits, drafting SOAP notes, tracking encounters, or submitting medical claims.</p>
+      </article>
+      <article class="h-card h-card--navy problem-card">
+        <h3>AI is everywhere, integrated nowhere</h3>
+        <p>Every vendor demos an AI tool. Most can't see your patients, your dispensing history, or your scheduled visits &mdash; so the agents can't act on what's actually happening in your pharmacy.</p>
+      </article>
+      <article class="h-card h-card--navy problem-card">
+        <h3>Scaling clinical services means restarting</h3>
+        <p>Every new store, every new program, every new payer launches like it's the first time. No standardized playbook. No infrastructure that travels with you.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. SEGMENTS (moved here from #5 — Built for Every Pharmacy) ============= -->
+<section class="tile tile--light" id="audience" aria-label="Built for every pharmacy">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Built for Every Pharmacy</span>
+      <h2 class="h-display">One platform. Built for how<br>each pharmacy operates.</h2>
+      <p class="lead">MedMe adapts to where you are &mdash; from a single store launching clinical services for the first time, to a national enterprise running standardized programs across hundreds of locations.</p>
+    </div>
+    <div class="tile-grid tile-grid--4 segments-grid">
+      <a href="/us/pharmacy/independents" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
+        </span>
+        <h3>For independents</h3>
+        <p>Launch clinical services and start getting paid for them. Built for owner-operated pharmacies.</p>
+        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+      <a href="/us/pharmacy/enterprises" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="7" height="14" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/><path d="M6 11h1M6 14h1M6 17h1M17 7h1M17 10h1M17 13h1M17 16h1"/></svg>
+        </span>
+        <h3>For enterprise chains</h3>
+        <p>The strategic platform partner for corporate-owned pharmacy networks. Modular, API-driven, enterprise-grade.</p>
+        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+      <a href="/us/pharmacy/networks" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><circle cx="4" cy="5" r="2"/><circle cx="20" cy="5" r="2"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="19" r="2"/><path d="M6 6l4.5 4.5M18 6l-4.5 4.5M6 18l4.5-4.5M18 18l-4.5-4.5"/></svg>
+        </span>
+        <h3>For banners &amp; co-ops</h3>
+        <p>A platform your members will actually adopt &mdash; with network-level reporting that strengthens your value proposition.</p>
+        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+      <a href="/us/pharmacy/specialty" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6.5L5.5 18A2 2 0 0 0 7.2 21h9.6a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 14h9"/></svg>
+        </span>
+        <h3>For specialty pharmacy</h3>
+        <p>Infrastructure that matches the operational complexity of specialty care. AI agents purpose-built for coordination.</p>
+        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. PLATFORM (modules — moved down from #3) ============= -->
 <section class="tile tile--light" id="billing" aria-label="What's in the platform">
   <div class="tile__inner">
     <div class="tile__head">
@@ -4768,259 +5066,154 @@
   </div>
 </section>
 
-<!-- ============= 3. HOW (light) ============= -->
-<section class="tile tile--light" aria-label="How MedMe works in 5 steps">
+<!-- ============= 6. CLINICAL JOURNEY (flow graphic — 6 lifecycle stages, animated like Patient Journey) ============= -->
+<section class="tile tile--light" aria-label="The clinical journey">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">How it works</span>
-      <h2 class="h-display">From open schedule<br>to deposited claim.</h2>
-      <p class="lead">One workflow, no swivel-chair. Designed by pharmacists, validated with billing teams.</p>
+      <span class="kicker">The Clinical Journey</span>
+      <h2 class="h-display">From launch to reimbursement.<br>One platform.</h2>
+      <p class="lead">MedMe covers the full clinical services lifecycle &mdash; every stage of the patient interaction, every stage of the pharmacy's program maturity.</p>
     </div>
-    <div class="how-grid">
-      <article class="h-card">
-        <div class="how-step__num">1</div>
-        <h3>Patient books a visit</h3>
-        <p>Online scheduler, tech walk-up, or pharmacist-initiated outreach. Eligibility runs at the moment of booking.</p>
-      </article>
-      <article class="h-card">
-        <div class="how-step__num">2</div>
-        <h3>Profile pulls the picture</h3>
-        <p>Rx history, vitals, allergies, payer details, care gaps — surfaced for the pharmacist before they walk in.</p>
-      </article>
-      <article class="h-card">
-        <div class="how-step__num">3</div>
-        <h3>Pharmacist runs encounter</h3>
-        <p>SOAP-style template with pharmacy-specific fields. The AI Scribe drafts as the conversation happens.</p>
-      </article>
-      <article class="h-card">
-        <div class="how-step__num">4</div>
-        <h3>Note becomes a claim</h3>
-        <p>Codes auto-suggest, time tracks, modifiers apply. Operator reviews, signs, releases.</p>
-      </article>
-      <article class="h-card">
-        <div class="how-step__num">5</div>
-        <h3>Reimbursement lands</h3>
-        <p>96% first-pass acceptance. Denials route back into the queue with the fix highlighted.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============= 5. AUDIENCE (dark) ============= -->
-<section class="tile tile--light" id="audience" aria-label="By pharmacy size">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Built for the way your pharmacy is shaped</span>
-      <h2 class="h-display">One platform. Different starting lines.</h2>
-      <p class="lead">For independents, multi-store regional chains, and enterprise health systems.</p>
-    </div>
-    <div class="tile-grid tile-grid--3">
-      <article class="h-card audience-card">
-        <div class="audience-card__role">Independents</div>
-        <h3>Single-store and 2–3 location operators</h3>
-        <ul>
-          <li>Live in 30 days, no IT team required</li>
-          <li>Includes EHR, scheduler, and AI Scribe</li>
-          <li>Add Medical Billing month two onward</li>
-          <li>Flat per-month pricing</li>
-        </ul>
-        <div class="audience-card__cta">
-          <a class="pill pill--solid" href="pages/us/pharmacy/independent.html">Learn more</a>
-        </div>
-      </article>
-      <article class="h-card audience-card">
-        <div class="audience-card__role">Specialty</div>
-        <h3>Specialty pharmacies &amp; payvider partners</h3>
-        <ul>
-          <li>Specialty therapy workflows &mdash; oncology, infusion, transplant, HIV</li>
-          <li>Prior-auth tracking + manufacturer outcomes reporting</li>
-          <li>Patient-adherence + side-effect monitoring</li>
-          <li>Co-managed care models with payvider partners</li>
-        </ul>
-        <div class="audience-card__cta">
-          <a class="pill pill--solid" href="pages/us/pharmacy/specialty.html">Learn more</a>
-        </div>
-      </article>
-      <article class="h-card audience-card">
-        <div class="audience-card__role">Enterprise</div>
-        <h3>Top-100 chains, health systems, payvider partners</h3>
-        <ul>
-          <li>SSO, role-based access, audit logs</li>
-          <li>Custom integrations (Epic, Cerner, RPA bridges)</li>
-          <li>Outcomes data shared with payer partners</li>
-          <li>Dedicated implementation &amp; clinical SMEs</li>
-        </ul>
-        <div class="audience-card__cta">
-          <a class="pill pill--solid" href="pages/us/pharmacy/enterprise.html">Learn more</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============= 5b. PATIENT JOURNEY (light — narrative 5-step story) ============= -->
-<section class="tile tile--light" aria-label="The patient journey">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">A day in the life</span>
-      <h2 class="h-display">Maria's diabetes check-in,<br>start to finish.</h2>
-      <p class="lead">One Tuesday in April. One patient, one pharmacist, one workflow. Here's what MedMe does in the background &mdash; and what neither of them has to think about.</p>
-    </div>
-    <div class="journey">
+    <div class="journey journey--6">
       <div class="journey__line" aria-hidden="true"></div>
       <ol class="journey__steps">
         <li class="journey__step">
           <span class="journey__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
           </span>
-          <h3>9:14&nbsp;pm &middot; Books</h3>
-          <p>Maria taps "CCM follow-up" on her phone. Eligibility verifies in real time.</p>
+          <h3>Schedule</h3>
+          <p>Booking, queueing, walk-ins</p>
         </li>
         <li class="journey__step">
           <span class="journey__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10"/></svg>
           </span>
           <h3>Intake</h3>
-          <p>Her A1c history, Rx list, and adherence gaps auto-fill before she walks in.</p>
+          <p>Digital forms, eligibility</p>
         </li>
         <li class="journey__step">
           <span class="journey__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 4z"/><path d="M8 10h8M8 13h5"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </span>
-          <h3>10:24&nbsp;am &middot; Consult</h3>
-          <p>Pharmacist listens. Clinical Assistant drafts the SOAP note in real time.</p>
+          <h3>Consult</h3>
+          <p>AI Clinical Assistant</p>
         </li>
         <li class="journey__step">
           <span class="journey__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
           </span>
-          <h3>7 days later</h3>
-          <p>Adherence SMS lands. Maria's next visit is auto-booked. Loop closes.</p>
+          <h3>Document</h3>
+          <p>AI Scribe drafts notes</p>
+        </li>
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+          </span>
+          <h3>Follow-up</h3>
+          <p>Patient outreach, care plans</p>
+        </li>
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M16 9.5C16 8.12 14.21 7 12 7s-4 1.12-4 2.5S9.79 12 12 12s4 1.12 4 2.5-1.79 2.5-4 2.5-4-1.12-4-2.5"/></svg>
+          </span>
+          <h3>Bill</h3>
+          <p>Full RCM, paid claims</p>
         </li>
       </ol>
     </div>
   </div>
 </section>
 
-<!-- ============= 4. STATS (dark) ============= -->
-<section class="tile tile--light" aria-label="Proof at scale">
+<!-- ============= 7. AI AGENTS (3-col, navy-themed boxes — AI-Native by Design) ============= -->
+<section class="tile tile--light" aria-label="AI agents">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Proof, across hundreds of pharmacies</span>
-      <h2 class="h-display">The numbers operators<br>actually see.</h2>
+      <span class="kicker">AI-Native by Design</span>
+      <h2 class="h-display">The AI agents are built<br>into the platform. Not bolted on.</h2>
+      <p class="lead">Three AI agents live inside the clinical workflow &mdash; supporting consultations, automating patient outreach, and reducing manual data entry across systems.</p>
     </div>
-    <div class="tile-stats">
-      <div class="big-stat">
-        <div class="big-stat__num"><span data-count="2.1" data-decimals="1" data-prefix="+$" data-suffix="M">+$0M</span></div>
-        <div class="big-stat__label">Annual reimbursement unlocked</div>
-      </div>
-      <div class="big-stat">
-        <div class="big-stat__num"><span data-count="12" data-suffix=" min">0 min</span></div>
-        <div class="big-stat__label">Median time per encounter</div>
-      </div>
-      <div class="big-stat">
-        <div class="big-stat__num"><span data-count="96" data-suffix="%">0%</span></div>
-        <div class="big-stat__label">First-pass claim acceptance</div>
-      </div>
-      <div class="big-stat">
-        <div class="big-stat__num"><span data-count="30" data-suffix=" days">0 days</span></div>
-        <div class="big-stat__label">Contract to first billable</div>
-      </div>
-    </div>
-    <p class="fine-print" style="text-align:center; margin-top: 2.5rem;">
-      Aggregated averages across MedMe customers in the United States, 2024–2025. Per-customer results vary by starting baseline, service mix, and payer coverage.
-    </p>
-  </div>
-</section>
-
-<!-- ============= 7. TESTIMONIALS (light — auto-rotating slider) ============= -->
-<section class="tile tile--light" id="testimonials" aria-label="Customer testimonials">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">What operators say</span>
-      <h2 class="h-display">Built with pharmacists,<br>validated in production.</h2>
-    </div>
-    <div class="testimonials" data-testimonials>
-      <div class="testimonials__stage">
-        <article class="testimonial testimonial--active" data-idx="0">
-          <div class="testimonial__avatar" style="background: var(--matcha); color: var(--indigo);"><span>JH</span></div>
-          <blockquote class="testimonial__quote">"We've always known our pharmacists were doing the work. MedMe is the first system that lets us prove it &mdash; and get paid for it. The first 90 days alone covered the contract for the year."</blockquote>
-          <div class="testimonial__who">
-            <div class="testimonial__name">Joshua Holland, RPh</div>
-            <div class="testimonial__role">VP Clinical Operations &middot; Heritage Rx, 9 stores TN+KY</div>
-          </div>
-        </article>
-        <article class="testimonial" data-idx="1">
-          <div class="testimonial__avatar" style="background: #cfd059; color: var(--indigo);"><span>MS</span></div>
-          <blockquote class="testimonial__quote">"Our pharmacists hated EHR documentation more than they loved patient care. MedMe was the first tool built for the way we actually work &mdash; the friction is just gone."</blockquote>
-          <div class="testimonial__who">
-            <div class="testimonial__name">Marcus Spencer, PharmD</div>
-            <div class="testimonial__role">Pharmacist-owner &middot; 3-store independent, TX</div>
-          </div>
-        </article>
-        <article class="testimonial" data-idx="2">
-          <div class="testimonial__avatar" style="background: var(--indigo); color: var(--seashell);"><span>RN</span></div>
-          <blockquote class="testimonial__quote">"We were doing $400K of clinical work and billing maybe a third of it. MedMe closed the loop in our first quarter and the reimbursement curve hasn't stopped."</blockquote>
-          <div class="testimonial__who">
-            <div class="testimonial__name">Renata Nguyen, PharmD, MBA</div>
-            <div class="testimonial__role">VP Clinical Services &middot; 14-store regional chain</div>
-          </div>
-        </article>
-      </div>
-      <div class="testimonials__dots" role="tablist" aria-label="Testimonial controls">
-        <button type="button" class="active" data-go="0" aria-label="Show testimonial 1"></button>
-        <button type="button" data-go="1" aria-label="Show testimonial 2"></button>
-        <button type="button" data-go="2" aria-label="Show testimonial 3"></button>
-      </div>
+    <div class="tile-grid tile-grid--3 ai-grid">
+      <article class="h-card h-card--navy ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
+        </span>
+        <span class="ai-tag">AI &middot; In-Consult</span>
+        <h3>AI Clinical Assistant <span class="ai-card__alias">(AI Scribe)</span></h3>
+        <p>Ambient documentation plus clinical decision support during the consult. Drafts SOAP notes from the conversation, surfaces protocols and drug info in context, and lets the pharmacist sign off in seconds.</p>
+        <a class="pill pill--solid ai-card__cta" href="/us/platform/ai-clinical-assistant">Learn more <span class="arrow">→</span></a>
+      </article>
+      <article class="h-card h-card--navy ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h2v6H6a2 2 0 0 1-2-2v-2z"/><path d="M16 9h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2V9z"/><path d="M5 11V9a7 7 0 0 1 14 0v2"/><path d="M19 15v1a3 3 0 0 1-3 3h-3"/><circle cx="12" cy="19" r="1.5"/></svg>
+        </span>
+        <span class="ai-tag">AI &middot; Patient-Facing</span>
+        <h3>AI Patient Concierge</h3>
+        <p>Voice and messaging agent handling inbound and outbound patient interactions &mdash; appointment booking, refill reminders, adherence check-ins, FAQs.</p>
+        <a class="pill pill--solid ai-card__cta" href="/us/platform/ai-assistants/patient-concierge">Learn more <span class="arrow">→</span></a>
+      </article>
+      <article class="h-card h-card--navy ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="7" cy="7" r="0.7" fill="currentColor"/><circle cx="9.5" cy="7" r="0.7" fill="currentColor"/><circle cx="12" cy="7" r="0.7" fill="currentColor"/><path d="M7 13h6M7 16h10"/></svg>
+        </span>
+        <span class="ai-tag">AI &middot; Operational</span>
+        <h3>Admin Clerk</h3>
+        <p>RPA-based automation that reads and writes the pharmacy management system without a formal integration project.</p>
+        <a class="pill pill--solid ai-card__cta" href="/us/platform/ai-assistants/admin-clerk">Learn more <span class="arrow">→</span></a>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 6. CALCULATOR (dark — visually prominent) ============= -->
+<!-- ============= 8. PARTNER CTA (light — endorsement statement) ============= -->
+<!-- ============= 8. ROI CALCULATOR (moved up — visually prominent) ============= -->
 <section class="tile tile--light tile--prominent" id="calc" aria-label="Reimbursement calculator">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Reimbursement calculator</span>
+      <span class="kicker">Reimbursement Calculator</span>
       <h2 class="h-display">Run the numbers on<br>your own pharmacy.</h2>
       <p class="lead">Two inputs &mdash; store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
     </div>
-    <div class="calc-card" data-calc-widget="us">
-      <div class="calc-card__field">
-        <label for="us-stores">Number of stores</label>
-        <div class="calc-card__input-wrap">
-          <input id="us-stores" type="number" min="1" max="9999" value="3" data-calc-stores aria-describedby="us-stores-unit" />
-          <span id="us-stores-unit">stores</span>
+    <div class="calc-card calc-card--split" data-calc-widget="us">
+      <div class="calc-card__inputs">
+        <div class="calc-card__field">
+          <label for="us-stores">Number of stores</label>
+          <div class="calc-card__input-wrap">
+            <input id="us-stores" type="number" min="1" max="9999" value="3" data-calc-stores aria-describedby="us-stores-unit" />
+            <span id="us-stores-unit">stores</span>
+          </div>
+        </div>
+        <div class="calc-card__field">
+          <label for="us-enc">Weekly clinical encounters per store</label>
+          <div class="calc-card__input-wrap">
+            <input id="us-enc" type="number" min="0" max="999" value="42" data-calc-encounters aria-describedby="us-enc-unit" />
+            <span id="us-enc-unit">enc/wk</span>
+          </div>
         </div>
       </div>
-      <div class="calc-card__field">
-        <label for="us-enc">Weekly clinical encounters per store</label>
-        <div class="calc-card__input-wrap">
-          <input id="us-enc" type="number" min="0" max="999" value="42" data-calc-encounters aria-describedby="us-enc-unit" />
-          <span id="us-enc-unit">enc/wk</span>
+      <div class="calc-card__output">
+        <div class="calc-card__result">
+          <div class="label">Estimated annual unlock</div>
+          <div class="value" data-calc-result>$487,200</div>
+          <div class="delta">vs. $0 captured today on 87% of these visits</div>
         </div>
-      </div>
-      <div class="calc-card__result">
-        <div class="label">Estimated annual unlock</div>
-        <div class="value" data-calc-result>$487,200</div>
-        <div class="delta">vs. $0 captured today on 87% of these visits</div>
-      </div>
-      <div style="text-align:center; margin-top:1.5rem;">
-        <a class="pill pill--solid" href="pages/us/resources/calculator.html">Run my full report</a>
+        <div class="calc-card__cta">
+          <a class="pill pill--solid" href="pages/us/resources/calculator.html">Run my full report</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= 8. CTA (dark — visually prominent) ============= -->
-<section class="tile tile--navy tile--prominent" aria-label="Final call to action">
+<!-- ============= 9. PARTNER WITH MEDME (navy + stacked + centered — now the final CTA section) ============= -->
+<section class="tile tile--navy tile--prominent" id="partner" aria-label="Partner with MedMe">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">
-      <span class="kicker">Ready to see it on your numbers?</span>
-      <h2 class="h-display">Show us a week. We'll show you<br>the missing revenue.</h2>
-      <p class="lead">20-minute screen-share, no prep. We'll walk through your service mix, run the math live, and leave you with a written estimate either way.</p>
+      <span class="kicker">Partner with MedMe</span>
+      <h2 class="h-display">The most-endorsed clinical services<br>platform in pharmacy.</h2>
+      <p class="lead">Trusted by pharmacy associations, banner groups, cooperatives, and pharmacy schools to power the next generation of clinical services.</p>
     </div>
     <div class="pill-cta-row pill-cta-row--center">
-      <a class="pill pill--solid" href="pages/us/contact.html">Book a demo</a>
+      <a class="pill pill--solid" href="/us/partners">Explore partnerships <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
