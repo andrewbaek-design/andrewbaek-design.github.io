@@ -954,7 +954,11 @@ footer.site-footer {
   gap: 0.3rem;
   transition: color 0.2s ease;
 }
+/* Trigger color — same matcha treatment for hover, focus,
+   and open (aria-expanded). No separate "active" look. */
 .nav__item-trigger:hover,
+.nav__item-trigger:focus-visible,
+.nav__item-group:focus-within .nav__item-trigger,
 .nav__item-group[aria-expanded="true"] .nav__item-trigger { color: var(--matcha); }
 .nav__item-trigger::after {
   content: "▾";
