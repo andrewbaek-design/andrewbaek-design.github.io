@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=60" />
+<link rel="stylesheet" href="/assets/brand.css?v=62" />
 <style>
   /* ============================================================
      INDEPENDENTS sub-page. Leans on the front-page design system
@@ -41,14 +41,14 @@
     padding-inline: var(--tile-pad-x);
     position: relative;
   }
-  /* VISUAL on top — fully visible, not a fading bg. Stacked
+  /* VISUAL on top, fully visible, not a fading bg. Stacked
      normally above the text content. */
   .sub-hero__visual {
     position: relative;
     max-width: 1080px;
     margin: 0 auto;
   }
-  /* TEXT sits below the visual with normal spacing — no overlap,
+  /* TEXT sits below the visual with normal spacing, no overlap,
      no negative margin. */
   .sub-hero__text {
     text-align: center;
@@ -167,11 +167,28 @@
     .hero-hub .hub-center circle.hub-center__ring,
     .hero-hub .hub-pulse { animation: none; opacity: 0; display: none; }
   }
+  /* Mobile/narrow-viewport: bump up the SVG content scale so the
+     hub labels stay readable. Break out of the inner padding to
+     give the SVG more horizontal room AND increase the in-SVG
+     text/stroke sizes so labels don't shrink to 5px when the
+     SVG is rendered at ~350px wide. */
   @media (max-width: 980px) {
     .sub-hero__inner {
       grid-template-columns: 1fr;
       gap: 2.5rem;
     }
+    .sub-hero__visual {
+      margin-inline: calc(-1 * var(--tile-pad-x));
+    }
+    .hero-hub .hub-node text  { font-size: 17px; }
+    .hero-hub .hub-center text { font-size: 18px; }
+  }
+  @media (max-width: 700px) {
+    .sub-hero { padding-inline: 0.5rem; }
+    .sub-hero__visual { margin-inline: 0; }
+    .hero-hub .hub-node text  { font-size: 22px; }
+    .hero-hub .hub-center text { font-size: 22px; }
+    .hero-hub .hub-node circle { stroke-width: 2; }
   }
 
   /* ====== HOW IT WORKS: 6-feature card grid ===================== */
@@ -187,14 +204,19 @@
     border: 1px solid rgba(6, 62, 84, 0.08);
     border-radius: var(--radius-lg);
     padding: 1.75rem;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    /* Explicitly remove the global .feature box-shadow inherited
+       from brand.css (var(--shadow-soft)). Cards on this page are
+       flat, only the hairline border + hover lift signal the card
+       boundary. */
+    box-shadow: none;
+    transition: transform 0.25s ease, border-color 0.25s ease;
   }
   .feature:hover {
+    /* Slight lift + border-tone darkening, no shadow. */
     transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(6, 62, 84, 0.08);
     border-color: rgba(6, 62, 84, 0.18);
   }
-  /* ====== FEATURE MOTION GRAPHICS — one tailored animation per
+  /* ====== FEATURE MOTION GRAPHICS: one tailored animation per
      card, in the same visual language as the homepage Platform
      bento (.feat-anim--ehr / --sched / --scribe / --billing-rich
      etc.). Each is a ~120px-tall stage with a couple of animated
@@ -212,7 +234,7 @@
     position: relative;
   }
 
-  /* 1. Schedule — calendar grid with booked slots + a "new" cell
+  /* 1. Schedule: calendar grid with booked slots + a "new" cell
      that pulses every loop (a new booking landing). */
   .fg-cal {
     display: grid;
@@ -237,7 +259,7 @@
     55% { transform: scale(1.18); box-shadow: 0 0 0 7px rgba(195, 196, 48, 0); }
   }
 
-  /* 2. Intake — three form rows filling in sequence (label + line
+  /* 2. Intake: three form rows filling in sequence (label + line
      where the line fills left-to-right with matcha). */
   .fg-form { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 220px; }
   .fg-form-row { display: flex; align-items: center; gap: 10px; }
@@ -275,7 +297,7 @@
     90%, 100% { width: 0; }
   }
 
-  /* 3. Consult — soundwave / audio bars, height bouncing in a
+  /* 3. Consult: soundwave / audio bars, height bouncing in a
      wave pattern (suggests AI Scribe listening to a consult). */
   .fg-wave {
     display: flex;
@@ -310,7 +332,7 @@
     50%      { transform: scaleY(1); }
   }
 
-  /* 4. Document — 4 SOAP rows. Each row has a small letter chip,
+  /* 4. Document: 4 SOAP rows. Each row has a small letter chip,
      a bar that fills, and a matcha check that fades in. Cascade. */
   .fg-soap { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 220px; }
   .fg-soap-row { display: flex; align-items: center; gap: 8px; }
@@ -369,7 +391,7 @@
     95%, 100% { opacity: 0; transform: scale(0.7); }
   }
 
-  /* 5. Follow Up — three chat bubbles (out / in / out) sliding
+  /* 5. Follow Up: three chat bubbles (out / in / out) sliding
      up one at a time, like a back-and-forth conversation. */
   .fg-msg { display: flex; flex-direction: column; gap: 7px; width: 100%; max-width: 220px; }
   .fg-bubble {
@@ -389,7 +411,7 @@
     90%, 100% { opacity: 0; transform: translateY(-4px); }
   }
 
-  /* 6. Get Paid — 4 status badges appearing sequentially
+  /* 6. Get Paid: 4 status badges appearing sequentially
      (Eligible → Coded → Submitted → Paid), where the final
      "Paid" badge lights matcha. */
   .fg-flow { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; justify-content: center; }
@@ -465,6 +487,60 @@
     color: rgba(6, 62, 84, 0.72);
   }
 
+  /* ====== STORY SECTION BG PATTERN: animated dot grid + scan wave.
+     Two layers:
+     1) base: faint regular matcha dot grid (always visible)
+     2) ::before: a brighter dot grid masked by a diagonal "wave"
+        whose mask-position animates across, lighting up dots
+        only where the wave currently sits.
+     mask-image on the container softens the section's left + right
+     edges so the grid doesn't end with a hard cutoff. ============== */
+  .story-bg-pattern {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    /* Faint always-visible dot grid */
+    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.08) 1.5px, transparent 1.6px);
+    background-size: 38px 38px;
+    background-position: center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+  .story-bg-pattern::before {
+    /* Brighter dot grid (same alignment as base), visible only
+       where the diagonal mask-wave currently sits. */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.32) 1.8px, transparent 1.9px);
+    background-size: 38px 38px;
+    background-position: center;
+    /* The mask itself is a narrow diagonal band of opacity; sliding
+       its position across the element makes the visible band sweep. */
+    -webkit-mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
+            mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
+    -webkit-mask-size: 220% 220%;
+            mask-size: 220% 220%;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    animation: dot-scan 7s linear infinite;
+  }
+  @keyframes dot-scan {
+    from {
+      -webkit-mask-position: 160% 160%;
+              mask-position: 160% 160%;
+    }
+    to {
+      -webkit-mask-position: -60% -60%;
+              mask-position: -60% -60%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .story-bg-pattern::before { animation: none; opacity: 0; }
+  }
+
   /* ====== STORY / VALUE-BLOCKS: 2-column (navy theme) =========== */
   .story-grid {
     display: grid;
@@ -481,11 +557,16 @@
     /* Navy section, so quote reads in seashell. */
     color: var(--seashell);
     letter-spacing: -0.012em;
+    /* Reset browser blockquote margins, keep visual rhythm. */
     margin: 1rem 0 1.25rem;
   }
+  /* Inner <p> wraps the quote text so text-wrap: pretty applies.
+     Reset its margins so it doesn't push the attribution down. */
+  .story-quote p { margin: 0; }
   .story-attribution {
     font-size: 0.875rem;
     color: rgba(250, 249, 245, 0.60);
+    margin: 0;
   }
   .value-blocks {
     display: grid;
@@ -494,13 +575,60 @@
   }
   @media (max-width: 600px) { .value-blocks { grid-template-columns: 1fr; } }
   /* Value blocks sit on navy. Subtle translucent-seashell fill +
-     hairline border so they still read as discrete cards. */
+     hairline border. Each block also runs a sequenced light-up
+     animation (matcha border + soft halo) that cycles through the
+     4 blocks in the order they appear in markup. */
   .value-block {
     background: rgba(250, 249, 245, 0.05);
     border: 1px solid rgba(250, 249, 245, 0.12);
     border-radius: var(--radius-md);
-    padding: 1.25rem 1.4rem;
+    padding: 1.4rem 1.5rem;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    animation: value-block-light 6s ease-in-out infinite;
   }
+  /* Stagger so the matcha light walks Credentialing → Claims →
+     Honest timelines → Denials worked (matches markup order). */
+  .value-block:nth-child(1) { animation-delay: 0s;   }
+  .value-block:nth-child(2) { animation-delay: 1.5s; }
+  .value-block:nth-child(3) { animation-delay: 3s;   }
+  .value-block:nth-child(4) { animation-delay: 4.5s; }
+  @keyframes value-block-light {
+    0%, 18%, 100% {
+      border-color: rgba(250, 249, 245, 0.12);
+      box-shadow: none;
+    }
+    4%, 14% {
+      border-color: var(--matcha);
+      box-shadow:
+        0 0 0 1px var(--matcha),
+        0 8px 28px rgba(195, 196, 48, 0.18);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .value-block { animation: none; }
+  }
+
+  /* Icon at the top of each value block, small matcha-tinted
+     square containing a stroke SVG. */
+  .value-block__icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: rgba(195, 196, 48, 0.18);
+    color: var(--matcha);
+    margin-bottom: 0.85rem;
+  }
+  .value-block__icon svg {
+    width: 20px; height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
   .value-block h4 {
     font-family: var(--font-display);
     font-size: 1rem;
@@ -515,6 +643,9 @@
     line-height: 1.5;
     color: rgba(250, 249, 245, 0.72);
   }
+
+  /* Book-a-demo CTA tucked under the attribution in the left column. */
+  .story-cta { margin-top: 1.75rem; }
 </style>
 </head>
 <body>
@@ -792,8 +923,8 @@
 <!-- ============= 1. SUB-HERO (stacked, mockup-as-fading-bg above text) ============= -->
 <section class="sub-hero" aria-label="Hero">
   <div class="sub-hero__inner">
-    <div class="sub-hero__visual" aria-hidden="true">
-      <svg class="hero-hub" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Independent pharmacy hub connected to six clinical services">
+    <div class="sub-hero__visual">
+      <svg class="hero-hub" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagram: your pharmacy at the center, connected to six clinical services: POCT, Test and Treat, Smoking Cessation, CCM, Vaccines, and MTM.">
         <!-- Spokes (hairlines from hub to each service node) -->
         <line class="hub-spoke" x1="400" y1="220" x2="570" y2="220" />
         <line class="hub-spoke" x1="400" y1="220" x2="485" y2="367" />
@@ -831,7 +962,7 @@
         <!-- Service nodes (small white circles + labels positioned outside) -->
         <g class="hub-node">
           <circle cx="570" cy="220" r="16" />
-          <text x="596" y="220" text-anchor="start">POCT</text>
+          <text x="614" y="220" text-anchor="start">POCT</text>
         </g>
         <g class="hub-node">
           <circle cx="485" cy="367" r="16" />
@@ -843,7 +974,7 @@
         </g>
         <g class="hub-node">
           <circle cx="230" cy="220" r="16" />
-          <text x="204" y="220" text-anchor="end">CCM</text>
+          <text x="186" y="220" text-anchor="end">CCM</text>
         </g>
         <g class="hub-node">
           <circle cx="315" cy="73" r="16" />
@@ -960,53 +1091,49 @@
   </div>
 </section>
 
-<!-- ============= 3. STORY (navy band — quote + 4 value blocks in 2-col split) ============= -->
+<!-- ============= 3. STORY (navy band, quote + 4 value blocks in 2-col split) ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="A clear path to reimbursement">
+  <div class="story-bg-pattern" aria-hidden="true"></div>
   <div class="tile__inner">
     <div class="story-grid">
       <div>
-        <span class="kicker">A Clear Path to Reimbursement</span>
-        <div class="story-quote">"We launched medical billing through MedMe. Six months in, clinical services revenue is a real line item on our P&amp;L."</div>
-        <div class="story-attribution">Independent pharmacy owner, US Southeast</div>
+        <h2 class="kicker">A Clear Path to Reimbursement</h2>
+        <blockquote class="story-quote"><p>"We launched medical billing through MedMe. Six months in, clinical services revenue is a real line item on our P&amp;L."</p></blockquote>
+        <p class="story-attribution">Independent pharmacy owner, US Southeast</p>
+        <div class="story-cta">
+          <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+        </div>
       </div>
       <div class="value-blocks">
         <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
           <h4>Credentialing handled</h4>
           <p>NPI, PECOS, state Medicaid, payer contracting, managed by our RCM team.</p>
         </div>
         <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M22 11.5V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          </span>
           <h4>Claims scrubbed</h4>
           <p>Every claim runs through our rule engine before submission.</p>
         </div>
         <div class="value-block">
-          <h4>Denials worked</h4>
-          <p>Our team investigates denials, calls payers, and learns the rules so they don't repeat.</p>
-        </div>
-        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </span>
           <h4>Honest timelines</h4>
           <p>Platform onboards quickly. Medical billing takes months to credential properly. We set the expectation upfront.</p>
         </div>
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35M8 11h6"/></svg>
+          </span>
+          <h4>Denials worked</h4>
+          <p>Our team investigates denials, calls payers, and learns the rules so they don't repeat.</p>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============= 4. FINAL CTA (navy + pulse rings) ============= -->
-<section class="tile tile--navy tile--prominent" aria-label="Book a demo">
-  <div class="tile__inner tile__inner--narrow">
-    <div class="tile__head tile__head--centered">
-      <span class="kicker">Ready to Launch?</span>
-      <h2 class="h-display">Let's run the numbers<br>on your pharmacy.</h2>
-      <p class="lead">20-minute screen-share, no prep on your side. We'll walk through your service mix, run the math live, and leave you with a written estimate either way.</p>
-    </div>
-    <div class="pill-cta-row pill-cta-row--center">
-      <span class="pulse-rings" aria-hidden="true">
-        <span class="pulse-ring"></span>
-        <span class="pulse-ring"></span>
-        <span class="pulse-ring"></span>
-        <span class="pulse-ring"></span>
-      </span>
-      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -1100,6 +1227,30 @@
     </div>
   </div>
 </footer>
+<script>
+  /* Reduced-motion guard for SMIL animations in the hero hub graphic.
+     The scoped CSS hides .hub-pulse via display:none under
+     prefers-reduced-motion, but SMIL <animateMotion> / <animate>
+     keep running (CPU cost). pauseAnimations() halts the SMIL
+     timeline entirely. */
+  (function () {
+    if (!window.matchMedia) return;
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function apply() {
+      if (!mq.matches) return;
+      document.querySelectorAll('.hero-hub').forEach(function (svg) {
+        if (typeof svg.pauseAnimations === 'function') svg.pauseAnimations();
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', apply);
+    } else {
+      apply();
+    }
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else if (mq.addListener) mq.addListener(apply);
+  })();
+</script>
 <script src="/assets/site.js" defer></script>
 </body>
 </html>
