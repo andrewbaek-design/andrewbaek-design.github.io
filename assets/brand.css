@@ -2325,13 +2325,19 @@ a.nav__dropdown-group-label:hover {
 .tile__head:not(:has(> p, > .lead, > .btn, > .cta-row, > a.btn)) {
   grid-template-columns: minmax(0, 1fr);
 }
-/* Mobile: stack vertically so the right column drops under the headline. */
+/* Mobile: stack vertically so the right column drops under the headline.
+   Also pull the bottom margin in — 4.5rem (72px) of breathing room
+   below the head reads as way too much air on a narrow viewport. */
 @media (max-width: 900px) {
   .tile__head {
     grid-template-columns: 1fr;
     gap: 0.85rem;
+    margin-bottom: 2.25rem;
   }
   .tile__head > * { grid-column: 1 !important; }
+}
+@media (max-width: 600px) {
+  .tile__head { margin-bottom: 1.75rem; }
 }
 
 /* Legacy left-aligned single-column variant. Kept as-is so any
@@ -2425,6 +2431,37 @@ a.nav__dropdown-group-label:hover {
   margin-bottom: 1rem;
 }
 .tile--dark .kicker { color: var(--matcha); }   /* legacy override, same color, kept for safety */
+
+/* ============================================================
+   HERO PILL TAG — outlined matcha pill used as the eyebrow above
+   the hero headline. Replaces the older inline-styled .kicker
+   for the hero context. Reusable anywhere an outlined matcha
+   pill-tag makes sense (e.g., featured section labels).
+   ============================================================ */
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  border: 1.5px solid var(--matcha);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--matcha);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.hero-pill__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--matcha);
+  flex-shrink: 0;
+  display: inline-block;
+}
 
 /* ============== PILL BUTTONS (single accent per surface) ============== */
 /* .pill / .pill--solid / .pill--ghost, surface-aware button system.

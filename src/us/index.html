@@ -17,7 +17,7 @@ page.title: MedMe, United States Homepage Mockup
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=57">
+<link rel="stylesheet" href="/assets/brand.css?v=59">
 
 <script type="application/ld+json">
 {
@@ -669,7 +669,10 @@ page.title: MedMe, United States Homepage Mockup
     width: 100%;
     aspect-ratio: 1192 / 656;
     background: #fff;
-    border-radius: 10px;
+    /* Aligned to the site radius scale (was 10px, off-token).
+       --radius-lg matches .h-card, the bento cards, the calc card,
+       and every other major surface. */
+    border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid rgba(6, 62, 84, 0.06);
     border-bottom-color: transparent;
@@ -3953,7 +3956,10 @@ page.title: MedMe, United States Homepage Mockup
 <!-- ============= 1. HERO (centered headline + AI-scribe mockup) ============= -->
 <section class="hero-end" aria-label="Hero">
   <div class="tile__inner">
-    <span class="kicker" style="text-transform: none; color: var(--matcha); letter-spacing: 0;"><span aria-hidden="true" style="display: inline-block; width: 0.45em; height: 0.45em; background: var(--matcha); border-radius: 50%; margin-right: 0.55em; vertical-align: 0.08em;"></span>North America's Pharmacy Clinical Services Platform</span>
+    <span class="hero-pill">
+      <span class="hero-pill__dot" aria-hidden="true"></span>
+      North America's Pharmacy Clinical Services Platform
+    </span>
     <h1>
       <span>The end-to-end platform for <span style="color: var(--matcha); display: inline;">pharmacy clinical services</span>.</span>
       <span>From launch to reimbursement.</span>
@@ -4850,7 +4856,7 @@ page.title: MedMe, United States Homepage Mockup
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">AI-Native by Design</span>
-      <h2 class="h-display">The AI agents are built<br>into the platform. Not bolted on.</h2>
+      <h2 class="h-display">The AI agents are built into the platform.<br>Not bolted on.</h2>
       <p class="lead">Three AI agents live inside the clinical workflow, supporting consultations, automating patient outreach, and reducing manual data entry across systems.</p>
     </div>
     <div class="tile-grid tile-grid--3 ai-grid">

@@ -17,7 +17,7 @@ page.title: MedMe, Canada Homepage
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=57">
+<link rel="stylesheet" href="/assets/brand.css?v=59">
 
 <script type="application/ld+json">
 {
@@ -650,7 +650,9 @@ page.title: MedMe, Canada Homepage
     width: 100%;
     aspect-ratio: 1192 / 656;
     background: #fff;
-    border-radius: 10px;
+    /* Aligned to the site radius scale (was 10px, off-token).
+       --radius-lg matches .h-card and every other major card surface. */
+    border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid rgba(6, 62, 84, 0.06);
     border-bottom-color: transparent;
