@@ -2443,10 +2443,11 @@ a.nav__dropdown-group-label:hover {
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.95rem;
-  border: 1.5px solid var(--matcha);
+  /* Outlined pill in the main text color (indigo). Was matcha. */
+  border: 1.5px solid var(--indigo);
   border-radius: 999px;
   background: transparent;
-  color: var(--matcha);
+  color: var(--indigo);
   font-family: var(--font-body);
   font-size: 0.82rem;
   font-weight: 600;
@@ -2458,7 +2459,7 @@ a.nav__dropdown-group-label:hover {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background: var(--matcha);
+  background: var(--indigo);
   flex-shrink: 0;
   display: inline-block;
 }
