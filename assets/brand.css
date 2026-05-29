@@ -41,8 +41,8 @@
 
   /* Spacing */
   --space-section: clamp(4rem, 8vw, 7rem);
-  --container: 1240px;
-  --container-narrow: 880px;
+  --container: 1440px;        /* wide page frame — matches Attio (90rem) */
+  --container-narrow: 720px;  /* tight text column — ~60–70 chars per line */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
@@ -348,7 +348,7 @@ section { padding-block: var(--space-section); }
 }
 
 /* ============== TRUST BAND ============== */
-.trust { background: var(--indigo); color: var(--seashell); padding: 3rem 0; }
+.trust { background: var(--indigo); color: var(--seashell); padding: 3rem 0; border-top: 1px solid rgba(250, 249, 245, 0.08); }
 .trust__top { display: grid; grid-template-columns: minmax(220px, 1fr) 2fr; gap: 3rem; align-items: center; }
 .trust__label .eyebrow { color: var(--matcha); }
 .trust__label .stat-line {
@@ -2166,6 +2166,11 @@ a.nav__dropdown-group-label:hover {
   padding-block: var(--tile-pad-y);
   padding-inline: 1.5rem;
   position: relative;
+  /* Attio-style hairline divider between sections. Sits at the
+     TOP of each tile so adjacent sections get a single 1px line.
+     Color is overridden on .tile--dark below so the line stays
+     visible against the indigo surface. */
+  border-top: 1px solid var(--indigo-08);
 }
 /* Light tiles + parchment tiles share the warm seashell page surface.
    Cards (.h-card) keep --surface-canvas (white) so they pop on seashell. */
@@ -2177,14 +2182,93 @@ a.nav__dropdown-group-label:hover {
   --accent:      var(--matcha);
   --accent-text: var(--indigo);
   --accent-soft: #d4d540;
+  /* Seashell-tinted hairline reads against the dark indigo bg. */
+  border-top-color: rgba(250, 249, 245, 0.08);
 }
 .tile--dark h1, .tile--dark h2, .tile--dark h3, .tile--dark h4 { color: var(--seashell); }
 
-.tile__inner { max-width: 1240px; margin: 0 auto; }
+.tile__inner { max-width: var(--container); margin: 0 auto; }
 .tile__inner--narrow { max-width: 920px; margin: 0 auto; }
-.tile__head { max-width: 760px; margin: 0 auto 3rem; text-align: center; }
-.tile__head--left { margin-left: 0; margin-right: auto; text-align: left; }
-.tile__head .lead { margin-top: 1rem; margin-bottom: 0; }
+
+/* ============================================================
+   TILE HEAD — Linear-style 2-column split (default 2026-05-29).
+   Left column: kicker + headline.
+   Right column: lead description + any CTA / button row.
+   Body content for the section sits BELOW the head as a single
+   column (unchanged). Hero and footer are NOT affected because
+   neither uses .tile__head.
+
+   ROLLBACK (single section): add the .tile__head--centered
+   modifier to that one .tile__head.
+   ROLLBACK (whole site): swap the default rule below with the
+   `.tile__head--centered` rule's body — i.e. make centered the
+   default and split the opt-in. The centered rule is kept here
+   intact for that purpose.
+   ============================================================ */
+.tile__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 1.25rem 4rem;
+  margin: 0 0 3rem;
+  text-align: left;
+  max-width: 100%;
+}
+/* Place kicker + headlines in the LEFT column. */
+.tile__head > .kicker,
+.tile__head > h1,
+.tile__head > h2,
+.tile__head > h3,
+.tile__head > h4,
+.tile__head > .h-display,
+.tile__head > .h-section {
+  grid-column: 1;
+}
+/* Place description + CTAs in the RIGHT column,
+   bottom-aligned so descriptions baseline against the headline. */
+.tile__head > p,
+.tile__head > .lead,
+.tile__head > .btn,
+.tile__head > .cta-row,
+.tile__head > a.btn {
+  grid-column: 2;
+  align-self: end;
+  margin: 0;
+}
+.tile__head .lead { margin: 0; }
+/* If the head has no right-column content (kicker + headline only),
+   collapse gracefully to a single left-anchored column. :has() is
+   supported in all modern browsers as of 2023. */
+.tile__head:not(:has(> p, > .lead, > .btn, > .cta-row, > a.btn)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+/* Mobile: stack vertically so the right column drops under the headline. */
+@media (max-width: 900px) {
+  .tile__head {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+  .tile__head > * { grid-column: 1 !important; }
+}
+
+/* Legacy left-aligned single-column variant. Kept as-is so any
+   existing `.tile__head--left` usage retains its old behavior. */
+.tile__head--left {
+  display: block;
+  max-width: 760px;
+  margin: 0 0 3rem;
+  text-align: left;
+}
+
+/* Rollback variant — restores the original centered single-column
+   look (kicker / headline / lead stacked, centered, max 760px). */
+.tile__head--centered {
+  display: block;
+  max-width: 760px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+.tile__head--centered .lead { margin-top: 1rem; margin-bottom: 0; }
 
 /* ============== APPLE TYPE ============== */
 .h-display, .h-section {

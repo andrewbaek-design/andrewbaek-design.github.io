@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=41">
+<link rel="stylesheet" href="/assets/brand.css?v=44">
 
 <script type="application/ld+json">
 {
@@ -50,8 +50,11 @@
     background: var(--seashell) !important;
     color: var(--indigo) !important;
     padding: 4rem 0 3rem !important;
+    /* Override the dark-default seashell-tinted divider so the
+       hairline stays visible on this light variant. */
+    border-top-color: var(--indigo-08) !important;
   }
-  .trust .wrap { max-width: 1240px; margin: 0 auto; padding: 0 1.5rem; }
+  .trust .wrap { max-width: var(--container); margin: 0 auto; padding: 0 1.5rem; }
   /* Override brand.css's 2-column grid so the header centers properly */
   .trust__top {
     display: block !important;
@@ -580,7 +583,7 @@
   .visual-wrap {
     position: relative;
     margin: 1.5rem auto 0;
-    max-width: 1240px;
+    max-width: var(--container);
     padding: 0 2rem;
   }
   /* visual-halo intentionally empty — green/indigo gradient halo
@@ -3560,7 +3563,7 @@
      and can be restored by removing the `hidden` attribute.
      ============================================================ */
   .hero-pipeline { padding: 3.5rem 0 2rem; }
-  .hp-wrap { max-width: 1240px; margin: 0 auto; padding: 0 2rem; }
+  .hp-wrap { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
   .hp-flow {
     display: flex;
     align-items: flex-start;
