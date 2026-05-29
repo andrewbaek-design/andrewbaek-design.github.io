@@ -4,165 +4,422 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>For Pharmacy Networks, MedMe Health</title>
-<meta name="description" content="One platform for banners, co-ops, and PSAOs. Unlock your member data, standardize the clinical workflow across stores, and run the commercial model that fits your network." />
+<meta name="description" content="MedMe gives pharmacy networks a clinical services platform members actually adopt, and gives the central organization the cross-network reporting that strengthens its value to membership." />
 <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/pharmacy/networks" />
 <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/pharmacy/networks" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=62" />
 <style>
   /* ============================================================
-     NETWORKS, solution page for banners, co-ops & PSAOs.
-     Reuses the .sol-hero / .persona-card / .built-grid pattern
-     established on Enterprises + Independents.
+     NETWORKS sub-page. Leans on the front-page design system
+     (.tile, .tile__head, .h-display, .kicker, .pill, .tile--navy).
+     Page-specific bits: network rollup hero motion graphic
+     (many member nodes consolidating into one), per-card motion
+     in the Value to Network grid, navy story band with four
+     commercial model value blocks.
      ============================================================ */
-  .sol-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
-  .sol-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
-  .sol-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .sol-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .sol-hero__breadcrumb a:hover { color: var(--indigo); }
-  .sol-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .sol-hero h1.h-display { margin: 0.5rem 0 1rem; }
-  .sol-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); margin: 0 0 1.75rem; }
-  .sol-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; }
 
-  .persona-card { background: #F5F7F8; border-radius: 18px; padding: 2rem; border: 1px solid rgba(6, 62, 84, 0.06); }
-  .persona-card__head { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(6, 62, 84, 0.08); }
-  .persona-card__avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--indigo-dark)); color: var(--matcha); display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
-  .persona-card__role { font-size: 0.8rem; color: rgba(6, 62, 84, 0.6); margin: 0 0 2px; }
-  .persona-card__name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--indigo); margin: 0; }
-  .persona-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.65rem; }
-  .persona-card li { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.9rem; color: var(--indigo); line-height: 1.5; }
-  .persona-card li::before { content: '\2713'; color: var(--matcha); font-weight: 700; font-size: 0.85rem; margin-top: 1px; }
-  @media (max-width: 880px) { .sol-hero__inner { grid-template-columns: 1fr; gap: 2rem; } }
+  /* ====== HERO: stacked (motion graphic above text) ============= */
+  .sub-hero {
+    background: var(--seashell);
+    padding: 2rem 1.5rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sub-hero__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+    position: relative;
+  }
+  .sub-hero__visual {
+    position: relative;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .sub-hero__text {
+    text-align: center;
+    max-width: 760px;
+    margin: 2.5rem auto 0;
+    position: relative;
+  }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto 1.75rem;
+    max-width: 640px;
+  }
+  .sub-hero__cta {
+    display: inline-flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: 2rem; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: 1.5rem; } }
 
-  /* Three pillars */
-  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .pillar { background: rgba(250, 249, 245, 0.04); border: 1px solid rgba(250, 249, 245, 0.12); border-radius: 14px; padding: 2rem; }
-  .pillar__num { font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--matcha); margin-bottom: 0.75rem; }
-  .pillar h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--seashell); margin: 0 0 0.6rem; letter-spacing: -0.012em; }
-  .pillar p { font-size: 0.92rem; color: rgba(250, 249, 245, 0.78); line-height: 1.55; margin: 0; }
-  @media (max-width: 880px) { .pillars { grid-template-columns: 1fr; } }
+  /* ====== HERO ROLLUP GRAPHIC ====================================
+     A 6x4 grid of small member-store dots flowing rightward into
+     a single rollup card on the right. Visualises many member
+     locations consolidating into one cross-network view. Reduced-
+     motion respected. */
+  .hero-roll {
+    position: relative;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    aspect-ratio: 800 / 440;
+    display: block;
+  }
+  .hero-roll .roll-mesh circle {
+    fill: var(--white);
+    stroke: rgba(6, 62, 84, 0.18);
+    stroke-width: 1.25;
+  }
+  .hero-roll .roll-mesh .roll-active {
+    fill: var(--matcha);
+    stroke: var(--matcha);
+    animation: roll-blink 3.2s ease-in-out infinite;
+  }
+  @keyframes roll-blink {
+    0%, 100% { opacity: 0.25; }
+    50%      { opacity: 1; }
+  }
+  .hero-roll .roll-mesh .roll-a-1 { animation-delay: 0s; }
+  .hero-roll .roll-mesh .roll-a-2 { animation-delay: 0.3s; }
+  .hero-roll .roll-mesh .roll-a-3 { animation-delay: 0.6s; }
+  .hero-roll .roll-mesh .roll-a-4 { animation-delay: 0.9s; }
+  .hero-roll .roll-mesh .roll-a-5 { animation-delay: 1.2s; }
+  .hero-roll .roll-pulse { fill: var(--matcha); }
+  .hero-roll .roll-card {
+    fill: var(--white);
+    stroke: rgba(6, 62, 84, 0.14);
+    stroke-width: 1.5;
+  }
+  .hero-roll .roll-card-ring {
+    fill: none;
+    stroke: var(--matcha);
+    stroke-width: 1.5;
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: roll-card-ring 2.8s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+  @keyframes roll-card-ring {
+    0%   { opacity: 0.55; transform: scale(1); }
+    100% { opacity: 0;    transform: scale(1.6); }
+  }
+  .hero-roll .roll-card-label {
+    fill: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    text-anchor: middle;
+  }
+  .hero-roll .roll-card-stat {
+    fill: rgba(6, 62, 84, 0.65);
+    font-family: var(--font-display);
+    font-size: 11px;
+    text-anchor: middle;
+  }
+  .hero-roll .roll-bar {
+    fill: var(--matcha);
+    transform-origin: left center;
+  }
+  .hero-roll .roll-bar-bg {
+    fill: rgba(6, 62, 84, 0.08);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-roll .roll-mesh .roll-active,
+    .hero-roll .roll-card-ring,
+    .hero-roll .roll-pulse { animation: none; opacity: 0; display: none; }
+  }
+  @media (max-width: 980px) {
+    .sub-hero__visual { margin-inline: calc(-1 * var(--tile-pad-x)); }
+    .hero-roll .roll-card-label { font-size: 17px; }
+    .hero-roll .roll-card-stat { font-size: 15px; }
+  }
+  @media (max-width: 700px) {
+    .sub-hero { padding-inline: 0.5rem; }
+    .sub-hero__visual { margin-inline: 0; }
+    .hero-roll .roll-card-label { font-size: 21px; }
+    .hero-roll .roll-card-stat { font-size: 18px; }
+  }
 
-  /* Ways we work grid */
-  .built-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .built-grid .h-card { padding: 1.75rem; }
-  .built-grid h3 { font-size: 1.1rem; margin: 0 0 0.5rem; color: var(--indigo); font-weight: 700; }
-  .built-grid p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
-  @media (max-width: 900px) { .built-grid { grid-template-columns: 1fr; } }
+  /* ====== VALUE TO NETWORK: 3-feature card grid w/ motion ======= */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .feature-grid { grid-template-columns: 1fr; } }
+  .feature {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: none;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .feature:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .feat-graphic {
+    width: 100%;
+    height: 130px;
+    background: rgba(195, 196, 48, 0.06);
+    border-radius: 10px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .feature h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .feature p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; }
 
-  /* Commercial models */
-  .models { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .model-card { background: #fff; border-radius: 16px; border: 1px solid rgba(6, 62, 84, 0.10); padding: 2rem; display: flex; flex-direction: column; }
-  .model-card__tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(6, 62, 84, 0.55); margin-bottom: 0.5rem; }
-  .model-card h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--indigo); margin: 0 0 0.6rem; letter-spacing: -0.012em; }
-  .model-card p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
-  @media (max-width: 880px) { .models { grid-template-columns: 1fr; } }
+  /* 1. Visibility: dashboard with chart bars + sweep line */
+  .feat-vis {
+    padding: 18px 22px;
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    position: relative;
+  }
+  .feat-vis .vis-bar {
+    flex: 1;
+    background: rgba(195, 196, 48, 0.25);
+    border-radius: 2px 2px 0 0;
+    animation: vis-grow 4s ease-in-out infinite;
+  }
+  .feat-vis .vis-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+  .feat-vis .vis-bar:nth-child(2) { height: 55%; animation-delay: 0.15s; }
+  .feat-vis .vis-bar:nth-child(3) { height: 40%; animation-delay: 0.3s; }
+  .feat-vis .vis-bar:nth-child(4) { height: 70%; animation-delay: 0.45s; }
+  .feat-vis .vis-bar:nth-child(5) { height: 50%; animation-delay: 0.6s; }
+  .feat-vis .vis-bar:nth-child(6) { height: 80%; animation-delay: 0.75s; }
+  .feat-vis .vis-bar:nth-child(7) { height: 65%; animation-delay: 0.9s; }
+  .feat-vis .vis-bar:nth-child(8) { height: 90%; animation-delay: 1.05s; }
+  @keyframes vis-grow {
+    0%, 100% { background: rgba(195, 196, 48, 0.25); transform: scaleY(0.9); }
+    50%      { background: var(--matcha);             transform: scaleY(1); }
+  }
 
-  /* Member data dashboard placeholder graphic */
-  .rollup-graphic { background: rgba(250, 249, 245, 0.04); border: 1px solid rgba(250, 249, 245, 0.12); border-radius: 14px; padding: 1.75rem; margin-top: 2.5rem; max-width: 920px; margin-left: auto; margin-right: auto; }
-  .rollup-graphic__bars { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; align-items: end; height: 140px; }
-  .rollup-graphic__bar { background: linear-gradient(180deg, var(--matcha), rgba(195, 196, 48, 0.4)); border-radius: 4px 4px 0 0; }
-  .rollup-graphic__caption { text-align: center; font-size: 0.85rem; color: rgba(250, 249, 245, 0.7); margin-top: 1rem; }
+  /* 2. Standardization: 3 row blueprints aligning identically */
+  .feat-std {
+    padding: 16px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+  .feat-std .std-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .feat-std .std-step {
+    height: 10px;
+    background: rgba(195, 196, 48, 0.3);
+    border-radius: 2px;
+    animation: std-align 3.6s ease-in-out infinite;
+  }
+  .feat-std .std-row:nth-child(1) .std-step:nth-child(1) { width: 20px; animation-delay: 0s; }
+  .feat-std .std-row:nth-child(1) .std-step:nth-child(2) { width: 30px; animation-delay: 0.1s; }
+  .feat-std .std-row:nth-child(1) .std-step:nth-child(3) { width: 24px; animation-delay: 0.2s; }
+  .feat-std .std-row:nth-child(2) .std-step:nth-child(1) { width: 20px; animation-delay: 0.4s; }
+  .feat-std .std-row:nth-child(2) .std-step:nth-child(2) { width: 30px; animation-delay: 0.5s; }
+  .feat-std .std-row:nth-child(2) .std-step:nth-child(3) { width: 24px; animation-delay: 0.6s; }
+  .feat-std .std-row:nth-child(3) .std-step:nth-child(1) { width: 20px; animation-delay: 0.8s; }
+  .feat-std .std-row:nth-child(3) .std-step:nth-child(2) { width: 30px; animation-delay: 0.9s; }
+  .feat-std .std-row:nth-child(3) .std-step:nth-child(3) { width: 24px; animation-delay: 1.0s; }
+  @keyframes std-align {
+    0%, 100% { background: rgba(195, 196, 48, 0.3); }
+    50%      { background: var(--matcha); }
+  }
 
-  /* Story quote */
-  .story { background: #fff; border-radius: 18px; border: 1px solid rgba(6, 62, 84, 0.08); padding: 2.5rem 3rem; margin-top: 2.5rem; max-width: 920px; margin-left: auto; margin-right: auto; }
-  .story__quote { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.45; color: var(--indigo); font-weight: 500; letter-spacing: -0.012em; margin: 0 0 1.25rem; }
-  .story__author { font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); }
-  .story__author b { color: var(--indigo); font-weight: 600; }
-  .story__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(6, 62, 84, 0.08); }
-  .story__stat .num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.012em; }
-  .story__stat .lbl { font-size: 0.8rem; color: rgba(6, 62, 84, 0.65); margin-top: 0.25rem; }
-  @media (max-width: 700px) { .story { padding: 2rem 1.5rem; } .story__stats { grid-template-columns: 1fr; gap: 1rem; } }
+  /* 3. Commercial: stacked dollar/value tags cycling */
+  .feat-comm {
+    padding: 14px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .feat-comm .comm-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--white);
+    border: 1px solid rgba(195, 196, 48, 0.3);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--indigo);
+    opacity: 0;
+    transform: translateY(8px);
+    animation: comm-show 4s ease-in-out infinite;
+  }
+  .feat-comm .comm-tag:nth-child(1) { animation-delay: 0s; }
+  .feat-comm .comm-tag:nth-child(2) { animation-delay: 1.3s; }
+  .feat-comm .comm-tag:nth-child(3) { animation-delay: 2.6s; }
+  .feat-comm .comm-tag .comm-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--matcha);
+    border-radius: 50%;
+  }
+  @keyframes comm-show {
+    0%, 70%, 100% { opacity: 0; transform: translateY(8px); }
+    10%, 30%      { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feat-vis .vis-bar,
+    .feat-std .std-step,
+    .feat-comm .comm-tag { animation: none; opacity: 1; transform: none; }
+  }
+
+  /* ====== NAVY STORY (member benefit + 4 commercial models) ===== */
+  .tile--navy { position: relative; overflow: hidden; }
+  .tile--navy .tile__inner { position: relative; z-index: 1; }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (max-width: 980px) { .story-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  .story-quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--seashell);
+    letter-spacing: -0.012em;
+    margin: 1rem 0 1.25rem;
+  }
+  .story-quote p { margin: 0; }
+  .story-attribution {
+    font-size: 0.875rem;
+    color: rgba(250, 249, 245, 0.60);
+    margin: 0;
+  }
+  .story-cta { margin-top: 1.75rem; }
+  .value-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  @media (max-width: 600px) { .value-blocks { grid-template-columns: 1fr; } }
+  .value-block {
+    background: rgba(250, 249, 245, 0.06);
+    border: 1px solid rgba(250, 249, 245, 0.12);
+    border-radius: 14px;
+    padding: 1.25rem;
+    transition: border-color 0.6s ease, box-shadow 0.6s ease;
+    animation: value-block-light 6s ease-in-out infinite;
+  }
+  .value-block:nth-child(1) { animation-delay: 0s; }
+  .value-block:nth-child(2) { animation-delay: 1.5s; }
+  .value-block:nth-child(3) { animation-delay: 3s; }
+  .value-block:nth-child(4) { animation-delay: 4.5s; }
+  @keyframes value-block-light {
+    0%, 18%, 100% { border-color: rgba(250, 249, 245, 0.12); box-shadow: none; }
+    6%, 12%       { border-color: var(--matcha); box-shadow: 0 0 0 1px rgba(195, 196, 48, 0.35), 0 8px 28px rgba(195, 196, 48, 0.18); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .value-block { animation: none; }
+  }
+  .value-block__icon {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(195, 196, 48, 0.18);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+  .value-block__icon svg { width: 18px; height: 18px; stroke: var(--matcha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .value-block h4 {
+    margin: 0 0 0.4rem;
+    color: var(--seashell);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .value-block p {
+    margin: 0;
+    color: rgba(250, 249, 245, 0.65);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* Faint navy bg pattern: dot grid + scan wave. */
+  .story-bg-pattern {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.08) 1.5px, transparent 1.6px);
+    background-size: 38px 38px;
+    background-position: center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+  .story-bg-pattern::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.32) 1.8px, transparent 1.9px);
+    background-size: 38px 38px;
+    background-position: center;
+    -webkit-mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
+            mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
+    -webkit-mask-size: 220% 220%;
+            mask-size: 220% 220%;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    animation: net-dot-scan 7s linear infinite;
+  }
+  @keyframes net-dot-scan {
+    from { -webkit-mask-position: 160% 160%; mask-position: 160% 160%; }
+    to   { -webkit-mask-position: -60% -60%; mask-position: -60% -60%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .story-bg-pattern::before { animation: none; opacity: 0; }
+  }
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to main content</a>
-<div class="util-bar" role="region" aria-label="Site announcement">
-  <div class="wrap util-bar--center">
-    <div class="news">
-      <strong>NEW:</strong> Admin Clerk, the AI assistant that runs the back office. <a href="/us/platform/ai-assistants/admin-clerk">See it work &rarr;</a>
-    </div>
-  </div>
-</div>
-<script src="/assets/site.js" defer></script>
-<!-- Cookie banner + preferences modal, appears on every page.
-     Behavior is driven by JS in /assets/site.js (consent management).
-     Compliant target: GDPR (EU), CCPA/CPRA (US), PIPEDA + Quebec Law 25 (CA),
-     and the strictest interpretation across all four. -->
-<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Cookie preferences" hidden>
-  <div class="cookie-banner__inner">
-    <p class="cookie-banner__desc">
-      We use essential cookies. Analytics and marketing are your choice.
-      See our <a href="/legal/privacy">privacy policy</a>.
-    </p>
-    <div class="cookie-banner__actions">
-      <button type="button" class="cookie-banner__btn cookie-banner__btn--ghost" data-consent-reject>Reject</button>
-      <button type="button" class="cookie-banner__btn cookie-banner__btn--ghost" data-consent-customize>Customize</button>
-      <button type="button" class="cookie-banner__btn cookie-banner__btn--accent" data-consent-accept>Accept</button>
-    </div>
-  </div>
-</div>
-
-<div class="cookie-modal" id="cookieModal" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle" hidden>
-  <div class="cookie-modal__overlay" data-consent-close aria-hidden="true"></div>
-  <div class="cookie-modal__panel" role="document">
-    <button type="button" class="cookie-modal__close" data-consent-close aria-label="Close preferences">✕</button>
-    <h2 id="cookieModalTitle" class="cookie-modal__title">Cookie preferences</h2>
-    <p class="cookie-modal__desc">
-      Choose what cookies MedMe can use during your visit. You can change these any time
-      via the "Cookie preferences" link in the footer.
-    </p>
-
-    <div class="cookie-cat">
-      <div class="cookie-cat__head">
-        <strong>Strictly necessary</strong>
-        <span class="cookie-cat__locked">Always on</span>
-      </div>
-      <p>Required for the site to load and function, session, security, region selection, accessibility preferences. Cannot be disabled.</p>
-    </div>
-
-    <div class="cookie-cat">
-      <label class="cookie-cat__head">
-        <strong>Functional</strong>
-        <input type="checkbox" data-consent-cat="functional" checked />
-        <span class="cookie-cat__toggle" aria-hidden="true"></span>
-      </label>
-      <p>Remember your region preference (US vs Canada), recent calculator inputs, and display preferences so you don't have to re-enter them.</p>
-    </div>
-
-    <div class="cookie-cat">
-      <label class="cookie-cat__head">
-        <strong>Analytics</strong>
-        <input type="checkbox" data-consent-cat="analytics" />
-        <span class="cookie-cat__toggle" aria-hidden="true"></span>
-      </label>
-      <p>Aggregate, de-identified usage data so we can improve the site (page views, navigation paths, broken-link detection). No PHI, no personally identifying info.</p>
-    </div>
-
-    <div class="cookie-cat">
-      <label class="cookie-cat__head">
-        <strong>Marketing</strong>
-        <input type="checkbox" data-consent-cat="marketing" />
-        <span class="cookie-cat__toggle" aria-hidden="true"></span>
-      </label>
-      <p>Help us understand which content brought you here so we can tailor follow-up. Used only if you've also given consent in any contact forms.</p>
-    </div>
-
-    <div class="cookie-modal__actions">
-      <button type="button" class="cookie-modal__btn cookie-modal__btn--ghost" data-consent-reject>Reject non-essential</button>
-      <button type="button" class="cookie-modal__btn cookie-modal__btn--accent" data-consent-save>Save preferences</button>
-    </div>
-  </div>
-</div>
 <!--
   US navigation, locked to sitemap v11.
   Structure: Pharmacy ▾ / Platform ▾ / Resources ▾ / Partners ▾ / About
   Notes:
    - Pharmacy: Independents / Enterprises / Networks / Specialty
    - Platform: Pharmacy EHR (overview, with module sub-pages) / AI Assistants / PMS Integrations
-   - Partners: Pharmacy Associations / Networks (ref) / Multi-store (ref)
+   - Partners: Pharmacy Associations / Networks (ref)
    - About: no children
    - CA toggle stays via localStorage; root-level geo redirect lives in src/index.html
 -->
@@ -297,10 +554,6 @@
               <span class="nav__dropdown-title">Networks <em class="nav__tag nav__tag--ref">ref</em></span>
               <span class="nav__dropdown-desc">See Pharmacy → Networks</span>
             </a>
-            <a href="/us/pharmacy/multi-store" class="nav__dropdown-link" role="menuitem">
-              <span class="nav__dropdown-title">Multi-store <em class="nav__tag nav__tag--ref">ref</em></span>
-              <span class="nav__dropdown-desc">See Pharmacy → Multi-store</span>
-            </a>
           </div>
         </li>
 
@@ -345,191 +598,181 @@
     <a class="btn btn-primary nav-drawer__cta" href="/us/contact">Book a demo <span class="arrow">→</span></a>
   </nav>
 </header>
+
 <main id="main">
 
-<!-- ============= HERO ============= -->
-<section class="sol-hero">
-  <div class="sol-hero__inner">
-    <div>
-      <div class="sol-hero__breadcrumb">
-        <a href="/us">Home</a><span class="sep">/</span>
-        <a href="/us/pharmacy/networks">Pharmacy</a><span class="sep">/</span>
-        <span>Networks</span>
-      </div>
-      <span class="kicker kicker--matcha">For banners, co-ops &amp; PSAOs</span>
-      <h1 class="h-display">One platform<br>for the whole network.</h1>
-      <p class="sol-hero__lede">Unlock your member data, standardize the clinical workflow across every store, and run the commercial model that fits your network. MedMe gives banners, co-ops, and PSAOs the visibility and leverage that fragmented point solutions never could.</p>
-      <div class="sol-hero__cta">
-        <a class="btn btn-primary" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/us/customers">See customer stories</a>
+<!-- ============= 1. SUB-HERO (stacked, network rollup motion above text) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__visual">
+      <svg class="hero-roll" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagram: many member pharmacy stores on the left consolidating into a single network rollup view on the right, showing active members, services delivered, and top performing locations.">
+
+        <!-- Left side: 6x4 mesh of member-store dots -->
+        <g class="roll-mesh">
+          <!-- Row 1 -->
+          <circle cx="80"  cy="100" r="8" class="roll-active roll-a-1" />
+          <circle cx="130" cy="100" r="8" />
+          <circle cx="180" cy="100" r="8" class="roll-active roll-a-3" />
+          <circle cx="230" cy="100" r="8" />
+          <circle cx="280" cy="100" r="8" />
+          <circle cx="330" cy="100" r="8" class="roll-active roll-a-5" />
+          <!-- Row 2 -->
+          <circle cx="80"  cy="170" r="8" />
+          <circle cx="130" cy="170" r="8" class="roll-active roll-a-2" />
+          <circle cx="180" cy="170" r="8" />
+          <circle cx="230" cy="170" r="8" class="roll-active roll-a-4" />
+          <circle cx="280" cy="170" r="8" />
+          <circle cx="330" cy="170" r="8" />
+          <!-- Row 3 -->
+          <circle cx="80"  cy="240" r="8" class="roll-active roll-a-4" />
+          <circle cx="130" cy="240" r="8" />
+          <circle cx="180" cy="240" r="8" />
+          <circle cx="230" cy="240" r="8" class="roll-active roll-a-1" />
+          <circle cx="280" cy="240" r="8" class="roll-active roll-a-3" />
+          <circle cx="330" cy="240" r="8" />
+          <!-- Row 4 -->
+          <circle cx="80"  cy="310" r="8" />
+          <circle cx="130" cy="310" r="8" class="roll-active roll-a-5" />
+          <circle cx="180" cy="310" r="8" class="roll-active roll-a-2" />
+          <circle cx="230" cy="310" r="8" />
+          <circle cx="280" cy="310" r="8" />
+          <circle cx="330" cy="310" r="8" class="roll-active roll-a-4" />
+        </g>
+
+        <!-- Data flow pulses traveling rightward into the rollup card -->
+        <circle r="3.5" cx="330" cy="100" class="roll-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"   path="M 0,0 L 240,120" />
+          <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="0s" />
+        </circle>
+        <circle r="3.5" cx="330" cy="170" class="roll-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.4s" path="M 0,0 L 240,50" />
+          <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+        </circle>
+        <circle r="3.5" cx="330" cy="240" class="roll-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.8s" path="M 0,0 L 240,-20" />
+          <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="0.8s" />
+        </circle>
+        <circle r="3.5" cx="330" cy="310" class="roll-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s" path="M 0,0 L 240,-90" />
+          <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="1.2s" />
+        </circle>
+
+        <!-- Right side: rollup card -->
+        <g>
+          <rect class="roll-card-ring" x="430" y="150" width="290" height="160" rx="16" />
+          <rect class="roll-card" x="430" y="150" width="290" height="160" rx="16" />
+          <text x="575" y="184" class="roll-card-label">Network Rollup</text>
+          <text x="575" y="206" class="roll-card-stat">All Members, This Month</text>
+
+          <!-- Stat bars inside the card -->
+          <rect class="roll-bar-bg" x="460" y="226" width="230" height="6" rx="3" />
+          <rect class="roll-bar"    x="460" y="226" width="190" height="6" rx="3" />
+          <text x="460" y="250" class="roll-card-stat" text-anchor="start">142 active members</text>
+
+          <rect class="roll-bar-bg" x="460" y="262" width="230" height="6" rx="3" />
+          <rect class="roll-bar"    x="460" y="262" width="160" height="6" rx="3" />
+          <text x="460" y="286" class="roll-card-stat" text-anchor="start">8,420 services delivered</text>
+        </g>
+      </svg>
+    </div>
+    <div class="sub-hero__text">
+      <h1 class="h-display">The clinical services platform<br>your members will actually use.</h1>
+      <p class="sub-hero__lede">MedMe gives pharmacy networks a platform members adopt, and gives the central organization the cross-network reporting that strengthens its value to membership.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
       </div>
     </div>
-    <aside class="persona-card">
-      <div class="persona-card__head">
-        <div class="persona-card__avatar">JM</div>
-        <div>
-          <p class="persona-card__role">VP, Pharmacy Services</p>
-          <p class="persona-card__name">Janelle Morris</p>
+  </div>
+</section>
+
+<!-- ============= 2. VALUE TO NETWORK (3 cards w/ motion) ============= -->
+<section class="tile tile--light" aria-label="Value to the network">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Value to the Network</span>
+      <h2 class="h-display">What MedMe gives<br>the central organization.</h2>
+      <p class="lead">Three things a network needs that store-by-store software can't deliver: one view across every member location, one clinical standard, and a commercial model designed around how your network actually works.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="feat-graphic feat-vis" aria-hidden="true">
+          <span class="vis-bar"></span><span class="vis-bar"></span><span class="vis-bar"></span><span class="vis-bar"></span>
+          <span class="vis-bar"></span><span class="vis-bar"></span><span class="vis-bar"></span><span class="vis-bar"></span>
+        </div>
+        <h3>Cross-network reporting</h3>
+        <p>Aggregate clinical services data across every member location. See what is working, where, and why.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-std" aria-hidden="true">
+          <div class="std-row"><span class="std-step"></span><span class="std-step"></span><span class="std-step"></span></div>
+          <div class="std-row"><span class="std-step"></span><span class="std-step"></span><span class="std-step"></span></div>
+          <div class="std-row"><span class="std-step"></span><span class="std-step"></span><span class="std-step"></span></div>
+        </div>
+        <h3>Service configurations as best practice</h3>
+        <p>Push standardized clinical workflows across members. Maintain consistency without removing local flexibility.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-comm" aria-hidden="true">
+          <span class="comm-tag"><span class="comm-dot"></span>Member Discount</span>
+          <span class="comm-tag"><span class="comm-dot"></span>Volume Rebate</span>
+          <span class="comm-tag"><span class="comm-dot"></span>Network-Paid</span>
+        </div>
+        <h3>Models that work for your network</h3>
+        <p>Member discount pricing. Volume-based rebates. Network-paid subscriptions. We structure the commercial model around how your network actually works.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. NAVY STORY (member benefit + 4 commercial models) ============= -->
+<section class="tile tile--navy" aria-label="A member benefit, not just a vendor">
+  <div class="story-bg-pattern" aria-hidden="true"></div>
+  <div class="tile__inner">
+    <div class="story-grid">
+      <div>
+        <h2 class="kicker">A Member Benefit, Not Just a Vendor</h2>
+        <blockquote class="story-quote"><p>"Your endorsement of MedMe becomes a tangible part of your value to members, a clinical services platform they can act on, at pricing only your network can offer."</p></blockquote>
+        <p class="story-attribution">From a recent banner partnership conversation</p>
+        <div class="story-cta">
+          <a class="pill pill--solid" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
         </div>
       </div>
-      <ul>
-        <li>200&ndash;2,000 member stores under one banner or co-op</li>
-        <li>Members run different PMSs and clinical tools today</li>
-        <li>No line of sight into member-level clinical activity</li>
-        <li>Wants to launch network-wide service programs</li>
-        <li>Needs a commercial model members will actually adopt</li>
-      </ul>
-    </aside>
-  </div>
-</section>
-
-<!-- ============= THREE PILLARS (dark) ============= -->
-<section class="tile tile--light" aria-label="What networks get">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Why networks choose MedMe</span>
-      <h2 class="h-display">Visibility, standardization,<br>commercial flexibility.</h2>
-      <p class="lead">The three things a network needs that store-by-store software can't give you: one view across all members, one clinical standard, and a commercial model that works for your structure.</p>
-    </div>
-    <div class="pillars">
-      <div class="pillar">
-        <div class="pillar__num">01 / Visibility</div>
-        <h3>Unlock your member data</h3>
-        <p>Network-wide dashboards roll up clinical activity, service volume, and revenue across every member store, the data you've never been able to see because it lived in a dozen disconnected systems.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar__num">02 / Standardization</div>
-        <h3>One clinical standard</h3>
-        <p>Standardized intake forms, documentation templates, and service workflows across the network. New programs launch once, centrally, and propagate to every member in days, not store-by-store over months.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar__num">03 / Flexibility</div>
-        <h3>The commercial model that fits</h3>
-        <p>Member discount, volume rebate, or network-paid subscription, structure the economics the way your network actually works. Members adopt because the math works for them, not because you mandate it.</p>
-      </div>
-    </div>
-    <!-- TODO: replace placeholder bar graphic with real member-data aggregation dashboard -->
-    <div class="rollup-graphic" aria-hidden="true">
-      <div class="rollup-graphic__bars">
-        <div class="rollup-graphic__bar" style="height: 45%"></div>
-        <div class="rollup-graphic__bar" style="height: 62%"></div>
-        <div class="rollup-graphic__bar" style="height: 38%"></div>
-        <div class="rollup-graphic__bar" style="height: 78%"></div>
-        <div class="rollup-graphic__bar" style="height: 55%"></div>
-        <div class="rollup-graphic__bar" style="height: 88%"></div>
-        <div class="rollup-graphic__bar" style="height: 70%"></div>
-        <div class="rollup-graphic__bar" style="height: 95%"></div>
-      </div>
-      <div class="rollup-graphic__caption">Network rollup, clinical service volume across all member stores, refreshed daily.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============= WAYS WE WORK (light) ============= -->
-<section class="tile tile--light" aria-label="Ways we work with networks">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Ways we work with networks</span>
-      <h2 class="h-display">From program launch<br>to member education.</h2>
-    </div>
-    <div class="built-grid">
-      <article class="h-card">
-        <h3>Network-wide MTMS rollouts</h3>
-        <p>Launch a medication-therapy-management program across every member at once. Standardized protocols, shared training, central reporting, live in weeks.</p>
-      </article>
-      <article class="h-card">
-        <h3>Test-and-treat expansion</h3>
-        <p>When a new test-and-treat authority lands, onboard the whole network with one playbook. Members start delivering the day the rules change.</p>
-      </article>
-      <article class="h-card">
-        <h3>Standardized forms</h3>
-        <p>One set of intake and consent forms across the network. Consistent data, consistent patient experience, consistent compliance posture.</p>
-      </article>
-      <article class="h-card">
-        <h3>White-label patient experience</h3>
-        <p>Your brand on the booking, intake, and follow-up touchpoints. Patients see your banner, not ours.</p>
-      </article>
-      <article class="h-card">
-        <h3>Member education</h3>
-        <p>Onboarding, certification, and ongoing enablement for member pharmacists, run centrally so every store delivers to the same standard.</p>
-      </article>
-      <article class="h-card">
-        <h3>Member-data aggregation</h3>
-        <p>Clinical and financial data rolled up to the network level, with member-level drill-down. Negotiate with payers and manufacturers from a position of data.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============= COMMERCIAL MODELS (light) ============= -->
-<section class="tile tile--light" aria-label="Commercial models" style="padding-top: 0;">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Three commercial models</span>
-      <h2 class="h-display">Structure the economics<br>your way.</h2>
-      <p class="lead">We've worked with networks of every shape. Pick the model that gets your members to yes.</p>
-    </div>
-    <div class="models">
-      <div class="model-card">
-        <div class="model-card__tag">Model 1</div>
-        <h3>Member discount</h3>
-        <p>The network negotiates a preferred rate; members subscribe directly at the discounted price. Lowest lift for the network office, fastest to stand up.</p>
-      </div>
-      <div class="model-card">
-        <div class="model-card__tag">Model 2</div>
-        <h3>Volume rebate</h3>
-        <p>Members subscribe at standard rates; the network earns a rebate scaled to total adoption. Aligns the network's incentive with member uptake.</p>
-      </div>
-      <div class="model-card">
-        <div class="model-card__tag">Model 3</div>
-        <h3>Network-paid subscription</h3>
-        <p>The network funds the platform centrally as a member benefit. Maximum adoption, fully standardized, and the strongest data position network-wide.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============= STORY (dark) ============= -->
-<section class="tile tile--light" aria-label="Network story">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">From the field</span>
-      <h2 class="h-display">A national banner,<br>standardized in one quarter.</h2>
-    </div>
-    <div class="story" style="background: rgba(250, 249, 245, 0.04); border-color: rgba(250, 249, 245, 0.12);">
-      <p class="story__quote" style="color: var(--seashell);">&ldquo;We'd tried to roll out a network-wide clinical program twice before and it died in the member stores both times, too many tools, no standard, no data. With MedMe, we launched once from head office and watched adoption climb week over week. For the first time we can actually see what our members are delivering.&rdquo;</p>
-      <div class="story__author" style="color: rgba(250, 249, 245, 0.7);">
-        <b style="color: var(--seashell);">Network Pharmacy Lead</b> &middot; PharmaChoice-style banner (representative)
-      </div>
-      <div class="story__stats">
-        <div class="story__stat"><div class="num" style="color: var(--matcha);">3 weeks</div><div class="lbl" style="color: rgba(250,249,245,0.7);">From program launch to first member live</div></div>
-        <div class="story__stat"><div class="num" style="color: var(--matcha);">84%</div><div class="lbl" style="color: rgba(250,249,245,0.7);">Member adoption within the first quarter</div></div>
-        <div class="story__stat"><div class="num" style="color: var(--matcha);">1 dashboard</div><div class="lbl" style="color: rgba(250,249,245,0.7);">Network-wide view, replacing 12 disconnected ones</div></div>
-      </div>
-    </div>
-    <p style="text-align:center; margin-top: 1.5rem; font-size: 0.875rem; color: rgba(250, 249, 245, 0.7);">
-      Plus: network members get access to the <b style="color: var(--seashell);">MedMe Impact Fund</b>, reinvesting platform proceeds into community-pharmacy research and clinical-service advocacy.
-      <!-- TODO: confirm Impact Fund public-facing wording with Christine -->
-    </p>
-  </div>
-</section>
-
-<!-- ============= FINAL CTA (dark prominent) ============= -->
-<section class="tile tile--light tile--prominent" aria-label="Get started">
-  <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Get started</span>
-      <h2 class="h-display">Let's talk about<br>your network.</h2>
-      <p class="lead">A 30-minute conversation with our partnerships team. We'll map your member base, the PMSs in play, and the commercial model that gets you to network-wide adoption.</p>
-      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a class="btn btn-primary" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/us/customers">See customer stories</a>
+      <div class="value-blocks">
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
+          </span>
+          <h4>Network-paid model</h4>
+          <p>Network pays for member subscriptions. Drives full standardization and aggregate data access.</p>
+        </div>
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20.59 13.41L13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
+          </span>
+          <h4>Member discount</h4>
+          <p>Reduced pricing for members, with network endorsement attached.</p>
+        </div>
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 1v22M5 5h11a3.5 3.5 0 0 1 0 7H7a3.5 3.5 0 0 0 0 7h12"/></svg>
+          </span>
+          <h4>Volume rebate</h4>
+          <p>Network earns rebates on aggregate member billing volume.</p>
+        </div>
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94L8.7 19.3a2.83 2.83 0 0 1-4-4L11.06 9a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </span>
+          <h4>Tailored to your network</h4>
+          <p>Every network is different. We design the structure that fits yours.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 </main>
+
 <!--
   US footer.
   Columns: Platform / Resources / Partners / Company.
@@ -617,6 +860,29 @@
     </div>
   </div>
 </footer>
+<script>
+  /* Reduced-motion guard for SMIL animations in the hero rollup
+     graphic. CSS hides .roll-pulse via display:none under
+     prefers-reduced-motion, but SMIL keeps the timeline running.
+     pauseAnimations() halts it entirely. */
+  (function () {
+    if (!window.matchMedia) return;
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function apply() {
+      if (!mq.matches) return;
+      document.querySelectorAll('.hero-roll').forEach(function (svg) {
+        if (typeof svg.pauseAnimations === 'function') svg.pauseAnimations();
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', apply);
+    } else {
+      apply();
+    }
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else if (mq.addListener) mq.addListener(apply);
+  })();
+</script>
 <script src="/assets/site.js" defer></script>
 </body>
 </html>
