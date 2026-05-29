@@ -44,7 +44,7 @@
   .sub-hero__text {
     text-align: center;
     max-width: 820px;
-    margin: 2.5rem auto 0;
+    margin: 1rem auto 0;
     position: relative;
   }
   .sub-hero h1.h-display {
@@ -69,16 +69,14 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-  @media (max-width: 980px) { .sub-hero__text { margin-top: 2rem; } }
-  @media (max-width: 640px) { .sub-hero__text { margin-top: 1.5rem; } }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: 0.75rem; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: 0.5rem; } }
 
   /* ====== HERO JOURNEY GRAPHIC ===================================
-     Horizontal patient-journey timeline. 4 stage stops connected
-     by a path. A patient pulse travels along the path, with
-     each stage stop pulsing as the pulse arrives. Above each
-     stop, an icon hints at the stage's nature (intake form,
-     message bubble, stethoscope, dashboard). Reduced-motion
-     respected via JS pauseAnimations + CSS display:none. */
+     Horizontal patient-journey timeline. Four stage stops
+     connected by a straight line. Each stage stop pulses on
+     a staggered loop. Static otherwise, reduced-motion handles
+     the ring animations via CSS. */
   .hero-journey {
     position: relative;
     width: 100%;
@@ -131,12 +129,8 @@
     text-anchor: middle;
     letter-spacing: -0.005em;
   }
-  .hero-journey .jr-patient {
-    fill: var(--matcha);
-  }
   @media (prefers-reduced-motion: reduce) {
-    .hero-journey .jr-stage-ring,
-    .hero-journey .jr-patient { animation: none; opacity: 0; display: none; }
+    .hero-journey .jr-stage-ring { animation: none; opacity: 0; display: none; }
   }
   @media (max-width: 980px) {
     .sub-hero__visual { margin-inline: calc(-1 * var(--tile-pad-x)); }
@@ -251,7 +245,12 @@
     color: rgba(6, 62, 84, 0.85);
   }
 
-  /* === STAGE 01: Intake motion theme, form rows filling left to right === */
+  /* 12 distinct stage-card motion graphics, one per card. Each
+     motion is themed to the specific service the card describes,
+     so the four cards in any one stage no longer share identical
+     animation idioms. Grouped here by stage for navigability. */
+
+  /* === STAGE 01 / Card 1, Referrals: digital intake rows filling === */
   .sm-intake {
     padding: 18px 16px;
     display: flex;
@@ -278,85 +277,406 @@
   .sm-intake .si-row:nth-child(1)::after { animation-delay: 0s; }
   .sm-intake .si-row:nth-child(2)::after { animation-delay: 0.25s; }
   .sm-intake .si-row:nth-child(3)::after { animation-delay: 0.5s; }
-  .sm-intake--v2 .si-row:nth-child(1)::after { animation-delay: 0.4s; }
-  .sm-intake--v2 .si-row:nth-child(2)::after { animation-delay: 0.1s; }
-  .sm-intake--v2 .si-row:nth-child(3)::after { animation-delay: 0.7s; }
-  .sm-intake--v3 .si-row::after { background: linear-gradient(90deg, var(--matcha) 60%, rgba(195, 196, 48, 0.3) 100%); }
   @keyframes si-fill {
     0%, 75%, 100% { transform: scaleX(0); }
     35%, 55%      { transform: scaleX(1); }
   }
 
-  /* === STAGE 02: Access, inbound/outbound message bubbles === */
-  .sm-access {
+  /* === STAGE 01 / Card 2, Program Enrollment: eligibility checks === */
+  .sm-elig {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .sm-elig .se-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 2px solid rgba(195, 196, 48, 0.4);
+    background: transparent;
+    position: relative;
+    animation: se-check 4.2s ease-in-out infinite;
+  }
+  .sm-elig .se-box::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 10px; height: 5px;
+    border-left: 2.5px solid var(--indigo);
+    border-bottom: 2.5px solid var(--indigo);
+    transform: translate(-50%, -65%) rotate(-45deg);
+    opacity: 0;
+    animation: se-mark 4.2s ease-in-out infinite;
+  }
+  .sm-elig .se-box:nth-child(1) { animation-delay: 0s; }
+  .sm-elig .se-box:nth-child(2) { animation-delay: 0.4s; }
+  .sm-elig .se-box:nth-child(3) { animation-delay: 0.8s; }
+  .sm-elig .se-box:nth-child(1)::after { animation-delay: 0s; }
+  .sm-elig .se-box:nth-child(2)::after { animation-delay: 0.4s; }
+  .sm-elig .se-box:nth-child(3)::after { animation-delay: 0.8s; }
+  @keyframes se-check {
+    0%, 30%, 100% { background: transparent; border-color: rgba(195, 196, 48, 0.4); }
+    45%, 85%      { background: var(--matcha); border-color: var(--matcha); }
+  }
+  @keyframes se-mark {
+    0%, 30%, 100% { opacity: 0; }
+    45%, 85%      { opacity: 1; }
+  }
+
+  /* === STAGE 01 / Card 3, Prior Auth: scan over doc grid === */
+  .sm-pa {
+    padding: 12px;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+  .sm-pa .sp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    height: 100%;
+    align-content: center;
+  }
+  .sm-pa .sp-cell {
+    height: 12px;
+    background: rgba(6, 62, 84, 0.08);
+    border-radius: 2px;
+  }
+  .sm-pa .sp-cell:nth-child(2n) { background: rgba(195, 196, 48, 0.22); }
+  .sm-pa::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 35%, rgba(195, 196, 48, 0.5) 50%, transparent 65%);
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
+    animation: sp-scan 3s linear infinite;
+  }
+  @keyframes sp-scan {
+    from { background-position: 0 -60%; }
+    to   { background-position: 0 160%; }
+  }
+
+  /* === STAGE 02 / Card 4, Delivery: reminder bell + ripples === */
+  .sm-bell {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .sm-bell .sb-icon {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    z-index: 1;
+    color: var(--matcha);
+    animation: sb-shake 3s ease-in-out infinite;
+  }
+  .sm-bell .sb-icon svg { width: 100%; height: 100%; display: block; fill: currentColor; }
+  .sm-bell .sb-ring {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--matcha);
+    opacity: 0;
+    animation: sb-ring 2.4s ease-out infinite;
+  }
+  .sm-bell .sb-ring:nth-of-type(2) { animation-delay: 0.8s; }
+  .sm-bell .sb-ring:nth-of-type(3) { animation-delay: 1.6s; }
+  @keyframes sb-shake {
+    0%, 80%, 100% { transform: rotate(0); }
+    85%           { transform: rotate(-10deg); }
+    90%           { transform: rotate(8deg); }
+    95%           { transform: rotate(-4deg); }
+  }
+  @keyframes sb-ring {
+    0%   { transform: scale(1);   opacity: 0.6; }
+    100% { transform: scale(3.4); opacity: 0; }
+  }
+
+  /* === STAGE 02 / Card 5, Scheduling: chat in/out bubbles === */
+  .sm-chat {
     padding: 12px 16px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 6px;
   }
-  .sm-access .sa-bubble {
+  .sm-chat .sa-bubble {
     height: 12px;
     border-radius: 6px;
     opacity: 0;
     animation: sa-bubble 3.8s ease-in-out infinite;
   }
-  .sm-access .sa-bubble--out {
+  .sm-chat .sa-bubble--out {
     background: rgba(6, 62, 84, 0.18);
     align-self: flex-start;
     max-width: 70%;
   }
-  .sm-access .sa-bubble--in {
+  .sm-chat .sa-bubble--in {
     background: var(--matcha);
     align-self: flex-end;
     max-width: 60%;
   }
-  .sm-access .sa-bubble:nth-child(1) { width: 70%; animation-delay: 0s; }
-  .sm-access .sa-bubble:nth-child(2) { width: 55%; animation-delay: 0.5s; }
-  .sm-access .sa-bubble:nth-child(3) { width: 60%; animation-delay: 1.0s; }
-  .sm-access--v2 .sa-bubble:nth-child(1) { animation-delay: 0.3s; }
-  .sm-access--v2 .sa-bubble:nth-child(2) { animation-delay: 0.8s; }
-  .sm-access--v2 .sa-bubble:nth-child(3) { animation-delay: 1.3s; }
-  .sm-access--v3 .sa-bubble--in { background: linear-gradient(90deg, var(--matcha) 70%, rgba(195, 196, 48, 0.4) 100%); }
+  .sm-chat .sa-bubble:nth-child(1) { width: 70%; animation-delay: 0s; }
+  .sm-chat .sa-bubble:nth-child(2) { width: 55%; animation-delay: 0.5s; }
+  .sm-chat .sa-bubble:nth-child(3) { width: 60%; animation-delay: 1.0s; }
   @keyframes sa-bubble {
     0%, 70%, 100% { opacity: 0; transform: translateY(6px); }
     18%, 50%      { opacity: 1; transform: translateY(0); }
   }
 
-  /* === STAGE 03: Clinical, pharmacist-patient waveform === */
-  .sm-clinical {
+  /* === STAGE 02 / Card 6, Shortage outreach: broadcast ripples === */
+  .sm-broadcast {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .sm-broadcast .sg-core {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--matcha);
+    position: relative;
+    z-index: 1;
+    animation: sg-core 1.4s ease-in-out infinite;
+  }
+  .sm-broadcast .sg-wave {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--matcha);
+    opacity: 0;
+    animation: sg-wave 2.4s ease-out infinite;
+  }
+  .sm-broadcast .sg-wave:nth-of-type(2) { animation-delay: 0.6s; }
+  .sm-broadcast .sg-wave:nth-of-type(3) { animation-delay: 1.2s; }
+  .sm-broadcast .sg-wave:nth-of-type(4) { animation-delay: 1.8s; }
+  @keyframes sg-core {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.25); }
+  }
+  @keyframes sg-wave {
+    0%   { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(5); opacity: 0; }
+  }
+
+  /* === STAGE 03 / Card 7, Medication review: pharmacist waveform === */
+  .sm-wave {
     padding: 0 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 4px;
   }
-  .sm-clinical .sc-bar {
+  .sm-wave .sc-bar {
     width: 4px;
     background: var(--matcha);
     border-radius: 2px;
     animation: sc-pulse 1.6s ease-in-out infinite;
   }
-  .sm-clinical .sc-bar:nth-child(1)  { height: 24px; animation-delay: 0s; }
-  .sm-clinical .sc-bar:nth-child(2)  { height: 38px; animation-delay: 0.06s; }
-  .sm-clinical .sc-bar:nth-child(3)  { height: 28px; animation-delay: 0.12s; }
-  .sm-clinical .sc-bar:nth-child(4)  { height: 50px; animation-delay: 0.18s; }
-  .sm-clinical .sc-bar:nth-child(5)  { height: 32px; animation-delay: 0.24s; }
-  .sm-clinical .sc-bar:nth-child(6)  { height: 60px; animation-delay: 0.30s; }
-  .sm-clinical .sc-bar:nth-child(7)  { height: 44px; animation-delay: 0.36s; }
-  .sm-clinical .sc-bar:nth-child(8)  { height: 30px; animation-delay: 0.42s; }
-  .sm-clinical .sc-bar:nth-child(9)  { height: 52px; animation-delay: 0.48s; }
-  .sm-clinical .sc-bar:nth-child(10) { height: 26px; animation-delay: 0.54s; }
-  .sm-clinical .sc-bar:nth-child(11) { height: 42px; animation-delay: 0.60s; }
-  .sm-clinical .sc-bar:nth-child(12) { height: 30px; animation-delay: 0.66s; }
+  .sm-wave .sc-bar:nth-child(1)  { height: 24px; animation-delay: 0s; }
+  .sm-wave .sc-bar:nth-child(2)  { height: 38px; animation-delay: 0.06s; }
+  .sm-wave .sc-bar:nth-child(3)  { height: 28px; animation-delay: 0.12s; }
+  .sm-wave .sc-bar:nth-child(4)  { height: 50px; animation-delay: 0.18s; }
+  .sm-wave .sc-bar:nth-child(5)  { height: 32px; animation-delay: 0.24s; }
+  .sm-wave .sc-bar:nth-child(6)  { height: 60px; animation-delay: 0.30s; }
+  .sm-wave .sc-bar:nth-child(7)  { height: 44px; animation-delay: 0.36s; }
+  .sm-wave .sc-bar:nth-child(8)  { height: 30px; animation-delay: 0.42s; }
+  .sm-wave .sc-bar:nth-child(9)  { height: 52px; animation-delay: 0.48s; }
+  .sm-wave .sc-bar:nth-child(10) { height: 26px; animation-delay: 0.54s; }
+  .sm-wave .sc-bar:nth-child(11) { height: 42px; animation-delay: 0.60s; }
+  .sm-wave .sc-bar:nth-child(12) { height: 30px; animation-delay: 0.66s; }
   @keyframes sc-pulse {
     0%, 100% { transform: scaleY(0.45); opacity: 0.6; }
     50%      { transform: scaleY(1);    opacity: 1; }
   }
-  .sm-clinical--v2 .sc-bar { animation-duration: 1.8s; }
-  .sm-clinical--v3 .sc-bar { animation-duration: 2.0s; background: linear-gradient(180deg, var(--matcha) 70%, rgba(195, 196, 48, 0.4) 100%); }
 
-  /* === STAGE 04: Reporting, dashboard data bars climbing === */
+  /* === STAGE 03 / Card 8, Telehealth: two video tiles + LIVE pill === */
+  .sm-video {
+    padding: 14px;
+    position: relative;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .sm-video .sv-tile {
+    width: 60px;
+    height: 42px;
+    background: rgba(6, 62, 84, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sm-video .sv-tile::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .sm-video .sv-live {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--indigo);
+    background: rgba(195, 196, 48, 0.18);
+    padding: 3px 9px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+  }
+  .sm-video .sv-live::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: var(--matcha);
+    border-radius: 50%;
+    animation: sv-blink 1.4s ease-in-out infinite;
+  }
+  @keyframes sv-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+
+  /* === STAGE 03 / Card 9, Patient education: 7-day calendar grid === */
+  .sm-calendar {
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sm-calendar .sc-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    width: 100%;
+  }
+  .sm-calendar .sc-day {
+    aspect-ratio: 1;
+    background: rgba(6, 62, 84, 0.08);
+    border-radius: 3px;
+    position: relative;
+  }
+  .sm-calendar .sc-day--checked {
+    background: var(--matcha);
+    animation: sc-day-pop 4s ease-in-out infinite;
+  }
+  .sm-calendar .sc-day--checked::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 6px; height: 3px;
+    border-left: 1.5px solid var(--indigo);
+    border-bottom: 1.5px solid var(--indigo);
+    transform: translate(-50%, -65%) rotate(-45deg);
+  }
+  .sm-calendar .sc-day--checked:nth-of-type(1) { animation-delay: 0s; }
+  .sm-calendar .sc-day--checked:nth-of-type(2) { animation-delay: 0.6s; }
+  .sm-calendar .sc-day--checked:nth-of-type(3) { animation-delay: 1.2s; }
+  .sm-calendar .sc-day--checked:nth-of-type(4) { animation-delay: 1.8s; }
+  @keyframes sc-day-pop {
+    0%, 50%, 100% { background: var(--matcha); transform: scale(1); }
+    25%           { background: rgba(195, 196, 48, 0.5); transform: scale(0.9); }
+  }
+
+  /* === STAGE 04 / Card 10, Adherence: 7-day streak + today pulse === */
+  .sm-pills {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .sm-pills .sp-day {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid rgba(195, 196, 48, 0.4);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .sm-pills .sp-day--done {
+    background: var(--matcha);
+    border-color: var(--matcha);
+  }
+  .sm-pills .sp-day--done::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 7px; height: 4px;
+    border-left: 2px solid var(--indigo);
+    border-bottom: 2px solid var(--indigo);
+    transform: translate(-50%, -65%) rotate(-45deg);
+  }
+  .sm-pills .sp-day--today {
+    background: var(--matcha);
+    border-color: var(--matcha);
+    animation: sp-today 1.8s ease-in-out infinite;
+  }
+  @keyframes sp-today {
+    0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(195, 196, 48, 0.5); }
+    50%      { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(195, 196, 48, 0); }
+  }
+
+  /* === STAGE 04 / Card 11, Case management: orbiting nodes === */
+  .sm-orbit {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .sm-orbit .so-wrap {
+    position: relative;
+    width: 86px;
+    height: 86px;
+    animation: so-rotate 6s linear infinite;
+  }
+  .sm-orbit .so-orbit {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px dashed rgba(195, 196, 48, 0.4);
+  }
+  .sm-orbit .so-node {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .sm-orbit .so-node--1 { top: -6px; left: 50%; transform: translateX(-50%); }
+  .sm-orbit .so-node--2 { bottom: 12%; left: -6px; }
+  .sm-orbit .so-node--3 { bottom: 12%; right: -6px; }
+  .sm-orbit .so-center {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--indigo);
+    z-index: 2;
+  }
+  @keyframes so-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* === STAGE 04 / Card 12, Outcome reporting: dashboard bars === */
   .sm-report {
     padding: 18px 16px;
     display: flex;
@@ -382,159 +702,178 @@
     0%, 100% { background: rgba(195, 196, 48, 0.3); transform: scaleY(0.85); }
     50%      { background: var(--matcha);             transform: scaleY(1); }
   }
-  .sm-report--v2 .sr-bar { animation-duration: 4.2s; }
-  .sm-report--v3 .sr-bar { animation-duration: 4.8s; }
 
   @media (prefers-reduced-motion: reduce) {
     .sm-intake .si-row::after,
-    .sm-access .sa-bubble,
-    .sm-clinical .sc-bar,
+    .sm-elig .se-box,
+    .sm-elig .se-box::after,
+    .sm-pa::after,
+    .sm-bell .sb-icon,
+    .sm-bell .sb-ring,
+    .sm-chat .sa-bubble,
+    .sm-broadcast .sg-core,
+    .sm-broadcast .sg-wave,
+    .sm-wave .sc-bar,
+    .sm-video .sv-live::before,
+    .sm-calendar .sc-day--checked,
+    .sm-pills .sp-day--today,
+    .sm-orbit .so-wrap,
     .sm-report .sr-bar { animation: none; opacity: 1; transform: none; }
   }
 
-  /* ====== TRUST CLAIMS band (tested, validated, battle-ready) ==== */
-  .trust-grid {
+  /* ====== FEATURED AI AGENT: PATIENT CONCIERGE =================
+     Mirrors the marketing-mockup pattern: a "story-section"
+     wrapper box (warm matcha-tinted background with a soft
+     decorative blob in the corner) containing an industry quote
+     on the left and a dark "Hero AI Product" card on the right.
+     Followed by a 3-card capabilities breakdown
+     (Inbound / Outbound / Coordination). */
+  .featured-story-card {
+    background: rgba(195, 196, 48, 0.06);
+    border: 1px solid rgba(195, 196, 48, 0.18);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin: 0 0 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-story-card::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--matcha);
+    opacity: 0.1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  @media (max-width: 700px) {
+    .featured-story-card { padding: 1.75rem; }
+  }
+  .featured-story {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: stretch;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 980px) { .featured-story { grid-template-columns: 1fr; gap: 2rem; } }
+  .featured-story__quote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .featured-quote {
+    margin: 0;
+  }
+  .featured-quote p {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+    line-height: 1.45;
+    font-weight: 500;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    margin: 0;
+    text-wrap: pretty;
+  }
+  .featured-quote__attrib {
+    margin: 1rem 0 0;
+    font-size: 0.875rem;
+    color: rgba(6, 62, 84, 0.55);
+  }
+  /* Dark "Hero AI Product" card on the right. */
+  .ai-card {
+    background: var(--indigo);
+    color: var(--seashell);
+    border: 1px solid rgba(195, 196, 48, 0.28);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ai-card__tag {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--matcha);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    margin-bottom: 0.25rem;
+  }
+  .ai-card h3 {
+    margin: 0;
+    font-size: clamp(1.35rem, 2vw, 1.65rem);
+    font-weight: 700;
+    color: var(--seashell);
+    letter-spacing: -0.018em;
+  }
+  .ai-card p {
+    margin: 0;
+    font-size: 1rem;
+    color: rgba(250, 249, 245, 0.78);
+    line-height: 1.55;
+  }
+  .ai-card .pill {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+  /* Scoped pill override: solid default is indigo-on-light. Inside
+     the dark ai-card it should match the .tile--navy treatment,
+     matcha fill on dark. */
+  .ai-card .pill--solid {
+    background: var(--matcha);
+    color: var(--indigo);
+    border-color: var(--matcha);
+    box-shadow: none;
+  }
+  .ai-card .pill--solid:hover {
+    background: transparent;
+    color: var(--matcha);
+    border-color: var(--matcha);
+  }
+
+  /* 3-card capabilities breakdown */
+  .featured-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
   }
-  @media (max-width: 900px) { .trust-grid { grid-template-columns: 1fr; } }
-  .trust-card {
+  @media (max-width: 900px) { .featured-grid { grid-template-columns: 1fr; } }
+  .featured-cap {
     background: var(--white);
     border: 1px solid rgba(6, 62, 84, 0.08);
     border-radius: var(--radius-lg);
     padding: 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
   }
-  .trust-card__check {
-    display: inline-flex;
-    width: 28px;
-    height: 28px;
-    align-items: center;
-    justify-content: center;
-    background: var(--matcha);
-    border-radius: 50%;
-    margin-bottom: 0.85rem;
+  .featured-cap:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
   }
-  .trust-card__check svg { width: 14px; height: 14px; stroke: var(--indigo); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-  .trust-card h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.05rem;
+  .featured-cap__num {
+    display: inline-block;
+    font-size: 11px;
+    color: rgba(6, 62, 84, 0.5);
     font-weight: 600;
-    color: var(--indigo);
-  }
-  .trust-card p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; font-size: 0.95rem; }
-  .trust-card p .accent { color: var(--matcha); font-weight: 700; }
-
-  /* ====== NAVY COMMITMENT story ================================ */
-  .tile--navy { position: relative; overflow: hidden; }
-  .tile--navy .tile__inner { position: relative; z-index: 1; }
-  .story-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-  @media (max-width: 980px) { .story-grid { grid-template-columns: 1fr; gap: 2rem; } }
-  .story-quote {
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2vw, 1.6rem);
-    line-height: 1.4;
-    font-weight: 500;
-    color: var(--seashell);
-    letter-spacing: -0.012em;
-    margin: 1rem 0 1.25rem;
-  }
-  .story-quote p { margin: 0; }
-  .story-attribution {
-    font-size: 0.875rem;
-    color: rgba(250, 249, 245, 0.60);
-    margin: 0;
-  }
-  .story-cta { margin-top: 1.75rem; }
-  .value-blocks {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-  @media (max-width: 600px) { .value-blocks { grid-template-columns: 1fr; } }
-  .value-block {
-    background: rgba(250, 249, 245, 0.06);
-    border: 1px solid rgba(250, 249, 245, 0.12);
-    border-radius: 14px;
-    padding: 1.25rem;
-    transition: border-color 0.6s ease, box-shadow 0.6s ease;
-    animation: value-block-light 6s ease-in-out infinite;
-  }
-  .value-block:nth-child(1) { animation-delay: 0s; }
-  .value-block:nth-child(2) { animation-delay: 1.5s; }
-  .value-block:nth-child(3) { animation-delay: 3s; }
-  .value-block:nth-child(4) { animation-delay: 4.5s; }
-  @keyframes value-block-light {
-    0%, 18%, 100% { border-color: rgba(250, 249, 245, 0.12); box-shadow: none; }
-    6%, 12%       { border-color: var(--matcha); box-shadow: 0 0 0 1px rgba(195, 196, 48, 0.35), 0 8px 28px rgba(195, 196, 48, 0.18); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .value-block { animation: none; }
-  }
-  .value-block__icon {
-    display: inline-flex;
-    width: 32px;
-    height: 32px;
-    align-items: center;
-    justify-content: center;
-    background: rgba(195, 196, 48, 0.18);
-    border-radius: 8px;
+    letter-spacing: 0.06em;
     margin-bottom: 0.75rem;
   }
-  .value-block__icon svg { width: 18px; height: 18px; stroke: var(--matcha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .value-block h4 {
-    margin: 0 0 0.4rem;
-    color: var(--seashell);
-    font-size: 1.05rem;
+  .featured-cap h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
   }
-  .value-block p {
+  .featured-cap p {
     margin: 0;
-    color: rgba(250, 249, 245, 0.65);
-    font-size: 0.9rem;
-    line-height: 1.5;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    font-size: 0.95rem;
   }
 
-  /* Faint navy bg pattern: dot grid + scan wave. */
-  .story-bg-pattern {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.08) 1.5px, transparent 1.6px);
-    background-size: 38px 38px;
-    background-position: center;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  }
-  .story-bg-pattern::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.32) 1.8px, transparent 1.9px);
-    background-size: 38px 38px;
-    background-position: center;
-    -webkit-mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
-            mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
-    -webkit-mask-size: 220% 220%;
-            mask-size: 220% 220%;
-    -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-    animation: spec-dot-scan 7s linear infinite;
-  }
-  @keyframes spec-dot-scan {
-    from { -webkit-mask-position: 160% 160%; mask-position: 160% 160%; }
-    to   { -webkit-mask-position: -60% -60%; mask-position: -60% -60%; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .story-bg-pattern::before { animation: none; opacity: 0; }
-  }
 </style>
 </head>
 <body>
@@ -546,17 +885,10 @@
 <section class="sub-hero" aria-label="Hero">
   <div class="sub-hero__inner">
     <div class="sub-hero__visual">
-      <svg class="hero-journey" viewBox="0 0 880 360" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagram: a four-stage specialty pharmacy patient journey. A patient pulse travels from Intake and Enrollment, through Access and Coordination, Clinical Care and Documentation, to Adherence and Reporting.">
+      <svg class="hero-journey" viewBox="0 0 880 360" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagram: a four-stage specialty pharmacy patient journey, from Intake and Enrollment, through Access and Coordination, Clinical Care and Documentation, to Adherence and Reporting.">
 
-        <!-- The journey path (a gentle wave) -->
-        <path class="jr-path" d="M 80,180 C 220,120 280,240 440,180 C 600,120 660,240 800,180" />
-
-        <!-- Patient pulse traveling along the path -->
-        <circle r="6" class="jr-patient">
-          <animateMotion dur="6s" repeatCount="indefinite" begin="0s"
-                         path="M 0,0 C 140,-60 200,60 360,0 C 520,-60 580,60 720,0" />
-          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.95;1" dur="6s" repeatCount="indefinite" begin="0s" />
-        </circle>
+        <!-- The journey path (straight horizontal line connecting the four stage stops) -->
+        <line class="jr-path" x1="80" y1="180" x2="800" y2="180" />
 
         <!-- Stage 01 -->
         <g class="jr-stage">
@@ -659,8 +991,8 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-intake sm-intake--v2" aria-hidden="true">
-          <span class="si-row"></span><span class="si-row"></span><span class="si-row"></span>
+        <div class="stage-card__motion sm-elig" aria-hidden="true">
+          <span class="se-box"></span><span class="se-box"></span><span class="se-box"></span>
         </div>
         <h3>Program Enrollment</h3>
         <p>Digital eligibility verification and seamless provider transitions.</p>
@@ -669,8 +1001,12 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-intake sm-intake--v3" aria-hidden="true">
-          <span class="si-row"></span><span class="si-row"></span><span class="si-row"></span>
+        <div class="stage-card__motion sm-pa" aria-hidden="true">
+          <div class="sp-grid">
+            <span class="sp-cell"></span><span class="sp-cell"></span><span class="sp-cell"></span><span class="sp-cell"></span>
+            <span class="sp-cell"></span><span class="sp-cell"></span><span class="sp-cell"></span><span class="sp-cell"></span>
+            <span class="sp-cell"></span><span class="sp-cell"></span><span class="sp-cell"></span><span class="sp-cell"></span>
+          </div>
         </div>
         <h3>Prior Authorization Processing</h3>
         <p>Automated PA intake with eligibility checks and missing-info flagging.</p>
@@ -693,10 +1029,13 @@
     </div>
     <div class="stage-grid">
       <article class="stage-card">
-        <div class="stage-card__motion sm-access" aria-hidden="true">
-          <span class="sa-bubble sa-bubble--out"></span>
-          <span class="sa-bubble sa-bubble--in"></span>
-          <span class="sa-bubble sa-bubble--out"></span>
+        <div class="stage-card__motion sm-bell" aria-hidden="true">
+          <span class="sb-ring"></span>
+          <span class="sb-ring"></span>
+          <span class="sb-ring"></span>
+          <span class="sb-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a6 6 0 0 0-6 6c0 4-1 6-2 7h16c-1-1-2-3-2-7a6 6 0 0 0-6-6zm0 21a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2z"/></svg>
+          </span>
         </div>
         <h3>Delivery Coordination</h3>
         <p>Automated reminders ensuring on-time medication access.</p>
@@ -705,7 +1044,7 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-access sm-access--v2" aria-hidden="true">
+        <div class="stage-card__motion sm-chat" aria-hidden="true">
           <span class="sa-bubble sa-bubble--in"></span>
           <span class="sa-bubble sa-bubble--out"></span>
           <span class="sa-bubble sa-bubble--in"></span>
@@ -717,10 +1056,12 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-access sm-access--v3" aria-hidden="true">
-          <span class="sa-bubble sa-bubble--out"></span>
-          <span class="sa-bubble sa-bubble--in"></span>
-          <span class="sa-bubble sa-bubble--out"></span>
+        <div class="stage-card__motion sm-broadcast" aria-hidden="true">
+          <span class="sg-wave"></span>
+          <span class="sg-wave"></span>
+          <span class="sg-wave"></span>
+          <span class="sg-wave"></span>
+          <span class="sg-core"></span>
         </div>
         <h3>Shortage and Recall Management</h3>
         <p>Automated outreach when slots open in high-demand programs.</p>
@@ -742,7 +1083,7 @@
     </div>
     <div class="stage-grid">
       <article class="stage-card">
-        <div class="stage-card__motion sm-clinical" aria-hidden="true">
+        <div class="stage-card__motion sm-wave" aria-hidden="true">
           <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
           <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
           <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
@@ -754,10 +1095,10 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-clinical sm-clinical--v2" aria-hidden="true">
-          <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
-          <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
-          <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
+        <div class="stage-card__motion sm-video" aria-hidden="true">
+          <span class="sv-live">Live</span>
+          <span class="sv-tile"></span>
+          <span class="sv-tile"></span>
         </div>
         <h3>Telehealth</h3>
         <p>Remote sessions with built-in communications and documentation.</p>
@@ -766,10 +1107,16 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-clinical sm-clinical--v3" aria-hidden="true">
-          <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
-          <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
-          <span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span><span class="sc-bar"></span>
+        <div class="stage-card__motion sm-calendar" aria-hidden="true">
+          <div class="sc-grid">
+            <span class="sc-day sc-day--checked"></span>
+            <span class="sc-day sc-day--checked"></span>
+            <span class="sc-day"></span>
+            <span class="sc-day sc-day--checked"></span>
+            <span class="sc-day sc-day--checked"></span>
+            <span class="sc-day"></span>
+            <span class="sc-day sc-day--checked"></span>
+          </div>
         </div>
         <h3>Patient Education and Counseling Support</h3>
         <p>Automated follow-ups and check-ins sustaining care between visits.</p>
@@ -791,9 +1138,14 @@
     </div>
     <div class="stage-grid">
       <article class="stage-card">
-        <div class="stage-card__motion sm-report" aria-hidden="true">
-          <span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span>
-          <span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span>
+        <div class="stage-card__motion sm-pills" aria-hidden="true">
+          <span class="sp-day sp-day--done"></span>
+          <span class="sp-day sp-day--done"></span>
+          <span class="sp-day sp-day--done"></span>
+          <span class="sp-day sp-day--done"></span>
+          <span class="sp-day sp-day--today"></span>
+          <span class="sp-day"></span>
+          <span class="sp-day"></span>
         </div>
         <h3>Ongoing Adherence Monitoring</h3>
         <p>Automated proactive refill reminders and check-ins keeping patients on therapy.</p>
@@ -802,9 +1154,14 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-report sm-report--v2" aria-hidden="true">
-          <span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span>
-          <span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span>
+        <div class="stage-card__motion sm-orbit" aria-hidden="true">
+          <div class="so-wrap">
+            <span class="so-orbit"></span>
+            <span class="so-node so-node--1"></span>
+            <span class="so-node so-node--2"></span>
+            <span class="so-node so-node--3"></span>
+          </div>
+          <span class="so-center"></span>
         </div>
         <h3>Case Management and PSP Coordination</h3>
         <p>Ongoing coordination with patient support programs across the journey.</p>
@@ -813,7 +1170,7 @@
         </div>
       </article>
       <article class="stage-card">
-        <div class="stage-card__motion sm-report sm-report--v3" aria-hidden="true">
+        <div class="stage-card__motion sm-report" aria-hidden="true">
           <span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span>
           <span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span><span class="sr-bar"></span>
         </div>
@@ -827,82 +1184,70 @@
   </div>
 </section>
 
-<!-- ============= 7. TRUST CLAIMS (tested, validated, battle-ready) ============= -->
-<section class="tile tile--light" aria-label="Tested, validated, battle-ready AI">
+<!-- ============= 7. FEATURED AI AGENT (Patient Concierge) ============= -->
+<section class="tile tile--light" aria-label="Featured AI agent: Patient Concierge">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Tested, Validated, and Battle-Ready AI</span>
-      <h2 class="h-display">Built in pharmacy.<br>Tested against the real intake floor.</h2>
+      <span class="kicker">Where the Operational Pressure Is</span>
+      <h2 class="h-display">The pressure in specialty isn't on the pharmacist's clinical time.<br>It's on the operational layer.</h2>
+      <p class="lead">PSP coordinators managing high-touch patient journeys. Call center staff handling appointment confirmations and refill check-ins. Back-office teams processing intake across disconnected systems. The cost of that coordination is real, and most of it currently runs on fax machines, phone trees, and manual hand-offs.</p>
     </div>
-    <div class="trust-grid">
-      <article class="trust-card">
-        <span class="trust-card__check" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <h3>Stress-tested at scale</h3>
-        <p>Tested across <span class="accent">100+</span> simulated patient personas to recognize diverse speech patterns, interruptions, and <span class="accent">30+</span> languages.</p>
+
+    <!-- Story-card wrapper: industry quote on the left, dark Hero
+         AI Product card on the right. Mirrors the marketing-mockup
+         .story-section container pattern. -->
+    <div class="featured-story-card">
+      <div class="featured-story">
+        <div class="featured-story__quote">
+          <blockquote class="featured-quote"><p>"We're looking for ways to take the repetitive work off the plates of PSP coordinators, call center staff, and back-office teams, so the people doing this work can focus on the activity that actually requires a human."</p></blockquote>
+          <p class="featured-quote__attrib">What we heard at Asembia 2026</p>
+        </div>
+        <div class="ai-card">
+          <span class="ai-card__tag">Hero AI Product · Specialty</span>
+          <h3>AI Patient Concierge</h3>
+          <p>Inbound and outbound voice agent handling the high-volume coordination work that currently consumes specialty teams: refill reminders, prior auth status, adherence check-ins, patient navigation, and multi-patient inquiries.</p>
+          <a class="pill pill--solid" href="/us/platform/ai-assistants/patient-concierge">Learn more about Patient Concierge <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-card capability breakdown -->
+    <div class="featured-grid">
+      <article class="featured-cap">
+        <span class="featured-cap__num">/ Inbound</span>
+        <h4>Patient and provider inquiries</h4>
+        <p>Voice and chat handling for the everyday operational calls. Status checks, navigation, FAQs. Multi-language support across 30+ languages.</p>
       </article>
-      <article class="trust-card">
-        <span class="trust-card__check" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <h3>Validated by pharmacists</h3>
-        <p>Validated in real-world service use cases through <span class="accent">pharmacist-led reviews</span> and <span class="accent">gold-standard dataset benchmarking</span>.</p>
+      <article class="featured-cap">
+        <span class="featured-cap__num">/ Outbound</span>
+        <h4>Refill reminders and adherence</h4>
+        <p>Proactive patient outreach at the right cadence. Refill check-ins, treatment adherence, delivery coordination, and follow-ups.</p>
       </article>
-      <article class="trust-card">
-        <span class="trust-card__check" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <h3>Continuously tested in production</h3>
-        <p>Bi-weekly model testing post-deployment with seamless failover to alternate <span class="accent">AI models</span> for uninterrupted reliability.</p>
+      <article class="featured-cap">
+        <span class="featured-cap__num">/ Coordination</span>
+        <h4>Payer and PA workflows</h4>
+        <p>Status follow-ups on prior authorizations, documentation requests, and payer status checks. Automated where they can be, structured where they can't.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 8. NAVY COMMITMENT (industry expertise + security) ============= -->
-<section class="tile tile--navy" aria-label="Our commitment">
-  <div class="story-bg-pattern" aria-hidden="true"></div>
-  <div class="tile__inner">
-    <div class="story-grid">
-      <div>
-        <h2 class="kicker">Our Commitment</h2>
-        <blockquote class="story-quote"><p>"MedMe was co-founded by a pharmacist, with pharmacists on every team across product, design, and engineering. The platform reflects how specialty pharmacy actually runs."</p></blockquote>
-        <p class="story-attribution">MedMe Health, North America</p>
-        <div class="story-cta">
-          <a class="pill pill--solid" href="/us/contact">Talk to our specialty team <span class="arrow">→</span></a>
-        </div>
-      </div>
-      <div class="value-blocks">
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-          </span>
-          <h4>SOC 2 Type II, HIPAA</h4>
-          <p>Full HIPAA compliance, BAAs with all data subprocessors, SAML, 2-factor auth, AES-256 encryption.</p>
-        </div>
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><circle cx="17" cy="6" r="2"/><path d="M17 14a3 3 0 0 1 3 3v2"/></svg>
-          </span>
-          <h4>Pharmacist-led design</h4>
-          <p>Co-founded by a pharmacist, with pharmacists on every team across product, design, and engineering.</p>
-        </div>
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
-          </span>
-          <h4>30+ language support</h4>
-          <p>Multilingual intake and patient communications, with diverse speech-pattern recognition validated in testing.</p>
-        </div>
-        <div class="value-block">
-          <span class="value-block__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9"/><polyline points="3 5 3 12 10 12"/></svg>
-          </span>
-          <h4>Bi-weekly validation</h4>
-          <p>Continuous model testing post-deployment with automatic failover to alternate models for uninterrupted reliability.</p>
-        </div>
-      </div>
+<!-- ============= 8. CLOSING CTA (navy, centered, pulse-rings) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Talk to our specialty team">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Get Started</span>
+      <h2 class="h-display">See how MedMe runs<br>your specialty workflow.</h2>
+      <p class="lead">30-minute conversation with our specialty team. We will map your patient mix, payer contracts, and clinical workflows, and propose a phased rollout that fits your operational reality.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Talk to our specialty team <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -910,29 +1255,6 @@
 </main>
 
 {{> partials/footer-us }}
-<script>
-  /* Reduced-motion guard for SMIL animations in the hero journey
-     graphic. CSS hides .jr-patient via display:none under
-     prefers-reduced-motion, but SMIL keeps the timeline running.
-     pauseAnimations() halts it entirely. */
-  (function () {
-    if (!window.matchMedia) return;
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function apply() {
-      if (!mq.matches) return;
-      document.querySelectorAll('.hero-journey').forEach(function (svg) {
-        if (typeof svg.pauseAnimations === 'function') svg.pauseAnimations();
-      });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', apply);
-    } else {
-      apply();
-    }
-    if (mq.addEventListener) mq.addEventListener('change', apply);
-    else if (mq.addListener) mq.addListener(apply);
-  })();
-</script>
 <script src="/assets/site.js" defer></script>
 </body>
 </html>
