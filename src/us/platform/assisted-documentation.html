@@ -3,55 +3,299 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Assisted Documentation, MedMe Health</title>
-<meta name="description" content="Pharmacy-tuned templates for CCM, MTM, immunizations, POCT, and transitions-of-care. The chart writes itself in the background so pharmacists can stay with the patient." />
+<title>Pharmacy EHR, MedMe Health</title>
+<meta name="description" content="The pharmacy EHR pharmacists actually want to use. SOAP notes, chronic-care plans, immunization records, transitions of care, and protocol-aligned workflows, all designed around pharmacy practice." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/assisted-documentation" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=62" />
 <style>
-  /* TODO: content pass, replace stub hero with full page structure. */
-  .stub-hero { background: var(--seashell, #FAF9F5); padding: 3.5rem 0 2.5rem; }
-  .stub-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
-  .stub-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .stub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .stub-hero__breadcrumb a:hover { color: var(--indigo, #063E54); }
-  .stub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .stub-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 880px; }
-  .stub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 720px; margin: 0 auto 2rem; }
-  .stub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .stub-todo { max-width: 720px; margin: 2rem auto 0; padding: 1.25rem 1.5rem; background: rgba(195, 196, 48, 0.12); border: 1px dashed rgba(195, 196, 48, 0.55); border-radius: 12px; color: #5a5b14; font-size: 0.875rem; line-height: 1.55; text-align: left; }
-  .stub-todo b { color: var(--indigo, #063E54); font-weight: 700; }
-  .legal-hub-list { max-width: 760px; margin: 2.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 2rem; }
-  .legal-hub-card { background: #fff; border: 1px solid rgba(6, 62, 84, 0.08); border-radius: 12px; padding: 1.5rem; text-decoration: none; color: inherit; transition: border-color .18s ease, transform .18s ease; display: block; }
-  .legal-hub-card:hover { border-color: rgba(6, 62, 84, 0.25); transform: translateY(-2px); }
-  .legal-hub-card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; font-weight: 700; color: var(--indigo, #063E54); }
-  .legal-hub-card p { margin: 0; font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); line-height: 1.5; }
-  @media (max-width: 600px) { .legal-hub-list { grid-template-columns: 1fr; } }
+  /* PHARMACY EHR. Hero with single-screen chart mockup (active
+     meds + care plan + encounter timer). Templates grid. Three
+     dark "what generic EHRs miss" cards. Stat band. Navy CTA. */
+
+  .sub-hero { background: var(--seashell); padding: 2rem 1.5rem 3.5rem; position: relative; overflow: hidden; }
+  .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
+  .sub-hero__bg {
+    position: relative; max-width: 1120px; margin: 0 auto;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
+    pointer-events: none;
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: -140px auto 0; position: relative; z-index: 2; }
+  .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
+  .sub-hero h1.h-display .accent { color: var(--matcha); }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 680px; }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -90px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -60px; } }
+
+  /* Chart mockup */
+  .chart { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: 16px; padding: 20px 22px; box-shadow: 0 12px 40px rgba(6,62,84,0.06); font-family: var(--font-display); color: var(--indigo); }
+  .chart__head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(6,62,84,0.08); }
+  .chart__title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .chart__brand { display: inline-flex; align-items: center; color: var(--indigo); height: 22px; }
+  .chart__brand svg { height: 22px; width: auto; display: block; }
+  .chart__layout { display: grid; grid-template-columns: 1fr 1fr 0.8fr; gap: 14px; }
+  @media (max-width: 800px) { .chart__layout { grid-template-columns: 1fr; } }
+  .chart__panel { background: rgba(6,62,84,0.04); border-radius: 10px; padding: 14px 16px; }
+  .chart__panel-lbl { font-size: 10px; color: rgba(6,62,84,0.55); font-weight: 600; letter-spacing: 0.04em; margin-bottom: 10px; }
+  .chart__med { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(6,62,84,0.06); font-size: 12px; }
+  .chart__med:last-child { border-bottom: 0; }
+  .chart__med-name { color: var(--indigo); font-weight: 500; }
+  .chart__med-pdc { font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 700; }
+  .chart__med-pdc--good { background: var(--matcha); color: var(--indigo); }
+  .chart__med-pdc--low { background: rgba(6,62,84,0.1); color: rgba(6,62,84,0.7); }
+  .chart__goal { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; border-bottom: 1px solid rgba(6,62,84,0.06); }
+  .chart__goal:last-child { border-bottom: 0; }
+  .chart__goal-name { font-size: 11px; color: var(--indigo); font-weight: 500; }
+  .chart__goal-bar { height: 4px; background: rgba(6,62,84,0.08); border-radius: 2px; overflow: hidden; }
+  .chart__goal-bar::after { content: ""; display: block; height: 100%; background: var(--matcha); width: 0; animation: chart-goal 5s ease-out infinite; }
+  .chart__goal:nth-child(2) .chart__goal-bar::after { animation-delay: 0.4s; }
+  .chart__goal:nth-child(3) .chart__goal-bar::after { animation-delay: 0.8s; }
+  @keyframes chart-goal {
+    0% { width: 0; }
+    40%, 90% { width: var(--w, 70%); }
+    100% { width: var(--w, 70%); }
+  }
+  .chart__goal:nth-child(1) .chart__goal-bar { --w: 85%; }
+  .chart__goal:nth-child(1) .chart__goal-bar::after { --w: 85%; }
+  .chart__goal:nth-child(2) .chart__goal-bar { --w: 60%; }
+  .chart__goal:nth-child(2) .chart__goal-bar::after { --w: 60%; }
+  .chart__goal:nth-child(3) .chart__goal-bar { --w: 75%; }
+  .chart__goal:nth-child(3) .chart__goal-bar::after { --w: 75%; }
+  .chart__timer { font-family: ui-monospace, "JetBrains Mono", monospace; font-size: 24px; font-weight: 700; color: var(--matcha); text-align: center; margin: 10px 0; letter-spacing: 0.02em; }
+  .chart__timer-lbl { font-size: 10px; color: rgba(6,62,84,0.55); text-align: center; font-weight: 600; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) { .chart__goal-bar::after { animation: none; } }
+
+  /* Templates grid */
+  .templates-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  @media (max-width: 900px) { .templates-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .templates-grid { grid-template-columns: 1fr; } }
+  .template-card { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 1.5rem; transition: transform 0.25s ease, border-color 0.25s ease; }
+  .template-card:hover { transform: translateY(-3px); border-color: rgba(6,62,84,0.18); }
+  .template-card__tag { font-family: ui-monospace, "JetBrains Mono", monospace; font-size: 11px; color: rgba(6,62,84,0.5); margin-bottom: 0.5rem; letter-spacing: 0.04em; }
+  .template-card h4 { margin: 0 0 0.4rem; font-size: 1rem; font-weight: 600; color: var(--indigo); }
+  .template-card p { margin: 0; color: rgba(6,62,84,0.72); line-height: 1.5; font-size: 0.875rem; }
+
+  /* Dark winner cards */
+  .winners-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .winners-grid { grid-template-columns: 1fr; } }
+  .winner-card { background: var(--indigo); color: var(--seashell); border: 1px solid rgba(195,196,48,0.18); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 12px 32px rgba(6,62,84,0.08); }
+  .winner-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
+  .winner-card__tag { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: inline-block; }
+  .winner-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--seashell); }
+  .winner-card p { margin: 0; color: rgba(250,249,245,0.78); line-height: 1.55; font-size: 0.95rem; }
+
+  /* Stat band */
+  .stats-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  @media (max-width: 900px) { .stats-band { grid-template-columns: repeat(2, 1fr); } }
+  .stats-band__cell { text-align: center; }
+  .stats-band__num { font-family: var(--font-display); font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1.05; margin-bottom: 0.5rem; }
+  .stats-band__label { font-size: 0.875rem; color: rgba(6,62,84,0.72); line-height: 1.4; max-width: 220px; margin: 0 auto; }
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to main content</a>
-{{> partials/util-bar-us }}
 {{> partials/nav-us }}
 
 <main id="main">
-<section class="stub-hero">
-  <div class="stub-hero__inner">
-    <div class="stub-hero__breadcrumb"><a href="/us">Home</a><span class="sep">/</span><a href="/us/platform">Platform</a><span class="sep">/</span><span>Assisted Documentation</span></div>
-    <span class="kicker kicker--matcha">Assisted Documentation</span>
-    <h1 class="h-display h-display--xl">SOAP, care plans, transitions,<br>drafted as the encounter happens.</h1>
-    <p class="stub-hero__lede">Pharmacy-tuned templates for CCM, MTM, immunizations, POCT, and transitions-of-care. The chart writes itself in the background so pharmacists can stay with the patient.</p>
-    <div class="stub-hero__cta">
-      <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+
+<!-- 1. SUB-HERO (chart mockup as BG) -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="chart">
+        <div class="chart__head">
+          <span class="chart__title">Patient Chart &middot; Patient 4821 &middot; CCM Visit</span>
+          <span class="chart__brand">{{> partials/logo-medme }}</span>
+        </div>
+        <div class="chart__layout">
+          <div class="chart__panel">
+            <div class="chart__panel-lbl">Active Medications</div>
+            <div class="chart__med"><span class="chart__med-name">Lisinopril 20 mg</span><span class="chart__med-pdc chart__med-pdc--good">PDC 0.92</span></div>
+            <div class="chart__med"><span class="chart__med-name">Metformin 1000 mg</span><span class="chart__med-pdc chart__med-pdc--good">PDC 0.88</span></div>
+            <div class="chart__med"><span class="chart__med-name">Atorvastatin 40 mg</span><span class="chart__med-pdc chart__med-pdc--low">PDC 0.68</span></div>
+            <div class="chart__med"><span class="chart__med-name">Aspirin 81 mg</span><span class="chart__med-pdc chart__med-pdc--good">PDC 0.95</span></div>
+          </div>
+          <div class="chart__panel">
+            <div class="chart__panel-lbl">Care Plan Goals</div>
+            <div class="chart__goal">
+              <div class="chart__goal-name">BP &lt; 140/90</div>
+              <div class="chart__goal-bar"></div>
+            </div>
+            <div class="chart__goal">
+              <div class="chart__goal-name">A1C &lt; 7.0</div>
+              <div class="chart__goal-bar"></div>
+            </div>
+            <div class="chart__goal">
+              <div class="chart__goal-name">LDL &lt; 100</div>
+              <div class="chart__goal-bar"></div>
+            </div>
+          </div>
+          <div class="chart__panel">
+            <div class="chart__panel-lbl">Encounter Time</div>
+            <div class="chart__timer">18:42</div>
+            <div class="chart__timer-lbl">Billable at 20:00 &middot; 99490</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- TODO: content pass, full page sections go here. -->
-    <div class="stub-todo">
-      <b>Stub page.</b> Full content lands during the per-page content pass. Hero copy and breadcrumb are wired to v11 naming, body sections, mocks, and CTAs to follow.
+    <div class="sub-hero__text">
+      <h1 class="h-display">The pharmacy EHR<br><span class="accent">pharmacists actually want to use.</span></h1>
+      <p class="sub-hero__lede">Charts, SOAP notes, immunizations, CCM care plans, and transitions of care in one interface designed around pharmacist workflows, not hospital systems.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+      </div>
     </div>
-    
   </div>
 </section>
+
+<!-- 2. WHY GENERIC EHRS FAIL -->
+<section class="tile tile--light" aria-label="Why generic EHRs fail">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Why Generic EHRs Fail at Pharmacy</span>
+      <h2 class="h-display">Pharmacy visits are short.<br>High-volume. Protocol-driven.</h2>
+      <p class="lead">Unlike 60-minute provider visits, pharmacy encounters run in 5 to 20 minute windows. Generic EHRs force pharmacists into hospital workflows: templates assume long visits, immunization billing is not native, CCM and MTM require custom builds, pharmacist roles are not first-class, and charts disconnect from dispensing systems. MedMe was built the other way around.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. TEMPLATES (out of the box) -->
+<section class="tile tile--light" aria-label="Service templates">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Service Templates, Ready Out of the Box</span>
+      <h2 class="h-display">Every clinical service<br>pharmacy delivers, templated.</h2>
+      <p class="lead">Pre-built service templates for the encounters your pharmacy already runs, plus a drag-and-drop builder for everything else.</p>
+    </div>
+    <div class="templates-grid">
+      <article class="template-card">
+        <div class="template-card__tag">/ SOAP</div>
+        <h4>SOAP notes</h4>
+        <p>Medication-focused subjective, objective, assessment, plan, with built-in code suggestion.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ Immunizations</div>
+        <h4>Vaccine workflows</h4>
+        <p>VIS, lot and expiry capture, IIS reporting, VAERS, and 90471/90472 billing wired in.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ CCM</div>
+        <h4>Chronic care plans</h4>
+        <p>20+ chronic conditions templated with goals and 99490/99491 billing.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ MTM</div>
+        <h4>MTM workflows</h4>
+        <p>CMR and TMR with auto-generated MAP/PML and 99605-99607 billing codes.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ Transitions</div>
+        <h4>Transitions of care</h4>
+        <p>Discharge follow-up, medication reconciliation, 7-14 day cycles.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ PrEP / PEP</div>
+        <h4>PrEP and PEP protocols</h4>
+        <p>Eligibility, baseline labs, CDC 2025 protocol wired into the workflow.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ Cessation</div>
+        <h4>Smoking cessation</h4>
+        <p>Five-A intake, NRT and varenicline protocols, 99406/99407 billing.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ Contraception</div>
+        <h4>Hormonal contraception</h4>
+        <p>Risk screening, blood pressure capture, follow-up cadence.</p>
+      </article>
+      <article class="template-card">
+        <div class="template-card__tag">/ Custom</div>
+        <h4>Drag-and-drop builder</h4>
+        <p>Build your own protocols for POC testing, anticoagulation, naloxone, or anything else your state allows.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WHAT GENERIC EHRS MISS (3 dark) -->
+<section class="tile tile--light" aria-label="What generic EHRs miss">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Built Around the Pharmacist</span>
+      <h2 class="h-display">One screen.<br>Everything to make the clinical decision.</h2>
+    </div>
+    <div class="winners-grid">
+      <article class="winner-card">
+        <span class="winner-card__tag">Single Surface</span>
+        <h3>No tab switching</h3>
+        <p>Active medications with PDC, care plan goals with status, and live encounter timing, all in one dashboard view. No clicking between five tabs to assemble a clinical picture.</p>
+      </article>
+      <article class="winner-card">
+        <span class="winner-card__tag">Pharmacy-Tuned</span>
+        <h3>Protocol-aligned workflows</h3>
+        <p>Service templates are built around the protocols pharmacy is paid to run. CCM, MTM, immunization, and transitions of care work the way the codes actually require, not retrofitted onto a generic EHR.</p>
+      </article>
+      <article class="winner-card">
+        <span class="winner-card__tag">PMS Sync</span>
+        <h3>Charts that stay current</h3>
+        <p>Bidirectional integration with PioneerRx, BestRx, McKesson, Liberty, and RxConnect pulls demographics, allergies, and dispensing history in real time. No re-keying. The chart is always current.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 5. STAT BAND -->
+<section class="tile tile--light" aria-label="Used daily by US pharmacists">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Used Daily by US Pharmacists</span>
+      <h2 class="h-display">2,400+ pharmacists<br>chart in MedMe every shift.</h2>
+    </div>
+    <div class="stats-band">
+      <div class="stats-band__cell">
+        <div class="stats-band__num">2,400+</div>
+        <div class="stats-band__label">Pharmacists charting in MedMe every shift across 14 states.</div>
+      </div>
+      <div class="stats-band__cell">
+        <div class="stats-band__num">12 min</div>
+        <div class="stats-band__label">Average documentation time per clinical encounter.</div>
+      </div>
+      <div class="stats-band__cell">
+        <div class="stats-band__num">4.7&thinsp;/&thinsp;5</div>
+        <div class="stats-band__label">Pharmacist usability score, post-training survey.</div>
+      </div>
+      <div class="stats-band__cell">
+        <div class="stats-band__num">99.97%</div>
+        <div class="stats-band__label">Platform uptime, trailing 12 months. SOC 2 Type II audited.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CLOSING CTA -->
+<section class="tile tile--navy tile--prominent" aria-label="Tired of fighting your EHR">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Tired of Fighting Your EHR?</span>
+      <h2 class="h-display">See the chart your pharmacists<br>will actually want to open.</h2>
+      <p class="lead">A 20-minute walkthrough on a sample CCM patient and a real encounter. We will load the chart, run the encounter live, and show you the SOAP note ready to bill at the end.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
 </main>
 
 {{> partials/footer-us }}

@@ -3,55 +3,129 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Messaging & Follow-Ups, MedMe Health</title>
-<meta name="description" content="Email, SMS, and patient-portal messages from one interface. Confirmation, reminder, follow-up cadences set by visit type, running quietly in the background." />
+<title>Messaging and Follow-Ups, MedMe Health</title>
+<meta name="description" content="Automated SMS and email reminders, recall outreach, and follow-up campaigns. Two-way patient conversation handled inside the platform, on the cadence your services actually need." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/messaging-follow-ups" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=62" />
 <style>
-  /* TODO: content pass, replace stub hero with full page structure. */
-  .stub-hero { background: var(--seashell, #FAF9F5); padding: 3.5rem 0 2.5rem; }
-  .stub-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
-  .stub-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .stub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .stub-hero__breadcrumb a:hover { color: var(--indigo, #063E54); }
-  .stub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .stub-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 880px; }
-  .stub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 720px; margin: 0 auto 2rem; }
-  .stub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .stub-todo { max-width: 720px; margin: 2rem auto 0; padding: 1.25rem 1.5rem; background: rgba(195, 196, 48, 0.12); border: 1px dashed rgba(195, 196, 48, 0.55); border-radius: 12px; color: #5a5b14; font-size: 0.875rem; line-height: 1.55; text-align: left; }
-  .stub-todo b { color: var(--indigo, #063E54); font-weight: 700; }
-  .legal-hub-list { max-width: 760px; margin: 2.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 2rem; }
-  .legal-hub-card { background: #fff; border: 1px solid rgba(6, 62, 84, 0.08); border-radius: 12px; padding: 1.5rem; text-decoration: none; color: inherit; transition: border-color .18s ease, transform .18s ease; display: block; }
-  .legal-hub-card:hover { border-color: rgba(6, 62, 84, 0.25); transform: translateY(-2px); }
-  .legal-hub-card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; font-weight: 700; color: var(--indigo, #063E54); }
-  .legal-hub-card p { margin: 0; font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); line-height: 1.5; }
-  @media (max-width: 600px) { .legal-hub-list { grid-template-columns: 1fr; } }
+  .sub-hero { background: var(--seashell); padding: 2rem 1.5rem 3.5rem; position: relative; overflow: hidden; }
+  .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
+  .sub-hero__bg {
+    position: relative; max-width: 1120px; margin: 0 auto;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
+    pointer-events: none;
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: -140px auto 0; position: relative; z-index: 2; }
+  .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
+  .sub-hero h1.h-display .accent { color: var(--matcha); }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 680px; }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -90px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -60px; } }
+
+  /* SMS thread mockup */
+  .sms { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: 16px; padding: 20px 22px; box-shadow: 0 12px 40px rgba(6,62,84,0.06); font-family: var(--font-display); color: var(--indigo); max-width: 460px; margin: 0 auto; }
+  .sms__head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(6,62,84,0.08); }
+  .sms__title { font-size: 14px; font-weight: 600; }
+  .sms__brand { display: inline-flex; align-items: center; color: var(--indigo); height: 22px; }
+  .sms__brand svg { height: 22px; width: auto; display: block; }
+  .sms__body { display: flex; flex-direction: column; gap: 8px; }
+  .sms__msg { padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.45; max-width: 85%; opacity: 0; animation: sms-in 0.5s ease-out forwards; }
+  .sms__msg--out { background: rgba(6,62,84,0.06); color: var(--indigo); border-bottom-left-radius: 4px; align-self: flex-start; animation-delay: 0.3s; }
+  .sms__msg--in { background: var(--matcha); color: var(--indigo); border-bottom-right-radius: 4px; align-self: flex-end; animation-delay: 1.0s; }
+  .sms__msg--out2 { background: rgba(6,62,84,0.06); color: var(--indigo); border-bottom-left-radius: 4px; align-self: flex-start; animation-delay: 1.7s; }
+  @keyframes sms-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { .sms__msg { animation: none; opacity: 1; transform: none; } }
+
+  /* Feature grid (dark) */
+  .winners-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .winners-grid { grid-template-columns: 1fr; } }
+  .winner-card { background: var(--indigo); color: var(--seashell); border: 1px solid rgba(195,196,48,0.18); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 12px 32px rgba(6,62,84,0.08); }
+  .winner-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
+  .winner-card__tag { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: inline-block; }
+  .winner-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--seashell); }
+  .winner-card p { margin: 0; color: rgba(250,249,245,0.78); line-height: 1.55; font-size: 0.95rem; }
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to main content</a>
-{{> partials/util-bar-us }}
 {{> partials/nav-us }}
 
 <main id="main">
-<section class="stub-hero">
-  <div class="stub-hero__inner">
-    <div class="stub-hero__breadcrumb"><a href="/us">Home</a><span class="sep">/</span><a href="/us/platform">Platform</a><span class="sep">/</span><span>Messaging & Follow-Ups</span></div>
-    <span class="kicker kicker--matcha">Messaging &amp; Follow-Ups</span>
-    <h1 class="h-display h-display--xl">Multi-channel patient messaging,<br>without a separate inbox.</h1>
-    <p class="stub-hero__lede">Email, SMS, and patient-portal messages from one interface. Confirmation, reminder, follow-up cadences set by visit type, running quietly in the background.</p>
-    <div class="stub-hero__cta">
-      <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="sms">
+        <div class="sms__head">
+          <span class="sms__title">Patient SMS &middot; Recall Campaign</span>
+          <span class="sms__brand">{{> partials/logo-medme }}</span>
+        </div>
+        <div class="sms__body">
+          <div class="sms__msg sms__msg--out">Hi Carla, your CCM follow-up is due. Reply YES to book a time this week.</div>
+          <div class="sms__msg sms__msg--in">YES</div>
+          <div class="sms__msg sms__msg--out2">Great. Pick a time: Tue 10:00, Wed 2:00, Thu 11:30.</div>
+        </div>
+      </div>
     </div>
-    <!-- TODO: content pass, full page sections go here. -->
-    <div class="stub-todo">
-      <b>Stub page.</b> Full content lands during the per-page content pass. Hero copy and breadcrumb are wired to v11 naming, body sections, mocks, and CTAs to follow.
+    <div class="sub-hero__text">
+      <h1 class="h-display">Automated SMS and email,<br><span class="accent">on the cadence care actually needs.</span></h1>
+      <p class="sub-hero__lede">Appointment reminders, recall outreach, refill check-ins, adherence nudges, two-way patient conversation handled inside the platform. No third-party SMS tool, no broken hand-offs.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+      </div>
     </div>
-    
   </div>
 </section>
+
+<section class="tile tile--light" aria-label="What messaging does">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Patient Conversation, Without the Phone Calls</span>
+      <h2 class="h-display">Reminders, recall, follow-up.<br>Three jobs, one place.</h2>
+      <p class="lead">Patients prefer text over phone calls. Pharmacy teams are the most-called part of the system. Messaging closes that gap: every routine touchpoint runs by SMS or email, with two-way reply flowing back into the patient's chart and the pharmacist's queue.</p>
+    </div>
+    <div class="winners-grid">
+      <article class="winner-card">
+        <span class="winner-card__tag">Reminders</span>
+        <h3>Appointment + refill reminders</h3>
+        <p>24-hour and 1-hour appointment reminders. Refill check-ins 7 days and 2 days before each fill. Adherence nudges scheduled by therapy class. Two-way reschedule routes the rebook back into the scheduler.</p>
+      </article>
+      <article class="winner-card">
+        <span class="winner-card__tag">Recall</span>
+        <h3>Bring-back campaigns</h3>
+        <p>Identify patients due for CCM, MTM, A1C, BP check-ins, or seasonal vaccines. Send a campaign to the cohort, accept replies into the scheduler, and watch encounters book without a phone call. 240 booked follow-ups in month one is typical.</p>
+      </article>
+      <article class="winner-card">
+        <span class="winner-card__tag">Follow-Ups</span>
+        <h3>Post-encounter follow-up</h3>
+        <p>Care plan check-ins, adherence prompts, and education content delivered on the cadence each protocol requires. Replies route into the patient's chart for the pharmacist to review, not into a separate SMS inbox.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--navy tile--prominent" aria-label="See the messaging engine">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">See the Messaging Engine</span>
+      <h2 class="h-display">Send a sample campaign.<br>Watch the replies come back into the chart.</h2>
+      <p class="lead">A 20-minute walkthrough on a real recall campaign. We will configure the cohort live, send a test SMS, and show you what happens when the patient replies.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span><span class="pulse-ring"></span>
+        <span class="pulse-ring"></span><span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
 </main>
 
 {{> partials/footer-us }}

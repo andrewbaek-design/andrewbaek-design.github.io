@@ -3,131 +3,292 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Patient Scheduler for Pharmacy, MedMe Health</title>
-<meta name="description" content="Online booking, eligibility verification, intake forms, the patient-facing layer that fills your clinical schedule and prevents unbillable visits." />
-<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/scheduler" />
+<title>Patient Scheduler, MedMe Health</title>
+<meta name="description" content="Online booking with eligibility verification at the moment of booking, intake forms flowing into the encounter, and automated recall outreach turning no-shows into ongoing relationships." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/scheduling-queuing" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=62" />
 <style>
-  .prod-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
-  .prod-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
-  .prod-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .prod-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .prod-hero__breadcrumb a:hover { color: var(--indigo); }
-  .prod-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .prod-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 920px; }
-  .prod-hero__lede { font-size: 1.15rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 760px; margin: 0 auto 2rem; }
-  .prod-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .stat-band { background: #fff; padding: 3rem 0; margin-top: 2rem; }
-  .stat-band__grid { max-width: 1080px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-  .stat-band__cell { text-align: center; }
-  .stat-band__num { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1.05; margin-bottom: 0.5rem; }
-  .stat-band__label { font-size: 0.875rem; color: rgba(6, 62, 84, 0.72); line-height: 1.4; }
-  @media (max-width: 900px) { .stat-band__grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; } }
-  .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .cap-grid .h-card { padding: 1.75rem; }
-  .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(195, 196, 48, 0.18); color: var(--matcha); display: grid; place-items: center; margin-bottom: 1rem; }
-  .cap-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  @media (max-width: 900px) { .cap-grid { grid-template-columns: 1fr; } }
-  .step-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .step-flow__step { background: var(--white); border-radius: 14px; padding: 1.5rem; border: 1px solid rgba(6, 62, 84, 0.08); }
-  .step-flow__num { width: 32px; height: 32px; border-radius: 50%; background: rgba(6, 62, 84, 0.08); display: grid; place-items: center; font-weight: 700; font-size: 14px; color: var(--indigo); margin-bottom: 1rem; }
-  .step-flow__step h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--indigo); margin: 0 0 0.5rem; }
-  .step-flow__step p { font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); line-height: 1.5; margin: 0; }
-  @media (max-width: 900px) { .step-flow { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .step-flow { grid-template-columns: 1fr; } }
+  /* ============================================================
+     PATIENT SCHEDULER product page. Hero with a booking-flow
+     mockup as faded BG (service tiles + time-slot picker +
+     eligibility check). 5-step booking process flow. Three dark
+     capability cards. Stat band. Customer quote. Navy CTA.
+     ============================================================ */
+
+  /* ====== SUB-HERO ============================================= */
+  .sub-hero { background: var(--seashell); padding: 2rem 1.5rem 3.5rem; position: relative; overflow: hidden; }
+  .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
+  .sub-hero__bg {
+    position: relative; max-width: 1120px; margin: 0 auto;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
+    pointer-events: none;
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: -140px auto 0; position: relative; z-index: 2; }
+  .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
+  .sub-hero h1.h-display .accent { color: var(--matcha); }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 680px; }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -90px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -60px; } }
+
+  /* Booking flow mockup */
+  .booking { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: 16px; padding: 20px 22px; box-shadow: 0 12px 40px rgba(6,62,84,0.06); font-family: var(--font-display); color: var(--indigo); }
+  .booking__head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(6,62,84,0.08); }
+  .booking__title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .booking__brand { display: inline-flex; align-items: center; color: var(--indigo); height: 22px; }
+  .booking__brand svg { height: 22px; width: auto; display: block; }
+  .booking__layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 800px) { .booking__layout { grid-template-columns: 1fr; } }
+  .booking__step { background: rgba(6,62,84,0.04); border-radius: 10px; padding: 14px 16px; }
+  .booking__step-lbl { font-size: 10px; color: rgba(6,62,84,0.55); font-weight: 600; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .booking__svc { display: flex; align-items: center; gap: 6px; padding: 6px 8px; margin-bottom: 6px; background: var(--white); border-radius: 6px; font-size: 11px; color: var(--indigo); border: 1px solid rgba(6,62,84,0.06); }
+  .booking__svc--active { border-color: var(--matcha); background: rgba(195,196,48,0.1); font-weight: 600; }
+  .booking__svc::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: rgba(6,62,84,0.18); }
+  .booking__svc--active::before { background: var(--matcha); }
+  .booking__slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .booking__slot { font-size: 10px; padding: 5px 4px; background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: 4px; text-align: center; color: rgba(6,62,84,0.7); }
+  .booking__slot--picked { background: var(--matcha); border-color: var(--matcha); color: var(--indigo); font-weight: 700; animation: booking-pick 4s ease-in-out infinite; }
+  @keyframes booking-pick {
+    0%, 60%, 100% { background: var(--matcha); }
+    30%           { background: rgba(195,196,48,0.4); }
+  }
+  .booking__check { background: var(--white); border: 1px solid rgba(195,196,48,0.3); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--indigo); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .booking__check::before { content: "✓"; color: var(--matcha); font-weight: 700; font-size: 13px; }
+  @media (prefers-reduced-motion: reduce) { .booking__slot--picked { animation: none; } }
+
+  /* ====== 5-STEP BOOKING PROCESS ============================== */
+  .chain { position: relative; }
+  .chain__steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; position: relative; }
+  @media (max-width: 1100px) { .chain__steps { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 700px)  { .chain__steps { grid-template-columns: 1fr; } }
+  .chain__steps::before {
+    content: ""; position: absolute;
+    top: 30px; left: 6%; right: 6%; height: 2px;
+    background: linear-gradient(90deg, rgba(195,196,48,0.4) 0%, rgba(195,196,48,0.85) 50%, rgba(195,196,48,0.4) 100%);
+    z-index: 0;
+  }
+  @media (max-width: 1100px) { .chain__steps::before { display: none; } }
+  .chain__step { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 1.5rem 1.25rem; position: relative; z-index: 1; transition: transform 0.25s ease, border-color 0.25s ease; }
+  .chain__step:hover { transform: translateY(-3px); border-color: rgba(6,62,84,0.18); }
+  .chain__step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--matcha); color: var(--indigo); font-size: 12px; font-weight: 700; margin-bottom: 0.75rem; }
+  .chain__step h4 { margin: 0 0 0.4rem; font-size: 1rem; font-weight: 600; color: var(--indigo); }
+  .chain__step p { margin: 0; font-size: 0.875rem; color: rgba(6,62,84,0.72); line-height: 1.5; }
+
+  /* ====== DARK CAPABILITIES (3 cards) ========================= */
+  .winners-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .winners-grid { grid-template-columns: 1fr; } }
+  .winner-card { background: var(--indigo); color: var(--seashell); border: 1px solid rgba(195,196,48,0.18); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 12px 32px rgba(6,62,84,0.08); }
+  .winner-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
+  .winner-card__tag { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: inline-block; }
+  .winner-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--seashell); }
+  .winner-card p { margin: 0; color: rgba(250,249,245,0.78); line-height: 1.55; font-size: 0.95rem; }
+
+  /* ====== STAT BAND ============================================ */
+  .stats-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  @media (max-width: 900px) { .stats-band { grid-template-columns: 1fr; } }
+  .stats-band__cell { text-align: center; }
+  .stats-band__num { font-family: var(--font-display); font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1.05; margin-bottom: 0.5rem; }
+  .stats-band__label { font-size: 0.875rem; color: rgba(6,62,84,0.72); line-height: 1.4; max-width: 260px; margin: 0 auto; }
+
+  /* ====== CUSTOMER QUOTE ====================================== */
+  .quote-card { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 2.25rem; text-align: center; max-width: 820px; margin: 0 auto; }
+  .quote-card__text { font-family: var(--font-display); font-size: clamp(1.15rem, 1.7vw, 1.4rem); line-height: 1.45; font-weight: 500; color: var(--indigo); margin: 0 0 1.25rem; letter-spacing: -0.012em; }
+  .quote-card__attrib { margin: 0; font-size: 0.875rem; color: rgba(6,62,84,0.6); }
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to main content</a>
-{{> partials/util-bar-us }}
 {{> partials/nav-us }}
+
 <main id="main">
 
-<section class="prod-hero">
-  <div class="prod-hero__inner">
-    <div class="prod-hero__breadcrumb">
-      <a href="/us">Home</a><span class="sep">/</span>
-      <a href="/us/platform/scheduler">Platform</a><span class="sep">/</span>
-      <span>Patient Scheduler</span>
+<!-- ============= 1. SUB-HERO (booking mockup as BG) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="booking">
+        <div class="booking__head">
+          <span class="booking__title">Book an Appointment</span>
+          <span class="booking__brand">{{> partials/logo-medme }}</span>
+        </div>
+        <div class="booking__layout">
+          <div class="booking__step">
+            <div class="booking__step-lbl">Step 1 &middot; Service</div>
+            <div class="booking__svc booking__svc--active">CCM Follow-up</div>
+            <div class="booking__svc">MTM Review</div>
+            <div class="booking__svc">Immunization</div>
+            <div class="booking__svc">POC Testing</div>
+          </div>
+          <div class="booking__step">
+            <div class="booking__step-lbl">Step 2 &middot; Time slot</div>
+            <div class="booking__slots">
+              <span class="booking__slot">9:00</span>
+              <span class="booking__slot">9:30</span>
+              <span class="booking__slot booking__slot--picked">10:00</span>
+              <span class="booking__slot">10:30</span>
+              <span class="booking__slot">11:00</span>
+              <span class="booking__slot">11:30</span>
+              <span class="booking__slot">1:00</span>
+              <span class="booking__slot">1:30</span>
+              <span class="booking__slot">2:00</span>
+            </div>
+          </div>
+          <div class="booking__step">
+            <div class="booking__step-lbl">Step 3 &middot; Eligibility</div>
+            <div class="booking__check">Medicare Part B verified</div>
+            <div class="booking__check">CCM not yet billed this month</div>
+            <div class="booking__check">Copay $0</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <span class="kicker kicker--matcha">Patient Scheduler</span>
-    <h1 class="h-display h-display--xl">Online booking that fills<br>your clinical schedule.</h1>
-    <p class="prod-hero__lede">Patient-facing booking, intake forms, and eligibility verification, live before the patient walks in. No no-shows, no unbillable encounters, no double bookings between dispense and consult.</p>
-    <div class="prod-hero__cta">
-      <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
-      <a class="btn btn-ghost" href="/us/platform/ehr">See the EHR</a>
-    </div>
-  </div>
-  <div class="stat-band">
-    <div class="stat-band__grid">
-      <div class="stat-band__cell"><div class="stat-band__num">42%</div><div class="stat-band__label">Lift in clinical appointment volume after rollout</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">87%</div><div class="stat-band__label">Of patients book online without staff time</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">&lt;1 min</div><div class="stat-band__label">Average eligibility-check turnaround</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">12%</div><div class="stat-band__label">No-show rate (down from 31% baseline)</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="tile tile--light" aria-label="The empty schedule problem">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">The empty-schedule problem</span>
-      <h2 class="h-display">A clinical service<br>nobody knows you offer.</h2>
-      <p class="lead">Most pharmacies have the capacity to do 4x more CCM, MTM, and immunization visits than they actually deliver. The bottleneck is not pharmacist availability, it's that patients don't know they can book.</p>
-    </div>
-  </div>
-</section>
-
-<section class="tile tile--light" aria-label="How the scheduler works">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">How it works</span>
-      <h2 class="h-display">Four steps from booked<br>to walked-in patient.</h2>
-    </div>
-    <div class="step-flow">
-      <div class="step-flow__step"><div class="step-flow__num">1</div><h3>Patient books online</h3><p>Embed on your site, link from refill reminders, or via the patient portal. 87% complete without a phone call.</p></div>
-      <div class="step-flow__step"><div class="step-flow__num">2</div><h3>Intake auto-fills</h3><p>Patient confirms basic info, allergies, conditions. Most fields pre-fill from existing chart.</p></div>
-      <div class="step-flow__step"><div class="step-flow__num">3</div><h3>Eligibility verifies</h3><p>Real-time Medicare Part B + commercial-payer check. Patient knows their copay before arriving.</p></div>
-      <div class="step-flow__step"><div class="step-flow__num">4</div><h3>Pharmacist gets prep</h3><p>Pharmacist opens the chart with intake, eligibility, and care gaps surfaced. Encounter starts faster.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="tile tile--light" aria-label="Capabilities">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">What's included</span>
-      <h2 class="h-display">Booking, intake, eligibility,<br>reminders, in one flow.</h2>
-    </div>
-    <div class="cap-grid">
-      <article class="h-card"><span class="cap-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><h3>Online booking</h3><p>Embeddable widget on any site. Custom service catalog per location. Mobile-first by default.</p></article>
-      <article class="h-card"><span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><h3>Smart intake</h3><p>HIPAA-compliant intake forms that pre-fill from existing chart data. Patients save 8+ minutes vs paper.</p></article>
-      <article class="h-card"><span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></span><h3>Eligibility verification</h3><p>Real-time Part B + commercial payer checks at booking. Pharmacists never deliver an unbillable visit.</p></article>
-      <article class="h-card"><span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M3 8a5 5 0 0 1 10 0v6"/><path d="M3 14h18l-3-3"/></svg></span><h3>Reminders</h3><p>SMS + email reminders 7, 1, and 0 days before. Two-way reply for confirmations and reschedules.</p></article>
-      <article class="h-card"><span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg></span><h3>Walk-in capture</h3><p>Tablet kiosk for walk-in patients to register, complete intake, and join the queue without staff time.</p></article>
-      <article class="h-card"><span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><h3>Provider routing</h3><p>Auto-route specific visit types to qualified pharmacists. Tie booking rules to state scope-of-practice.</p></article>
-    </div>
-  </div>
-</section>
-
-<section class="tile tile--light tile--prominent" aria-label="Get started">
-  <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Get started</span>
-      <h2 class="h-display">See your schedule<br>fill itself.</h2>
-      <p class="lede">15-minute walkthrough. We'll embed the scheduler on a test page and book a real CCM visit live.</p>
-      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/us/pricing">See pricing</a>
+    <div class="sub-hero__text">
+      <h1 class="h-display">Online booking and eligibility,<br><span class="accent">in one flow.</span></h1>
+      <p class="sub-hero__lede">Patients self-book on their phones while eligibility verification runs automatically, intake forms arrive before they walk in, and no-shows convert into ongoing relationships through automated recall outreach.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ============= 2. NOT A GENERIC CALENDAR ============= -->
+<section class="tile tile--light" aria-label="Not a generic calendar">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Not a Generic Calendar Tool</span>
+      <h2 class="h-display">Every step integrates<br>with what makes the appointment billable.</h2>
+      <p class="lead">The scheduler automates the entire booking-to-encounter chain. Each step routes into your EHR, your eligibility checks, your billing workflow, and your patient outreach, so the appointment a patient books is the same appointment that ends in a paid claim.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. 5-STEP BOOKING PROCESS ============= -->
+<section class="tile tile--light" aria-label="Five-step booking process">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">The Five-Step Booking Process</span>
+      <h2 class="h-display">From self-serve booking<br>to a documented encounter.</h2>
+    </div>
+    <div class="chain">
+      <div class="chain__steps">
+        <article class="chain__step">
+          <span class="chain__step-num">01</span>
+          <h4>Pick a service</h4>
+          <p>Patient selects CCM, MTM, vaccine, or POCT from a list of services your pharmacy actually delivers.</p>
+        </article>
+        <article class="chain__step">
+          <span class="chain__step-num">02</span>
+          <h4>Select store and time</h4>
+          <p>Multi-store scheduler shows real-time availability across your network. Time slot lands in the pharmacist's day.</p>
+        </article>
+        <article class="chain__step">
+          <span class="chain__step-num">03</span>
+          <h4>Confirm with eligibility</h4>
+          <p>Live 270/271 eligibility check runs in seconds. Copay, plan type, and CCM-this-month status surface before booking confirms.</p>
+        </article>
+        <article class="chain__step">
+          <span class="chain__step-num">04</span>
+          <h4>Receive intake link</h4>
+          <p>Service-specific intake form lands by SMS. 60-second completion on the patient's phone, before the encounter.</p>
+        </article>
+        <article class="chain__step">
+          <span class="chain__step-num">05</span>
+          <h4>Get reminders</h4>
+          <p>Reminders go out at 24 hours and 1 hour. Two-way SMS reschedule lands the rebook back in the scheduler without a phone call.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. CAPABILITIES (3 dark cards) ============= -->
+<section class="tile tile--light" aria-label="What the scheduler does">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">What the Scheduler Does</span>
+      <h2 class="h-display">Three places generic schedulers<br>fall apart for pharmacy.</h2>
+    </div>
+    <div class="winners-grid">
+      <article class="winner-card">
+        <span class="winner-card__tag">Booking Widget</span>
+        <h3>Drop-in for any pharmacy site</h3>
+        <p>Mobile-first booking widget, ADA-compliant, with 12-language support. Embeds in your pharmacy's existing website and brand. 68% of bookings complete on the patient's phone in under 90 seconds.</p>
+      </article>
+      <article class="winner-card">
+        <span class="winner-card__tag">Eligibility at Booking</span>
+        <h3>Real-time 270/271 verification</h3>
+        <p>Live eligibility checks against Medicare Part B and 200+ commercial payers, before the appointment is confirmed. Pharmacists never deliver a service the payer would not have covered.</p>
+      </article>
+      <article class="winner-card">
+        <span class="winner-card__tag">Intake &amp; Recall</span>
+        <h3>Forms in. Patients back.</h3>
+        <p>Service-specific intake forms (CCM consent, MTM medication lists, VIS attestation) auto-send before the encounter. Recall campaigns pull due patients into SMS and email queues automatically.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. STAT BAND ============= -->
+<section class="tile tile--light" aria-label="The numbers customers post">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">The Numbers Customers Post</span>
+      <h2 class="h-display">What "scheduler that<br>actually moves appointments" looks like.</h2>
+    </div>
+    <div class="stats-band">
+      <div class="stats-band__cell">
+        <div class="stats-band__num">410K+</div>
+        <div class="stats-band__label">Patient appointments booked through MedMe in the last 12 months.</div>
+      </div>
+      <div class="stats-band__cell">
+        <div class="stats-band__num">68%</div>
+        <div class="stats-band__label">Of bookings complete on the patient's phone in under 90 seconds.</div>
+      </div>
+      <div class="stats-band__cell">
+        <div class="stats-band__num">22%</div>
+        <div class="stats-band__label">Reduction in no-show rate after rollout, vs. phone reminders.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 6. CUSTOMER QUOTE ============= -->
+<section class="tile tile--light" aria-label="Customer quote">
+  <div class="tile__inner">
+    <div class="quote-card">
+      <p class="quote-card__text">"Recall outreach turned a 'we should call those CCM patients back' wishlist into 240 booked follow-ups in the first month. The eligibility check saved my MTM pharmacist 4 hours weekly on insurance calls."</p>
+      <p class="quote-card__attrib"><strong>Diana Park, PharmD</strong> &middot; Owner, Wellgrove Pharmacy &middot; 3 stores, OR</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 7. CLOSING CTA ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Let patients book themselves">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Tired of Phone-Tag and Clipboard Intake?</span>
+      <h2 class="h-display">Let patients book themselves.<br>Have eligibility in hand before they walk in.</h2>
+      <p class="lead">A 20-minute walkthrough on a real pharmacy booking flow. We will configure your services live, run an eligibility check on a sample patient, and show you the SMS the patient actually receives.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
 </main>
+
 {{> partials/footer-us }}
 <script src="/assets/site.js" defer></script>
 </body>

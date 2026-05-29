@@ -3,169 +3,364 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pharmacy EHR, MedMe Health</title>
-<meta name="description" content="The EHR built end-to-end for clinical pharmacy. SOAP notes, chronic-care plans, immunization records, transitions-of-care, pharmacy-tuned, no shoehorning." />
-<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/ehr" />
+<title>Platform, MedMe Health</title>
+<meta name="description" content="The pharmacy-specific EHR and medical billing platform. Scheduler, Pharmacy EHR, AI Scribe, Medical Billing, Analytics, and PMS Integrations, in one operating system for clinical pharmacy." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform" />
+<link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/platform" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=62" />
 <style>
-  .prod-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
-  .prod-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
-  .prod-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .prod-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .prod-hero__breadcrumb a:hover { color: var(--indigo); }
-  .prod-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .prod-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 920px; }
-  .prod-hero__lede { font-size: 1.15rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 760px; margin: 0 auto 2rem; }
-  .prod-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  /* ============================================================
+     PLATFORM OVERVIEW. Tour of the six modules that make up the
+     MedMe platform, with module cards routing to each dedicated
+     sub-page. Uses the enterprise sub-hero pattern with a faded
+     "all modules" mockup as the hero background, then a grid of
+     module cards, then a navy closing CTA with pulse-rings.
+     ============================================================ */
 
-  .stat-band { background: #fff; padding: 3rem 0; margin-top: 2rem; }
-  .stat-band__grid { max-width: 1080px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-  .stat-band__cell { text-align: center; }
-  .stat-band__num { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1.05; margin-bottom: 0.5rem; }
-  .stat-band__label { font-size: 0.875rem; color: rgba(6, 62, 84, 0.72); line-height: 1.4; }
-  @media (max-width: 900px) { .stat-band__grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; } }
+  /* ====== SUB-HERO with faded module-grid mockup =============== */
+  .sub-hero {
+    background: var(--seashell);
+    padding: 2rem 1.5rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sub-hero__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+    position: relative;
+  }
+  .sub-hero__bg {
+    position: relative;
+    max-width: 1120px;
+    margin: 0 auto;
+    -webkit-mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 45%,
+                          rgba(0, 0, 0, 0) 95%);
+            mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 45%,
+                          rgba(0, 0, 0, 0) 95%);
+    pointer-events: none;
+  }
+  .sub-hero__text {
+    text-align: center;
+    max-width: 800px;
+    margin: -140px auto 0;
+    position: relative;
+    z-index: 2;
+  }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto 1.75rem;
+    max-width: 680px;
+  }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -90px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -60px; } }
 
-  .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .cap-grid .h-card { padding: 1.75rem; }
-  .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(195, 196, 48, 0.18); color: var(--matcha); display: grid; place-items: center; margin-bottom: 1rem; }
-  .cap-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  @media (max-width: 900px) { .cap-grid { grid-template-columns: 1fr; } }
+  /* Faded "all modules" mockup: a grid of six module tiles
+     suggesting the full platform surface area. */
+  .mod-mock {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 12px 40px rgba(6, 62, 84, 0.06);
+    font-family: var(--font-display);
+    color: var(--indigo);
+  }
+  .mod-mock__head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px solid rgba(6, 62, 84, 0.08);
+  }
+  .mod-mock__title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .mod-mock__brand { display: inline-flex; align-items: center; color: var(--indigo); height: 22px; }
+  .mod-mock__brand svg { height: 22px; width: auto; display: block; }
+  .mod-mock__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 720px) { .mod-mock__grid { grid-template-columns: repeat(2, 1fr); } }
+  .mod-mock__tile {
+    background: rgba(6, 62, 84, 0.04);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mod-mock__tile-name { font-size: 12px; font-weight: 600; color: var(--indigo); }
+  .mod-mock__tile-status {
+    font-size: 10px;
+    color: var(--indigo);
+    background: rgba(195, 196, 48, 0.18);
+    padding: 2px 8px;
+    border-radius: 999px;
+    align-self: flex-start;
+    font-weight: 600;
+    margin-top: 4px;
+    animation: mod-status-pulse 4s ease-in-out infinite;
+  }
+  .mod-mock__tile:nth-child(1) .mod-mock__tile-status { animation-delay: 0s; }
+  .mod-mock__tile:nth-child(2) .mod-mock__tile-status { animation-delay: 0.4s; }
+  .mod-mock__tile:nth-child(3) .mod-mock__tile-status { animation-delay: 0.8s; }
+  .mod-mock__tile:nth-child(4) .mod-mock__tile-status { animation-delay: 1.2s; }
+  .mod-mock__tile:nth-child(5) .mod-mock__tile-status { animation-delay: 1.6s; }
+  .mod-mock__tile:nth-child(6) .mod-mock__tile-status { animation-delay: 2.0s; }
+  @keyframes mod-status-pulse {
+    0%, 100% { background: rgba(195, 196, 48, 0.18); }
+    50%      { background: var(--matcha); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mod-mock__tile-status { animation: none; }
+  }
 
-  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2.5rem; }
-  .compare-card { border-radius: 14px; padding: 1.75rem; }
-  .compare-card--old { background: rgba(178, 34, 52, 0.06); border: 1px solid rgba(178, 34, 52, 0.18); }
-  .compare-card--new { background: rgba(195, 196, 48, 0.12); border: 1px solid rgba(195, 196, 48, 0.4); }
-  .compare-card h3 { margin: 0 0 1rem; font-size: 1.05rem; font-weight: 700; color: var(--indigo); }
-  .compare-card ul { list-style: none; padding: 0; margin: 0; }
-  .compare-card li { padding: 0.5rem 0; font-size: 0.9rem; color: var(--indigo); display: flex; align-items: flex-start; gap: 0.6rem; }
-  .compare-card li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; margin-top: 0.5rem; flex-shrink: 0; }
-  .compare-card--old li::before { background: rgba(178, 34, 52, 0.5); }
-  .compare-card--new li::before { background: var(--matcha); }
-  @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+  /* ====== MODULE CARDS GRID ==================================== */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .module-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .module-grid { grid-template-columns: 1fr; } }
+  .module-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .module-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.2);
+    box-shadow: 0 12px 28px rgba(6, 62, 84, 0.08);
+  }
+  .module-card__icon {
+    display: inline-flex;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    background: rgba(195, 196, 48, 0.14);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+  .module-card__icon svg { width: 22px; height: 22px; stroke: var(--matcha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .module-card h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .module-card p { margin: 0 0 1rem; color: rgba(6, 62, 84, 0.72); line-height: 1.5; font-size: 0.95rem; flex: 1; }
+  .module-card__arrow {
+    font-size: 0.85rem;
+    color: var(--matcha);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .module-card__arrow::after {
+    content: "→";
+    transition: transform 0.25s ease;
+  }
+  .module-card:hover .module-card__arrow::after { transform: translateX(4px); }
 </style>
 </head>
 <body>
-<a href="#main" class="skip-link">Skip to main content</a>
-{{> partials/util-bar-us }}
 {{> partials/nav-us }}
+
 <main id="main">
 
-<section class="prod-hero">
-  <div class="prod-hero__inner">
-    <div class="prod-hero__breadcrumb">
-      <a href="/us">Home</a><span class="sep">/</span>
-      <a href="/us/platform/ehr">Platform</a><span class="sep">/</span>
-      <span>Pharmacy EHR</span>
+<!-- ============= 1. SUB-HERO (module-grid mockup as faded BG above text) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="mod-mock">
+        <div class="mod-mock__head">
+          <span class="mod-mock__title">MedMe Platform · Live Modules</span>
+          <span class="mod-mock__brand">{{> partials/logo-medme }}</span>
+        </div>
+        <div class="mod-mock__grid">
+          <div class="mod-mock__tile">
+            <span class="mod-mock__tile-name">Patient Scheduler</span>
+            <span class="mod-mock__tile-status">Live</span>
+          </div>
+          <div class="mod-mock__tile">
+            <span class="mod-mock__tile-name">Pharmacy EHR</span>
+            <span class="mod-mock__tile-status">Live</span>
+          </div>
+          <div class="mod-mock__tile">
+            <span class="mod-mock__tile-name">AI Clinical Assistant</span>
+            <span class="mod-mock__tile-status">Live</span>
+          </div>
+          <div class="mod-mock__tile">
+            <span class="mod-mock__tile-name">Medical Billing</span>
+            <span class="mod-mock__tile-status">Live</span>
+          </div>
+          <div class="mod-mock__tile">
+            <span class="mod-mock__tile-name">Messaging &amp; Follow-Ups</span>
+            <span class="mod-mock__tile-status">Live</span>
+          </div>
+          <div class="mod-mock__tile">
+            <span class="mod-mock__tile-name">PMS Integrations</span>
+            <span class="mod-mock__tile-status">Live</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <span class="kicker kicker--matcha">Pharmacy EHR</span>
-    <h1 class="h-display h-display--xl">The chart pharmacy<br>actually needs.</h1>
-    <p class="prod-hero__lede">SOAP notes, chronic-care plans, immunization records, and transitions-of-care, built around the way pharmacists work, not shoehorned from a medical-group EHR.</p>
-    <div class="prod-hero__cta">
-      <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
-      <a class="btn btn-ghost" href="/us/platform/medical-billing">See billing</a>
-    </div>
-  </div>
-  <div class="stat-band">
-    <div class="stat-band__grid">
-      <div class="stat-band__cell"><div class="stat-band__num">4,500+</div><div class="stat-band__label">Pharmacies running on MedMe EHR</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">12M+</div><div class="stat-band__label">Patient records managed</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">2 hrs</div><div class="stat-band__label">Average training to live use</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">30 days</div><div class="stat-band__label">From contract to first encounter</div></div>
+    <div class="sub-hero__text">
+      <h1 class="h-display">The pharmacy-specific operating system for clinical care.</h1>
+      <p class="sub-hero__lede">Six modules in one platform. Scheduler, Pharmacy EHR, AI Clinical Assistant, Medical Billing, Messaging, and PMS Integrations, fostering proactive, preventative, and personalized care.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="Why pharmacy-specific">
+<!-- ============= 2. MODULE CARDS (links to each sub-page) ============= -->
+<section class="tile tile--light" aria-label="Platform modules">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Why pharmacy-specific</span>
-      <h2 class="h-display">Generic clinical EHRs<br>weren't built for the bench.</h2>
-      <p class="lead">Medical-group EHRs assume a physician sitting at a desk for a 30-minute appointment. Pharmacy is shorter encounters, more counseling, time-based codes, and a workflow that has to flow between the counter and the consult room.</p>
+      <span class="kicker">One Platform, Six Modules</span>
+      <h2 class="h-display">Adopt the modules you need.<br>They work better together.</h2>
+      <p class="lead">Every module is best-in-class for its job, and every module talks to the others. The pharmacist's clinical workflow runs from booking through documentation to a paid claim, end to end, inside MedMe.</p>
     </div>
-    <div class="compare-grid">
-      <div class="compare-card compare-card--old">
-        <h3>Generic clinical EHR</h3>
-        <ul>
-          <li>Endless required fields for things pharmacy doesn't need</li>
-          <li>No native CCM or MTM templates</li>
-          <li>No state immunization registry pre-built</li>
-          <li>Provider-only billing logic, no incident-to</li>
-          <li>$2,000+ per month per provider seat</li>
-        </ul>
-      </div>
-      <div class="compare-card compare-card--new">
-        <h3>MedMe Pharmacy EHR</h3>
-        <ul>
-          <li>Pharmacist workflow first, every field earns its rent</li>
-          <li>CCM, MTM, transitions-of-care templates built in</li>
-          <li>State registries: all 50 states, pre-credentialed</li>
-          <li>Pharmacy + incident-to + RHC billing native</li>
-          <li>Flat per-store, all seats included</li>
-        </ul>
-      </div>
+    <div class="module-grid">
+      <a class="module-card" href="/us/platform/scheduling-queuing">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </span>
+        <h3>Patient Scheduler</h3>
+        <p>Online booking with eligibility verification at booking and intake forms flowing into the encounter. Multi-calendar with patient flow visibility.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
+      <a class="module-card" href="/us/platform/assisted-documentation">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        </span>
+        <h3>Pharmacy EHR</h3>
+        <p>The pharmacy EHR pharmacists actually want to use. SOAP notes, CCM care plans, immunizations, transitions of care, and protocol-aligned workflows.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
+      <a class="module-card" href="/us/platform/ai-clinical-assistant">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+        </span>
+        <h3>AI Clinical Assistant</h3>
+        <p>AI Scribe that listens, drafts the SOAP note, and pre-codes the encounter. Pharmacist reviews and signs in under 90 seconds.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
+      <a class="module-card" href="/us/platform/medical-billing">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </span>
+        <h3>Medical Billing</h3>
+        <p>Every documented encounter into a clean Medicare Part B claim. Eligibility, CPT/HCPCS coding, time tracking, submission, and denial management in one workflow.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
+      <a class="module-card" href="/us/platform/messaging-follow-ups">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <h3>Messaging &amp; Follow-Ups</h3>
+        <p>Automated SMS and email reminders, recall outreach, and follow-up campaigns. Two-way patient conversation handled inside the platform.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
+      <a class="module-card" href="/us/platform/pms-integrations">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v6a3 3 0 0 0 3 3h6"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/></svg>
+        </span>
+        <h3>PMS Integrations</h3>
+        <p>Bidirectional sync with PioneerRx, BestRx, McKesson, Liberty, and RxConnect. Demographics, allergies, and dispensing history live in MedMe.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="What's included">
+<!-- ============= 3. AI ASSISTANTS section (add-on layer) ============= -->
+<section class="tile tile--light" aria-label="AI Assistants">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">What's included</span>
-      <h2 class="h-display">Built around the encounters<br>pharmacy actually delivers.</h2>
+      <span class="kicker">Add-on Layer, AI Assistants</span>
+      <h2 class="h-display">Three AI agents working across the platform.</h2>
+      <p class="lead">Voice and chat agents that handle the routine patient touchpoints, the back-office data entry, and the clinical documentation. Each agent is opt-in and slots into the workflow the platform already runs.</p>
     </div>
-    <div class="cap-grid">
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></span>
-        <h3>SOAP templates</h3>
-        <p>Pre-built for CCM, MTM, immunizations, POCT, transitions-of-care. Custom templates configurable per store.</p>
-      </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-        <h3>Patient chart</h3>
-        <p>Demographics, Rx history, allergies, vitals, adherence gaps, payer mix, one screen, surfaced before the encounter.</p>
-      </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
-        <h3>Care plans</h3>
-        <p>Chronic-care plans built with the patient, tied to follow-up cadence. Auto-suggested based on conditions and gaps.</p>
-      </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-        <h3>Immunization records</h3>
-        <p>VFC + commercial immunizations. All 50 state registries pre-integrated. Lot tracking, VIS storage, recall queues.</p>
-      </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></span>
-        <h3>Transitions-of-care</h3>
-        <p>Post-discharge med-rec workflow. 7-day, 14-day, 30-day touchpoints baked into the schedule.</p>
-      </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-        <h3>AI Scribe built in</h3>
-        <p>Every encounter can be drafted by AI Scribe. No separate app, no separate cost, included with the EHR.</p>
-      </article>
+    <div class="module-grid">
+      <a class="module-card" href="/us/platform/ai-assistants/patient-concierge">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <h3>Patient Concierge</h3>
+        <p>Voice and chat agents for the routine patient touchpoints. Refill reminders, appointment confirmations, intake, and follow-ups, without tying up your team.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
+      <a class="module-card" href="/us/platform/ai-assistants/admin-clerk">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M7 14h4M7 18h4M14 14h3M14 18h3"/></svg>
+        </span>
+        <h3>Admin Clerk</h3>
+        <p>RPA-driven data entry across non-integrated systems. Prior authorizations, claims work, and outcome reporting where no API exists. New.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
+      <a class="module-card" href="/us/platform/ai-clinical-assistant">
+        <span class="module-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+        </span>
+        <h3>Clinical Assistant</h3>
+        <p>The AI Scribe that captures the conversation, drafts the SOAP note, and suggests the right CPT/HCPCS code. Pharmacist reviews and signs.</p>
+        <span class="module-card__arrow">Learn more</span>
+      </a>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light tile--prominent" aria-label="Get started">
-  <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Get started</span>
-      <h2 class="h-display">See the chart open<br>on a real patient.</h2>
-      <p class="lead">15-minute walkthrough of the EHR on your visit types and templates.</p>
-      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/us/pricing">See pricing</a>
-      </div>
+<!-- ============= 4. CLOSING CTA (navy, centered, pulse-rings) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Book a platform demo">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">See the Platform</span>
+      <h2 class="h-display">A 20-minute screen-share<br>through the full platform.</h2>
+      <p class="lead">Bring a week of your encounter volume. We will walk through the modules you would actually use, run the reimbursement math live, and show you the chart your pharmacists will want to open.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
 
 </main>
+
 {{> partials/footer-us }}
 <script src="/assets/site.js" defer></script>
 </body>
