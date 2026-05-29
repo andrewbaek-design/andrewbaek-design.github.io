@@ -2221,6 +2221,44 @@ a.nav__dropdown-group-label:hover {
 .tile--dark h3,
 .tile--dark h4  { color: var(--indigo); }
 
+/* ============================================================
+   NAVY SECTION VARIANT — opt-in indigo treatment for sections
+   that need to "punch" against the all-light page rhythm
+   (typically the final CTA above the footer). Inverts bg/text,
+   re-tints the hairline dividers, and flips the pill buttons
+   to matcha so they read on indigo.
+   Uses --indigo-95 (#0a4a63) — a hair lighter than the base
+   --indigo (#063E54) the footer uses — so the section reads as
+   a distinct band from the footer instead of bleeding into it.
+   ============================================================ */
+.tile--navy {
+  background: var(--indigo-95);
+  color: var(--seashell);
+  border-top-color: rgba(250, 249, 245, 0.10);
+}
+.tile--navy::before,
+.tile--navy::after { background: rgba(250, 249, 245, 0.10); }
+.tile--navy h1,
+.tile--navy h2,
+.tile--navy h3,
+.tile--navy h4 { color: var(--seashell); }
+.tile--navy .lead { color: rgba(250, 249, 245, 0.78); }
+.tile--navy .fine-print { color: rgba(250, 249, 245, 0.48); }
+.tile--navy .pill--solid,
+.tile--navy .pill--ghost {
+  background: var(--matcha);
+  color: var(--indigo);
+  border-color: var(--matcha);
+  box-shadow: none;
+}
+.tile--navy .pill--solid:hover,
+.tile--navy .pill--ghost:hover {
+  background: transparent;
+  color: var(--matcha);
+  border-color: var(--matcha);
+  box-shadow: none;
+}
+
 /* Interior gutter (padding-inline = var(--tile-pad-x)) keeps content
    from butting up against the side-hairline pseudo-elements. The token
    steps down on smaller viewports so the gutter never eats the whole
@@ -2371,14 +2409,18 @@ a.nav__dropdown-group-label:hover {
 .kicker {
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: var(--apple-caption);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--accent);
+  /* Title Case 2026-05-29 — was UPPERCASE with letter-spacing 0.04em.
+     Site-wide rule: no text-transform: uppercase unless explicitly
+     requested. Reduced tracking + slight size bump since Title Case
+     doesn't need wide letter-spacing to read evenly. */
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--matcha);
   display: inline-block;
   margin-bottom: 1rem;
 }
-.tile--dark .kicker { color: var(--matcha); }
+.tile--dark .kicker { color: var(--matcha); }   /* legacy override — same color, kept for safety */
 
 /* ============== PILL BUTTONS (single accent per surface) ============== */
 /* .pill / .pill--solid / .pill--ghost — surface-aware button system.

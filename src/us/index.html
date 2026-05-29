@@ -17,7 +17,7 @@ page.title: MedMe — United States Homepage Mockup
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=48">
+<link rel="stylesheet" href="/assets/brand.css?v=52">
 
 <script type="application/ld+json">
 {
@@ -392,6 +392,14 @@ page.title: MedMe — United States Homepage Mockup
      which fades both the frame's bg/border AND the inner mockup content
      in a single soft alpha gradient. No inner overlay needed. */
   .visual-frame { overflow: visible; }
+  /* On the US homepage the .visual-frame element has no children
+     (the panes live in .mockup-stack below it). Without this rule
+     the empty .visual-frame still renders its own card chrome —
+     rounded border + faint gradient bg + mask — and reads as a
+     floating "ghost bar" above the mockup. Hide it whenever it
+     has no content; CA still has children inside .visual-frame
+     so this :empty rule doesn't affect it. */
+  .visual-frame:empty { display: none; }
 
   /* ====== PLACEHOLDER MOCKUPS (shared chrome for non-Scribe tabs) ====== */
   .pmock {
@@ -1207,7 +1215,9 @@ page.title: MedMe — United States Homepage Mockup
     padding: 48px 32px;
     top: 0;             /* overrides the original top:56px (no topbar now) */
     display: flex;
-    justify-content: center;
+    justify-content: center;   /* horizontal centering of the card */
+    align-items: center;       /* vertical centering — was missing, fields
+                                  hugged the top of the 1192×656 frame. */
   }
   .mockup-host .intake-card-left--minimal {
     flex: 0 1 640px;
@@ -3101,15 +3111,10 @@ page.title: MedMe — United States Homepage Mockup
      matcha accent in .tile__head::before provide enough visual
      emphasis without the dark fill. */
   .tile--prominent .tile__head { position: relative; padding-top: 1rem; }
-  .tile--prominent .tile__head::before {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 3px;
-    background: var(--matcha);
-    border-radius: 2px;
-    margin: 0 auto 1.25rem;
-  }
+  /* Matcha accent bar above prominent section heads — removed
+     2026-05-29 at user request. The .tile--navy bg + section
+     hairline divider provide enough emphasis without it. */
+  .tile--prominent .tile__head::before { content: none; }
   .tile--prominent .h-display {
     font-size: clamp(1.875rem, 3.4vw, 2.875rem);
     letter-spacing: -0.024em;
@@ -4729,9 +4734,9 @@ page.title: MedMe — United States Homepage Mockup
 </section>
 
 <!-- ============= 8. CTA (dark — visually prominent) ============= -->
-<section class="tile tile--light tile--prominent" aria-label="Final call to action">
+<section class="tile tile--navy tile--prominent" aria-label="Final call to action">
   <div class="tile__inner tile__inner--narrow">
-    <div class="tile__head">
+    <div class="tile__head tile__head--centered">
       <span class="kicker">Ready to see it on your numbers?</span>
       <h2 class="h-display">Show us a week. We'll show you<br>the missing revenue.</h2>
       <p class="lead">20-minute screen-share, no prep. We'll walk through your service mix, run the math live, and leave you with a written estimate either way.</p>
