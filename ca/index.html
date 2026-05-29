@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MedMe Health — The clinical operating system for Canadian community pharmacy</title>
+<title>MedMe Health, The clinical operating system for Canadian community pharmacy</title>
 <meta name="description" content="MedMe is the pharmacy-specific EHR that documents every encounter and turns it into a documented, reimbursable service. Built with Canadian pharmacy operators." />
 
 <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/" />
@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=56">
+<link rel="stylesheet" href="/assets/brand.css?v=57">
 
 <script type="application/ld+json">
 {
@@ -39,18 +39,18 @@
 
 <style>
   /* ============================================================
-     POC PAGE STYLES — Apple-inspired tile-system overrides + the
+     POC PAGE STYLES, Apple-inspired tile-system overrides + the
      two interactive pieces (device-frame scene rotation, the
      reimbursement-calculator widget). Everything else is in
      /assets/brand.css under "APPLE-INSPIRED TILE SYSTEM".
      ============================================================ */
 
-  /* ====== Trust section — seashell bg + centered header + animated logo marquee ====== */
+  /* ====== Trust section, seashell bg + centered header + animated logo marquee ====== */
   .trust {
     background: var(--seashell) !important;
     color: var(--indigo) !important;
     padding: 4rem 0 3rem !important;
-    /* Match the US homepage override — keep the section
+    /* Match the US homepage override, keep the section
        divider visible on this light .trust variant. */
     border-top-color: var(--indigo-08) !important;
   }
@@ -64,7 +64,7 @@
     max-width: 720px;
   }
   .trust__label { display: block; }
-  /* Bigger, headline-weight treatment — reads as a section heading,
+  /* Bigger, headline-weight treatment, reads as a section heading,
      not a tiny eyebrow label. The dot indicator moves below the text. */
   .trust__label .eyebrow {
     color: var(--indigo);
@@ -132,7 +132,7 @@
     font-weight: 700;
     font-size: 0.95rem;
   }
-  /* Pharmacy-chain wordmarks — typeset placeholders that render in
+  /* Pharmacy-chain wordmarks, typeset placeholders that render in
      greyscale on the trust band. Designed to be swapped for real
      licensed brand assets later. */
   .trust__wordmark {
@@ -237,7 +237,7 @@
   }
 
   /* ====== TAB BAR (product mockup switcher) ====== */
-  /* Attio-style tabs — flat row with a matcha underline on the active
+  /* Attio-style tabs, flat row with a matcha underline on the active
      tab. No pill background container so the active state is visually
      distinct from the hero "Book a demo" pill. */
   .tab-bar-wrap {
@@ -325,7 +325,7 @@
   .mockup-pane--active { display: block; }
 
   /* ============================================================
-     SCROLL REVEAL — sections fade in + rise as they enter view.
+     SCROLL REVEAL, sections fade in + rise as they enter view.
      Honor prefers-reduced-motion.
      ============================================================ */
   .reveal {
@@ -339,7 +339,7 @@
     opacity: 1;
     transform: translateY(0);
   }
-  /* Stagger children inside a grid — adds successive 80ms delays */
+  /* Stagger children inside a grid, adds successive 80ms delays */
   .reveal.is-stagger-1 { transition-delay: 0.05s; }
   .reveal.is-stagger-2 { transition-delay: 0.13s; }
   .reveal.is-stagger-3 { transition-delay: 0.21s; }
@@ -357,7 +357,7 @@
     display: inline-block;
   }
 
-  /* Subtle hover lift on cards — adds tactile feedback without overdoing it */
+  /* Subtle hover lift on cards, adds tactile feedback without overdoing it */
   .h-card {
     transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
                 box-shadow 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -426,7 +426,7 @@
     margin: 0 0 18px;
   }
 
-  /* Pane 1 — Scheduling & Queueing */
+  /* Pane 1, Scheduling & Queueing */
   .pmock-queue { display: flex; flex-direction: column; gap: 6px; }
   .pmock-queue-item {
     display: flex; align-items: center; gap: 10px;
@@ -455,7 +455,7 @@
   .pmock-cal .cal-slot.booked { background: rgba(6,62,84,0.18); border-color: rgba(6,62,84,0.2); }
   .pmock-cal .cal-slot.new   { background: #c3c430; border-color: #9C9D26; }
 
-  /* Pane 2 — Patient Intake Forms */
+  /* Pane 2, Patient Intake Forms */
   .pmock-steps {
     display: flex; gap: 0;
     align-items: center;
@@ -481,7 +481,7 @@
   .pmock-row { display: flex; gap: 12px; margin-top: 10px; }
   .pmock-row > * { flex: 1; }
 
-  /* Pane 3 — Assisted Documentation */
+  /* Pane 3, Assisted Documentation */
   .pmock-soap { display: flex; flex-direction: column; gap: 12px; }
   .pmock-soap-row { border: 1px solid rgba(0,0,0,0.10); border-radius: 6px; padding: 10px 12px; background: #fff; }
   .pmock-soap-row.active { border-color: #073e54; box-shadow: 0 0 0 3px rgba(7,62,84,0.10); }
@@ -499,7 +499,7 @@
   }
   .pmock-ai-chip::before { content: "AI"; font-size: 10px; font-weight: 800; background: #c3c430; color: #1c2308; padding: 1px 5px; border-radius: 4px; }
 
-  /* Pane 4 — Messaging & Follow-Ups */
+  /* Pane 4, Messaging & Follow-Ups */
   .pmock-msg-list { display: flex; flex-direction: column; gap: 6px; }
   .pmock-msg-item {
     display: flex; align-items: center; gap: 10px;
@@ -520,7 +520,7 @@
   .pmock-bubble.out { background: #073e54; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
   .pmock-templates { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.08); }
 
-  /* Pane 6 — Patient Concierge */
+  /* Pane 6, Patient Concierge */
   .pmock-concierge { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; background: linear-gradient(180deg, #fafbfc, #fff); }
   .pmock-phone {
     width: 320px;
@@ -543,7 +543,7 @@
   .pmock-phone-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
   .pmock-phone-pill { padding: 6px 12px; background: #fff; border: 1px solid #073e54; color: #073e54; border-radius: 999px; font-size: 11.5px; font-weight: 600; }
 
-  /* Pane 7 — Admin Clerk (Kroll bridge) */
+  /* Pane 7, Admin Clerk (Kroll bridge) */
   .pmock-bridge { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 64px 1fr; gap: 0; background: #fff; }
   .pmock-bridge-col { padding: 24px 26px; min-width: 0; }
   .pmock-bridge-col.medme { border-right: 1px solid rgba(0,0,0,0.06); background: #fff; }
@@ -588,7 +588,7 @@
     padding: 0 2rem 4rem;
     max-width: var(--container);
   }
-  /* visual-halo intentionally empty — green/indigo gradient halo
+  /* visual-halo intentionally empty, green/indigo gradient halo
      removed for a cleaner page surface. */
   .visual-halo { display: none; }
   .visual-frame {
@@ -640,7 +640,7 @@
   }
   .visual-frame .url .lock { opacity: .6; }
 
-  /* ====== MOCKUP HOST (scoped — AI Scribe / Medication Review motion graphic) ====== */
+  /* ====== MOCKUP HOST (scoped, AI Scribe / Medication Review motion graphic) ====== */
   .mockup-host {
     position: relative;
     width: 100%;
@@ -747,7 +747,7 @@
   @keyframes m-wave { 0%, 100% { height: 3px; } 50% { height: 13px; } }
 
   /* ============================================================
-     SCHEDULING & QUEUEING MOCKUP — patient-facing booking widget.
+     SCHEDULING & QUEUEING MOCKUP, patient-facing booking widget.
      Two side-by-side cards: MedMe Pharmacy booking (Walk-in /
      Book Appointment toggle + 7-day x 6-slot grid) + Store Locator
      with map. Matches /Downloads/Calendar 4/scheduling & Queueing.svg.
@@ -768,7 +768,7 @@
     padding: 24px 20px 20px;
   }
 
-  /* Left card — header */
+  /* Left card, header */
   .mockup-host .sched-book-title {
     margin: 0;
     font-size: 22px; font-weight: 800;
@@ -898,7 +898,7 @@
     100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(4, 43, 59, 0); }
   }
 
-  /* Right card — Store Locator */
+  /* Right card, Store Locator */
   .mockup-host .sched-locator-title {
     margin: 0 0 14px;
     font-size: 17px;
@@ -946,7 +946,7 @@
   }
 
   /* ============================================================
-     PATIENT INTAKE FORMS MOCKUP — patient-facing booking flow.
+     PATIENT INTAKE FORMS MOCKUP, patient-facing booking flow.
      Two-card layout: form on left, booking summary + vertical
      stepper on right. Matches /Downloads/Desktop 2/Patient-Intake.svg.
      Progress bar animates between step 2 and step 3 as fields fill.
@@ -1214,7 +1214,7 @@
   }
 
   /* ============================================================
-     MESSAGING & FOLLOW-UPS MOCKUP — 3 phone screens side by side:
+     MESSAGING & FOLLOW-UPS MOCKUP, 3 phone screens side by side:
      (1) email confirmation, (2) SMS reminders, (3) email reminder.
      Phone 2 animates: typing indicator → bubble 1 → typing → bubble 2.
      Matches /Downloads/Messaging & Follow-Ups.svg.
@@ -1481,7 +1481,7 @@
   }
 
   /* ============================================================
-     MEDICAL BILLING MOCKUP — pharmacist-facing claims dashboard.
+     MEDICAL BILLING MOCKUP, pharmacist-facing claims dashboard.
      Top bar with title + stat pills, left claim queue, main claim
      detail panel with codes + total + submit. Aligned with the
      other tab mockups: Montserrat, #042B3B navy, light gray bg.
@@ -1526,7 +1526,7 @@
     gap: 18px;
   }
 
-  /* Left sidebar — claim queue */
+  /* Left sidebar, claim queue */
   .mockup-host .bill-side {
     width: 280px;
     background: #fff;
@@ -1584,7 +1584,7 @@
     margin-top: 2px;
   }
 
-  /* Main panel — current claim detail */
+  /* Main panel, current claim detail */
   .mockup-host .bill-main {
     flex: 1; min-width: 0;
     background: #fff;
@@ -1869,7 +1869,7 @@
     font-size: var(--apple-fine);
     color: rgba(6,62,84,0.55);
   }
-  /* Dark-tile variant — the inner card flips to the DEEPEST navy
+  /* Dark-tile variant, the inner card flips to the DEEPEST navy
      (#042B3B / --indigo-dark) so it pops against the section's regular
      indigo. Labels switch to seashell tints; inputs use a translucent
      seashell fill so they still read as form fields. */
@@ -1896,11 +1896,11 @@
   .tile--dark .calc-card__result .delta { color: rgba(250, 249, 245, 0.55); }
 
   /* ============================================================
-     PLATFORM CARD MOTION GRAPHICS — small CSS-only animations
+     PLATFORM CARD MOTION GRAPHICS, small CSS-only animations
      that illustrate each feature. All loop infinitely; pause
      under prefers-reduced-motion.
      ============================================================ */
-  /* Motion graphic — sits as a floating illustration inside each card,
+  /* Motion graphic, sits as a floating illustration inside each card,
      no frame or background of its own. The card's own border + padding
      gives the surrounding chrome. */
   .feat-anim {
@@ -1919,7 +1919,7 @@
   }
 
   /* ============================================================
-     Bento card motion graphics — show "completed" state at rest,
+     Bento card motion graphics, show "completed" state at rest,
      restart from beginning on card hover.
 
      Mechanism:
@@ -1987,7 +1987,7 @@
   .tile-grid--bento .h-card:hover .fa-int-pulse--s { animation-delay: 1.2s !important; }
   .tile-grid--bento .h-card:hover .fa-int-pulse--w { animation-delay: 1.8s !important; }
 
-  /* Respect user motion preferences — keep animations off entirely. */
+  /* Respect user motion preferences, keep animations off entirely. */
   @media (prefers-reduced-motion: reduce) {
     .tile-grid--bento .h-card:hover,
     .tile-grid--bento .h-card:hover *,
@@ -2002,7 +2002,7 @@
      the bento). Card-level invert: dark bg + seashell text inside
      a light platform section.
      ============================================================ */
-  /* Feature card — light theme 2026-05-29 (was indigo-dark navy).
+  /* Feature card, light theme 2026-05-29 (was indigo-dark navy).
      White card with a matcha accent border to keep "featured" weight. */
   .h-card--feature {
     background: var(--white) !important;
@@ -2025,7 +2025,7 @@
     color: var(--matcha);
     border-color: var(--matcha);
   }
-  /* Snug the rich animation up against the title — the column gap
+  /* Snug the rich animation up against the title, the column gap
      alone provides the separation, no extra margin-bottom needed. */
   .h-card--feature .feat-anim {
     margin-bottom: 0;
@@ -2036,7 +2036,7 @@
   .alink--on-dark:hover { border-bottom-color: var(--matcha); }
 
   /* ============================================================
-     RICH BILLING FLOW — bigger animation for the Medical Billing
+     RICH BILLING FLOW, bigger animation for the Medical Billing
      hero card. Shows the full Eligibility → Auto-coded → Claim
      ready → Paid sequence. Steps fade in left-to-right with stagger,
      all stay visible at peak, then reset.
@@ -2171,7 +2171,7 @@
     font-size: 1.2rem;
   }
 
-  /* 1. Billing — claim line items with highlight pulse */
+  /* 1. Billing, claim line items with highlight pulse */
   .feat-anim--billing { padding: 12px; place-items: stretch; }
   .fa-bill-stack {
     display: flex; flex-direction: column; gap: 4px;
@@ -2217,7 +2217,7 @@
     margin-right: 6px;
   }
 
-  /* 2. EHR — SOAP fields filling + checkmarks */
+  /* 2. EHR, SOAP fields filling + checkmarks */
   .feat-anim--ehr { padding: 14px 18px; place-items: stretch; }
   .fa-ehr-stack {
     display: flex; flex-direction: column; gap: 7px;
@@ -2270,7 +2270,7 @@
     75%, 100% { opacity: 0; transform: scale(0.4); }
   }
 
-  /* 3. AI Scribe — symmetric waveform */
+  /* 3. AI Scribe, symmetric waveform */
   .feat-anim--scribe .fa-wave {
     display: flex; align-items: center; justify-content: center;
     gap: 4px; height: 100%;
@@ -2299,7 +2299,7 @@
     50% { height: 56px; }
   }
 
-  /* 4. Scheduler — multiple slots filling in over time (booking flow). */
+  /* 4. Scheduler, multiple slots filling in over time (booking flow). */
   .feat-anim--sched .fa-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -2340,7 +2340,7 @@
     }
   }
 
-  /* 5. Analytics — staggered bar chart */
+  /* 5. Analytics, staggered bar chart */
   .feat-anim--analytics .fa-bars {
     display: flex; align-items: flex-end; justify-content: center;
     gap: 10px; height: 80px;
@@ -2363,7 +2363,7 @@
   @keyframes fa-bar-68 { 0%, 100% { height: 8px; } 45%, 70% { height: 52px; } }
   @keyframes fa-bar-85 { 0%, 100% { height: 8px; } 45%, 70% { height: 66px; } }
 
-  /* 6. Integrations — hub + satellites + animated data packets flying
+  /* 6. Integrations, hub + satellites + animated data packets flying
         out from the center to each node, plus a continuous radial ring
         expanding from the center for added energy. */
   .feat-anim--integrations .fa-hub {
@@ -2512,18 +2512,18 @@
   .tile--dark .fa-int-node--center { background: var(--matcha); }
 
   /* ============================================================
-     PROMINENT TILE — visual presence comes from (a) a slightly darker
+     PROMINENT TILE, visual presence comes from (a) a slightly darker
      surface, (b) a short matcha accent rule centered above the kicker,
      (c) tighter, larger headline tracking. No diffuse glow.
      ============================================================ */
   .tile--prominent {
     position: relative;
   }
-  /* Calc section — light theme 2026-05-29 (was --indigo-95 navy).
+  /* Calc section, light theme 2026-05-29 (was --indigo-95 navy).
      Hairline divider + matcha accent in .tile__head::before
      carry the visual emphasis now. */
   .tile--prominent .tile__head { position: relative; padding-top: 1rem; }
-  /* Matcha accent bar above prominent section heads — removed
+  /* Matcha accent bar above prominent section heads, removed
      2026-05-29 at user request. */
   .tile--prominent .tile__head::before { content: none; }
   .tile--prominent .h-display {
@@ -2532,7 +2532,7 @@
   }
 
   /* ============================================================
-     TESTIMONIAL SLIDER — auto-rotating quotes on the dark tile.
+     TESTIMONIAL SLIDER, auto-rotating quotes on the dark tile.
      All slides occupy the same grid cell; only the active one is
      visible (opacity 1). Auto-advances every 6s, pauses on hover,
      and reacts to dot clicks.
@@ -2614,7 +2614,7 @@
   }
 
   /* ============================================================
-     PATIENT JOURNEY — horizontal 5-step timeline with a matcha
+     PATIENT JOURNEY, horizontal 5-step timeline with a matcha
      line that flows left to right and step icons that pulse in
      sequence. Each step also has a tiny motion graphic.
      ============================================================ */
@@ -2770,7 +2770,7 @@
   }
 
   /* ============================================================
-     BENTO GRID — varied card sizes for the platform section.
+     BENTO GRID, varied card sizes for the platform section.
      Layout (desktop, 4 columns × 3 rows):
        [ Card 1 (2×2) ][ Card 2 (2×1) ]
        [              ][ C3 ][ C4    ]
@@ -2807,7 +2807,7 @@
   }
 
   /* ============================================================
-     RESPONSIVE — mobile/tablet adjustments for the homepage POC.
+     RESPONSIVE, mobile/tablet adjustments for the homepage POC.
      Most tile-system rules in brand.css already handle breakpoints;
      these patch the page-specific elements (mockup, tabs, hero).
      ============================================================ */
@@ -2822,12 +2822,12 @@
     .visual-wrap { padding: 0 1rem; }
     .tab-bar-wrap { padding: 0 1rem; }
     .tab { font-size: 13px; padding: 9px 14px; }
-    /* Mockup gets smaller on mobile — aspect-ratio handles it, but pad less */
+    /* Mockup gets smaller on mobile, aspect-ratio handles it, but pad less */
     .visual-frame { padding: 6px; }
     .mockup-pane::after { height: 30%; }
   }
 
-  /* ====== AUDIENCE cards — flex column so the CTA can pin to the bottom,
+  /* ====== AUDIENCE cards, flex column so the CTA can pin to the bottom,
      keeping all 3 buttons at the same y-position regardless of how long
      each card's list runs. ====== */
   .audience-card {
@@ -2880,12 +2880,12 @@
 <div class="util-bar" role="region" aria-label="Site announcement">
   <div class="wrap util-bar--center">
     <div class="news">
-      <strong>NEW:</strong> Admin Clerk &mdash; the AI assistant that books the consult while you fill the script. <a href="/ca/platform/ai-assistants/admin-clerk">See it work &rarr;</a>
+      <strong>NEW:</strong> Admin Clerk, the AI assistant that books the consult while you fill the script. <a href="/ca/platform/ai-assistants/admin-clerk">See it work &rarr;</a>
     </div>
   </div>
 </div>
 <script src="/assets/site.js" defer></script>
-<!-- Cookie banner + preferences modal — appears on every page.
+<!-- Cookie banner + preferences modal, appears on every page.
      Behavior is driven by JS in /assets/site.js (consent management).
      Compliant target: GDPR (EU), CCPA/CPRA (US), PIPEDA + Quebec Law 25 (CA),
      and the strictest interpretation across all four. -->
@@ -2918,7 +2918,7 @@
         <strong>Strictly necessary</strong>
         <span class="cookie-cat__locked">Always on</span>
       </div>
-      <p>Required for the site to load and function — session, security, region selection, accessibility preferences. Cannot be disabled.</p>
+      <p>Required for the site to load and function, session, security, region selection, accessibility preferences. Cannot be disabled.</p>
     </div>
 
     <div class="cookie-cat">
@@ -2955,7 +2955,7 @@
   </div>
 </div>
 <!--
-  CA navigation — locked to sitemap v11 (CA branch).
+  CA navigation, locked to sitemap v11 (CA branch).
   Differences from US v11:
    - Platform overview labeled "MedMe Care Platform" (pending Purya alignment)
    - No Medical Billing Suite under platform modules (US-only)
@@ -3027,7 +3027,7 @@
               </a>
               <a href="/ca/platform/ai-clinical-assistant" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
                 <span class="nav__dropdown-tile-title">AI Clinical Assistant <em class="nav__tag">Add-on</em></span>
-                <span class="nav__dropdown-tile-desc">AI Scribe — real-time notes and care plans</span>
+                <span class="nav__dropdown-tile-desc">AI Scribe, real-time notes and care plans</span>
               </a>
             </div>
             <div class="nav__dropdown-group">
@@ -3168,7 +3168,7 @@
       <div class="mockup-host" id="schedHost">
         <div class="frame-inner" id="schedFrame">
 
-          <!-- LEFT CARD — MedMe Pharmacy booking widget -->
+          <!-- LEFT CARD, MedMe Pharmacy booking widget -->
           <section class="sched-book" aria-label="Booking widget">
             <h2 class="sched-book-title">MedMe Pharmacy</h2>
             <div class="sched-book-divider"></div>
@@ -3259,7 +3259,7 @@
             </div>
           </section>
 
-          <!-- RIGHT CARD — Store Locator -->
+          <!-- RIGHT CARD, Store Locator -->
           <section class="sched-locator" aria-label="Store locator">
             <h3 class="sched-locator-title">Store Locator</h3>
             <div class="sched-map">
@@ -3445,7 +3445,7 @@
         <div class="frame-inner" id="msgFrame">
           <div class="msg-stage">
 
-            <!-- PHONE 1 — booking confirmation email -->
+            <!-- PHONE 1, booking confirmation email -->
             <div class="msg-phone msg-phone--email">
               <div class="msg-status">
                 <span>9:41</span>
@@ -3487,7 +3487,7 @@
               </div>
             </div>
 
-            <!-- PHONE 2 — SMS conversation -->
+            <!-- PHONE 2, SMS conversation -->
             <div class="msg-phone msg-phone--sms">
               <div class="msg-status">
                 <span>9:41</span>
@@ -3535,7 +3535,7 @@
               <div class="msg-sms-home"></div>
             </div>
 
-            <!-- PHONE 3 — reminder email -->
+            <!-- PHONE 3, reminder email -->
             <div class="msg-phone msg-phone--email">
               <div class="msg-status">
                 <span>9:41</span>
@@ -3695,7 +3695,7 @@
     <div class="trust__top">
       <div class="trust__label">
         <span class="eyebrow">Trusted by Canadian pharmacy leaders</span>
-        <div class="stat-line">From single-store independents to national chains &mdash; documenting clinical work and turning it into clean claims.</div>
+        <div class="stat-line">From single-store independents to national chains, documenting clinical work and turning it into clean claims.</div>
       </div>
     </div>
     <div class="trust__logos" role="list" aria-label="Customer logos">
@@ -3719,13 +3719,13 @@
   </div>
 </section>
 
-<!-- ============= 3. PLATFORM (dark — Medical Billing card uses --indigo-dark) ============= -->
+<!-- ============= 3. PLATFORM (dark, Medical Billing card uses --indigo-dark) ============= -->
 <section class="tile tile--light" id="billing" aria-label="What's in the platform">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">The platform</span>
       <h2 class="h-display">Built to document and bill,<br>nothing they don't.</h2>
-      <p class="lead">Pick the modules that fit your service mix. Medical Billing converts every documented encounter into a clean Medicare Part&nbsp;B claim &mdash; the wedge that turns clinical scope into reliable revenue.</p>
+      <p class="lead">Pick the modules that fit your service mix. Medical Billing converts every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that turns clinical scope into reliable revenue.</p>
     </div>
     <div class="tile-grid tile-grid--bento">
       <article class="h-card h-card--feature">
@@ -3762,7 +3762,7 @@
           </div>
         </div>
         <h3>Patient Concierge</h3>
-        <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim &mdash; the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
+        <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
         <ul class="feat-list">
           <li>Provincial PIN auto-coding from the encounter note</li>
           <li>Time tracking + modifier rules for incident-to billing</li>
@@ -3783,7 +3783,7 @@
           </div>
         </div>
         <h3>MedMe Care Platform</h3>
-        <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows &mdash; all pharmacy-tuned, no generic-EHR shoehorning.</p>
+        <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows, all pharmacy-tuned, no generic-EHR shoehorning.</p>
         <ul class="feat-list">
           <li>Pharmacy-specific templates for MedsCheck, Med review, immunizations, POCT</li>
           <li>Care plans + adherence tracking baked into the encounter</li>
@@ -3834,7 +3834,7 @@
           </div>
         </div>
         <h3>Outcomes &amp; analytics</h3>
-        <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive &mdash; with the math already done.</p>
+        <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive, with the math already done.</p>
         <ul class="feat-list">
           <li>Per-store + per-pharmacist productivity dashboards</li>
           <li>Reimbursement trending + denial root-cause analysis</li>
@@ -3888,7 +3888,7 @@
       <article class="h-card">
         <div class="how-step__num">2</div>
         <h3>Profile pulls the picture</h3>
-        <p>Rx history, vitals, allergies, payer details, care gaps — surfaced for the pharmacist before they walk in.</p>
+        <p>Rx history, vitals, allergies, payer details, care gaps, surfaced for the pharmacist before they walk in.</p>
       </article>
       <article class="h-card">
         <div class="how-step__num">3</div>
@@ -3935,7 +3935,7 @@
         <div class="audience-card__role">Specialty</div>
         <h3>Specialty pharmacies &amp; payvider partners</h3>
         <ul>
-          <li>Specialty therapy workflows &mdash; oncology, infusion, transplant, HIV</li>
+          <li>Specialty therapy workflows, oncology, infusion, transplant, HIV</li>
           <li>Prior-auth tracking + manufacturer outcomes reporting</li>
           <li>Patient-adherence + side-effect monitoring</li>
           <li>Co-managed care models with payvider partners</li>
@@ -3961,13 +3961,13 @@
   </div>
 </section>
 
-<!-- ============= 5b. PATIENT JOURNEY (light — narrative 5-step story) ============= -->
+<!-- ============= 5b. PATIENT JOURNEY (light, narrative 5-step story) ============= -->
 <section class="tile tile--light" aria-label="The patient journey">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">A day in the life</span>
       <h2 class="h-display">Maria's diabetes check-in,<br>start to finish.</h2>
-      <p class="lead">One Tuesday in April. One patient, one pharmacist, one workflow. Here's what MedMe does in the background &mdash; and what neither of them has to think about.</p>
+      <p class="lead">One Tuesday in April. One patient, one pharmacist, one workflow. Here's what MedMe does in the background, and what neither of them has to think about.</p>
     </div>
     <div class="journey">
       <div class="journey__line" aria-hidden="true"></div>
@@ -4036,7 +4036,7 @@
   </div>
 </section>
 
-<!-- ============= 7. TESTIMONIALS (light — auto-rotating slider) ============= -->
+<!-- ============= 7. TESTIMONIALS (light, auto-rotating slider) ============= -->
 <section class="tile tile--light" id="testimonials" aria-label="Customer testimonials">
   <div class="tile__inner">
     <div class="tile__head">
@@ -4047,7 +4047,7 @@
       <div class="testimonials__stage">
         <article class="testimonial testimonial--active" data-idx="0">
           <div class="testimonial__avatar" style="background: var(--matcha); color: var(--indigo);"><span>JH</span></div>
-          <blockquote class="testimonial__quote">"We've always known our pharmacists were doing the work. MedMe is the first system that lets us prove it &mdash; and get paid for it. The first 90 days alone covered the contract for the year."</blockquote>
+          <blockquote class="testimonial__quote">"We've always known our pharmacists were doing the work. MedMe is the first system that lets us prove it, and get paid for it. The first 90 days alone covered the contract for the year."</blockquote>
           <div class="testimonial__who">
             <div class="testimonial__name">Joshua Holland, RPh</div>
             <div class="testimonial__role">VP Clinical Operations &middot; Whole Health Pharmacy, 9 stores TN+KY</div>
@@ -4055,7 +4055,7 @@
         </article>
         <article class="testimonial" data-idx="1">
           <div class="testimonial__avatar" style="background: #cfd059; color: var(--indigo);"><span>MS</span></div>
-          <blockquote class="testimonial__quote">"Our pharmacists hated EHR documentation more than they loved patient care. MedMe was the first tool built for the way we actually work &mdash; the friction is just gone."</blockquote>
+          <blockquote class="testimonial__quote">"Our pharmacists hated EHR documentation more than they loved patient care. MedMe was the first tool built for the way we actually work, the friction is just gone."</blockquote>
           <div class="testimonial__who">
             <div class="testimonial__name">Marcus Spencer, PharmD</div>
             <div class="testimonial__role">Pharmacist-owner &middot; 3-store independent, TX</div>
@@ -4079,13 +4079,13 @@
   </div>
 </section>
 
-<!-- ============= 6. CALCULATOR (dark — visually prominent) ============= -->
+<!-- ============= 6. CALCULATOR (dark, visually prominent) ============= -->
 <section class="tile tile--light tile--prominent" id="calc" aria-label="Reimbursement calculator">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Reimbursement calculator</span>
       <h2 class="h-display">Run the numbers on<br>your own pharmacy.</h2>
-      <p class="lead">Two inputs &mdash; store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
+      <p class="lead">Two inputs, store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
     </div>
     <div class="calc-card" data-calc-widget="us">
       <div class="calc-card__field">
@@ -4114,7 +4114,7 @@
   </div>
 </section>
 
-<!-- ============= 8. CTA (dark — visually prominent) ============= -->
+<!-- ============= 8. CTA (dark, visually prominent) ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="Final call to action">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">
@@ -4137,7 +4137,7 @@
 </main>
 
 <!--
-  CA footer — locked to sitemap v11 (CA branch).
+  CA footer, locked to sitemap v11 (CA branch).
   Mirrors US v11 layout, with CA-specific labels:
    - "MedMe Care Platform" instead of "Pharmacy EHR"
    - No Medical Billing Suite link
@@ -4158,7 +4158,7 @@
             <path d="M24.0991 3.24596C26.0597 3.63474 27.8246 4.69174 29.0925 6.23655C30.3604 7.78136 31.0528 9.71826 31.0515 11.7166V19.8434H25.8544C25.7308 19.8426 25.6125 19.7932 25.5251 19.706C25.4802 19.6629 25.4446 19.6112 25.4204 19.554C25.3961 19.4967 25.3837 19.4352 25.3839 19.373V11.6623C25.3844 11.5389 25.3605 11.4167 25.3136 11.3026C25.2667 11.1884 25.1978 11.0847 25.1107 10.9973C25.0236 10.9099 24.92 10.8405 24.8061 10.7932C24.6922 10.7459 24.5699 10.7215 24.4465 10.7215H20.6972C20.4477 10.7228 20.2088 10.8215 20.0312 10.9965C19.9439 11.084 19.8746 11.1878 19.8274 11.3021C19.7802 11.4163 19.756 11.5387 19.7562 11.6623V19.373C19.7562 19.4348 19.7441 19.4961 19.7205 19.5532C19.697 19.6103 19.6623 19.6622 19.6186 19.706C19.5294 19.7928 19.4102 19.842 19.2857 19.8434H11.5877C11.464 19.8429 11.3415 19.867 11.2271 19.9141C11.1127 19.9612 11.0088 20.0304 10.9213 20.1179C10.8338 20.2054 10.7645 20.3093 10.7174 20.4236C10.6703 20.538 10.6463 20.6605 10.6468 20.7842V24.5365C10.6463 24.6601 10.6703 24.7827 10.7174 24.897C10.7645 25.0114 10.8338 25.1153 10.9213 25.2028C11.0088 25.2902 11.1127 25.3595 11.2271 25.4066C11.3415 25.4537 11.464 25.4777 11.5877 25.4773H19.2857C19.4102 25.4786 19.5294 25.5278 19.6186 25.6148C19.6623 25.6585 19.697 25.7104 19.7205 25.7675C19.7441 25.8246 19.7562 25.8858 19.7562 25.9476V31.1292H11.642C9.34987 31.1292 7.15164 30.2188 5.53085 28.5984C3.91006 26.9779 2.99951 24.7801 2.99951 22.4885C2.99951 20.1968 3.91006 17.9991 5.53085 16.3786C7.15164 14.7581 9.34987 13.8478 11.642 13.8478H13.7737V11.7202C13.7739 10.4429 14.0573 9.18156 14.6035 8.0269C15.1497 6.87225 15.9452 5.85302 16.9326 5.0426C17.9201 4.23218 19.075 3.65071 20.3142 3.34004C21.5533 3.02938 22.846 2.99725 24.0991 3.24596ZM25.3912 31.1292V26.1032C25.3921 25.9375 25.4584 25.7788 25.5756 25.6617C25.6928 25.5444 25.8515 25.4782 26.0173 25.4773H31.0551V31.1292H25.3912Z" fill="#C3C430"/>
           </g>
         </svg>
-        <p>The clinical operating system for Canadian community pharmacy — built so the work pharmacists already do finally gets recognized.</p>
+        <p>The clinical operating system for Canadian community pharmacy, built so the work pharmacists already do finally gets recognized.</p>
       </div>
       <div class="foot__col">
         <h4>Pharmacy</h4>
@@ -4243,7 +4243,7 @@
 
 <script>
 /* ============================================================
-   Hero AI-Scribe motion graphic — 16-second loop:
+   Hero AI-Scribe motion graphic, 16-second loop:
    cursor → Start Scribe → record/wave/transcription stream →
    Populate fields → per-field auto-type → note typing →
    Continue pulse. Mockup scales to fit its responsive container.
@@ -4292,7 +4292,7 @@
     { t: "Patient: ", speaker: true },
     { t: "Hi, I'm Sophia Ramirez. " },
     { t: "My date of birth is February 1st, 1993. " },
-    { t: "I live at 118 Queen Street West, Apartment 402, in Toronto, Ontario — " },
+    { t: "I live at 118 Queen Street West, Apartment 402, in Toronto, Ontario, " },
     { t: "postal code M5H 2N2. " },
     { t: "\nPharmacist: ", speaker: true },
     { t: "Thanks Sophia. I'll book a follow-up next month." }
@@ -4460,7 +4460,7 @@
 })();
 
 /* ============================================================
-   Marquee carousel — duplicate each track's children once so a
+   Marquee carousel, duplicate each track's children once so a
    translateX(-50%) loop wraps seamlessly (the second set takes
    the first set's place at the wrap point).
    ============================================================ */
@@ -4477,7 +4477,7 @@
 })();
 
 /* ============================================================
-   Counter animation — ticks numeric values from 0 to their target
+   Counter animation, ticks numeric values from 0 to their target
    when first scrolled into view. Uses easeOutCubic for a smooth
    settle. Honors prefers-reduced-motion (sets the final value
    directly without animating).
@@ -4527,7 +4527,7 @@
 })();
 
 /* ============================================================
-   Scroll reveal — fades + rises elements as they enter the
+   Scroll reveal, fades + rises elements as they enter the
    viewport. Auto-staggers siblings within grid containers.
    ============================================================ */
 (function(){
@@ -4572,7 +4572,7 @@
 })();
 
 /* ============================================================
-   Testimonial slider — auto-rotates every 6s, dot click jumps,
+   Testimonial slider, auto-rotates every 6s, dot click jumps,
    hover pauses, respects prefers-reduced-motion (no auto-rotate).
    ============================================================ */
 (function(){
@@ -4604,7 +4604,7 @@
 })();
 
 /* ============================================================
-   Scheduling & Queueing mockup — cursor moves to an empty slot,
+   Scheduling & Queueing mockup, cursor moves to an empty slot,
    tooltip appears with patient details, slot fills matcha, and a
    new queue entry slides in from the top. ~12-second loop.
    ============================================================ */
@@ -4672,7 +4672,7 @@
   }
 
   function tick(now) {
-    /* Pane is display:none on inactive tabs — host has zero dimensions
+    /* Pane is display:none on inactive tabs, host has zero dimensions
        and DOMMatrixReadOnly would throw parsing 'none'. Skip until the
        host is visible (Scheduling tab is active). */
     var rect = host.getBoundingClientRect();
@@ -4895,7 +4895,7 @@
 })();
 
 /* ============================================================
-   Medical Billing pane — fits the 1192x656 frame to the host.
+   Medical Billing pane, fits the 1192x656 frame to the host.
    No motion graphic (static dashboard).
    ============================================================ */
 (function () {
@@ -4992,7 +4992,7 @@
 })();
 
 /* ============================================================
-   Product mockup tabs — swap which mockup-pane is visible.
+   Product mockup tabs, swap which mockup-pane is visible.
    Scribe pane re-runs fitMockup() on activation so the inner
    1192×656 frame scales correctly after being display:none.
    ============================================================ */
@@ -5106,7 +5106,7 @@
 })();
 
 /* ============================================================
-   Reimbursement calculator — live update on input change
+   Reimbursement calculator, live update on input change
    ============================================================ */
 (function(){
   'use strict';

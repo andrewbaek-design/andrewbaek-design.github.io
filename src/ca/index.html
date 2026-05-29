@@ -1,13 +1,13 @@
 ---
 region: ca
-page.title: MedMe — Canada Homepage
+page.title: MedMe, Canada Homepage
 ---
 <!DOCTYPE html>
 <html lang="en-CA">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MedMe Health — The clinical operating system for Canadian community pharmacy</title>
+<title>MedMe Health, The clinical operating system for Canadian community pharmacy</title>
 <meta name="description" content="MedMe is the pharmacy-specific EHR that documents every encounter and turns it into a documented, reimbursable service. Built with Canadian pharmacy operators." />
 
 <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/" />
@@ -17,7 +17,7 @@ page.title: MedMe — Canada Homepage
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=56">
+<link rel="stylesheet" href="/assets/brand.css?v=57">
 
 <script type="application/ld+json">
 {
@@ -43,18 +43,18 @@ page.title: MedMe — Canada Homepage
 
 <style>
   /* ============================================================
-     POC PAGE STYLES — Apple-inspired tile-system overrides + the
+     POC PAGE STYLES, Apple-inspired tile-system overrides + the
      two interactive pieces (device-frame scene rotation, the
      reimbursement-calculator widget). Everything else is in
      /assets/brand.css under "APPLE-INSPIRED TILE SYSTEM".
      ============================================================ */
 
-  /* ====== Trust section — seashell bg + centered header + animated logo marquee ====== */
+  /* ====== Trust section, seashell bg + centered header + animated logo marquee ====== */
   .trust {
     background: var(--seashell) !important;
     color: var(--indigo) !important;
     padding: 4rem 0 3rem !important;
-    /* Match the US homepage override — keep the section
+    /* Match the US homepage override, keep the section
        divider visible on this light .trust variant. */
     border-top-color: var(--indigo-08) !important;
   }
@@ -68,7 +68,7 @@ page.title: MedMe — Canada Homepage
     max-width: 720px;
   }
   .trust__label { display: block; }
-  /* Bigger, headline-weight treatment — reads as a section heading,
+  /* Bigger, headline-weight treatment, reads as a section heading,
      not a tiny eyebrow label. The dot indicator moves below the text. */
   .trust__label .eyebrow {
     color: var(--indigo);
@@ -136,7 +136,7 @@ page.title: MedMe — Canada Homepage
     font-weight: 700;
     font-size: 0.95rem;
   }
-  /* Pharmacy-chain wordmarks — typeset placeholders that render in
+  /* Pharmacy-chain wordmarks, typeset placeholders that render in
      greyscale on the trust band. Designed to be swapped for real
      licensed brand assets later. */
   .trust__wordmark {
@@ -241,7 +241,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ====== TAB BAR (product mockup switcher) ====== */
-  /* Attio-style tabs — flat row with a matcha underline on the active
+  /* Attio-style tabs, flat row with a matcha underline on the active
      tab. No pill background container so the active state is visually
      distinct from the hero "Book a demo" pill. */
   .tab-bar-wrap {
@@ -329,7 +329,7 @@ page.title: MedMe — Canada Homepage
   .mockup-pane--active { display: block; }
 
   /* ============================================================
-     SCROLL REVEAL — sections fade in + rise as they enter view.
+     SCROLL REVEAL, sections fade in + rise as they enter view.
      Honor prefers-reduced-motion.
      ============================================================ */
   .reveal {
@@ -343,7 +343,7 @@ page.title: MedMe — Canada Homepage
     opacity: 1;
     transform: translateY(0);
   }
-  /* Stagger children inside a grid — adds successive 80ms delays */
+  /* Stagger children inside a grid, adds successive 80ms delays */
   .reveal.is-stagger-1 { transition-delay: 0.05s; }
   .reveal.is-stagger-2 { transition-delay: 0.13s; }
   .reveal.is-stagger-3 { transition-delay: 0.21s; }
@@ -361,7 +361,7 @@ page.title: MedMe — Canada Homepage
     display: inline-block;
   }
 
-  /* Subtle hover lift on cards — adds tactile feedback without overdoing it */
+  /* Subtle hover lift on cards, adds tactile feedback without overdoing it */
   .h-card {
     transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
                 box-shadow 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -430,7 +430,7 @@ page.title: MedMe — Canada Homepage
     margin: 0 0 18px;
   }
 
-  /* Pane 1 — Scheduling & Queueing */
+  /* Pane 1, Scheduling & Queueing */
   .pmock-queue { display: flex; flex-direction: column; gap: 6px; }
   .pmock-queue-item {
     display: flex; align-items: center; gap: 10px;
@@ -459,7 +459,7 @@ page.title: MedMe — Canada Homepage
   .pmock-cal .cal-slot.booked { background: rgba(6,62,84,0.18); border-color: rgba(6,62,84,0.2); }
   .pmock-cal .cal-slot.new   { background: #c3c430; border-color: #9C9D26; }
 
-  /* Pane 2 — Patient Intake Forms */
+  /* Pane 2, Patient Intake Forms */
   .pmock-steps {
     display: flex; gap: 0;
     align-items: center;
@@ -485,7 +485,7 @@ page.title: MedMe — Canada Homepage
   .pmock-row { display: flex; gap: 12px; margin-top: 10px; }
   .pmock-row > * { flex: 1; }
 
-  /* Pane 3 — Assisted Documentation */
+  /* Pane 3, Assisted Documentation */
   .pmock-soap { display: flex; flex-direction: column; gap: 12px; }
   .pmock-soap-row { border: 1px solid rgba(0,0,0,0.10); border-radius: 6px; padding: 10px 12px; background: #fff; }
   .pmock-soap-row.active { border-color: #073e54; box-shadow: 0 0 0 3px rgba(7,62,84,0.10); }
@@ -503,7 +503,7 @@ page.title: MedMe — Canada Homepage
   }
   .pmock-ai-chip::before { content: "AI"; font-size: 10px; font-weight: 800; background: #c3c430; color: #1c2308; padding: 1px 5px; border-radius: 4px; }
 
-  /* Pane 4 — Messaging & Follow-Ups */
+  /* Pane 4, Messaging & Follow-Ups */
   .pmock-msg-list { display: flex; flex-direction: column; gap: 6px; }
   .pmock-msg-item {
     display: flex; align-items: center; gap: 10px;
@@ -524,7 +524,7 @@ page.title: MedMe — Canada Homepage
   .pmock-bubble.out { background: #073e54; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
   .pmock-templates { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.08); }
 
-  /* Pane 6 — Patient Concierge */
+  /* Pane 6, Patient Concierge */
   .pmock-concierge { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; background: linear-gradient(180deg, #fafbfc, #fff); }
   .pmock-phone {
     width: 320px;
@@ -547,7 +547,7 @@ page.title: MedMe — Canada Homepage
   .pmock-phone-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
   .pmock-phone-pill { padding: 6px 12px; background: #fff; border: 1px solid #073e54; color: #073e54; border-radius: 999px; font-size: 11.5px; font-weight: 600; }
 
-  /* Pane 7 — Admin Clerk (Kroll bridge) */
+  /* Pane 7, Admin Clerk (Kroll bridge) */
   .pmock-bridge { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 64px 1fr; gap: 0; background: #fff; }
   .pmock-bridge-col { padding: 24px 26px; min-width: 0; }
   .pmock-bridge-col.medme { border-right: 1px solid rgba(0,0,0,0.06); background: #fff; }
@@ -592,7 +592,7 @@ page.title: MedMe — Canada Homepage
     padding: 0 2rem 4rem;
     max-width: var(--container);
   }
-  /* visual-halo intentionally empty — green/indigo gradient halo
+  /* visual-halo intentionally empty, green/indigo gradient halo
      removed for a cleaner page surface. */
   .visual-halo { display: none; }
   .visual-frame {
@@ -644,7 +644,7 @@ page.title: MedMe — Canada Homepage
   }
   .visual-frame .url .lock { opacity: .6; }
 
-  /* ====== MOCKUP HOST (scoped — AI Scribe / Medication Review motion graphic) ====== */
+  /* ====== MOCKUP HOST (scoped, AI Scribe / Medication Review motion graphic) ====== */
   .mockup-host {
     position: relative;
     width: 100%;
@@ -751,7 +751,7 @@ page.title: MedMe — Canada Homepage
   @keyframes m-wave { 0%, 100% { height: 3px; } 50% { height: 13px; } }
 
   /* ============================================================
-     SCHEDULING & QUEUEING MOCKUP — patient-facing booking widget.
+     SCHEDULING & QUEUEING MOCKUP, patient-facing booking widget.
      Two side-by-side cards: MedMe Pharmacy booking (Walk-in /
      Book Appointment toggle + 7-day x 6-slot grid) + Store Locator
      with map. Matches /Downloads/Calendar 4/scheduling & Queueing.svg.
@@ -772,7 +772,7 @@ page.title: MedMe — Canada Homepage
     padding: 24px 20px 20px;
   }
 
-  /* Left card — header */
+  /* Left card, header */
   .mockup-host .sched-book-title {
     margin: 0;
     font-size: 22px; font-weight: 800;
@@ -902,7 +902,7 @@ page.title: MedMe — Canada Homepage
     100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(4, 43, 59, 0); }
   }
 
-  /* Right card — Store Locator */
+  /* Right card, Store Locator */
   .mockup-host .sched-locator-title {
     margin: 0 0 14px;
     font-size: 17px;
@@ -950,7 +950,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     PATIENT INTAKE FORMS MOCKUP — patient-facing booking flow.
+     PATIENT INTAKE FORMS MOCKUP, patient-facing booking flow.
      Two-card layout: form on left, booking summary + vertical
      stepper on right. Matches /Downloads/Desktop 2/Patient-Intake.svg.
      Progress bar animates between step 2 and step 3 as fields fill.
@@ -1218,7 +1218,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     MESSAGING & FOLLOW-UPS MOCKUP — 3 phone screens side by side:
+     MESSAGING & FOLLOW-UPS MOCKUP, 3 phone screens side by side:
      (1) email confirmation, (2) SMS reminders, (3) email reminder.
      Phone 2 animates: typing indicator → bubble 1 → typing → bubble 2.
      Matches /Downloads/Messaging & Follow-Ups.svg.
@@ -1485,7 +1485,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     MEDICAL BILLING MOCKUP — pharmacist-facing claims dashboard.
+     MEDICAL BILLING MOCKUP, pharmacist-facing claims dashboard.
      Top bar with title + stat pills, left claim queue, main claim
      detail panel with codes + total + submit. Aligned with the
      other tab mockups: Montserrat, #042B3B navy, light gray bg.
@@ -1530,7 +1530,7 @@ page.title: MedMe — Canada Homepage
     gap: 18px;
   }
 
-  /* Left sidebar — claim queue */
+  /* Left sidebar, claim queue */
   .mockup-host .bill-side {
     width: 280px;
     background: #fff;
@@ -1588,7 +1588,7 @@ page.title: MedMe — Canada Homepage
     margin-top: 2px;
   }
 
-  /* Main panel — current claim detail */
+  /* Main panel, current claim detail */
   .mockup-host .bill-main {
     flex: 1; min-width: 0;
     background: #fff;
@@ -1873,7 +1873,7 @@ page.title: MedMe — Canada Homepage
     font-size: var(--apple-fine);
     color: rgba(6,62,84,0.55);
   }
-  /* Dark-tile variant — the inner card flips to the DEEPEST navy
+  /* Dark-tile variant, the inner card flips to the DEEPEST navy
      (#042B3B / --indigo-dark) so it pops against the section's regular
      indigo. Labels switch to seashell tints; inputs use a translucent
      seashell fill so they still read as form fields. */
@@ -1900,11 +1900,11 @@ page.title: MedMe — Canada Homepage
   .tile--dark .calc-card__result .delta { color: rgba(250, 249, 245, 0.55); }
 
   /* ============================================================
-     PLATFORM CARD MOTION GRAPHICS — small CSS-only animations
+     PLATFORM CARD MOTION GRAPHICS, small CSS-only animations
      that illustrate each feature. All loop infinitely; pause
      under prefers-reduced-motion.
      ============================================================ */
-  /* Motion graphic — sits as a floating illustration inside each card,
+  /* Motion graphic, sits as a floating illustration inside each card,
      no frame or background of its own. The card's own border + padding
      gives the surrounding chrome. */
   .feat-anim {
@@ -1923,7 +1923,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     Bento card motion graphics — show "completed" state at rest,
+     Bento card motion graphics, show "completed" state at rest,
      restart from beginning on card hover.
 
      Mechanism:
@@ -1991,7 +1991,7 @@ page.title: MedMe — Canada Homepage
   .tile-grid--bento .h-card:hover .fa-int-pulse--s { animation-delay: 1.2s !important; }
   .tile-grid--bento .h-card:hover .fa-int-pulse--w { animation-delay: 1.8s !important; }
 
-  /* Respect user motion preferences — keep animations off entirely. */
+  /* Respect user motion preferences, keep animations off entirely. */
   @media (prefers-reduced-motion: reduce) {
     .tile-grid--bento .h-card:hover,
     .tile-grid--bento .h-card:hover *,
@@ -2006,7 +2006,7 @@ page.title: MedMe — Canada Homepage
      the bento). Card-level invert: dark bg + seashell text inside
      a light platform section.
      ============================================================ */
-  /* Feature card — light theme 2026-05-29 (was indigo-dark navy).
+  /* Feature card, light theme 2026-05-29 (was indigo-dark navy).
      White card with a matcha accent border to keep "featured" weight. */
   .h-card--feature {
     background: var(--white) !important;
@@ -2029,7 +2029,7 @@ page.title: MedMe — Canada Homepage
     color: var(--matcha);
     border-color: var(--matcha);
   }
-  /* Snug the rich animation up against the title — the column gap
+  /* Snug the rich animation up against the title, the column gap
      alone provides the separation, no extra margin-bottom needed. */
   .h-card--feature .feat-anim {
     margin-bottom: 0;
@@ -2040,7 +2040,7 @@ page.title: MedMe — Canada Homepage
   .alink--on-dark:hover { border-bottom-color: var(--matcha); }
 
   /* ============================================================
-     RICH BILLING FLOW — bigger animation for the Medical Billing
+     RICH BILLING FLOW, bigger animation for the Medical Billing
      hero card. Shows the full Eligibility → Auto-coded → Claim
      ready → Paid sequence. Steps fade in left-to-right with stagger,
      all stay visible at peak, then reset.
@@ -2175,7 +2175,7 @@ page.title: MedMe — Canada Homepage
     font-size: 1.2rem;
   }
 
-  /* 1. Billing — claim line items with highlight pulse */
+  /* 1. Billing, claim line items with highlight pulse */
   .feat-anim--billing { padding: 12px; place-items: stretch; }
   .fa-bill-stack {
     display: flex; flex-direction: column; gap: 4px;
@@ -2221,7 +2221,7 @@ page.title: MedMe — Canada Homepage
     margin-right: 6px;
   }
 
-  /* 2. EHR — SOAP fields filling + checkmarks */
+  /* 2. EHR, SOAP fields filling + checkmarks */
   .feat-anim--ehr { padding: 14px 18px; place-items: stretch; }
   .fa-ehr-stack {
     display: flex; flex-direction: column; gap: 7px;
@@ -2274,7 +2274,7 @@ page.title: MedMe — Canada Homepage
     75%, 100% { opacity: 0; transform: scale(0.4); }
   }
 
-  /* 3. AI Scribe — symmetric waveform */
+  /* 3. AI Scribe, symmetric waveform */
   .feat-anim--scribe .fa-wave {
     display: flex; align-items: center; justify-content: center;
     gap: 4px; height: 100%;
@@ -2303,7 +2303,7 @@ page.title: MedMe — Canada Homepage
     50% { height: 56px; }
   }
 
-  /* 4. Scheduler — multiple slots filling in over time (booking flow). */
+  /* 4. Scheduler, multiple slots filling in over time (booking flow). */
   .feat-anim--sched .fa-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -2344,7 +2344,7 @@ page.title: MedMe — Canada Homepage
     }
   }
 
-  /* 5. Analytics — staggered bar chart */
+  /* 5. Analytics, staggered bar chart */
   .feat-anim--analytics .fa-bars {
     display: flex; align-items: flex-end; justify-content: center;
     gap: 10px; height: 80px;
@@ -2367,7 +2367,7 @@ page.title: MedMe — Canada Homepage
   @keyframes fa-bar-68 { 0%, 100% { height: 8px; } 45%, 70% { height: 52px; } }
   @keyframes fa-bar-85 { 0%, 100% { height: 8px; } 45%, 70% { height: 66px; } }
 
-  /* 6. Integrations — hub + satellites + animated data packets flying
+  /* 6. Integrations, hub + satellites + animated data packets flying
         out from the center to each node, plus a continuous radial ring
         expanding from the center for added energy. */
   .feat-anim--integrations .fa-hub {
@@ -2516,18 +2516,18 @@ page.title: MedMe — Canada Homepage
   .tile--dark .fa-int-node--center { background: var(--matcha); }
 
   /* ============================================================
-     PROMINENT TILE — visual presence comes from (a) a slightly darker
+     PROMINENT TILE, visual presence comes from (a) a slightly darker
      surface, (b) a short matcha accent rule centered above the kicker,
      (c) tighter, larger headline tracking. No diffuse glow.
      ============================================================ */
   .tile--prominent {
     position: relative;
   }
-  /* Calc section — light theme 2026-05-29 (was --indigo-95 navy).
+  /* Calc section, light theme 2026-05-29 (was --indigo-95 navy).
      Hairline divider + matcha accent in .tile__head::before
      carry the visual emphasis now. */
   .tile--prominent .tile__head { position: relative; padding-top: 1rem; }
-  /* Matcha accent bar above prominent section heads — removed
+  /* Matcha accent bar above prominent section heads, removed
      2026-05-29 at user request. */
   .tile--prominent .tile__head::before { content: none; }
   .tile--prominent .h-display {
@@ -2536,7 +2536,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     TESTIMONIAL SLIDER — auto-rotating quotes on the dark tile.
+     TESTIMONIAL SLIDER, auto-rotating quotes on the dark tile.
      All slides occupy the same grid cell; only the active one is
      visible (opacity 1). Auto-advances every 6s, pauses on hover,
      and reacts to dot clicks.
@@ -2618,7 +2618,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     PATIENT JOURNEY — horizontal 5-step timeline with a matcha
+     PATIENT JOURNEY, horizontal 5-step timeline with a matcha
      line that flows left to right and step icons that pulse in
      sequence. Each step also has a tiny motion graphic.
      ============================================================ */
@@ -2774,7 +2774,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     BENTO GRID — varied card sizes for the platform section.
+     BENTO GRID, varied card sizes for the platform section.
      Layout (desktop, 4 columns × 3 rows):
        [ Card 1 (2×2) ][ Card 2 (2×1) ]
        [              ][ C3 ][ C4    ]
@@ -2811,7 +2811,7 @@ page.title: MedMe — Canada Homepage
   }
 
   /* ============================================================
-     RESPONSIVE — mobile/tablet adjustments for the homepage POC.
+     RESPONSIVE, mobile/tablet adjustments for the homepage POC.
      Most tile-system rules in brand.css already handle breakpoints;
      these patch the page-specific elements (mockup, tabs, hero).
      ============================================================ */
@@ -2826,12 +2826,12 @@ page.title: MedMe — Canada Homepage
     .visual-wrap { padding: 0 1rem; }
     .tab-bar-wrap { padding: 0 1rem; }
     .tab { font-size: 13px; padding: 9px 14px; }
-    /* Mockup gets smaller on mobile — aspect-ratio handles it, but pad less */
+    /* Mockup gets smaller on mobile, aspect-ratio handles it, but pad less */
     .visual-frame { padding: 6px; }
     .mockup-pane::after { height: 30%; }
   }
 
-  /* ====== AUDIENCE cards — flex column so the CTA can pin to the bottom,
+  /* ====== AUDIENCE cards, flex column so the CTA can pin to the bottom,
      keeping all 3 buttons at the same y-position regardless of how long
      each card's list runs. ====== */
   .audience-card {
@@ -2917,7 +2917,7 @@ page.title: MedMe — Canada Homepage
       <div class="mockup-host" id="schedHost">
         <div class="frame-inner" id="schedFrame">
 
-          <!-- LEFT CARD — MedMe Pharmacy booking widget -->
+          <!-- LEFT CARD, MedMe Pharmacy booking widget -->
           <section class="sched-book" aria-label="Booking widget">
             <h2 class="sched-book-title">MedMe Pharmacy</h2>
             <div class="sched-book-divider"></div>
@@ -3008,7 +3008,7 @@ page.title: MedMe — Canada Homepage
             </div>
           </section>
 
-          <!-- RIGHT CARD — Store Locator -->
+          <!-- RIGHT CARD, Store Locator -->
           <section class="sched-locator" aria-label="Store locator">
             <h3 class="sched-locator-title">Store Locator</h3>
             <div class="sched-map">
@@ -3185,7 +3185,7 @@ page.title: MedMe — Canada Homepage
         <div class="frame-inner" id="msgFrame">
           <div class="msg-stage">
 
-            <!-- PHONE 1 — booking confirmation email -->
+            <!-- PHONE 1, booking confirmation email -->
             <div class="msg-phone msg-phone--email">
               <div class="msg-status">
                 <span>9:41</span>
@@ -3218,7 +3218,7 @@ page.title: MedMe — Canada Homepage
               </div>
             </div>
 
-            <!-- PHONE 2 — SMS conversation -->
+            <!-- PHONE 2, SMS conversation -->
             <div class="msg-phone msg-phone--sms">
               <div class="msg-status">
                 <span>9:41</span>
@@ -3266,7 +3266,7 @@ page.title: MedMe — Canada Homepage
               <div class="msg-sms-home"></div>
             </div>
 
-            <!-- PHONE 3 — reminder email -->
+            <!-- PHONE 3, reminder email -->
             <div class="msg-phone msg-phone--email">
               <div class="msg-status">
                 <span>9:41</span>
@@ -3417,7 +3417,7 @@ page.title: MedMe — Canada Homepage
     <div class="trust__top">
       <div class="trust__label">
         <span class="eyebrow">Trusted by Canadian pharmacy leaders</span>
-        <div class="stat-line">From single-store independents to national chains &mdash; documenting clinical work and turning it into clean claims.</div>
+        <div class="stat-line">From single-store independents to national chains, documenting clinical work and turning it into clean claims.</div>
       </div>
     </div>
     <div class="trust__logos" role="list" aria-label="Customer logos">
@@ -3441,13 +3441,13 @@ page.title: MedMe — Canada Homepage
   </div>
 </section>
 
-<!-- ============= 3. PLATFORM (dark — Medical Billing card uses --indigo-dark) ============= -->
+<!-- ============= 3. PLATFORM (dark, Medical Billing card uses --indigo-dark) ============= -->
 <section class="tile tile--light" id="billing" aria-label="What's in the platform">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">The platform</span>
       <h2 class="h-display">Built to document and bill,<br>nothing they don't.</h2>
-      <p class="lead">Pick the modules that fit your service mix. Medical Billing converts every documented encounter into a clean Medicare Part&nbsp;B claim &mdash; the wedge that turns clinical scope into reliable revenue.</p>
+      <p class="lead">Pick the modules that fit your service mix. Medical Billing converts every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that turns clinical scope into reliable revenue.</p>
     </div>
     <div class="tile-grid tile-grid--bento">
       <article class="h-card h-card--feature">
@@ -3484,7 +3484,7 @@ page.title: MedMe — Canada Homepage
           </div>
         </div>
         <h3>Patient Concierge</h3>
-        <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim &mdash; the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
+        <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
         <ul class="feat-list">
           <li>Provincial PIN auto-coding from the encounter note</li>
           <li>Time tracking + modifier rules for incident-to billing</li>
@@ -3505,7 +3505,7 @@ page.title: MedMe — Canada Homepage
           </div>
         </div>
         <h3>MedMe Care Platform</h3>
-        <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows &mdash; all pharmacy-tuned, no generic-EHR shoehorning.</p>
+        <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows, all pharmacy-tuned, no generic-EHR shoehorning.</p>
         <ul class="feat-list">
           <li>Pharmacy-specific templates for MedsCheck, Med review, immunizations, POCT</li>
           <li>Care plans + adherence tracking baked into the encounter</li>
@@ -3556,7 +3556,7 @@ page.title: MedMe — Canada Homepage
           </div>
         </div>
         <h3>Outcomes &amp; analytics</h3>
-        <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive &mdash; with the math already done.</p>
+        <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive, with the math already done.</p>
         <ul class="feat-list">
           <li>Per-store + per-pharmacist productivity dashboards</li>
           <li>Reimbursement trending + denial root-cause analysis</li>
@@ -3610,7 +3610,7 @@ page.title: MedMe — Canada Homepage
       <article class="h-card">
         <div class="how-step__num">2</div>
         <h3>Profile pulls the picture</h3>
-        <p>Rx history, vitals, allergies, payer details, care gaps — surfaced for the pharmacist before they walk in.</p>
+        <p>Rx history, vitals, allergies, payer details, care gaps, surfaced for the pharmacist before they walk in.</p>
       </article>
       <article class="h-card">
         <div class="how-step__num">3</div>
@@ -3657,7 +3657,7 @@ page.title: MedMe — Canada Homepage
         <div class="audience-card__role">Specialty</div>
         <h3>Specialty pharmacies &amp; payvider partners</h3>
         <ul>
-          <li>Specialty therapy workflows &mdash; oncology, infusion, transplant, HIV</li>
+          <li>Specialty therapy workflows, oncology, infusion, transplant, HIV</li>
           <li>Prior-auth tracking + manufacturer outcomes reporting</li>
           <li>Patient-adherence + side-effect monitoring</li>
           <li>Co-managed care models with payvider partners</li>
@@ -3683,13 +3683,13 @@ page.title: MedMe — Canada Homepage
   </div>
 </section>
 
-<!-- ============= 5b. PATIENT JOURNEY (light — narrative 5-step story) ============= -->
+<!-- ============= 5b. PATIENT JOURNEY (light, narrative 5-step story) ============= -->
 <section class="tile tile--light" aria-label="The patient journey">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">A day in the life</span>
       <h2 class="h-display">Maria's diabetes check-in,<br>start to finish.</h2>
-      <p class="lead">One Tuesday in April. One patient, one pharmacist, one workflow. Here's what MedMe does in the background &mdash; and what neither of them has to think about.</p>
+      <p class="lead">One Tuesday in April. One patient, one pharmacist, one workflow. Here's what MedMe does in the background, and what neither of them has to think about.</p>
     </div>
     <div class="journey">
       <div class="journey__line" aria-hidden="true"></div>
@@ -3758,7 +3758,7 @@ page.title: MedMe — Canada Homepage
   </div>
 </section>
 
-<!-- ============= 7. TESTIMONIALS (light — auto-rotating slider) ============= -->
+<!-- ============= 7. TESTIMONIALS (light, auto-rotating slider) ============= -->
 <section class="tile tile--light" id="testimonials" aria-label="Customer testimonials">
   <div class="tile__inner">
     <div class="tile__head">
@@ -3769,7 +3769,7 @@ page.title: MedMe — Canada Homepage
       <div class="testimonials__stage">
         <article class="testimonial testimonial--active" data-idx="0">
           <div class="testimonial__avatar" style="background: var(--matcha); color: var(--indigo);"><span>JH</span></div>
-          <blockquote class="testimonial__quote">"We've always known our pharmacists were doing the work. MedMe is the first system that lets us prove it &mdash; and get paid for it. The first 90 days alone covered the contract for the year."</blockquote>
+          <blockquote class="testimonial__quote">"We've always known our pharmacists were doing the work. MedMe is the first system that lets us prove it, and get paid for it. The first 90 days alone covered the contract for the year."</blockquote>
           <div class="testimonial__who">
             <div class="testimonial__name">Joshua Holland, RPh</div>
             <div class="testimonial__role">VP Clinical Operations &middot; Whole Health Pharmacy, 9 stores TN+KY</div>
@@ -3777,7 +3777,7 @@ page.title: MedMe — Canada Homepage
         </article>
         <article class="testimonial" data-idx="1">
           <div class="testimonial__avatar" style="background: #cfd059; color: var(--indigo);"><span>MS</span></div>
-          <blockquote class="testimonial__quote">"Our pharmacists hated EHR documentation more than they loved patient care. MedMe was the first tool built for the way we actually work &mdash; the friction is just gone."</blockquote>
+          <blockquote class="testimonial__quote">"Our pharmacists hated EHR documentation more than they loved patient care. MedMe was the first tool built for the way we actually work, the friction is just gone."</blockquote>
           <div class="testimonial__who">
             <div class="testimonial__name">Marcus Spencer, PharmD</div>
             <div class="testimonial__role">Pharmacist-owner &middot; 3-store independent, TX</div>
@@ -3801,13 +3801,13 @@ page.title: MedMe — Canada Homepage
   </div>
 </section>
 
-<!-- ============= 6. CALCULATOR (dark — visually prominent) ============= -->
+<!-- ============= 6. CALCULATOR (dark, visually prominent) ============= -->
 <section class="tile tile--light tile--prominent" id="calc" aria-label="Reimbursement calculator">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Reimbursement calculator</span>
       <h2 class="h-display">Run the numbers on<br>your own pharmacy.</h2>
-      <p class="lead">Two inputs &mdash; store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
+      <p class="lead">Two inputs, store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
     </div>
     <div class="calc-card" data-calc-widget="us">
       <div class="calc-card__field">
@@ -3836,7 +3836,7 @@ page.title: MedMe — Canada Homepage
   </div>
 </section>
 
-<!-- ============= 8. CTA (dark — visually prominent) ============= -->
+<!-- ============= 8. CTA (dark, visually prominent) ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="Final call to action">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">
@@ -3862,7 +3862,7 @@ page.title: MedMe — Canada Homepage
 
 <script>
 /* ============================================================
-   Hero AI-Scribe motion graphic — 16-second loop:
+   Hero AI-Scribe motion graphic, 16-second loop:
    cursor → Start Scribe → record/wave/transcription stream →
    Populate fields → per-field auto-type → note typing →
    Continue pulse. Mockup scales to fit its responsive container.
@@ -3911,7 +3911,7 @@ page.title: MedMe — Canada Homepage
     { t: "Patient: ", speaker: true },
     { t: "Hi, I'm Sophia Ramirez. " },
     { t: "My date of birth is February 1st, 1993. " },
-    { t: "I live at 118 Queen Street West, Apartment 402, in Toronto, Ontario — " },
+    { t: "I live at 118 Queen Street West, Apartment 402, in Toronto, Ontario, " },
     { t: "postal code M5H 2N2. " },
     { t: "\nPharmacist: ", speaker: true },
     { t: "Thanks Sophia. I'll book a follow-up next month." }
@@ -4079,7 +4079,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Marquee carousel — duplicate each track's children once so a
+   Marquee carousel, duplicate each track's children once so a
    translateX(-50%) loop wraps seamlessly (the second set takes
    the first set's place at the wrap point).
    ============================================================ */
@@ -4096,7 +4096,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Counter animation — ticks numeric values from 0 to their target
+   Counter animation, ticks numeric values from 0 to their target
    when first scrolled into view. Uses easeOutCubic for a smooth
    settle. Honors prefers-reduced-motion (sets the final value
    directly without animating).
@@ -4146,7 +4146,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Scroll reveal — fades + rises elements as they enter the
+   Scroll reveal, fades + rises elements as they enter the
    viewport. Auto-staggers siblings within grid containers.
    ============================================================ */
 (function(){
@@ -4191,7 +4191,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Testimonial slider — auto-rotates every 6s, dot click jumps,
+   Testimonial slider, auto-rotates every 6s, dot click jumps,
    hover pauses, respects prefers-reduced-motion (no auto-rotate).
    ============================================================ */
 (function(){
@@ -4223,7 +4223,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Scheduling & Queueing mockup — cursor moves to an empty slot,
+   Scheduling & Queueing mockup, cursor moves to an empty slot,
    tooltip appears with patient details, slot fills matcha, and a
    new queue entry slides in from the top. ~12-second loop.
    ============================================================ */
@@ -4291,7 +4291,7 @@ page.title: MedMe — Canada Homepage
   }
 
   function tick(now) {
-    /* Pane is display:none on inactive tabs — host has zero dimensions
+    /* Pane is display:none on inactive tabs, host has zero dimensions
        and DOMMatrixReadOnly would throw parsing 'none'. Skip until the
        host is visible (Scheduling tab is active). */
     var rect = host.getBoundingClientRect();
@@ -4514,7 +4514,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Medical Billing pane — fits the 1192x656 frame to the host.
+   Medical Billing pane, fits the 1192x656 frame to the host.
    No motion graphic (static dashboard).
    ============================================================ */
 (function () {
@@ -4611,7 +4611,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Product mockup tabs — swap which mockup-pane is visible.
+   Product mockup tabs, swap which mockup-pane is visible.
    Scribe pane re-runs fitMockup() on activation so the inner
    1192×656 frame scales correctly after being display:none.
    ============================================================ */
@@ -4725,7 +4725,7 @@ page.title: MedMe — Canada Homepage
 })();
 
 /* ============================================================
-   Reimbursement calculator — live update on input change
+   Reimbursement calculator, live update on input change
    ============================================================ */
 (function(){
   'use strict';

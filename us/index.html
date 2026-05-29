@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>MedMe Health — The pharmacy EHR built for clinical services and medical billing</title>
+<title>MedMe Health, The pharmacy EHR built for clinical services and medical billing</title>
 <meta name="description" content="MedMe is the pharmacy-specific EHR that documents every encounter and turns it into a clean Medicare Part B claim. Built with US pharmacy operators." />
 
 <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/" />
@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=56">
+<link rel="stylesheet" href="/assets/brand.css?v=57">
 
 <script type="application/ld+json">
 {
@@ -39,13 +39,13 @@
 
 <style>
   /* ============================================================
-     POC PAGE STYLES — Apple-inspired tile-system overrides + the
+     POC PAGE STYLES, Apple-inspired tile-system overrides + the
      two interactive pieces (device-frame scene rotation, the
      reimbursement-calculator widget). Everything else is in
      /assets/brand.css under "APPLE-INSPIRED TILE SYSTEM".
      ============================================================ */
 
-  /* ====== Trust section — seashell bg + centered header + animated logo marquee ====== */
+  /* ====== Trust section, seashell bg + centered header + animated logo marquee ====== */
   .trust {
     background: var(--seashell) !important;
     color: var(--indigo) !important;
@@ -64,7 +64,7 @@
     max-width: 720px;
   }
   .trust__label { display: block; }
-  /* Bigger, headline-weight treatment — reads as a section heading,
+  /* Bigger, headline-weight treatment, reads as a section heading,
      not a tiny eyebrow label. The dot indicator moves below the text. */
   .trust__label .eyebrow {
     color: var(--indigo);
@@ -132,7 +132,7 @@
     font-weight: 700;
     font-size: 0.95rem;
   }
-  /* Pharmacy-chain wordmarks — typeset placeholders that render in
+  /* Pharmacy-chain wordmarks, typeset placeholders that render in
      greyscale on the trust band. Designed to be swapped for real
      licensed brand assets later. */
   .trust__wordmark {
@@ -200,7 +200,7 @@
   }
   .hero-end h1 {
     font-family: var(--font-display);
-    /* Match the section .h-display weight (600) — was 700. */
+    /* Match the section .h-display weight (600), was 700. */
     font-weight: 600;
     font-size: clamp(28px, 4.4vw, 54px);
     line-height: 1.08;
@@ -238,7 +238,7 @@
   }
 
   /* ====== TAB BAR (product mockup switcher) ====== */
-  /* Attio-style tabs — flat row with a matcha underline on the active
+  /* Attio-style tabs, flat row with a matcha underline on the active
      tab. No pill background container so the active state is visually
      distinct from the hero "Book a demo" pill. */
   .tab-bar-wrap {
@@ -317,10 +317,10 @@
   }
 
   /* ====== MOCKUP PANES (one visible at a time) ====== */
-  /* .mockup-stack — positioning anchor for the 5 .mockup-pane children.
+  /* .mockup-stack, positioning anchor for the 5 .mockup-pane children.
      The active pane sits in normal flow and gives the stack its height
      via aspect-ratio. The outgoing pane (.is-leaving) is absolutely
-     positioned with top:0 — anchored to THIS stack, not to .visual-wrap
+     positioned with top:0, anchored to THIS stack, not to .visual-wrap
      above it, so the fade-out can no longer bleed up over the
      .hero-workflow chip strip ("ghost bar" overlay). */
   .mockup-stack {
@@ -336,7 +336,7 @@
   .mockup-pane--active { display: block; }
 
   /* ============================================================
-     SCROLL REVEAL — sections fade in + rise as they enter view.
+     SCROLL REVEAL, sections fade in + rise as they enter view.
      Honor prefers-reduced-motion.
      ============================================================ */
   .reveal {
@@ -350,7 +350,7 @@
     opacity: 1;
     transform: translateY(0);
   }
-  /* Stagger children inside a grid — adds successive 80ms delays */
+  /* Stagger children inside a grid, adds successive 80ms delays */
   .reveal.is-stagger-1 { transition-delay: 0.05s; }
   .reveal.is-stagger-2 { transition-delay: 0.13s; }
   .reveal.is-stagger-3 { transition-delay: 0.21s; }
@@ -368,7 +368,7 @@
     display: inline-block;
   }
 
-  /* Subtle hover lift on cards — adds tactile feedback without overdoing it */
+  /* Subtle hover lift on cards, adds tactile feedback without overdoing it */
   .h-card {
     transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
                 box-shadow 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -391,8 +391,8 @@
   .visual-frame { overflow: visible; }
   /* On the US homepage the .visual-frame element has no children
      (the panes live in .mockup-stack below it). Without this rule
-     the empty .visual-frame still renders its own card chrome —
-     rounded border + faint gradient bg + mask — and reads as a
+     the empty .visual-frame still renders its own card chrome,
+     rounded border + faint gradient bg + mask, and reads as a
      floating "ghost bar" above the mockup. Hide it whenever it
      has no content; CA still has children inside .visual-frame
      so this :empty rule doesn't affect it. */
@@ -445,7 +445,7 @@
     margin: 0 0 18px;
   }
 
-  /* Pane 1 — Scheduling & Queueing */
+  /* Pane 1, Scheduling & Queueing */
   .pmock-queue { display: flex; flex-direction: column; gap: 6px; }
   .pmock-queue-item {
     display: flex; align-items: center; gap: 10px;
@@ -474,7 +474,7 @@
   .pmock-cal .cal-slot.booked { background: rgba(6,62,84,0.18); border-color: rgba(6,62,84,0.2); }
   .pmock-cal .cal-slot.new   { background: #c3c430; border-color: #9C9D26; }
 
-  /* Pane 2 — Patient Intake Forms */
+  /* Pane 2, Patient Intake Forms */
   .pmock-steps {
     display: flex; gap: 0;
     align-items: center;
@@ -500,7 +500,7 @@
   .pmock-row { display: flex; gap: 12px; margin-top: 10px; }
   .pmock-row > * { flex: 1; }
 
-  /* Pane 3 — Assisted Documentation */
+  /* Pane 3, Assisted Documentation */
   .pmock-soap { display: flex; flex-direction: column; gap: 12px; }
   .pmock-soap-row { border: 1px solid rgba(0,0,0,0.10); border-radius: 6px; padding: 10px 12px; background: #fff; }
   .pmock-soap-row.active { border-color: #073e54; box-shadow: 0 0 0 3px rgba(7,62,84,0.10); }
@@ -518,7 +518,7 @@
   }
   .pmock-ai-chip::before { content: "AI"; font-size: 10px; font-weight: 800; background: #c3c430; color: #1c2308; padding: 1px 5px; border-radius: 4px; }
 
-  /* Pane 4 — Messaging & Follow-Ups */
+  /* Pane 4, Messaging & Follow-Ups */
   .pmock-msg-list { display: flex; flex-direction: column; gap: 6px; }
   .pmock-msg-item {
     display: flex; align-items: center; gap: 10px;
@@ -539,7 +539,7 @@
   .pmock-bubble.out { background: #073e54; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
   .pmock-templates { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.08); }
 
-  /* Pane 6 — Patient Concierge */
+  /* Pane 6, Patient Concierge */
   .pmock-concierge { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; background: linear-gradient(180deg, #fafbfc, #fff); }
   .pmock-phone {
     width: 320px;
@@ -562,7 +562,7 @@
   .pmock-phone-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
   .pmock-phone-pill { padding: 6px 12px; background: #fff; border: 1px solid #073e54; color: #073e54; border-radius: 999px; font-size: 11.5px; font-weight: 600; }
 
-  /* Pane 7 — Admin Clerk (Kroll bridge) */
+  /* Pane 7, Admin Clerk (Kroll bridge) */
   .pmock-bridge { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 64px 1fr; gap: 0; background: #fff; }
   .pmock-bridge-col { padding: 24px 26px; min-width: 0; }
   .pmock-bridge-col.medme { border-right: 1px solid rgba(0,0,0,0.06); background: #fff; }
@@ -607,7 +607,7 @@
     padding: 0 2rem 4rem;
     max-width: var(--container);
   }
-  /* visual-halo intentionally empty — green/indigo gradient halo
+  /* visual-halo intentionally empty, green/indigo gradient halo
      removed for a cleaner page surface. */
   .visual-halo { display: none; }
   .visual-frame {
@@ -659,7 +659,7 @@
   }
   .visual-frame .url .lock { opacity: .6; }
 
-  /* ====== MOCKUP HOST (scoped — AI Scribe / Medication Review motion graphic) ====== */
+  /* ====== MOCKUP HOST (scoped, AI Scribe / Medication Review motion graphic) ====== */
   .mockup-host {
     position: relative;
     width: 100%;
@@ -766,7 +766,7 @@
   @keyframes m-wave { 0%, 100% { height: 3px; } 50% { height: 13px; } }
 
   /* ============================================================
-     SCHEDULING & QUEUEING MOCKUP — patient-facing booking widget.
+     SCHEDULING & QUEUEING MOCKUP, patient-facing booking widget.
      Two side-by-side cards: MedMe Pharmacy booking (Walk-in /
      Book Appointment toggle + 7-day x 6-slot grid) + Store Locator
      with map. Matches /Downloads/Calendar 4/scheduling & Queueing.svg.
@@ -782,9 +782,9 @@
     left: 0; right: 0;
     padding: 30px 48px 32px;
   }
-  /* .sched-locator removed from DOM 2026-05-26 — calendar view full-width */
+  /* .sched-locator removed from DOM 2026-05-26, calendar view full-width */
 
-  /* Left card — header */
+  /* Left card, header */
   .mockup-host .sched-book-title {
     margin: 0;
     font-size: 22px; font-weight: 800;
@@ -925,7 +925,7 @@
     100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); }
   }
 
-  /* Zoom-in on the grid card after the click — focal moment before the
+  /* Zoom-in on the grid card after the click, focal moment before the
      pane transitions to Intake. Transform-origin is set inline by JS so
      the zoom centers on whichever slot was booked. */
   .mockup-host .sched-grid-card {
@@ -936,7 +936,7 @@
   .mockup-host .sched-grid-card.is-zooming {
     transform: scale(1.85);
   }
-  /* Cursor hides during the zoom — it was positioned at the pre-scale
+  /* Cursor hides during the zoom, it was positioned at the pre-scale
      coordinates and would visually drift mid-zoom otherwise. */
   .mockup-host.is-zooming .cursor {
     opacity: 0;
@@ -957,7 +957,7 @@
     opacity: 0.25;
   }
 
-  /* Right card — Store Locator */
+  /* Right card, Store Locator */
   .mockup-host .sched-locator-title {
     margin: 0 0 14px;
     font-size: 17px;
@@ -1005,7 +1005,7 @@
   }
 
   /* ============================================================
-     PATIENT INTAKE FORMS MOCKUP — patient-facing booking flow.
+     PATIENT INTAKE FORMS MOCKUP, patient-facing booking flow.
      Two-card layout: form on left, booking summary + vertical
      stepper on right. Matches /Downloads/Desktop 2/Patient-Intake.svg.
      Progress bar animates between step 2 and step 3 as fields fill.
@@ -1203,7 +1203,7 @@
   }
 
   /* ============================================================
-     INTAKE MINIMAL — conceptual reduction (2026-05-26) to match
+     INTAKE MINIMAL, conceptual reduction (2026-05-26) to match
      the Scheduler's level of abstraction. Single-column 3-field
      form, big fields, fade edges, centered.
      ============================================================ */
@@ -1213,7 +1213,7 @@
     top: 0;             /* overrides the original top:56px (no topbar now) */
     display: flex;
     justify-content: center;   /* horizontal centering of the card */
-    align-items: center;       /* vertical centering — was missing, fields
+    align-items: center;       /* vertical centering, was missing, fields
                                   hugged the top of the 1192×656 frame. */
   }
   .mockup-host .intake-card-left--minimal {
@@ -1268,7 +1268,7 @@
     transition: opacity 0.55s ease-out, transform 0.18s ease-out, box-shadow 0.18s ease-out;
   }
 
-  /* Field auto-fill animation — matcha glow + slight scale pop when each
+  /* Field auto-fill animation, matcha glow + slight scale pop when each
      field reveals its value. Lasts 600ms then settles. */
   .mockup-host .intake-field--big {
     transition: border-color 0.45s ease-out, box-shadow 0.45s ease-out, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1293,7 +1293,7 @@
     border-color: rgba(4, 43, 59, 0.20);
   }
 
-  /* CTA pulse — matcha glow burst at the moment of "submission" before
+  /* CTA pulse, matcha glow burst at the moment of "submission" before
      the pane transitions to the next workflow stage. */
   .mockup-host .intake-cta--big.is-pulsing {
     animation: intake-cta-pulse 0.9s ease-out;
@@ -1304,7 +1304,7 @@
     100% { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
   }
 
-  /* "Appointment booked!" confirmation popup — pops in centered over the
+  /* "Appointment booked!" confirmation popup, pops in centered over the
      intake form when Continue fires, holds, then fades as the pane flips. */
   .mockup-host .intake-popup {
     position: absolute;
@@ -1362,7 +1362,7 @@
   }
 
   /* ============================================================
-     AI CLINICAL ASSISTANT (Documentation) — conceptual minimal layout.
+     AI CLINICAL ASSISTANT (Documentation), conceptual minimal layout.
      Single centered column: Scribe card (button + timer + waveform)
      → live transcription card → 4 consult fields in a 2x2 grid.
      Matches Scheduler/Intake level of abstraction.
@@ -1375,7 +1375,7 @@
     flex-direction: column;
     gap: 18px;
   }
-  /* Top row — scribe card (left, fixed) + transcript chat (right, flex). */
+  /* Top row, scribe card (left, fixed) + transcript chat (right, flex). */
   .mockup-host .doc-top-row {
     display: flex;
     gap: 24px;
@@ -1402,7 +1402,7 @@
     line-height: 1.2;
   }
 
-  /* BIG centered wave — the focal element of the scribe card. */
+  /* BIG centered wave, the focal element of the scribe card. */
   .mockup-host .doc-minimal .scribe-wave-big {
     flex: 1 1 auto;
     display: flex;
@@ -1534,7 +1534,7 @@
   }
   .mockup-host .doc-bubble-text { display: block; }
 
-  /* Consult fields — Intake-style floating label, big value */
+  /* Consult fields, Intake-style floating label, big value */
   .mockup-host .doc-fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1573,7 +1573,7 @@
     min-height: 28px;
     transition: opacity 0.35s ease-out, transform 0.35s ease-out;
   }
-  /* Typing state — matcha border glow + blinking caret cursor. */
+  /* Typing state, matcha border glow + blinking caret cursor. */
   .mockup-host .doc-field.is-typing {
     border-color: var(--matcha);
     box-shadow: 0 0 0 3px rgba(195, 196, 48, 0.22), 0 4px 14px rgba(195, 196, 48, 0.14);
@@ -1656,7 +1656,7 @@
   }
 
   /* ============================================================
-     MEDICAL BILLING — conceptual minimal layout. Vertical stack:
+     MEDICAL BILLING, conceptual minimal layout. Vertical stack:
      claim header → 2 CPT code rows (auto-typing) → total counter
      → Submit button → Paid popup. Same level of abstraction as
      the other conceptual panes.
@@ -1707,7 +1707,7 @@
     color: rgba(6, 62, 84, 0.62);
   }
 
-  /* CPT code rows — start empty, reveal via JS with Intake-style glow pop */
+  /* CPT code rows, start empty, reveal via JS with Intake-style glow pop */
   .mockup-host .bill-codes-card {
     padding: 14px 36px;
   }
@@ -1801,7 +1801,7 @@
     justify-content: center;
     margin-top: 4px;
   }
-  /* Same as Intake "Continue" big button — full styling, not piggy-backed
+  /* Same as Intake "Continue" big button, full styling, not piggy-backed
      on .pill so we get pure white text instead of seashell. */
   .mockup-host .bill-submit {
     position: relative;
@@ -1903,7 +1903,7 @@
      Direction toggles via [data-push-direction] on .visual-wrap. */
   .visual-frame { overflow: hidden; }
   /* ============================================================
-     Pane transition — gentle crossfade with a small directional
+     Pane transition, gentle crossfade with a small directional
      rise. Earlier versions used a 36px horizontal slide + scale
      on the outgoing pane, which read as "jumpy" because the two
      directions of motion (in/out) fought each other and the
@@ -1911,7 +1911,7 @@
      New behavior:
        - Same duration & easing for in/out (no mismatch)
        - Pure vertical drift of 10px (subtle, like Linear/Stripe)
-       - No outgoing scale — feels more like a soft swap
+       - No outgoing scale, feels more like a soft swap
        - Outgoing pane fades while new pane rises into place
      The horizontal direction (data-push-direction) still nudges
      the rise slightly left/right (≤4px) so forward vs. backward
@@ -2024,7 +2024,7 @@
   }
 
   /* ============================================================
-     MESSAGING & FOLLOW-UPS MOCKUP — 3 phone screens side by side:
+     MESSAGING & FOLLOW-UPS MOCKUP, 3 phone screens side by side:
      (1) email confirmation, (2) SMS reminders, (3) email reminder.
      Phone 2 animates: typing indicator → bubble 1 → typing → bubble 2.
      Matches /Downloads/Messaging & Follow-Ups.svg.
@@ -2383,7 +2383,7 @@
   @media (max-width: 1100px) { .tile-grid--4 { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px)  { .tile-grid--4 { grid-template-columns: 1fr; } }
 
-  /* Segment + AI tag pills — small matcha-tinted chip at the top of
+  /* Segment + AI tag pills, small matcha-tinted chip at the top of
      each card. Title Case (no uppercase per the site-wide rule). */
   .seg-tag, .ai-tag {
     display: inline-block;
@@ -2402,7 +2402,7 @@
     color: var(--indigo-80);
   }
 
-  /* Segment card — anchor element styled as a card. Hover state
+  /* Segment card, anchor element styled as a card. Hover state
      plays nicely with the .h-card base hover-lift. */
   a.segment-card {
     text-decoration: none;
@@ -2421,7 +2421,7 @@
   }
   a.segment-card .alink { margin-top: auto; }
 
-  /* Segment icon — 44×44 rounded square with the seg-tag matcha tint
+  /* Segment icon, 44×44 rounded square with the seg-tag matcha tint
      and the indigo stroke icon centered inside. Sits at the top of
      each card above the segment tag pill. */
   .segment-card__icon {
@@ -2446,7 +2446,7 @@
     margin-top: auto;
   }
 
-  /* AI-card navy treatment — applied per-box (.h-card--navy) so only
+  /* AI-card navy treatment, applied per-box (.h-card--navy) so only
      the cards turn navy, NOT the surrounding light tile. Tint hooks
      for tag pill + body text inherit from the dark-card token set. */
   .h-card.h-card--navy {
@@ -2464,7 +2464,7 @@
     background: rgba(195, 196, 48, 0.18);
     color: var(--matcha);
   }
-  /* AI-card icon container — same 44×44 footprint as the segment
+  /* AI-card icon container, same 44×44 footprint as the segment
      icon, themed for the dark surface. */
   .ai-card__icon {
     display: inline-grid;
@@ -2505,7 +2505,7 @@
     border-color: var(--matcha);
   }
 
-  /* "(AI Scribe)" suffix on the AI Clinical Assistant heading —
+  /* "(AI Scribe)" suffix on the AI Clinical Assistant heading,
      smaller, lighter, matcha-tinted so it reads as an alias and
      doesn't compete with the primary product name. */
   .ai-card__alias {
@@ -2531,7 +2531,7 @@
 
   /* ====== CALCULATOR widget ====== */
   .calc-card {
-    /* Full content-width — was capped at 720px. Now fills the .tile__inner. */
+    /* Full content-width, was capped at 720px. Now fills the .tile__inner. */
     width: 100%;
     margin: 0 auto;
     background: var(--white);
@@ -2563,7 +2563,7 @@
     .calc-card__output { align-items: stretch; text-align: center; }
     .calc-card__cta { align-self: center; }
   }
-  .calc-card__field { margin-bottom: 0; }   /* reset — gap on .calc-card__inputs handles spacing */
+  .calc-card__field { margin-bottom: 0; }   /* reset, gap on .calc-card__inputs handles spacing */
   .calc-card__field label {
     display: block;
     font-size: var(--apple-caption);
@@ -2598,7 +2598,7 @@
     color: rgba(6,62,84,0.5);
     font-weight: 500;
   }
-  /* Result block — now its own right column inside .calc-card--split.
+  /* Result block, now its own right column inside .calc-card--split.
      No top border / no top margin (the column gap handles separation
      from the inputs). Left-aligned to match the field labels on the
      left column. */
@@ -2627,7 +2627,7 @@
     font-size: var(--apple-fine);
     color: rgba(6,62,84,0.55);
   }
-  /* Dark-tile variant — the inner card flips to the DEEPEST navy
+  /* Dark-tile variant, the inner card flips to the DEEPEST navy
      (#042B3B / --indigo-dark) so it pops against the section's regular
      indigo. Labels switch to seashell tints; inputs use a translucent
      seashell fill so they still read as form fields. */
@@ -2654,11 +2654,11 @@
   .tile--dark .calc-card__result .delta { color: rgba(250, 249, 245, 0.55); }
 
   /* ============================================================
-     PLATFORM CARD MOTION GRAPHICS — small CSS-only animations
+     PLATFORM CARD MOTION GRAPHICS, small CSS-only animations
      that illustrate each feature. All loop infinitely; pause
      under prefers-reduced-motion.
      ============================================================ */
-  /* Motion graphic — sits as a floating illustration inside each card,
+  /* Motion graphic, sits as a floating illustration inside each card,
      no frame or background of its own. The card's own border + padding
      gives the surrounding chrome. */
   .feat-anim {
@@ -2677,7 +2677,7 @@
   }
 
   /* ============================================================
-     Bento card motion graphics — show "completed" state at rest,
+     Bento card motion graphics, show "completed" state at rest,
      restart from beginning on card hover.
 
      Mechanism:
@@ -2745,7 +2745,7 @@
   .tile-grid--bento .h-card:hover .fa-int-pulse--s { animation-delay: 1.2s !important; }
   .tile-grid--bento .h-card:hover .fa-int-pulse--w { animation-delay: 1.8s !important; }
 
-  /* Respect user motion preferences — keep animations off entirely. */
+  /* Respect user motion preferences, keep animations off entirely. */
   @media (prefers-reduced-motion: reduce) {
     .tile-grid--bento .h-card:hover,
     .tile-grid--bento .h-card:hover *,
@@ -2760,7 +2760,7 @@
      the bento). Card-level invert: dark bg + seashell text inside
      a light platform section.
      ============================================================ */
-  /* Medical Billing feature card — light theme 2026-05-29 (was
+  /* Medical Billing feature card, light theme 2026-05-29 (was
      indigo-dark navy). Now a clean white card with a matcha accent
      border so it still reads "featured" without the dark background. */
   .h-card--feature {
@@ -2775,7 +2775,7 @@
   .h-card--feature .feat-list { color: var(--indigo-80); }
   .h-card--feature .feat-list li::before { background: var(--matcha); }
   /* Medical Billing pill: matcha solid still works on white as the
-     accent CTA — keep it. */
+     accent CTA, keep it. */
   .h-card--feature .pill--solid {
     background: var(--matcha);
     color: var(--indigo);
@@ -2786,7 +2786,7 @@
     color: var(--matcha);
     border-color: var(--matcha);
   }
-  /* Snug the rich animation up against the title — the column gap
+  /* Snug the rich animation up against the title, the column gap
      alone provides the separation, no extra margin-bottom needed. */
   .h-card--feature .feat-anim {
     margin-bottom: 0;
@@ -2797,7 +2797,7 @@
   .alink--on-dark:hover { border-bottom-color: var(--matcha); }
 
   /* ============================================================
-     RICH BILLING FLOW — bigger animation for the Medical Billing
+     RICH BILLING FLOW, bigger animation for the Medical Billing
      hero card. Shows the full Eligibility → Auto-coded → Claim
      ready → Paid sequence. Steps fade in left-to-right with stagger,
      all stay visible at peak, then reset.
@@ -2820,7 +2820,7 @@
     position: relative;
     padding: 10px 14px;
     border-radius: 10px;
-    /* Light-card variant (was seashell @ 8%/12% — invisible on white). */
+    /* Light-card variant (was seashell @ 8%/12%, invisible on white). */
     background: rgba(6, 62, 84, 0.04);
     border: 1px solid rgba(6, 62, 84, 0.08);
     opacity: 0;
@@ -2933,7 +2933,7 @@
     font-size: 1.2rem;
   }
 
-  /* 1. Billing — claim line items with highlight pulse */
+  /* 1. Billing, claim line items with highlight pulse */
   .feat-anim--billing { padding: 12px; place-items: stretch; }
   .fa-bill-stack {
     display: flex; flex-direction: column; gap: 4px;
@@ -2979,7 +2979,7 @@
     margin-right: 6px;
   }
 
-  /* 2. EHR — SOAP fields filling + checkmarks */
+  /* 2. EHR, SOAP fields filling + checkmarks */
   .feat-anim--ehr { padding: 14px 18px; place-items: stretch; }
   .fa-ehr-stack {
     display: flex; flex-direction: column; gap: 7px;
@@ -3032,7 +3032,7 @@
     75%, 100% { opacity: 0; transform: scale(0.4); }
   }
 
-  /* 3. AI Scribe — symmetric waveform */
+  /* 3. AI Scribe, symmetric waveform */
   .feat-anim--scribe .fa-wave {
     display: flex; align-items: center; justify-content: center;
     gap: 4px; height: 100%;
@@ -3061,7 +3061,7 @@
     50% { height: 56px; }
   }
 
-  /* 4. Scheduler — multiple slots filling in over time (booking flow). */
+  /* 4. Scheduler, multiple slots filling in over time (booking flow). */
   .feat-anim--sched .fa-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -3102,7 +3102,7 @@
     }
   }
 
-  /* 5. Analytics — staggered bar chart */
+  /* 5. Analytics, staggered bar chart */
   .feat-anim--analytics .fa-bars {
     display: flex; align-items: flex-end; justify-content: center;
     gap: 10px; height: 80px;
@@ -3125,7 +3125,7 @@
   @keyframes fa-bar-68 { 0%, 100% { height: 8px; } 45%, 70% { height: 52px; } }
   @keyframes fa-bar-85 { 0%, 100% { height: 8px; } 45%, 70% { height: 66px; } }
 
-  /* 6. Integrations — hub + satellites + animated data packets flying
+  /* 6. Integrations, hub + satellites + animated data packets flying
         out from the center to each node, plus a continuous radial ring
         expanding from the center for added energy. */
   .feat-anim--integrations .fa-hub {
@@ -3274,7 +3274,7 @@
   .tile--dark .fa-int-node--center { background: var(--matcha); }
 
   /* ============================================================
-     PROMINENT TILE — visual presence comes from (a) a slightly darker
+     PROMINENT TILE, visual presence comes from (a) a slightly darker
      surface, (b) a short matcha accent rule centered above the kicker,
      (c) tighter, larger headline tracking. No diffuse glow.
      ============================================================ */
@@ -3282,11 +3282,11 @@
     position: relative;
   }
   /* Calc section was previously navy (--indigo-95). Flipped to the
-     standard light surface 2026-05-29 — the hairline divider + the
+     standard light surface 2026-05-29, the hairline divider + the
      matcha accent in .tile__head::before provide enough visual
      emphasis without the dark fill. */
   .tile--prominent .tile__head { position: relative; padding-top: 1rem; }
-  /* Matcha accent bar above prominent section heads — removed
+  /* Matcha accent bar above prominent section heads, removed
      2026-05-29 at user request. The .tile--navy bg + section
      hairline divider provide enough emphasis without it. */
   .tile--prominent .tile__head::before { content: none; }
@@ -3296,7 +3296,7 @@
   }
 
   /* ============================================================
-     TESTIMONIAL SLIDER — auto-rotating quotes on the dark tile.
+     TESTIMONIAL SLIDER, auto-rotating quotes on the dark tile.
      All slides occupy the same grid cell; only the active one is
      visible (opacity 1). Auto-advances every 6s, pauses on hover,
      and reacts to dot clicks.
@@ -3378,7 +3378,7 @@
   }
 
   /* ============================================================
-     PATIENT JOURNEY — horizontal 5-step timeline with a matcha
+     PATIENT JOURNEY, horizontal 5-step timeline with a matcha
      line that flows left to right and step icons that pulse in
      sequence. Each step also has a tiny motion graphic.
      ============================================================ */
@@ -3506,7 +3506,7 @@
   }
 
   /* ============================================================
-     JOURNEY 6-STEP VARIANT — reuses .journey base styling but
+     JOURNEY 6-STEP VARIANT, reuses .journey base styling but
      expands to 6 columns with re-tuned line insets + pulse delays.
      Used by The Clinical Journey section to render the full
      Schedule → Intake → Consult → Document → Follow-up → Bill
@@ -3529,7 +3529,7 @@
     .journey--6 .journey__steps { grid-template-columns: repeat(2, 1fr); }
   }
 
-  /* Problem-statement section — navy boxes with matcha headings. */
+  /* Problem-statement section, navy boxes with matcha headings. */
   .problem-card h3 {
     font-family: var(--font-display);
     font-weight: 700;
@@ -3548,7 +3548,7 @@
   .h-card--navy.problem-card h3 { color: var(--matcha); }
   .h-card--navy.problem-card p  { color: rgba(250, 249, 245, 0.82); }
 
-  /* Card feature lists (more info per card) — was seashell @ 72%
+  /* Card feature lists (more info per card), was seashell @ 72%
      (designed for the retired dark-tile theme). Flipped to indigo
      @ 72% so the bullets are visible on light tile surfaces. */
   .feat-list {
@@ -3579,7 +3579,7 @@
   }
 
   /* ============================================================
-     BENTO GRID — varied card sizes for the platform section.
+     BENTO GRID, varied card sizes for the platform section.
      Layout (desktop, 4 columns × 3 rows):
        [ Card 1 (2×2) ][ Card 2 (2×1) ]
        [              ][ C3 ][ C4    ]
@@ -3616,7 +3616,7 @@
   }
 
   /* ============================================================
-     RESPONSIVE — mobile/tablet adjustments for the homepage POC.
+     RESPONSIVE, mobile/tablet adjustments for the homepage POC.
      Most tile-system rules in brand.css already handle breakpoints;
      these patch the page-specific elements (mockup, tabs, hero).
      ============================================================ */
@@ -3631,12 +3631,12 @@
     .visual-wrap { padding: 0 1rem; }
     .tab-bar-wrap { padding: 0 1rem; }
     .tab { font-size: 13px; padding: 9px 14px; }
-    /* Mockup gets smaller on mobile — aspect-ratio handles it, but pad less */
+    /* Mockup gets smaller on mobile, aspect-ratio handles it, but pad less */
     .visual-frame { padding: 6px; }
     .mockup-pane::after { height: 30%; }
   }
 
-  /* ====== AUDIENCE cards — flex column so the CTA can pin to the bottom,
+  /* ====== AUDIENCE cards, flex column so the CTA can pin to the bottom,
      keeping all 3 buttons at the same y-position regardless of how long
      each card's list runs. ====== */
   .audience-card {
@@ -3682,7 +3682,7 @@
   }
 
   /* ============================================================
-     Tab bar hidden — the hero mockups now auto-rotate full-frame
+     Tab bar hidden, the hero mockups now auto-rotate full-frame
      without manual tab controls. The .tab-bar markup stays in the
      DOM so the existing rotation JS keeps cycling through panes
      (tabs are still toggled, just invisibly).
@@ -3690,7 +3690,7 @@
   .tab-bar-wrap { display: none !important; }
 
   /* ============================================================
-     GLOBAL WORKFLOW INDICATOR — sits above the mockup frame,
+     GLOBAL WORKFLOW INDICATOR, sits above the mockup frame,
      shows the 4 workflow stages with active state updating as
      the rotation cycles through panes.
      ============================================================ */
@@ -3745,7 +3745,7 @@
     box-shadow: 0 0 0 5px rgba(195, 196, 48, 0.25);
   }
   /* ============================================================
-     ACTIVE-DOT PULSE — soft matcha ghost ring radiates outward
+     ACTIVE-DOT PULSE, soft matcha ghost ring radiates outward
      and fades, infinite, ~1.6s. The dot itself stays crisp; only
      a ::after layer expands behind it. Linear-style cue that the
      active stage is "live." Respects prefers-reduced-motion.
@@ -3802,7 +3802,7 @@
       rgba(6, 62, 84, 0.12) 100%);
     transition: background 0.08s linear;
   }
-  /* Get Paid stage — checkmark icon appears when the stage activates. */
+  /* Get Paid stage, checkmark icon appears when the stage activates. */
   .hw-stage[data-pane-key="paid"] .hw-dot-check {
     display: none;
     width: 20px; height: 20px;
@@ -3832,7 +3832,7 @@
   }
 
   /* ============================================================
-     HERO PIPELINE — single conceptual motion graphic that replaced
+     HERO PIPELINE, single conceptual motion graphic that replaced
      the legacy 5-tab mockup carousel. Four stages animate in turn
      across a 16s loop: Scheduling → Intake → AI Clinical Assistant
      → Medical Billing. Uses abstracted SVG icons (no literal product
@@ -3944,12 +3944,12 @@
 <div class="util-bar" role="region" aria-label="Site announcement">
   <div class="wrap util-bar--center">
     <div class="news">
-      <strong>NEW:</strong> Admin Clerk &mdash; the AI assistant that runs the back office. <a href="/us/platform/ai-assistants/admin-clerk">See it work &rarr;</a>
+      <strong>NEW:</strong> Admin Clerk, the AI assistant that runs the back office. <a href="/us/platform/ai-assistants/admin-clerk">See it work &rarr;</a>
     </div>
   </div>
 </div>
 <script src="/assets/site.js" defer></script>
-<!-- Cookie banner + preferences modal — appears on every page.
+<!-- Cookie banner + preferences modal, appears on every page.
      Behavior is driven by JS in /assets/site.js (consent management).
      Compliant target: GDPR (EU), CCPA/CPRA (US), PIPEDA + Quebec Law 25 (CA),
      and the strictest interpretation across all four. -->
@@ -3982,7 +3982,7 @@
         <strong>Strictly necessary</strong>
         <span class="cookie-cat__locked">Always on</span>
       </div>
-      <p>Required for the site to load and function — session, security, region selection, accessibility preferences. Cannot be disabled.</p>
+      <p>Required for the site to load and function, session, security, region selection, accessibility preferences. Cannot be disabled.</p>
     </div>
 
     <div class="cookie-cat">
@@ -4019,7 +4019,7 @@
   </div>
 </div>
 <!--
-  US navigation — locked to sitemap v11.
+  US navigation, locked to sitemap v11.
   Structure: Pharmacy ▾ / Platform ▾ / Resources ▾ / Partners ▾ / About
   Notes:
    - Pharmacy: Independents / Enterprises / Networks / Specialty
@@ -4092,7 +4092,7 @@
               </a>
               <a href="/us/platform/ai-clinical-assistant" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
                 <span class="nav__dropdown-tile-title">AI Clinical Assistant <em class="nav__tag">Add-on</em></span>
-                <span class="nav__dropdown-tile-desc">AI Scribe — real-time notes and care plans</span>
+                <span class="nav__dropdown-tile-desc">AI Scribe, real-time notes and care plans</span>
               </a>
               <a href="/us/platform/medical-billing" class="nav__dropdown-tile nav__dropdown-tile--addon" role="menuitem">
                 <span class="nav__dropdown-tile-title">Medical Billing Suite <em class="nav__tag">Add-on</em></span>
@@ -4220,7 +4220,7 @@
     </h1>
     <p class="sub">
       <span>MedMe gives pharmacies the infrastructure to launch, scale, and get paid for clinical services.</span>
-      <span>AI-native, modular, API-driven &mdash; built for how pharmacy actually works.</span>
+      <span>AI-native, modular, API-driven, built for how pharmacy actually works.</span>
     </p>
     <div class="cta-row">
       <a class="btn btn-primary btn--lg" href="pages/us/contact.html">Book a 20-Min Demo <span class="arrow">&rarr;</span></a>
@@ -4228,11 +4228,11 @@
   </div>
 </section>
 
-<!-- ============= 1a. HERO PIPELINE (abstract icon graphic — hidden; superseded by the auto-rotating full-frame legacy mockups below. Restore by removing `hidden`. ============= -->
+<!-- ============= 1a. HERO PIPELINE (abstract icon graphic, hidden; superseded by the auto-rotating full-frame legacy mockups below. Restore by removing `hidden`. ============= -->
 <section class="hero-pipeline" aria-label="MedMe workflow pipeline" hidden>
   <div class="hp-wrap">
     <div class="hp-flow">
-      <!-- Stage 1 — Scheduling & Queuing -->
+      <!-- Stage 1, Scheduling & Queuing -->
       <div class="hp-stage" data-stage="1">
         <div class="hp-icon">
           <svg viewBox="0 0 56 56" aria-hidden="true">
@@ -4258,7 +4258,7 @@
 
       <div class="hp-arrow" aria-hidden="true"><div class="hp-pulse" data-pulse="1"></div></div>
 
-      <!-- Stage 2 — Patient Intake Form -->
+      <!-- Stage 2, Patient Intake Form -->
       <div class="hp-stage" data-stage="2">
         <div class="hp-icon">
           <svg viewBox="0 0 56 56" aria-hidden="true">
@@ -4278,7 +4278,7 @@
 
       <div class="hp-arrow" aria-hidden="true"><div class="hp-pulse" data-pulse="2"></div></div>
 
-      <!-- Stage 3 — AI Clinical Assistant -->
+      <!-- Stage 3, AI Clinical Assistant -->
       <div class="hp-stage" data-stage="3">
         <div class="hp-icon">
           <svg viewBox="0 0 56 56" aria-hidden="true">
@@ -4298,7 +4298,7 @@
 
       <div class="hp-arrow" aria-hidden="true"><div class="hp-pulse" data-pulse="3"></div></div>
 
-      <!-- Stage 4 — Medical Billing -->
+      <!-- Stage 4, Medical Billing -->
       <div class="hp-stage" data-stage="4">
         <div class="hp-icon">
           <svg viewBox="0 0 56 56" aria-hidden="true">
@@ -4318,7 +4318,7 @@
   </div>
 </section>
 
-<!-- ============= LEGACY MOCKUPS (now ACTIVE — auto-rotate, tab bar hidden via .tab-bar-wrap { display: none }) ============= -->
+<!-- ============= LEGACY MOCKUPS (now ACTIVE, auto-rotate, tab bar hidden via .tab-bar-wrap { display: none }) ============= -->
 <div class="legacy-mockups">
 <div class="tab-bar-wrap">
   <div class="tab-bar" role="tablist" aria-label="Product mockup tabs">
@@ -4331,7 +4331,7 @@
 </div>
 
 <div class="visual-wrap" aria-hidden="true">
-  <!-- Global workflow indicator — visualizes the 4-stage process as the
+  <!-- Global workflow indicator, visualizes the 4-stage process as the
        mockup rotation cycles. Active stage updates from the rotation
        activate() hook below. -->
   <div class="hero-workflow" aria-hidden="true">
@@ -4383,7 +4383,7 @@
       <div class="mockup-host" id="schedHost">
         <div class="frame-inner" id="schedFrame">
 
-          <!-- LEFT CARD — MedMe Pharmacy booking widget -->
+          <!-- LEFT CARD, MedMe Pharmacy booking widget -->
           <section class="sched-book" aria-label="Booking widget">
 
             <div class="sched-grid-card">
@@ -4443,7 +4443,7 @@
             </div>
           </section>
 
-          <!-- Store Locator removed per direction 2026-05-26 — calendar view is the sole focus of the Scheduling mockup. -->
+          <!-- Store Locator removed per direction 2026-05-26, calendar view is the sole focus of the Scheduling mockup. -->
 
           <div class="cursor" id="schCursor">
             <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
@@ -4490,7 +4490,7 @@
             </div>
           </div>
 
-          <!-- Confirmation popup — appears when Continue is "clicked." -->
+          <!-- Confirmation popup, appears when Continue is "clicked." -->
           <div class="intake-popup" id="intakePopup" aria-hidden="true">
             <div class="intake-popup__inner">
               <div class="intake-popup__check" aria-hidden="true">
@@ -4512,14 +4512,14 @@
         <div class="frame-inner" id="billFrame">
 
           <div class="bill-minimal">
-            <!-- Claim header — patient + service + coverage -->
+            <!-- Claim header, patient + service + coverage -->
             <div class="bill-card bill-claim-header">
               <div class="bill-claim-tag">Auto-coded from encounter note</div>
               <h2 class="bill-claim-patient">Sophia Ramirez</h2>
               <div class="bill-claim-sub">Annual MTM Review &middot; Medicare Part&nbsp;B</div>
             </div>
 
-            <!-- Auto-coded CPT rows — type in sequentially -->
+            <!-- Auto-coded CPT rows, type in sequentially -->
             <div class="bill-card bill-codes-card">
               <div class="bill-code-row" id="bcRow1">
                 <span class="bill-code-tag" id="bcTag1"></span>
@@ -4533,7 +4533,7 @@
               </div>
             </div>
 
-            <!-- Total — counts up live -->
+            <!-- Total, counts up live -->
             <div class="bill-total">
               <span class="bill-total-label">Claim total</span>
               <span class="bill-total-amt" id="bcTotal">$0.00</span>
@@ -4576,7 +4576,7 @@
         <div class="frame-inner" id="msgFrame">
           <div class="msg-stage">
 
-            <!-- PHONE 1 — booking confirmation email -->
+            <!-- PHONE 1, booking confirmation email -->
             <div class="msg-phone msg-phone--email">
               <div class="msg-status">
                 <span>9:41</span>
@@ -4618,7 +4618,7 @@
               </div>
             </div>
 
-            <!-- PHONE 2 — SMS conversation -->
+            <!-- PHONE 2, SMS conversation -->
             <div class="msg-phone msg-phone--sms">
               <div class="msg-status">
                 <span>9:41</span>
@@ -4666,7 +4666,7 @@
               <div class="msg-sms-home"></div>
             </div>
 
-            <!-- PHONE 3 — reminder email -->
+            <!-- PHONE 3, reminder email -->
             <div class="msg-phone msg-phone--email">
               <div class="msg-status">
                 <span>9:41</span>
@@ -4815,8 +4815,7 @@
   <div class="wrap">
     <div class="trust__top">
       <div class="trust__label">
-        <span class="eyebrow">Trusted across U.S. pharmacy</span>
-        <div class="stat-line">From single-store independents to top-100 chains.</div>
+        <h2 class="h-display">Trusted by US pharmacy leaders</h2>
       </div>
     </div>
     <div class="trust__logos" role="list" aria-label="Customer segments">
@@ -4832,10 +4831,10 @@
       </div>
     </div>
     <div class="trust__stats">
-      <div class="trust__stat"><div class="num"><span data-count="4500" data-suffix="+">0</span></div><div class="label">Pharmacies</div></div>
-      <div class="trust__stat"><div class="num"><span data-count="12" data-suffix="M+">0M+</span></div><div class="label">Patients</div></div>
-      <div class="trust__stat"><div class="num"><span data-count="25" data-suffix="M+">0M+</span></div><div class="label">Clinical services</div></div>
-      <div class="trust__stat"><div class="num"><span data-count="16" data-suffix="">0</span></div><div class="label">States</div></div>
+      <div class="trust__stat"><div class="num">4,500+</div><div class="label">pharmacies powered</div></div>
+      <div class="trust__stat"><div class="num">30M+</div><div class="label">patient interactions</div></div>
+      <div class="trust__stat"><div class="num">16 + 10</div><div class="label">us states &middot; ca provinces</div></div>
+      <div class="trust__stat"><div class="num">99.99%</div><div class="label">platform uptime</div></div>
     </div>
   </div>
 </section>
@@ -4846,12 +4845,12 @@
     <div class="tile__head">
       <span class="kicker">Why MedMe</span>
       <h2 class="h-display">Pharmacy tech ends where<br>clinical work begins.</h2>
-      <p class="lead">Your dispensing stack is solid. The clinical side is where everything falls apart &mdash; and that's exactly where the growth is.</p>
+      <p class="lead">Your dispensing stack is solid. The clinical side is where everything falls apart, and that's exactly where the growth is.</p>
     </div>
     <div class="tile-grid tile-grid--2 problem-grid">
       <article class="h-card h-card--navy problem-card">
         <h3>Clinical services live outside your tech stack</h3>
-        <p>Vaccines, MTM, point-of-care testing &mdash; your team is already delivering the work. But the documentation, scheduling, and follow-up live in spreadsheets, paper, and disconnected portals.</p>
+        <p>Vaccines, MTM, point-of-care testing, your team is already delivering the work. But the documentation, scheduling, and follow-up live in spreadsheets, paper, and disconnected portals.</p>
       </article>
       <article class="h-card h-card--navy problem-card">
         <h3>Your PMS dispenses; nothing else fits</h3>
@@ -4859,7 +4858,7 @@
       </article>
       <article class="h-card h-card--navy problem-card">
         <h3>AI is everywhere, integrated nowhere</h3>
-        <p>Every vendor demos an AI tool. Most can't see your patients, your dispensing history, or your scheduled visits &mdash; so the agents can't act on what's actually happening in your pharmacy.</p>
+        <p>Every vendor demos an AI tool. Most can't see your patients, your dispensing history, or your scheduled visits, so the agents can't act on what's actually happening in your pharmacy.</p>
       </article>
       <article class="h-card h-card--navy problem-card">
         <h3>Scaling clinical services means restarting</h3>
@@ -4869,13 +4868,13 @@
   </div>
 </section>
 
-<!-- ============= 4. SEGMENTS (moved here from #5 — Built for Every Pharmacy) ============= -->
+<!-- ============= 4. SEGMENTS (moved here from #5, Built for Every Pharmacy) ============= -->
 <section class="tile tile--light" id="audience" aria-label="Built for every pharmacy">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Built for Every Pharmacy</span>
       <h2 class="h-display">One platform. Built for how<br>each pharmacy operates.</h2>
-      <p class="lead">MedMe adapts to where you are &mdash; from a single store launching clinical services for the first time, to a national enterprise running standardized programs across hundreds of locations.</p>
+      <p class="lead">MedMe adapts to where you are, from a single store launching clinical services for the first time, to a national enterprise running standardized programs across hundreds of locations.</p>
     </div>
     <div class="tile-grid tile-grid--4 segments-grid">
       <a href="/us/pharmacy/independents" class="h-card segment-card">
@@ -4899,7 +4898,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><circle cx="4" cy="5" r="2"/><circle cx="20" cy="5" r="2"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="19" r="2"/><path d="M6 6l4.5 4.5M18 6l-4.5 4.5M6 18l4.5-4.5M18 18l-4.5-4.5"/></svg>
         </span>
         <h3>For banners &amp; co-ops</h3>
-        <p>A platform your members will actually adopt &mdash; with network-level reporting that strengthens your value proposition.</p>
+        <p>A platform your members will actually adopt, with network-level reporting that strengthens your value proposition.</p>
         <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
       </a>
       <a href="/us/pharmacy/specialty" class="h-card segment-card">
@@ -4914,13 +4913,13 @@
   </div>
 </section>
 
-<!-- ============= 5. PLATFORM (modules — moved down from #3) ============= -->
+<!-- ============= 5. PLATFORM (modules, moved down from #3) ============= -->
 <section class="tile tile--light" id="billing" aria-label="What's in the platform">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">The platform</span>
       <h2 class="h-display">Built to document and bill,<br>nothing they don't.</h2>
-      <p class="lead">Pick the modules that fit your service mix. Medical Billing converts every documented encounter into a clean Medicare Part&nbsp;B claim &mdash; the wedge that turns clinical scope into reliable revenue.</p>
+      <p class="lead">Pick the modules that fit your service mix. Medical Billing converts every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that turns clinical scope into reliable revenue.</p>
     </div>
     <div class="tile-grid tile-grid--bento">
       <article class="h-card h-card--feature">
@@ -4957,7 +4956,7 @@
           </div>
         </div>
         <h3>Medical Billing</h3>
-        <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim &mdash; the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
+        <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
         <ul class="feat-list">
           <li>CPT / HCPCS auto-coding from the encounter note</li>
           <li>Time tracking + modifier rules for incident-to billing</li>
@@ -4978,7 +4977,7 @@
           </div>
         </div>
         <h3>Pharmacy EHR</h3>
-        <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows &mdash; all pharmacy-tuned, no generic-EHR shoehorning.</p>
+        <p>SOAP notes, chronic care plans, immunization records, and transitions-of-care workflows, all pharmacy-tuned, no generic-EHR shoehorning.</p>
         <ul class="feat-list">
           <li>Pharmacy-specific templates for CCM, MTM, immunizations, POCT</li>
           <li>Care plans + adherence tracking baked into the encounter</li>
@@ -5029,7 +5028,7 @@
           </div>
         </div>
         <h3>Outcomes &amp; analytics</h3>
-        <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive &mdash; with the math already done.</p>
+        <p>See which services are billable, which are getting reimbursed, which pharmacists are most productive, with the math already done.</p>
         <ul class="feat-list">
           <li>Per-store + per-pharmacist productivity dashboards</li>
           <li>Reimbursement trending + denial root-cause analysis</li>
@@ -5066,13 +5065,13 @@
   </div>
 </section>
 
-<!-- ============= 6. CLINICAL JOURNEY (flow graphic — 6 lifecycle stages, animated like Patient Journey) ============= -->
+<!-- ============= 6. CLINICAL JOURNEY (flow graphic, 6 lifecycle stages, animated like Patient Journey) ============= -->
 <section class="tile tile--light" aria-label="The clinical journey">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">The Clinical Journey</span>
       <h2 class="h-display">From launch to reimbursement.<br>One platform.</h2>
-      <p class="lead">MedMe covers the full clinical services lifecycle &mdash; every stage of the patient interaction, every stage of the pharmacy's program maturity.</p>
+      <p class="lead">MedMe covers the full clinical services lifecycle, every stage of the patient interaction, every stage of the pharmacy's program maturity.</p>
     </div>
     <div class="journey journey--6">
       <div class="journey__line" aria-hidden="true"></div>
@@ -5124,13 +5123,13 @@
   </div>
 </section>
 
-<!-- ============= 7. AI AGENTS (3-col, navy-themed boxes — AI-Native by Design) ============= -->
+<!-- ============= 7. AI AGENTS (3-col, navy-themed boxes, AI-Native by Design) ============= -->
 <section class="tile tile--light" aria-label="AI agents">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">AI-Native by Design</span>
       <h2 class="h-display">The AI agents are built<br>into the platform. Not bolted on.</h2>
-      <p class="lead">Three AI agents live inside the clinical workflow &mdash; supporting consultations, automating patient outreach, and reducing manual data entry across systems.</p>
+      <p class="lead">Three AI agents live inside the clinical workflow, supporting consultations, automating patient outreach, and reducing manual data entry across systems.</p>
     </div>
     <div class="tile-grid tile-grid--3 ai-grid">
       <article class="h-card h-card--navy ai-card">
@@ -5148,7 +5147,7 @@
         </span>
         <span class="ai-tag">AI &middot; Patient-Facing</span>
         <h3>AI Patient Concierge</h3>
-        <p>Voice and messaging agent handling inbound and outbound patient interactions &mdash; appointment booking, refill reminders, adherence check-ins, FAQs.</p>
+        <p>Voice and messaging agent handling inbound and outbound patient interactions, appointment booking, refill reminders, adherence check-ins, FAQs.</p>
         <a class="pill pill--solid ai-card__cta" href="/us/platform/ai-assistants/patient-concierge">Learn more <span class="arrow">→</span></a>
       </article>
       <article class="h-card h-card--navy ai-card">
@@ -5164,14 +5163,14 @@
   </div>
 </section>
 
-<!-- ============= 8. PARTNER CTA (light — endorsement statement) ============= -->
-<!-- ============= 8. ROI CALCULATOR (moved up — visually prominent) ============= -->
+<!-- ============= 8. PARTNER CTA (light, endorsement statement) ============= -->
+<!-- ============= 8. ROI CALCULATOR (moved up, visually prominent) ============= -->
 <section class="tile tile--light tile--prominent" id="calc" aria-label="Reimbursement calculator">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Reimbursement Calculator</span>
       <h2 class="h-display">Run the numbers on<br>your own pharmacy.</h2>
-      <p class="lead">Two inputs &mdash; store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
+      <p class="lead">Two inputs, store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
     </div>
     <div class="calc-card calc-card--split" data-calc-widget="us">
       <div class="calc-card__inputs">
@@ -5204,7 +5203,7 @@
   </div>
 </section>
 
-<!-- ============= 9. PARTNER WITH MEDME (navy + stacked + centered — now the final CTA section) ============= -->
+<!-- ============= 9. PARTNER WITH MEDME (navy + stacked + centered, now the final CTA section) ============= -->
 <section class="tile tile--navy tile--prominent" id="partner" aria-label="Partner with MedMe">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">
@@ -5227,7 +5226,7 @@
 </main>
 
 <!--
-  US footer — locked to sitemap v11.
+  US footer, locked to sitemap v11.
   Columns: Pharmacy / Platform / Resources / Partners / Company / Customers
   Footer-only surfaces: Company (Our Team, Career, Contact, Legal hub)
                        Customers (Case Studies)
@@ -5247,7 +5246,7 @@
             <path d="M24.0991 3.24596C26.0597 3.63474 27.8246 4.69174 29.0925 6.23655C30.3604 7.78136 31.0528 9.71826 31.0515 11.7166V19.8434H25.8544C25.7308 19.8426 25.6125 19.7932 25.5251 19.706C25.4802 19.6629 25.4446 19.6112 25.4204 19.554C25.3961 19.4967 25.3837 19.4352 25.3839 19.373V11.6623C25.3844 11.5389 25.3605 11.4167 25.3136 11.3026C25.2667 11.1884 25.1978 11.0847 25.1107 10.9973C25.0236 10.9099 24.92 10.8405 24.8061 10.7932C24.6922 10.7459 24.5699 10.7215 24.4465 10.7215H20.6972C20.4477 10.7228 20.2088 10.8215 20.0312 10.9965C19.9439 11.084 19.8746 11.1878 19.8274 11.3021C19.7802 11.4163 19.756 11.5387 19.7562 11.6623V19.373C19.7562 19.4348 19.7441 19.4961 19.7205 19.5532C19.697 19.6103 19.6623 19.6622 19.6186 19.706C19.5294 19.7928 19.4102 19.842 19.2857 19.8434H11.5877C11.464 19.8429 11.3415 19.867 11.2271 19.9141C11.1127 19.9612 11.0088 20.0304 10.9213 20.1179C10.8338 20.2054 10.7645 20.3093 10.7174 20.4236C10.6703 20.538 10.6463 20.6605 10.6468 20.7842V24.5365C10.6463 24.6601 10.6703 24.7827 10.7174 24.897C10.7645 25.0114 10.8338 25.1153 10.9213 25.2028C11.0088 25.2902 11.1127 25.3595 11.2271 25.4066C11.3415 25.4537 11.464 25.4777 11.5877 25.4773H19.2857C19.4102 25.4786 19.5294 25.5278 19.6186 25.6148C19.6623 25.6585 19.697 25.7104 19.7205 25.7675C19.7441 25.8246 19.7562 25.8858 19.7562 25.9476V31.1292H11.642C9.34987 31.1292 7.15164 30.2188 5.53085 28.5984C3.91006 26.9779 2.99951 24.7801 2.99951 22.4885C2.99951 20.1968 3.91006 17.9991 5.53085 16.3786C7.15164 14.7581 9.34987 13.8478 11.642 13.8478H13.7737V11.7202C13.7739 10.4429 14.0573 9.18156 14.6035 8.0269C15.1497 6.87225 15.9452 5.85302 16.9326 5.0426C17.9201 4.23218 19.075 3.65071 20.3142 3.34004C21.5533 3.02938 22.846 2.99725 24.0991 3.24596ZM25.3912 31.1292V26.1032C25.3921 25.9375 25.4584 25.7788 25.5756 25.6617C25.6928 25.5444 25.8515 25.4782 26.0173 25.4773H31.0551V31.1292H25.3912Z" fill="#C3C430"/>
           </g>
         </svg>
-        <p>The clinical operating system for community pharmacy — built so the work pharmacists already do finally gets reimbursed.</p>
+        <p>The clinical operating system for community pharmacy, built so the work pharmacists already do finally gets reimbursed.</p>
       </div>
       <div class="foot__col">
         <h4>Pharmacy</h4>
@@ -5333,7 +5332,7 @@
 
 <script>
 /* ============================================================
-   Hero AI-Scribe motion graphic — 16-second loop:
+   Hero AI-Scribe motion graphic, 16-second loop:
    cursor → Start Scribe → record/wave/transcription stream →
    Populate fields → per-field auto-type → note typing →
    Continue pulse. Mockup scales to fit its responsive container.
@@ -5514,7 +5513,7 @@
       }
     }
 
-    /* "Consult completed" popup — pops after the 4th field finishes typing. */
+    /* "Consult completed" popup, pops after the 4th field finishes typing. */
     if (t >= SEQ.popupAt) {
       var dp2 = $('docPopup');
       if (dp2 && !dp2.classList.contains('is-visible')) dp2.classList.add('is-visible');
@@ -5533,7 +5532,7 @@
 })();
 
 /* ============================================================
-   Marquee carousel — duplicate each track's children once so a
+   Marquee carousel, duplicate each track's children once so a
    translateX(-50%) loop wraps seamlessly (the second set takes
    the first set's place at the wrap point).
    ============================================================ */
@@ -5550,7 +5549,7 @@
 })();
 
 /* ============================================================
-   Counter animation — ticks numeric values from 0 to their target
+   Counter animation, ticks numeric values from 0 to their target
    when first scrolled into view. Uses easeOutCubic for a smooth
    settle. Honors prefers-reduced-motion (sets the final value
    directly without animating).
@@ -5600,7 +5599,7 @@
 })();
 
 /* ============================================================
-   Scroll reveal — fades + rises elements as they enter the
+   Scroll reveal, fades + rises elements as they enter the
    viewport. Auto-staggers siblings within grid containers.
    ============================================================ */
 (function(){
@@ -5645,7 +5644,7 @@
 })();
 
 /* ============================================================
-   Testimonial slider — auto-rotates every 6s, dot click jumps,
+   Testimonial slider, auto-rotates every 6s, dot click jumps,
    hover pauses, respects prefers-reduced-motion (no auto-rotate).
    ============================================================ */
 (function(){
@@ -5677,7 +5676,7 @@
 })();
 
 /* ============================================================
-   Scheduling & Queueing mockup — cursor moves to an empty slot,
+   Scheduling & Queueing mockup, cursor moves to an empty slot,
    tooltip appears with patient details, slot fills matcha, and a
    new queue entry slides in from the top. ~12-second loop.
    ============================================================ */
@@ -5756,7 +5755,7 @@
   }
 
   function tick(now) {
-    /* Pane is display:none on inactive tabs — host has zero dimensions
+    /* Pane is display:none on inactive tabs, host has zero dimensions
        and DOMMatrixReadOnly would throw parsing 'none'. Skip until the
        host is visible (Scheduling tab is active). */
     var rect = host.getBoundingClientRect();
@@ -5863,7 +5862,7 @@
 
   function $(id) { return document.getElementById(id); }
 
-  /* Abstract placeholder data — conceptual intake, not a real patient.
+  /* Abstract placeholder data, conceptual intake, not a real patient.
      "Sophia Ramirez" matches the patient name used in the AI Clinical
      Assistant mockup for narrative continuity across the workflow. */
   var FIELDS = [
@@ -5871,7 +5870,7 @@
     { id: 'fldDOB',       text: '1985-04-12' },
     { id: 'fldPhone',     text: '555-555-0100' }
   ];
-  /* Field-by-field reveal — replaced the slow char-by-char typing with a
+  /* Field-by-field reveal, replaced the slow char-by-char typing with a
      punchier sequential animation where each field auto-fills + gets a
      brief matcha highlight pulse, then transitions to the CTA pulse,
      then heroAdvance() back to Scheduling. */
@@ -5973,7 +5972,7 @@
 })();
 
 /* ============================================================
-   Medical Billing — conceptual motion graphic. Sequence:
+   Medical Billing, conceptual motion graphic. Sequence:
    1. Code rows fade/slide in
    2. Each code row types its CPT tag + description + amount
    3. Total counts up from $0 to claim total
@@ -6074,7 +6073,7 @@
     moveInstant(40, 100);
   }
 
-  /* Intake-style reveal — set text instantly, add .is-filling glow, then
+  /* Intake-style reveal, set text instantly, add .is-filling glow, then
      remove it after the value-pop animation completes. */
   function revealRow(idx) {
     var data = ROW_DATA[idx];
@@ -6143,7 +6142,7 @@
       var sub2 = $('bcSubmit');
       if (sub2) sub2.classList.add('is-pulsing');
     }
-    /* Workflow indicator — progress bar between Medical Billing and
+    /* Workflow indicator, progress bar between Medical Billing and
        Get Paid fills continuously from 0 → 100% during the billing
        animation. Reaches 100% at popupAt. */
     var paidArrow = document.querySelector('.hw-arrow[data-arrow="paid"]');
@@ -6259,13 +6258,13 @@
 })();
 
 /* ============================================================
-   Product mockup tabs — swap which mockup-pane is visible.
+   Product mockup tabs, swap which mockup-pane is visible.
    Scribe pane re-runs fitMockup() on activation so the inner
    1192×656 frame scales correctly after being display:none.
    ============================================================ */
 (function(){
   'use strict';
-  // Full 4-pane rotation (Messaging excluded entirely — not part of the
+  // Full 4-pane rotation (Messaging excluded entirely, not part of the
   // schedule → intake → consult → billing → paid workflow narrative).
   var tabs = document.querySelectorAll(
     '.tab[data-tab="scheduling"], .tab[data-tab="intake"], ' +
@@ -6308,7 +6307,7 @@
     if (key === 'messaging')     refit('msgHost', 'msgFrame');
     if (key === 'billing')       refit('billHost', 'billFrame');
 
-    /* Global workflow indicator — mark stages as done/active/pending
+    /* Global workflow indicator, mark stages as done/active/pending
        based on the active pane's position in the workflow. The 5th
        stage "Get Paid" doesn't have a pane; its active state is set
        by the Billing animation when the popup fires. activate() here
@@ -6319,7 +6318,7 @@
     var stages = document.querySelectorAll('.hw-stage');
     var arrows = document.querySelectorAll('.hw-arrow');
     stages.forEach(function(stage, i){
-      /* Skip the Get Paid stage — its state is managed by the billing
+      /* Skip the Get Paid stage, its state is managed by the billing
          animation, not by which pane is active. */
       if (stage.getAttribute('data-pane-key') === 'paid') {
         /* When leaving billing for any earlier pane, clear paid state. */
@@ -6387,7 +6386,7 @@
      - Pauses when the browser tab is hidden.
      - Stops permanently once the user clicks a tab.
      ---------------------------------------------------------- */
-  /* Rotation unlocked 2026-05-26 — full 4-pane cycle:
+  /* Rotation unlocked 2026-05-26, full 4-pane cycle:
      Scheduling → Patient Intake → Consult Complete (Documentation) →
      Medical Billing → back to Scheduling. Get Paid is shown as the
      5th workflow stage but doesn't have its own pane (it's the final
@@ -6482,7 +6481,7 @@
 })();
 
 /* ============================================================
-   Reimbursement calculator — live update on input change
+   Reimbursement calculator, live update on input change
    ============================================================ */
 (function(){
   'use strict';

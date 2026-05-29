@@ -1,5 +1,5 @@
 /* ============================================================
-   MEDME BRAND TOKENS — per Brandguide v1.0 (Feb 2022)
+   MEDME BRAND TOKENS, per Brandguide v1.0 (Feb 2022)
    Shared stylesheet for every page in the mockup.
    ============================================================ */
 :root {
@@ -9,7 +9,7 @@
   --matcha: #C3C430;
 
   /* Tints */
-  --indigo-dark: #042B3B;          /* deepest navy — emphasis boxes on dark tiles */
+  --indigo-dark: #042B3B;          /* deepest navy, emphasis boxes on dark tiles */
   --indigo-95: #0a4a63;
   --indigo-80: #1f5670;
   --indigo-12: rgba(6,62,84,0.12);
@@ -23,7 +23,7 @@
   --black: #000000;
   --white: #FFFFFF;
 
-  /* Type stacks — Montserrat used for both display and body
+  /* Type stacks, Montserrat used for both display and body
      (Urbanist removed per design direction). */
   --font-display: "Montserrat", system-ui, -apple-system, sans-serif;
   --font-body:    "Montserrat", system-ui, -apple-system, sans-serif;
@@ -41,8 +41,8 @@
 
   /* Spacing */
   --space-section: clamp(4rem, 8vw, 7rem);
-  --container: 1440px;        /* wide page frame — matches Attio (90rem) */
-  --container-narrow: 720px;  /* tight text column — ~60–70 chars per line */
+  --container: 1440px;        /* wide page frame, matches Attio (90rem) */
+  --container-narrow: 720px;  /* tight text column, ~60–70 chars per line */
   /* Interior gutter between the container's side-hairline and content.
      Token is referenced by .tile__inner, .trust .wrap, .cta-band .wrap
      so every section type stays in sync. Stepped via media queries
@@ -147,11 +147,11 @@ section { padding-block: var(--space-section); }
 .text-on-indigo { color: rgba(250,249,245,0.85); }
 
 /* ============================================================
-   BUTTON SYSTEM — unified across the site
+   BUTTON SYSTEM, unified across the site
    Base: .btn   |   Sizes: .btn--sm / .btn--lg
-   Variants: .btn-primary--accent (matcha) — primary action
-             .btn-primary          (indigo) — secondary action
-             .btn-ghost            (outline) — tertiary action
+   Variants: .btn-primary--accent (matcha), primary action
+             .btn-primary          (indigo), secondary action
+             .btn-ghost            (outline), tertiary action
              + .btn-ghost--on-indigo  (ghost on dark surface)
    One radius (full pill 999px), one font (Montserrat 600),
    one motion system.
@@ -190,7 +190,7 @@ section { padding-block: var(--space-section); }
 .btn--sm { font-size: 13px; padding: 8px 16px; gap: 6px; }
 .btn--lg { font-size: 16px; padding: 14px 26px; gap: 10px; }
 
-/* Primary action — matcha (the brand's single accent for "click me") */
+/* Primary action, matcha (the brand's single accent for "click me") */
 .btn-primary--accent {
   background: var(--matcha);
   color: var(--indigo);
@@ -205,7 +205,7 @@ section { padding-block: var(--space-section); }
               0 6px 20px rgba(195, 196, 48, 0.45);
 }
 
-/* Secondary action — solid indigo */
+/* Secondary action, solid indigo */
 .btn-primary {
   background: var(--indigo);
   color: var(--seashell);
@@ -217,7 +217,7 @@ section { padding-block: var(--space-section); }
   color: var(--matcha);
 }
 
-/* Ghost / tertiary — outlined, low emphasis */
+/* Ghost / tertiary, outlined, low emphasis */
 .btn-ghost {
   background: transparent;
   color: var(--indigo);
@@ -228,7 +228,7 @@ section { padding-block: var(--space-section); }
   border-color: var(--indigo);
 }
 
-/* Ghost on dark surface — used on indigo tiles */
+/* Ghost on dark surface, used on indigo tiles */
 .btn-ghost--on-indigo {
   color: var(--seashell);
   border-color: rgba(250, 249, 245, 0.30);
@@ -238,7 +238,7 @@ section { padding-block: var(--space-section); }
   border-color: var(--seashell);
 }
 
-/* Arrow icon inside buttons — subtle slide on hover */
+/* Arrow icon inside buttons, subtle slide on hover */
 .btn .arrow {
   transition: transform 0.18s ease;
   display: inline-block;
@@ -814,8 +814,8 @@ footer.site-footer {
 .table .check { color: var(--matcha); font-weight: 700; }
 .table .x { color: var(--indigo-80); opacity: 0.5; }
 
-/* ============== MOBILE NAV — hamburger + drawer ============== */
-/* Hamburger button — hidden on desktop, shown on mobile. Three lines
+/* ============== MOBILE NAV, hamburger + drawer ============== */
+/* Hamburger button, hidden on desktop, shown on mobile. Three lines
    that animate into an X when the drawer is open. */
 .nav__hamburger {
   display: none;
@@ -843,7 +843,7 @@ footer.site-footer {
 .nav__hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .nav__hamburger:focus-visible { outline: 2px solid var(--matcha); outline-offset: 2px; }
 
-/* Drawer panel — slides down from the nav on mobile. Hidden on
+/* Drawer panel, slides down from the nav on mobile. Hidden on
    desktop and when aria-hidden is true. */
 .nav-drawer {
   display: none;
@@ -933,7 +933,7 @@ footer.site-footer {
 }
 
 /* ============================================================
-   NAV DROPDOWNS — base hide/show behaviour
+   NAV DROPDOWNS, base hide/show behaviour
    Lives in the shared stylesheet so EVERY page that uses the
    nav partial gets the right dropdown UX (hidden by default,
    visible on :hover / :focus-within / [aria-expanded=true]).
@@ -1015,10 +1015,10 @@ footer.site-footer {
 
 /* ============================================================
    NAV DROPDOWN ITEMS (flat-list, used by Pharmacy / Resources /
-   Partners — anything that isn't the Platform mega-menu).
+   Partners, anything that isn't the Platform mega-menu).
    Linear-style: text-only, no leading icon. Title block above,
    short description below. Icon spans (.nav__dropdown-icon) are
-   intentionally not styled — if any markup still emits one it
+   intentionally not styled, if any markup still emits one it
    stays hidden via the rule below.
    ============================================================ */
 .nav__dropdown-link {
@@ -1051,7 +1051,7 @@ footer.site-footer {
 }
 
 /* ============================================================
-   NAV PILL TAGS — "Add-on" / "New" / "ref" badges that sit
+   NAV PILL TAGS, "Add-on" / "New" / "ref" badges that sit
    inline next to a title. Visually explicit pill, normal-case,
    small. Variants differ only in color so the meaning reads
    at a glance.
@@ -1076,12 +1076,12 @@ footer.site-footer {
   white-space: nowrap;
 }
 .nav__tag--new {
-  /* New: indigo fill, seashell text — louder, signals fresh */
+  /* New: indigo fill, seashell text, louder, signals fresh */
   background: var(--indigo);
   color: var(--seashell);
 }
 .nav__tag--ref {
-  /* ref: outlined, low-key — "this lives elsewhere" */
+  /* ref: outlined, low-key, "this lives elsewhere" */
   background: transparent;
   color: var(--indigo-80);
   border-color: var(--indigo-12);
@@ -1108,7 +1108,7 @@ footer.site-footer {
   font-weight: 600;
   transition: background 0.2s, border-color 0.2s;
 }
-/* Light-surface variant — used in the nav (white bg) */
+/* Light-surface variant, used in the nav (white bg) */
 .nav__region.region-switch .region-switch__trigger {
   background: transparent;
   border-color: rgba(6, 62, 84, 0.18);
@@ -1165,7 +1165,7 @@ footer.site-footer {
 .region-switch__item,
 .util-bar .region-switch__menu .region-switch__item {
   /* The second selector beats .util-bar .util-right a (specificity 0,2,1)
-     which would otherwise turn the item text Seashell — invisible on a
+     which would otherwise turn the item text Seashell, invisible on a
      near-white dropdown menu surface. */
   display: flex;
   align-items: center;
@@ -1338,7 +1338,7 @@ a.nav__dropdown-group-label:hover {
 
 /* ============================================================
    MOBILE NAV DROPDOWN (≤ 980px)
-   Hover doesn't work on touch — switch to aria-expanded toggling
+   Hover doesn't work on touch, switch to aria-expanded toggling
    via the click handler in site.js. Dropdown becomes a vertical
    accordion under the trigger.
    ============================================================ */
@@ -1380,10 +1380,10 @@ a.nav__dropdown-group-label:hover {
 }
 
 /* ============================================================
-   VISUAL POLISH LAYER — applies site-wide
+   VISUAL POLISH LAYER, applies site-wide
    ============================================================ */
 
-/* 1. Count-up — tabular nums + pulse on completion */
+/* 1. Count-up, tabular nums + pulse on completion */
 .proof-tile__value,
 .num,
 .trust__stat .num,
@@ -1408,7 +1408,7 @@ a.nav__dropdown-group-label:hover {
               0 0 0 1.5px rgba(195, 196, 48, 0.55) !important;
 }
 
-/* 2b. Bento 2.0 — rounded + lift + ::after explore arrow */
+/* 2b. Bento 2.0, rounded + lift + ::after explore arrow */
 .bcard, .pcard, .acard {
   border-radius: 20px !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -1454,14 +1454,14 @@ a.nav__dropdown-group-label:hover {
   opacity: 0.7;
 }
 
-/* 4. Mega-menu — Matcha edge glow when open */
+/* 4. Mega-menu, Matcha edge glow when open */
 .nav__item-group:hover .nav__dropdown,
 .nav__item-group[aria-expanded="true"] .nav__dropdown {
   box-shadow: 0 16px 48px rgba(6, 62, 84, 0.22),
               0 0 0 1.5px rgba(195, 196, 48, 0.30) !important;
 }
 
-/* 5. Hero chrome — pharmacy-flavored trust pill */
+/* 5. Hero chrome, pharmacy-flavored trust pill */
 .hero__device { position: relative; }
 .hero-chrome {
   position: absolute;
@@ -1499,7 +1499,7 @@ a.nav__dropdown-group-label:hover {
   font-weight: 900;
 }
 
-/* 6. Custom cursor follow — hidden on touch / reduced motion */
+/* 6. Custom cursor follow, hidden on touch / reduced motion */
 .cursor-follow {
   position: fixed;
   top: 0; left: 0;
@@ -1591,7 +1591,7 @@ a.nav__dropdown-group-label:hover {
    ---------------------------------------------------------------- */
 .how__steps { --progress: 0%; }
 
-/* The filling Matcha progress line — sits over the base connector */
+/* The filling Matcha progress line, sits over the base connector */
 .how__steps::after {
   content: "";
   position: absolute;
@@ -1614,7 +1614,7 @@ a.nav__dropdown-group-label:hover {
               opacity 0.4s ease;
 }
 
-/* Step__num base — already styled inline in homepage src; we add the
+/* Step__num base, already styled inline in homepage src; we add the
    transition + the checkmark layer here, so the cross-fade works. */
 .how__steps .step .step__num {
   position: relative;
@@ -1642,7 +1642,7 @@ a.nav__dropdown-group-label:hover {
   pointer-events: none;
 }
 
-/* PAST — completed: dimmed step, Matcha check-mark badge */
+/* PAST, completed: dimmed step, Matcha check-mark badge */
 .how__steps .step.step--past {
   opacity: 0.62;
 }
@@ -1657,7 +1657,7 @@ a.nav__dropdown-group-label:hover {
   transform: scale(1);
 }
 
-/* ACTIVE — current: prominent lift, Matcha glow */
+/* ACTIVE, current: prominent lift, Matcha glow */
 .how__steps .step.step--active {
   opacity: 1;
   transform: translateY(-8px);
@@ -1675,7 +1675,7 @@ a.nav__dropdown-group-label:hover {
   color: var(--seashell);
 }
 
-/* FUTURE — not yet: very subtle */
+/* FUTURE, not yet: very subtle */
 .how__steps .step.step--future {
   opacity: 0.38;
 }
@@ -1699,12 +1699,12 @@ a.nav__dropdown-group-label:hover {
    LIQUID GLASS PREMIUM POLISH
    Subtle specular highlights + frosted backdrops on the key
    surfaces: sticky nav, proof tiles, dashboard mockup, bento
-   cards. The trick is restraint — one specular gradient and
+   cards. The trick is restraint, one specular gradient and
    one soft edge per surface. Together they tie the page into
    a "glass under light" aesthetic without overdoing it.
    ============================================================ */
 
-/* Sticky nav — solid seashell surface (no blur). Transitions handle the
+/* Sticky nav, solid seashell surface (no blur). Transitions handle the
    pill-shape morph on scroll. */
 .nav {
   background: rgba(250, 249, 245, 0.96) !important;  /* seashell @ 96% opacity */
@@ -1727,13 +1727,13 @@ a.nav__dropdown-group-label:hover {
   transition: opacity 0.35s ease, left 0.35s ease, right 0.35s ease;
 }
 
-/* Full-width blur backdrop behind the nav when scrolled — covers the
+/* Full-width blur backdrop behind the nav when scrolled, covers the
    entire nav area edge-to-edge, with a true backdrop blur (no white wash)
    and a smooth fade-out at the bottom so there's no visible cut line
    where the blur ends. The pill itself (z-index 100) sits on top. */
-/* (Blur backdrop pseudo removed — nav is solid white at all times.) */
+/* (Blur backdrop pseudo removed, nav is solid white at all times.) */
 
-/* Pill stays a clean, solid-ish surface — no backdrop-filter on the
+/* Pill stays a clean, solid-ish surface, no backdrop-filter on the
    pill itself. The ::before pseudo above still provides the wider
    full-width blur ring behind it. */
 .nav.is-scrolled {
@@ -1741,7 +1741,7 @@ a.nav__dropdown-group-label:hover {
   backdrop-filter: none !important;
 }
 
-/* Pill state — triggered by `.is-scrolled` class added in site.js when
+/* Pill state, triggered by `.is-scrolled` class added in site.js when
    the user scrolls past ~40px. Becomes a floating, rounded panel that
    inset itself from the viewport edges + lifts on a soft shadow. */
 .nav.is-scrolled {
@@ -1778,7 +1778,7 @@ a.nav__dropdown-group-label:hover {
   .nav, .nav::after { transition: none; }
 }
 
-/* Proof tiles — Indigo with a specular light from top-left */
+/* Proof tiles, Indigo with a specular light from top-left */
 .proof-tile {
   background:
     linear-gradient(135deg,
@@ -1799,7 +1799,7 @@ a.nav__dropdown-group-label:hover {
   border-radius: inherit;
 }
 
-/* Dashboard mockup — glass panel with top-edge specular */
+/* Dashboard mockup, glass panel with top-edge specular */
 .proof .proof__dashboard {
   position: relative;
   isolation: isolate;
@@ -1815,7 +1815,7 @@ a.nav__dropdown-group-label:hover {
   border-radius: inherit;
 }
 
-/* Bento cards — soft Matcha-tinted top-edge highlight on hover */
+/* Bento cards, soft Matcha-tinted top-edge highlight on hover */
 .bcard {
   position: relative;
 }
@@ -1838,7 +1838,7 @@ a.nav__dropdown-group-label:hover {
 }
 
 /* ============================================================
-   COOKIE CONSENT — banner + preferences modal
+   COOKIE CONSENT, banner + preferences modal
    Lives on every page (included from util-bar partial).
    Designed for GDPR / CCPA / PIPEDA / Quebec Law 25 compliance:
    - "Reject all" button has equal visual weight to "Accept all"
@@ -2106,7 +2106,7 @@ a.nav__dropdown-group-label:hover {
   .cookie-banner, .cookie-modal__panel { animation: none; }
 }
 
-/* Hero h1 — target 3 lines by reducing font + balancing line widths.
+/* Hero h1, target 3 lines by reducing font + balancing line widths.
    The clamp goes a notch smaller than the default 3.5rem max so the
    sentence "From appointment to paid claim, in one pharmacy-built
    workflow." wraps to 3 lines on common desktop viewports (1200–1600px),
@@ -2127,20 +2127,20 @@ a.nav__dropdown-group-label:hover {
 .proof-heatmap span   { will-change: opacity; }
 
 /* ============================================================
-   APPLE-INSPIRED TILE SYSTEM (POC — US homepage)
+   APPLE-INSPIRED TILE SYSTEM (POC, US homepage)
    Additive layer that maps the Apple visual grammar onto MedMe
    brand colors + fonts. Indigo as the "ink + dark surface,"
    matcha as the dark-tile accent, seashell as the parchment.
    ============================================================ */
 :root {
-  /* Surface tokens — light surfaces unified on pure white (#FFFFFF);
+  /* Surface tokens, light surfaces unified on pure white (#FFFFFF);
      dark surfaces stay indigo. Seashell is retained as a token for any
      legacy callers but is no longer used as a default background. */
   --surface-canvas:    var(--white);
   --surface-parchment: var(--white);
   --surface-dark:      var(--indigo);
 
-  /* Per-surface accent + accent-text — Option C:
+  /* Per-surface accent + accent-text, Option C:
      light tiles use indigo, dark tiles use matcha.
      .tile--* rules below override these inside each surface. */
   --accent:      var(--indigo);
@@ -2162,7 +2162,7 @@ a.nav__dropdown-group-label:hover {
   --r-lg:   18px;
   --r-pill: 9999px;
 
-  /* The single drop-shadow — for product renders only */
+  /* The single drop-shadow, for product renders only */
   --shadow-product: 3px 5px 30px rgba(0, 0, 0, 0.22);
 
   /* Hairlines */
@@ -2182,7 +2182,7 @@ a.nav__dropdown-group-label:hover {
   border-top: 1px solid var(--indigo-08);
 }
 /* ============================================================
-   CONTAINER SIDE-HAIRLINES — vertical 1px lines at the left and
+   CONTAINER SIDE-HAIRLINES, vertical 1px lines at the left and
    right edges of var(--container), spanning the full height of
    every section type (.tile / .trust / .cta-band). On viewports
    narrower than the container, the lines clamp to 1.5rem from
@@ -2208,7 +2208,7 @@ a.nav__dropdown-group-label:hover {
 .trust, .cta-band { position: relative; }
 
 /* All tile variants now share the seashell page surface. .tile--dark
-   is intentionally aliased to the same look as .tile--light — the
+   is intentionally aliased to the same look as .tile--light, the
    navy variant was retired 2026-05-29 in favor of an all-light
    visual rhythm. The class name is preserved so existing inline
    overrides (`.tile--dark .X`) still cascade if pages haven't been
@@ -2222,13 +2222,13 @@ a.nav__dropdown-group-label:hover {
 .tile--dark h4  { color: var(--indigo); }
 
 /* ============================================================
-   NAVY SECTION VARIANT — opt-in indigo treatment for sections
+   NAVY SECTION VARIANT, opt-in indigo treatment for sections
    that need to "punch" against the all-light page rhythm
    (typically the final CTA above the footer). Inverts bg/text,
    re-tints the hairline dividers, and flips the pill buttons
    to matcha so they read on indigo.
-   Uses --indigo-95 (#0a4a63) — a hair lighter than the base
-   --indigo (#063E54) the footer uses — so the section reads as
+   Uses --indigo-95 (#0a4a63), a hair lighter than the base
+   --indigo (#063E54) the footer uses, so the section reads as
    a distinct band from the footer instead of bleeding into it.
    ============================================================ */
 .tile--navy {
@@ -2272,7 +2272,7 @@ a.nav__dropdown-group-label:hover {
 .cta-band .wrap { position: relative; z-index: 1; padding-inline: var(--tile-pad-x); }
 
 /* ============================================================
-   TILE HEAD — Linear-style 2-column split (default 2026-05-29).
+   TILE HEAD, Linear-style 2-column split (default 2026-05-29).
    Left column: kicker + headline.
    Right column: lead description + any CTA / button row.
    Body content for the section sits BELOW the head as a single
@@ -2282,7 +2282,7 @@ a.nav__dropdown-group-label:hover {
    ROLLBACK (single section): add the .tile__head--centered
    modifier to that one .tile__head.
    ROLLBACK (whole site): swap the default rule below with the
-   `.tile__head--centered` rule's body — i.e. make centered the
+   `.tile__head--centered` rule's body, i.e. make centered the
    default and split the opt-in. The centered rule is kept here
    intact for that purpose.
    ============================================================ */
@@ -2343,7 +2343,7 @@ a.nav__dropdown-group-label:hover {
   text-align: left;
 }
 
-/* Rollback variant — restores the original centered single-column
+/* Rollback variant, restores the original centered single-column
    look (kicker / headline / lead stacked, centered, max 760px). */
 .tile__head--centered {
   display: block;
@@ -2362,7 +2362,7 @@ a.nav__dropdown-group-label:hover {
   text-wrap: balance;
 }
 .h-display {
-  /* Section heading size — reduced 2026-05-29.
+  /* Section heading size, reduced 2026-05-29.
      Was: var(--apple-h1) = clamp(2.125rem, 4vw, 3.25rem). */
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   line-height: 1.1;
@@ -2413,7 +2413,7 @@ a.nav__dropdown-group-label:hover {
 .kicker {
   font-family: var(--font-body);
   font-weight: 600;
-  /* Title Case 2026-05-29 — was UPPERCASE with letter-spacing 0.04em.
+  /* Title Case 2026-05-29, was UPPERCASE with letter-spacing 0.04em.
      Site-wide rule: no text-transform: uppercase unless explicitly
      requested. Reduced tracking + slight size bump since Title Case
      doesn't need wide letter-spacing to read evenly. */
@@ -2424,10 +2424,10 @@ a.nav__dropdown-group-label:hover {
   display: inline-block;
   margin-bottom: 1rem;
 }
-.tile--dark .kicker { color: var(--matcha); }   /* legacy override — same color, kept for safety */
+.tile--dark .kicker { color: var(--matcha); }   /* legacy override, same color, kept for safety */
 
 /* ============== PILL BUTTONS (single accent per surface) ============== */
-/* .pill / .pill--solid / .pill--ghost — surface-aware button system.
+/* .pill / .pill--solid / .pill--ghost, surface-aware button system.
    On LIGHT tiles, primary action = navy. On DARK tiles, primary action =
    matcha (matcha pops against indigo; navy on navy would disappear). */
 .pill {
@@ -2478,7 +2478,7 @@ a.nav__dropdown-group-label:hover {
 }
 
 /* Dark-tile buttons: flat filled matcha (no glossy shadow). Hover
-   inverts to an outlined style — transparent bg + matcha border/text. */
+   inverts to an outlined style, transparent bg + matcha border/text. */
 .tile--dark .pill--solid,
 .tile--dark .pill--ghost {
   background: var(--matcha);
@@ -2509,7 +2509,7 @@ a.nav__dropdown-group-label:hover {
 .pill-cta-row--center { justify-content: center; width: 100%; }
 
 /* ============================================================
-   PULSE RINGS — concentric matcha rings emanating from a CTA.
+   PULSE RINGS, concentric matcha rings emanating from a CTA.
    Drop a <span class="pulse-rings"> with 4 .pulse-ring children
    inside a .pill-cta-row to get the radar/sonar effect behind the
    pill button. Each ring starts small + faint, expands to ~3.5×

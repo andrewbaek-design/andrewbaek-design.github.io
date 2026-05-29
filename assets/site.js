@@ -1,5 +1,5 @@
 /* ============================================================
-   site.js — universal nav + region-switcher behaviour
+   site.js, universal nav + region-switcher behaviour
    Loaded by EVERY page (linked from the nav partial).
    Page-specific JS (hero scenes, marquee, reveal observer) stays
    inline in src/mockup-*-homepage.html.
@@ -301,7 +301,7 @@
       window.MedMeConsent = existing;
     }
 
-    /* Event delegation — works regardless of when banner/modal mounts */
+    /* Event delegation, works regardless of when banner/modal mounts */
     document.addEventListener('click', function (e) {
       if (e.target.closest('[data-consent-accept]')) {
         writeConsent({ functional: true, analytics: true, marketing: true });
@@ -411,7 +411,7 @@
           line.style.strokeDashoffset = '0';
         });
 
-        /* Heatmap stagger fade — preserve each cell's original opacity */
+        /* Heatmap stagger fade, preserve each cell's original opacity */
         var cells = en.target.querySelectorAll('.proof-heatmap span');
         cells.forEach(function (cell, i) {
           var saved = cell.style.opacity || '1';
