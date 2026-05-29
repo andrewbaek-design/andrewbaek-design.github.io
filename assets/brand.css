@@ -43,6 +43,11 @@
   --space-section: clamp(4rem, 8vw, 7rem);
   --container: 1440px;        /* wide page frame — matches Attio (90rem) */
   --container-narrow: 720px;  /* tight text column — ~60–70 chars per line */
+  /* Interior gutter between the container's side-hairline and content.
+     Token is referenced by .tile__inner, .trust .wrap, .cta-band .wrap
+     so every section type stays in sync. Stepped via media queries
+     below the :root block. */
+  --tile-pad-x: 5rem;
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
@@ -53,6 +58,11 @@
   --shadow-card: 0 8px 40px rgba(6,62,84,0.12);
   --shadow-deep: 0 20px 60px rgba(6,62,84,0.18);
 }
+
+/* Side-gutter step-down for smaller viewports.
+   Desktop default = 5rem (80px) | Tablet = 3rem (48px) | Mobile = 1.5rem (24px) */
+@media (max-width: 1100px) { :root { --tile-pad-x: 3rem; } }
+@media (max-width: 700px)  { :root { --tile-pad-x: 1.5rem; } }
 
 /* ============== RESET / BASE ============== */
 *, *::before, *::after { box-sizing: border-box; }
@@ -348,7 +358,7 @@ section { padding-block: var(--space-section); }
 }
 
 /* ============== TRUST BAND ============== */
-.trust { background: var(--indigo); color: var(--seashell); padding: 3rem 0; border-top: 1px solid rgba(250, 249, 245, 0.08); }
+.trust { background: var(--seashell); color: var(--indigo); padding: 3rem 0; border-top: 1px solid var(--indigo-08); }
 .trust__top { display: grid; grid-template-columns: minmax(220px, 1fr) 2fr; gap: 3rem; align-items: center; }
 .trust__label .eyebrow { color: var(--matcha); }
 .trust__label .stat-line {
@@ -639,13 +649,15 @@ section { padding-block: var(--space-section); }
 .story-metric .label { font-size: var(--fs-small); color: rgba(250,249,245,0.85); margin-top: 0.4rem; }
 
 /* ============== CTA BAND ============== */
-.cta-band { background: var(--indigo); color: var(--seashell); }
+/* Light-themed 2026-05-29 (was indigo). Keeps the same 2-col grid
+   but inherits the section-divider hairlines that .tile sections get. */
+.cta-band { background: var(--seashell); color: var(--indigo); border-top: 1px solid var(--indigo-08); }
 .cta-band .wrap {
   display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 2rem; align-items: center;
 }
-.cta-band h2 { color: var(--seashell); font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.1; max-width: 720px; }
-.cta-band p { color: rgba(250,249,245,0.85); margin-top: 1rem; }
+.cta-band h2 { color: var(--indigo); font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.1; max-width: 720px; }
+.cta-band p { color: var(--indigo-80); margin-top: 1rem; }
 .cta-band__buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: flex-end; }
 
 /* ============== FOOTER ============== */
@@ -2166,29 +2178,60 @@ a.nav__dropdown-group-label:hover {
   padding-block: var(--tile-pad-y);
   padding-inline: 1.5rem;
   position: relative;
-  /* Attio-style hairline divider between sections. Sits at the
-     TOP of each tile so adjacent sections get a single 1px line.
-     Color is overridden on .tile--dark below so the line stays
-     visible against the indigo surface. */
+  /* Attio-style hairline divider between sections (top edge). */
   border-top: 1px solid var(--indigo-08);
 }
-/* Light tiles + parchment tiles share the warm seashell page surface.
-   Cards (.h-card) keep --surface-canvas (white) so they pop on seashell. */
-.tile--light     { background: var(--seashell); color: var(--indigo); }
-.tile--parchment { background: var(--seashell); color: var(--indigo); }
-.tile--dark      {
-  background: var(--surface-dark);
-  color: var(--seashell);
-  --accent:      var(--matcha);
-  --accent-text: var(--indigo);
-  --accent-soft: #d4d540;
-  /* Seashell-tinted hairline reads against the dark indigo bg. */
-  border-top-color: rgba(250, 249, 245, 0.08);
+/* ============================================================
+   CONTAINER SIDE-HAIRLINES — vertical 1px lines at the left and
+   right edges of var(--container), spanning the full height of
+   every section type (.tile / .trust / .cta-band). On viewports
+   narrower than the container, the lines clamp to 1.5rem from
+   the viewport edge so they never leave the visible area.
+   Pointer-events none so they don't intercept clicks.
+   ============================================================ */
+.tile::before,  .tile::after,
+.trust::before, .trust::after,
+.cta-band::before, .cta-band::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--indigo-08);
+  pointer-events: none;
+  z-index: 0;
 }
-.tile--dark h1, .tile--dark h2, .tile--dark h3, .tile--dark h4 { color: var(--seashell); }
+.tile::before,  .trust::before,  .cta-band::before { left:  max(1.5rem, calc(50% - var(--container) / 2)); }
+.tile::after,   .trust::after,   .cta-band::after  { right: max(1.5rem, calc(50% - var(--container) / 2)); }
+/* Section types other than .tile need position:relative so the
+   absolute hairlines anchor to them, not to a wider ancestor. */
+.trust, .cta-band { position: relative; }
 
-.tile__inner { max-width: var(--container); margin: 0 auto; }
-.tile__inner--narrow { max-width: 920px; margin: 0 auto; }
+/* All tile variants now share the seashell page surface. .tile--dark
+   is intentionally aliased to the same look as .tile--light — the
+   navy variant was retired 2026-05-29 in favor of an all-light
+   visual rhythm. The class name is preserved so existing inline
+   overrides (`.tile--dark .X`) still cascade if pages haven't been
+   re-tagged; those rules are now dead-code but harmless. */
+.tile--light,
+.tile--parchment,
+.tile--dark      { background: var(--seashell); color: var(--indigo); }
+.tile--dark h1,
+.tile--dark h2,
+.tile--dark h3,
+.tile--dark h4  { color: var(--indigo); }
+
+/* Interior gutter (padding-inline = var(--tile-pad-x)) keeps content
+   from butting up against the side-hairline pseudo-elements. The token
+   steps down on smaller viewports so the gutter never eats the whole
+   content area on mobile. */
+.tile__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; z-index: 1; }
+.tile__inner--narrow { max-width: 920px; margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; z-index: 1; }
+/* Same gutter for other top-level section content wrappers so the
+   side-hairline pseudos always sit behind content AND every section
+   type shares the same horizontal rhythm. */
+.trust .wrap,
+.cta-band .wrap { position: relative; z-index: 1; padding-inline: var(--tile-pad-x); }
 
 /* ============================================================
    TILE HEAD — Linear-style 2-column split (default 2026-05-29).

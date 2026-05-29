@@ -17,7 +17,7 @@ page.title: MedMe — Canada Homepage
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=44">
+<link rel="stylesheet" href="/assets/brand.css?v=47">
 
 <script type="application/ld+json">
 {
@@ -58,7 +58,7 @@ page.title: MedMe — Canada Homepage
        divider visible on this light .trust variant. */
     border-top-color: var(--indigo-08) !important;
   }
-  .trust .wrap { max-width: var(--container); margin: 0 auto; padding: 0 1.5rem; }
+  .trust .wrap { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); }
   /* Override brand.css's 2-column grid so the header centers properly */
   .trust__top {
     display: block !important;
@@ -587,8 +587,10 @@ page.title: MedMe — Canada Homepage
   .visual-wrap {
     position: relative;
     margin: 1.5rem auto 0;
+    /* Bottom padding so the mockup has breathing room before the
+       next section's hairline divider. */
+    padding: 0 2rem 4rem;
     max-width: var(--container);
-    padding: 0 2rem;
   }
   /* visual-halo intentionally empty — green/indigo gradient halo
      removed for a cleaner page surface. */
@@ -2004,17 +2006,19 @@ page.title: MedMe — Canada Homepage
      the bento). Card-level invert: dark bg + seashell text inside
      a light platform section.
      ============================================================ */
+  /* Feature card — light theme 2026-05-29 (was indigo-dark navy).
+     White card with a matcha accent border to keep "featured" weight. */
   .h-card--feature {
-    background: var(--indigo-dark) !important;
-    border-color: var(--indigo-dark) !important;
-    color: var(--seashell);
+    background: var(--white) !important;
+    border-color: rgba(195, 196, 48, 0.55) !important;
+    border-width: 1.5px !important;
+    color: var(--indigo);
     gap: 0.5rem;
   }
-  .h-card--feature h3 { color: var(--seashell); margin-top: 0; }
-  .h-card--feature p { color: rgba(250, 249, 245, 0.8); }
-  .h-card--feature .feat-list { color: #FFFFFF; }
+  .h-card--feature h3 { color: var(--indigo); margin-top: 0; }
+  .h-card--feature p { color: var(--indigo-80); }
+  .h-card--feature .feat-list { color: var(--indigo-80); }
   .h-card--feature .feat-list li::before { background: var(--matcha); }
-  /* Medical Billing pill: matcha solid since the card itself is dark navy */
   .h-card--feature .pill--solid {
     background: var(--matcha);
     color: var(--indigo);
@@ -2519,11 +2523,9 @@ page.title: MedMe — Canada Homepage
   .tile--prominent {
     position: relative;
   }
-  /* Calc section uses the lighter dark shade so it sits visibly distinct
-     from the CTA tile below it (which keeps the base --indigo). */
-  #calc.tile--prominent {
-    background: var(--indigo-95) !important;
-  }
+  /* Calc section — light theme 2026-05-29 (was --indigo-95 navy).
+     Hairline divider + matcha accent in .tile__head::before
+     carry the visual emphasis now. */
   .tile--prominent .tile__head { position: relative; padding-top: 1rem; }
   .tile--prominent .tile__head::before {
     content: "";
@@ -2760,7 +2762,7 @@ page.title: MedMe — Canada Homepage
     font-size: 0.875rem;
     color: rgba(250, 249, 245, 0.72);
   }
-  .tile--light .feat-list { color: rgba(6, 62, 84, 0.72); }
+  .tile--dark .feat-list { color: rgba(6, 62, 84, 0.72); }
   .feat-list li {
     padding-left: 1.25rem;
     position: relative;
@@ -3446,7 +3448,7 @@ page.title: MedMe — Canada Homepage
 </section>
 
 <!-- ============= 3. PLATFORM (dark — Medical Billing card uses --indigo-dark) ============= -->
-<section class="tile tile--dark" id="billing" aria-label="What's in the platform">
+<section class="tile tile--light" id="billing" aria-label="What's in the platform">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">The platform</span>
@@ -3732,7 +3734,7 @@ page.title: MedMe — Canada Homepage
 </section>
 
 <!-- ============= 4. STATS (dark) ============= -->
-<section class="tile tile--dark" aria-label="Proof at scale">
+<section class="tile tile--light" aria-label="Proof at scale">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Proof, across hundreds of pharmacies</span>
@@ -3806,7 +3808,7 @@ page.title: MedMe — Canada Homepage
 </section>
 
 <!-- ============= 6. CALCULATOR (dark — visually prominent) ============= -->
-<section class="tile tile--dark tile--prominent" id="calc" aria-label="Reimbursement calculator">
+<section class="tile tile--light tile--prominent" id="calc" aria-label="Reimbursement calculator">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Reimbursement calculator</span>
@@ -3841,7 +3843,7 @@ page.title: MedMe — Canada Homepage
 </section>
 
 <!-- ============= 8. CTA (dark — visually prominent) ============= -->
-<section class="tile tile--dark tile--prominent" aria-label="Final call to action">
+<section class="tile tile--light tile--prominent" aria-label="Final call to action">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head">
       <span class="kicker">Ready to see it on your numbers?</span>
