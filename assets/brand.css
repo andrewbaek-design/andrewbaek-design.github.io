@@ -400,10 +400,13 @@ a.nav__dropdown-group-label[aria-current="page"] {
 .trust__label { display: block; }
 .trust__label h2.h-display {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  line-height: 1.15;
+  /* Match the standard .h-display weight used elsewhere on the
+     site, so the trust headline sits at the same visual rank
+     as other section titles. */
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.1;
   margin: 0;
   color: var(--indigo);
 }
@@ -411,11 +414,13 @@ a.nav__dropdown-group-label[aria-current="page"] {
   color: var(--indigo);
   display: block;
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  /* Same as the h2 fallback above, weight matches site-wide
+     section titles. */
+  font-weight: 600;
+  letter-spacing: -0.018em;
   text-transform: none;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  line-height: 1.15;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.1;
 }
 .trust__label .eyebrow::before { display: none; }
 .trust__label .stat-line {
