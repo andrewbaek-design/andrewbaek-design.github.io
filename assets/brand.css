@@ -305,9 +305,10 @@ section { padding-block: var(--space-section); }
   color: var(--indigo);
 }
 a.nav__dropdown-group-label[aria-current="page"] {
-  /* Group label keeps its own treatment — text turns indigo + the
-     hairline underline tints matcha, same as :hover. */
-  color: var(--indigo);
+  /* Group label stays matcha to match the Foundation column header
+     and Pharmacy EHR / AI Assistants headers visually. Underline
+     turns solid matcha as the current-page affordance. */
+  color: var(--matcha);
   border-bottom-color: var(--matcha);
 }
 .nav__cta { display: flex; gap: 0.75rem; align-items: center; }
@@ -1405,13 +1406,17 @@ footer.site-footer {
   padding-bottom: 0.4rem;
   border-bottom: 1px solid var(--indigo-12);
 }
-/* When the group label is itself a link to the section overview page. */
+/* When the group label is itself a link to the section overview page.
+   Keep the same matcha color across :hover and [aria-current] so all
+   three column headers (Pharmacy EHR / AI Assistants / Foundation)
+   stay visually consistent. Hover affordance comes from the
+   border-bottom shifting to solid matcha. */
 a.nav__dropdown-group-label {
   text-decoration: none;
   transition: color 0.18s ease, border-color 0.18s ease;
 }
 a.nav__dropdown-group-label:hover {
-  color: var(--indigo);
+  color: var(--matcha);
   border-bottom-color: var(--matcha);
 }
 .nav__dropdown-tile {
