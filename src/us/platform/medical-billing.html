@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Medical Billing, MedMe Health</title>
-<meta name="description" content="Convert every documented encounter into a clean Medicare Part B claim. Eligibility, CPT/HCPCS coding, time tracking, claim submission, and denial management in one workflow, built for the services pharmacy is paid to deliver." />
+<meta name="description" content="End-to-end medical billing for pharmacy. Patient estimations, eligibility checks, coding and claim generation, submission, denials management, and analytics, all in one workflow built to maximize reimbursements." />
 <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/medical-billing" />
 <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,12 +13,13 @@
 <link rel="stylesheet" href="/assets/brand.css?v=64" />
 <style>
   /* ============================================================
-     MEDICAL BILLING product page. Hero with a billing-console
-     mockup as faded BG (claims, $ unlocked, denials worked).
-     Five-step billing chain visualized as a horizontal flow.
-     Three "where we win" dark feature cards. Stat band.
-     Customer story. Navy closing CTA. Mirrors the enterprise
-     template's structure.
+     MEDICAL BILLING product page. Hero is a Claim Analytics
+     dashboard recreated from the source SVG (light-grey outer
+     chrome, white inner panels, 4 KPI tiles, animated bar chart,
+     claims-table card). Content follows the Generic Billing AD,
+     Page 6 PDF: 5 RCM lifecycle capabilities, a 78%-vs-PBM
+     callout, a 3-step onboarding guide for pharmacies new to
+     medical billing, and a six-cell "what sets us apart" band.
      ============================================================ */
 
   /* ====== SUB-HERO ============================================= */
@@ -26,90 +27,269 @@
   .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
   .sub-hero__bg {
     position: relative; max-width: 1120px; margin: 0 auto;
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
+    /* Mockup acts as a backdrop. Solid through the top 60% (header,
+       KPIs, chart top), then fades out so the headline can sit
+       slightly over the lower portion of the mockup without making
+       the claims rows compete with the title. */
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
     pointer-events: none;
   }
-  .sub-hero__text { text-align: center; max-width: 820px; margin: -140px auto 0; position: relative; z-index: 2; }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: -110px auto 0; position: relative; z-index: 2; }
   .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
   .sub-hero h1.h-display .accent { color: var(--matcha); }
-  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 680px; }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 720px; }
   .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-  @media (max-width: 980px) { .sub-hero__text { margin-top: -90px; } }
-  @media (max-width: 640px) { .sub-hero__text { margin-top: -60px; } }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -80px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -50px; } }
 
-  /* Billing dashboard mockup */
-  .billdash { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: 16px; padding: 20px 22px; box-shadow: 0 12px 40px rgba(6,62,84,0.06); font-family: var(--font-display); color: var(--indigo); }
-  .billdash__head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(6,62,84,0.08); }
-  .billdash__title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
-  .billdash__brand { display: inline-flex; align-items: center; color: var(--indigo); height: 22px; }
-  .billdash__brand svg { height: 22px; width: auto; display: block; }
-  .billdash__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
-  @media (max-width: 720px) { .billdash__stats { grid-template-columns: repeat(2, 1fr); } }
-  .billdash__stat { background: rgba(6,62,84,0.04); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
-  .billdash__stat-label { font-size: 11px; color: rgba(6,62,84,0.55); font-weight: 500; }
-  .billdash__stat-value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; color: var(--indigo); }
-  .billdash__stat-value .delta { font-size: 11px; color: #8a8b1c; font-weight: 600; margin-left: 6px; }
-  .billdash__queue { background: rgba(6,62,84,0.04); border-radius: 10px; padding: 14px 16px; }
-  .billdash__queue-title { font-size: 11px; color: rgba(6,62,84,0.55); font-weight: 500; margin-bottom: 10px; }
-  .billdash__row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(6,62,84,0.06); font-size: 12px; }
-  .billdash__row:last-child { border-bottom: 0; }
-  .billdash__row-code { font-weight: 600; color: var(--indigo); }
-  .billdash__row-pill { font-size: 10px; padding: 2px 8px; border-radius: 999px; font-weight: 600; }
-  .billdash__row-pill--paid { background: var(--matcha); color: var(--indigo); animation: billrow-paid 5s ease-in-out infinite; }
-  .billdash__row-pill--pending { background: rgba(6,62,84,0.08); color: var(--indigo); }
-  .billdash__row:nth-child(2) .billdash__row-pill--paid { animation-delay: 0.5s; }
-  .billdash__row:nth-child(3) .billdash__row-pill--paid { animation-delay: 1.0s; }
-  .billdash__row:nth-child(4) .billdash__row-pill--paid { animation-delay: 1.5s; }
-  @keyframes billrow-paid {
-    0%, 60%, 100% { background: var(--matcha); }
-    30%           { background: rgba(195, 196, 48, 0.4); }
+  /* ====== CLAIM ANALYTICS MOCKUP (recreated from source SVG)
+     SVG palette preserved:
+       - Outer chrome  : #F5F7F8 (light grey)
+       - Inner cards   : white
+       - Chart bars    : #16B1FF (the SVG analytics blue)
+       - Status paid   : #56CA00 (green)
+       - Status pend.  : #FFB400 (amber)
+       - Text muted    : #6B6B6B / #386576 (grey + slate)
+     ============================================================ */
+  .bd-stage { display: flex; justify-content: center; padding: 16px 12px 36px; }
+  .bd-frame {
+    width: 720px; max-width: 100%;
+    background: #F5F7F8;
+    border-radius: 26px;
+    padding: 14px;
+    box-shadow:
+      0 22px 44px -12px rgba(6, 62, 84, 0.20),
+      0 8px 16px -4px rgba(6, 62, 84, 0.10);
+    font-family: var(--font-display);
+    color: var(--indigo);
+    display: flex; flex-direction: column; gap: 10px;
   }
-  @media (prefers-reduced-motion: reduce) { .billdash__row-pill--paid { animation: none; } }
+  .bd-card { background: #fff; border-radius: 22px; padding: 16px 18px; }
 
-  /* ====== 5-STEP BILLING CHAIN ================================ */
-  .chain { position: relative; }
-  .chain__steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; position: relative; }
-  @media (max-width: 1100px) { .chain__steps { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 700px)  { .chain__steps { grid-template-columns: 1fr; } }
-  .chain__steps::before {
-    content: ""; position: absolute;
-    top: 30px; left: 6%; right: 6%;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(195,196,48,0.4) 0%, rgba(195,196,48,0.85) 50%, rgba(195,196,48,0.4) 100%);
-    z-index: 0;
+  /* Card 1: title + KPIs + chart */
+  .bd-card__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .bd-card__title { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--indigo); }
+  .bd-live { font-size: 10px; color: rgba(6, 62, 84, 0.62); font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+  .bd-live__dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #56CA00;
+    box-shadow: 0 0 0 0 rgba(86, 202, 0, 0.55);
+    animation: bd-live-pulse 2.2s ease-in-out infinite;
   }
-  @media (max-width: 1100px) { .chain__steps::before { display: none; } }
-  .chain__step { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 1.5rem 1.25rem; position: relative; z-index: 1; transition: transform 0.25s ease, border-color 0.25s ease; }
-  .chain__step:hover { transform: translateY(-3px); border-color: rgba(6,62,84,0.18); }
-  .chain__step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--matcha); color: var(--indigo); font-size: 12px; font-weight: 700; margin-bottom: 0.75rem; }
-  .chain__step h4 { margin: 0 0 0.4rem; font-size: 1rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; }
-  .chain__step p { margin: 0; font-size: 0.875rem; color: rgba(6,62,84,0.72); line-height: 1.5; }
+  @keyframes bd-live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(86, 202, 0, 0.55); }
+    50%      { box-shadow: 0 0 0 6px rgba(86, 202, 0, 0);    }
+  }
 
-  /* ====== WHERE WE WIN (3 dark cards) ========================= */
-  .winners-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-  @media (max-width: 1000px) { .winners-grid { grid-template-columns: 1fr; } }
-  .winner-card { background: var(--indigo); color: var(--seashell); border: 1px solid rgba(195,196,48,0.18); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 12px 32px rgba(6,62,84,0.08); }
-  .winner-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
-  .winner-card__tag { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: inline-block; }
-  .winner-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--seashell); letter-spacing: -0.012em; }
-  .winner-card p { margin: 0; color: rgba(250,249,245,0.78); line-height: 1.55; font-size: 0.95rem; }
+  .bd-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  @media (max-width: 560px) { .bd-kpis { grid-template-columns: repeat(2, 1fr); } }
+  .bd-kpi {
+    background: #F5F7F8;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .bd-kpi__label { font-size: 10px; color: rgba(6, 62, 84, 0.55); font-weight: 500; display: block; margin-bottom: 4px; letter-spacing: 0; }
+  .bd-kpi__value { font-size: 18px; font-weight: 700; color: var(--indigo); letter-spacing: -0.012em; }
 
-  /* ====== STAT BAND ============================================ */
-  .stats-band { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-  @media (max-width: 900px) { .stats-band { grid-template-columns: repeat(2, 1fr); } }
-  .stats-band__cell { text-align: center; }
-  .stats-band__num { font-family: var(--font-display); font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 600; color: var(--indigo); letter-spacing: -0.022em; line-height: 1.05; margin-bottom: 0.5rem; }
-  .stats-band__label { font-size: 0.875rem; color: rgba(6,62,84,0.72); line-height: 1.4; max-width: 220px; margin: 0 auto; }
+  /* Bar chart, growing-in on load */
+  .bd-chart {
+    display: flex; align-items: flex-end; gap: 7px;
+    height: 96px; padding: 6px 2px 0;
+    border-top: 1px solid rgba(6, 62, 84, 0.06);
+    margin-top: 4px;
+  }
+  .bd-bar {
+    flex: 1;
+    background: #16B1FF;
+    border-radius: 3px 3px 0 0;
+    transform-origin: bottom;
+    animation: bd-bar-grow 1.4s cubic-bezier(0.2, 0.8, 0.3, 1) backwards;
+  }
+  .bd-bar--alt { background: #56CA00; }
+  .bd-bar:nth-child(1)  { height: 32%; animation-delay: 0.08s; }
+  .bd-bar:nth-child(2)  { height: 70%; animation-delay: 0.16s; }
+  .bd-bar:nth-child(3)  { height: 95%; animation-delay: 0.24s; }
+  .bd-bar:nth-child(4)  { height: 48%; animation-delay: 0.32s; }
+  .bd-bar:nth-child(5)  { height: 82%; animation-delay: 0.40s; }
+  .bd-bar:nth-child(6)  { height: 56%; animation-delay: 0.48s; }
+  .bd-bar:nth-child(7)  { height: 88%; animation-delay: 0.56s; }
+  .bd-bar:nth-child(8)  { height: 44%; animation-delay: 0.64s; }
+  .bd-bar:nth-child(9)  { height: 76%; animation-delay: 0.72s; }
+  .bd-bar:nth-child(10) { height: 60%; animation-delay: 0.80s; }
+  .bd-bar:nth-child(11) { height: 92%; animation-delay: 0.88s; }
+  .bd-bar:nth-child(12) { height: 38%; animation-delay: 0.96s; }
+  @keyframes bd-bar-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
-  /* ====== CUSTOMER STORY (light card with quote) =============== */
-  .story-card { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 2.25rem; display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; align-items: center; }
-  @media (max-width: 900px) { .story-card { grid-template-columns: 1fr; gap: 1.5rem; } }
-  .story-card__quote { font-family: var(--font-display); font-size: clamp(1.15rem, 1.7vw, 1.4rem); line-height: 1.45; font-weight: 500; color: var(--indigo); margin: 0 0 1.25rem; letter-spacing: -0.012em; }
-  .story-card__attrib { margin: 0; font-size: 0.875rem; color: rgba(6,62,84,0.6); }
-  .story-card__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .story-card__stat-num { font-size: 1.6rem; font-weight: 700; color: var(--indigo); letter-spacing: -0.018em; }
-  .story-card__stat-lbl { font-size: 0.78rem; color: rgba(6,62,84,0.6); line-height: 1.4; }
+  /* Card 2: claims table */
+  .bd-rows { padding: 4px 2px; }
+  .bd-row {
+    display: grid;
+    grid-template-columns: 1fr 90px 1.5fr 90px;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 10px;
+    border-bottom: 1px solid rgba(6, 62, 84, 0.06);
+    font-size: 12.5px;
+  }
+  .bd-row:last-child { border-bottom: 0; }
+  .bd-row__id { font-weight: 600; color: var(--indigo); }
+  .bd-row__svc { color: rgba(6, 62, 84, 0.62); }
+  .bd-row__amt { font-weight: 700; color: var(--indigo); letter-spacing: -0.01em; text-align: right; }
+  .bd-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.01em; justify-self: start; }
+  .bd-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .bd-pill--paid    { background: rgba(86, 202, 0, 0.14);  color: #3d8e00; }
+  .bd-pill--pending { background: rgba(255, 180, 0, 0.16); color: #a87200; }
+
+  .bd-row:nth-child(1) .bd-pill--paid    { animation: bd-pill-pulse 4.4s ease-in-out infinite; }
+  .bd-row:nth-child(3) .bd-pill--paid    { animation: bd-pill-pulse 4.4s ease-in-out infinite; animation-delay: 1.2s; }
+  .bd-row:nth-child(2) .bd-pill--pending { animation: bd-pill-pulse 4.4s ease-in-out infinite; animation-delay: 0.6s; }
+  @keyframes bd-pill-pulse {
+    0%, 60%, 100% { filter: none; }
+    30%           { filter: brightness(1.08) saturate(1.2); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bd-bar, .bd-live__dot, .bd-pill { animation: none !important; }
+    .bd-bar { transform: scaleY(1); }
+  }
+  @media (max-width: 560px) {
+    .bd-row { grid-template-columns: 1fr 80px 80px; }
+    .bd-row__svc { display: none; }
+  }
+
+  /* ====== 5-CARD RCM LIFECYCLE GRID ============================ */
+  .rcm-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.25rem; }
+  @media (max-width: 1200px) { .rcm-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px)  { .rcm-grid { grid-template-columns: 1fr; } }
+  .rcm-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.25rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .rcm-card:hover { transform: translateY(-3px); border-color: rgba(6, 62, 84, 0.22); }
+  .rcm-card__num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-size: 12px; font-weight: 700;
+    margin-bottom: 0.9rem;
+  }
+  .rcm-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; line-height: 1.25; }
+  .rcm-card__sub { font-style: italic; font-size: 0.875rem; color: #6f7b1a; margin: 0 0 0.9rem; line-height: 1.45; }
+  .rcm-card__bullets { margin: 0; padding: 0; list-style: none; }
+  .rcm-card__bullets li {
+    font-size: 0.875rem;
+    color: rgba(6, 62, 84, 0.78);
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+  .rcm-card__bullets li::before {
+    content: "";
+    position: absolute; left: 0; top: 8px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+
+  /* ====== MATCHA CALLOUT BAND (78% reimbursement stat) ========= */
+  .ctrl-band {
+    background: rgba(195, 196, 48, 0.06);
+    border: 1px solid rgba(195, 196, 48, 0.22);
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 2rem; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .ctrl-band::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at top right, rgba(195, 196, 48, 0.16) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  @media (max-width: 820px) { .ctrl-band { grid-template-columns: 1fr; padding: 1.75rem; text-align: left; } }
+  .ctrl-band__text { max-width: 720px; position: relative; z-index: 1; }
+  .ctrl-band__kicker { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: inline-block; }
+  .ctrl-band h3 { margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 700; color: var(--indigo); letter-spacing: -0.018em; line-height: 1.2; }
+  .ctrl-band h3 .accent { color: var(--matcha-deep, #8a8b1c); }
+  .ctrl-band p { margin: 0; font-size: 1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); text-wrap: pretty; }
+  .ctrl-band__big {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--indigo);
+    letter-spacing: -0.03em;
+    position: relative; z-index: 1;
+    text-align: right;
+  }
+  .ctrl-band__big small { display: block; font-size: 0.85rem; font-weight: 500; color: rgba(6, 62, 84, 0.62); margin-top: 0.4rem; letter-spacing: 0; }
+  @media (max-width: 820px) { .ctrl-band__big { text-align: left; } }
+
+  /* ====== 3-STEP ONBOARDING ==================================== */
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 800px) { .steps-grid { grid-template-columns: 1fr; } }
+  .step-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .step-card:hover { transform: translateY(-3px); border-color: rgba(195, 196, 48, 0.5); }
+  .step-card__tag { font-size: 12px; font-weight: 700; color: var(--matcha); letter-spacing: 0.06em; margin-bottom: 0.85rem; display: inline-block; }
+  .step-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; }
+  .step-card p { margin: 0; font-size: 0.95rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; }
+
+  /* ====== "WHAT SETS US APART" 3x2 DARK CARD GRID ============== */
+  .apart-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 900px) { .apart-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .apart-grid { grid-template-columns: 1fr; } }
+  .apart-cell {
+    background: var(--indigo);
+    color: var(--seashell);
+    border: 1px solid rgba(195, 196, 48, 0.18);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex; flex-direction: column; gap: 0.85rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 12px 32px rgba(6, 62, 84, 0.08);
+  }
+  .apart-cell:hover {
+    transform: translateY(-3px);
+    border-color: var(--matcha);
+    box-shadow: 0 16px 38px rgba(6, 62, 84, 0.16);
+  }
+  .apart-cell__check {
+    flex-shrink: 0;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--matcha);
+    color: var(--indigo);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 700; line-height: 1;
+  }
+  .apart-cell__num {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 2.6vw, 2.25rem);
+    font-weight: 700;
+    color: var(--seashell);
+    letter-spacing: -0.022em;
+    line-height: 1.05;
+  }
+  .apart-cell__label {
+    font-size: 0.95rem;
+    color: rgba(250, 249, 245, 0.78);
+    line-height: 1.55;
+  }
+  .apart-cell__label .accent {
+    color: var(--matcha);
+    font-weight: 600;
+  }
 </style>
 </head>
 <body>
@@ -117,57 +297,78 @@
 
 <main id="main">
 
-<!-- ============= 1. SUB-HERO (billing dashboard mockup as BG) ============= -->
+<!-- ============= 1. SUB-HERO (animated Claim Analytics dashboard) ============= -->
 <section class="sub-hero" aria-label="Hero">
   <div class="sub-hero__inner">
     <div class="sub-hero__bg" aria-hidden="true">
-      <div class="billdash">
-        <div class="billdash__head">
-          <span class="billdash__title">Billing Console &middot; Q1 2026</span>
-          <span class="billdash__brand">{{> partials/logo-medme }}</span>
-        </div>
-        <div class="billdash__stats">
-          <div class="billdash__stat">
-            <span class="billdash__stat-label">Claims paid</span>
-            <span class="billdash__stat-value">487<span class="delta">+22%</span></span>
+      <div class="bd-stage">
+        <div class="bd-frame">
+          <div class="bd-card">
+            <div class="bd-card__head">
+              <span class="bd-card__title">Claim Analytics</span>
+              <span class="bd-live"><span class="bd-live__dot"></span> Live</span>
+            </div>
+            <div class="bd-kpis">
+              <div class="bd-kpi">
+                <span class="bd-kpi__label">Submitted</span>
+                <span class="bd-kpi__value">248</span>
+              </div>
+              <div class="bd-kpi">
+                <span class="bd-kpi__label">Clean rate</span>
+                <span class="bd-kpi__value">98%</span>
+              </div>
+              <div class="bd-kpi">
+                <span class="bd-kpi__label">Paid (30d)</span>
+                <span class="bd-kpi__value">$42.7K</span>
+              </div>
+              <div class="bd-kpi">
+                <span class="bd-kpi__label">Avg TAT</span>
+                <span class="bd-kpi__value">22h</span>
+              </div>
+            </div>
+            <div class="bd-chart" aria-hidden="true">
+              <span class="bd-bar"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar bd-bar--alt"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar"></span>
+              <span class="bd-bar bd-bar--alt"></span>
+              <span class="bd-bar"></span>
+            </div>
           </div>
-          <div class="billdash__stat">
-            <span class="billdash__stat-label">First-pass rate</span>
-            <span class="billdash__stat-value">96%</span>
-          </div>
-          <div class="billdash__stat">
-            <span class="billdash__stat-label">Reimbursement</span>
-            <span class="billdash__stat-value">$74.2K</span>
-          </div>
-          <div class="billdash__stat">
-            <span class="billdash__stat-label">Median pay cycle</span>
-            <span class="billdash__stat-value">14 days</span>
-          </div>
-        </div>
-        <div class="billdash__queue">
-          <div class="billdash__queue-title">Recent claims</div>
-          <div class="billdash__row">
-            <span class="billdash__row-code">99490 &middot; CCM 20 min</span>
-            <span class="billdash__row-pill billdash__row-pill--paid">Paid</span>
-          </div>
-          <div class="billdash__row">
-            <span class="billdash__row-code">99607 &middot; MTM add-on</span>
-            <span class="billdash__row-pill billdash__row-pill--paid">Paid</span>
-          </div>
-          <div class="billdash__row">
-            <span class="billdash__row-code">G0511 &middot; RHC care mgmt</span>
-            <span class="billdash__row-pill billdash__row-pill--paid">Paid</span>
-          </div>
-          <div class="billdash__row">
-            <span class="billdash__row-code">99491 &middot; CCM provider 30</span>
-            <span class="billdash__row-pill billdash__row-pill--pending">In review</span>
+          <div class="bd-card">
+            <div class="bd-rows">
+              <div class="bd-row">
+                <span class="bd-row__id">CL-28391</span>
+                <span class="bd-pill bd-pill--paid">Paid</span>
+                <span class="bd-row__svc">Reconciled, ERA received</span>
+                <span class="bd-row__amt">$128.50</span>
+              </div>
+              <div class="bd-row">
+                <span class="bd-row__id">CL-28390</span>
+                <span class="bd-pill bd-pill--pending">Pending</span>
+                <span class="bd-row__svc">Submitted, awaiting payer</span>
+                <span class="bd-row__amt">$94.20</span>
+              </div>
+              <div class="bd-row">
+                <span class="bd-row__id">CL-28389</span>
+                <span class="bd-pill bd-pill--paid">Paid</span>
+                <span class="bd-row__svc">Reconciled, ERA received</span>
+                <span class="bd-row__amt">$312.00</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="sub-hero__text">
-      <h1 class="h-display">Convert every encounter<br>into a <span class="accent">clean Medicare Part B claim.</span></h1>
-      <p class="sub-hero__lede">Eligibility, CPT/HCPCS coding, time tracking, claim submission, and denial management, wired into the same workflow your pharmacists already use. Built for CCM, MTM, RHC, and the services pharmacy is paid to deliver.</p>
+      <h1 class="h-display">Switch to MedMe's medical billing<br>and <span class="accent">get paid more, faster.</span></h1>
+      <p class="sub-hero__lede">End-to-end medical billing support to reclaim your team's time and maximize reimbursements. Eligibility, coding, submission, denials, and analytics in one workflow built for pharmacy.</p>
       <div class="sub-hero__cta">
         <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
       </div>
@@ -177,154 +378,165 @@
 
 {{> partials/trust-band-us }}
 
-<!-- ============= 2. THE REIMBURSEMENT GAP ============= -->
-<section class="tile tile--light" aria-label="The reimbursement gap">
+<!-- ============= 2. WHAT SETS US APART (3x2 dark card grid) ============= -->
+<section class="tile tile--light" aria-label="What sets MedMe medical billing apart">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">The Reimbursement Gap</span>
-      <h2 class="h-display">60-80% of billable pharmacy services<br>never get invoiced.</h2>
-      <p class="lead">Your pharmacists are already counseling MTM patients, building care plans, and following up with chronic-disease patients. The encounter happens. The work gets done. But somewhere between the SOAP note and the claim form, the revenue evaporates, and the average pharmacy never sees it. MedMe closes every leak in that chain inside the same screen the pharmacist already lives in.</p>
+      <span class="kicker">What Sets Us Apart</span>
+      <h2 class="h-display">Six reasons pharmacies<br>switch to MedMe billing.</h2>
     </div>
-  </div>
-</section>
-
-<!-- ============= 3. THE FIVE-STEP BILLING CHAIN ============= -->
-<section class="tile tile--light" aria-label="The five-step billing chain">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">The Five-Step Billing Chain</span>
-      <h2 class="h-display">From appointment scheduled<br>to claim paid, automated end to end.</h2>
-      <p class="lead">No spreadsheets. No re-keying. No outsourced biller you have never met. Every step is captured in MedMe and surfaced in one billing console.</p>
-    </div>
-    <div class="chain">
-      <div class="chain__steps">
-        <article class="chain__step">
-          <span class="chain__step-num">01</span>
-          <h4>Eligibility check</h4>
-          <p>Real-time Medicare Part B and commercial-payer eligibility runs the moment a patient books. Pharmacists never deliver a service the payer will not cover.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">02</span>
-          <h4>Smart coding</h4>
-          <p>As the SOAP note is written, MedMe suggests the correct CPT/HCPCS code, the right modifier, and the diagnosis pointer.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">03</span>
-          <h4>Time tracking</h4>
-          <p>Time-based services like 99490 and 99607 are tracked automatically in the background, producing a defensible audit trail.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">04</span>
-          <h4>Claim submission</h4>
-          <p>Clean 837P claims pushed to Change Healthcare, Availity, or Office Ally, pre-validated against payer-specific rules.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">05</span>
-          <h4>Denial management</h4>
-          <p>Denials are routed by reason code. MedMe pre-fills the corrected claim, drafts the appeal, and tracks the resubmission until the dollar lands.</p>
-        </article>
+    <div class="apart-grid">
+      <div class="apart-cell">
+        <span class="apart-cell__check">&check;</span>
+        <div class="apart-cell__num">4%</div>
+        <div class="apart-cell__label"><span class="accent">Competitive pricing</span>, charged only on successful claims, no flat platform fee.</div>
+      </div>
+      <div class="apart-cell">
+        <span class="apart-cell__check">&check;</span>
+        <div class="apart-cell__num">80%+</div>
+        <div class="apart-cell__label"><span class="accent">Reduction in manual workflows</span> with AI assistants and PMS integrations.</div>
+      </div>
+      <div class="apart-cell">
+        <span class="apart-cell__check">&check;</span>
+        <div class="apart-cell__num">98%+</div>
+        <div class="apart-cell__label"><span class="accent">Clean claims rate</span> at first submission across the customer cohort.</div>
+      </div>
+      <div class="apart-cell">
+        <span class="apart-cell__check">&check;</span>
+        <div class="apart-cell__num">50%</div>
+        <div class="apart-cell__label"><span class="accent">Faster reimbursements</span> than the industry average for pharmacy billing.</div>
+      </div>
+      <div class="apart-cell">
+        <span class="apart-cell__check">&check;</span>
+        <div class="apart-cell__num">&lt;24h</div>
+        <div class="apart-cell__label"><span class="accent">Claims entering processing</span>, vs the 48 to 72-hour industry average.</div>
+      </div>
+      <div class="apart-cell">
+        <span class="apart-cell__check">&check;</span>
+        <div class="apart-cell__num">All-in-one</div>
+        <div class="apart-cell__label">Access to MedMe's <span class="accent">end-to-end workflow tools</span>, scheduling, intake, documentation, follow ups, PMS integration, billing.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= 4. WHERE WE WIN (3 dark feature cards) ============= -->
-<section class="tile tile--light" aria-label="Where MedMe wins">
+<!-- ============= 3. FULL RCM LIFECYCLE (5 capability cards) ============= -->
+<section class="tile tile--light" aria-label="End-to-end revenue cycle">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Where MedMe Wins</span>
-      <h2 class="h-display">Three places generic<br>billing tools fall apart.</h2>
-      <p class="lead">If you have tried to bolt a billing add-on onto a generic EHR, this is the part that broke. We rebuilt each of these from scratch, for pharmacy.</p>
+      <span class="kicker">End-to-End Revenue Cycle</span>
+      <h2 class="h-display">Five connected capabilities,<br>one billing engine.</h2>
+      <p class="lead">MedMe's RCM engine manages the full claim lifecycle, from intake to reimbursement, with built-in coding logic, eligibility verification, and reconciliation workflows. Each capability hands off cleanly to the next.</p>
     </div>
-    <div class="winners-grid">
-      <article class="winner-card">
-        <span class="winner-card__tag">Eligibility</span>
-        <h3>Live 270/271 verification</h3>
-        <p>Patient eligibility, copay, deductible-met, plan type, and CCM-already-billed-this-month, all surfaced before the encounter starts. No more delivering a service to a patient who already had it billed elsewhere.</p>
+    <div class="rcm-grid">
+      <article class="rcm-card">
+        <span class="rcm-card__num">01</span>
+        <h3>Patient Estimations</h3>
+        <p class="rcm-card__sub">Predict out-of-pocket costs before the encounter.</p>
+        <ul class="rcm-card__bullets">
+          <li>Combine returned insurance benefits with fee schedules to estimate patient responsibility</li>
+          <li>Determine if self-pay consent or pre-service credit-card capture is required</li>
+          <li>Improve transparency and reduce downstream billing issues</li>
+        </ul>
       </article>
-      <article class="winner-card">
-        <span class="winner-card__tag">Smart Coding</span>
-        <h3>Pharmacy-tuned code engine</h3>
-        <p>Encounter type plus time plus diagnosis plus pharmacist credential gives MedMe enough signal to suggest the correct primary code, add-on codes, and modifiers, and to flag when an encounter should be coded as 99491 instead of 99490.</p>
+      <article class="rcm-card">
+        <span class="rcm-card__num">02</span>
+        <h3>End-to-End Claim Automation</h3>
+        <p class="rcm-card__sub">MedMe's RCM engine manages the full claim lifecycle, from intake to reimbursement.</p>
+        <ul class="rcm-card__bullets">
+          <li>Eligibility checks with insurer data</li>
+          <li>Automatic extraction of insurance card details (OCR)</li>
+          <li>Real-time verification of active coverage</li>
+          <li>Structured documentation ensures compliance upstream</li>
+        </ul>
       </article>
-      <article class="winner-card">
-        <span class="winner-card__tag">Denials</span>
-        <h3>Denial management workflow</h3>
-        <p>Every 277CA and 835 ERA is parsed and reconciled. Denials land in a queue grouped by reason code with the corrected claim pre-filled. Median time from denial to corrected claim: 18 hours.</p>
+      <article class="rcm-card">
+        <span class="rcm-card__num">03</span>
+        <h3>Coding &amp; Claim Generation</h3>
+        <p class="rcm-card__sub">Built-in coding logic simplifies billing for clinical encounters.</p>
+        <ul class="rcm-card__bullets">
+          <li>Auto-map encounter data to CPT/ICD codes</li>
+          <li>Pre-populated claim templates reduce miscoding</li>
+          <li>Human-in-the-loop review before submission</li>
+        </ul>
+      </article>
+      <article class="rcm-card">
+        <span class="rcm-card__num">04</span>
+        <h3>Submission, Tracking &amp; Reconciliation</h3>
+        <p class="rcm-card__sub">Stay in control with real-time visibility and hands-off denials management.</p>
+        <ul class="rcm-card__bullets">
+          <li>Live status updates for every claim</li>
+          <li>Automatic detection and retry of denials up to 3 times before manual review</li>
+          <li>Adjustment workflows for underpaid or unpaid claims</li>
+          <li>Reconciliation tools for complete revenue transparency</li>
+        </ul>
+      </article>
+      <article class="rcm-card">
+        <span class="rcm-card__num">05</span>
+        <h3>Dashboarding &amp; Insights</h3>
+        <p class="rcm-card__sub">Monitor financial performance across stores, services, and payers.</p>
+        <ul class="rcm-card__bullets">
+          <li>View claims volume, reimbursement rates, and payment timelines</li>
+          <li>Identify denial trends</li>
+          <li>Measure billing efficiency and financial return</li>
+        </ul>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 5. THE NUMBERS ============= -->
-<section class="tile tile--light" aria-label="The numbers customers post">
+<!-- ============= 4. 78% REIMBURSEMENT CALLOUT (matcha band) ============= -->
+<section class="tile tile--light" aria-label="Medical billing yields a 78% higher reimbursement rate">
+  <div class="tile__inner">
+    <div class="ctrl-band">
+      <div class="ctrl-band__text">
+        <span class="ctrl-band__kicker">The Reimbursement Gap</span>
+        <h3>Medical billing yields a <span class="accent">78% higher reimbursement rate</span> than PBM billing.</h3>
+        <p>For every dollar earned through PBM billing today, medical billing brings in roughly $1.78. MedMe makes that switch a workflow, not a project, with credentialing support, payer guidance, and the platform infrastructure to keep claims moving from day one.</p>
+      </div>
+      <div class="ctrl-band__big">
+        78%
+        <small>higher vs PBM billing</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. NEW TO MEDICAL BILLING? 3-STEP GUIDE ============= -->
+<section class="tile tile--light" aria-label="New to medical billing? Three-step onboarding">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">The Numbers Customers Post</span>
-      <h2 class="h-display">What "billing that<br>actually works" looks like.</h2>
+      <span class="kicker">New to Medical Billing?</span>
+      <h2 class="h-display">We guide you<br>through every step.</h2>
+      <p class="lead">From scheduling and intake to documentation, patient follow ups, and PMS integration, built to ensure pharmacies get paid accurately and quickly with minimal administrative effort. For pharmacies exploring medical billing for the first time, MedMe provides step-by-step guidance to get started.</p>
     </div>
-    <div class="stats-band">
-      <div class="stats-band__cell">
-        <div class="stats-band__num">96%</div>
-        <div class="stats-band__label">First-pass claim acceptance across the customer cohort.</div>
-      </div>
-      <div class="stats-band__cell">
-        <div class="stats-band__num">$2.1M</div>
-        <div class="stats-band__label">Average annual reimbursement unlocked per multi-store partner.</div>
-      </div>
-      <div class="stats-band__cell">
-        <div class="stats-band__num">14 days</div>
-        <div class="stats-band__label">Median pay cycle from encounter to ERA across all live payers.</div>
-      </div>
-      <div class="stats-band__cell">
-        <div class="stats-band__num">3.2&times;</div>
-        <div class="stats-band__label">Increase in CCM enrolment after 90 days on the platform.</div>
-      </div>
+    <div class="steps-grid">
+      <article class="step-card">
+        <span class="step-card__tag">Step 01</span>
+        <h3>Credentialing &amp; enrollment</h3>
+        <p>Support with credentialing and enrollment for both Medicaid and commercial MCOs to unlock higher-value reimbursements.</p>
+      </article>
+      <article class="step-card">
+        <span class="step-card__tag">Step 02</span>
+        <h3>Expert consulting</h3>
+        <p>Complimentary expert consulting on which payers and which services to start with, tailored to your pharmacy's footprint and patient mix.</p>
+      </article>
+      <article class="step-card">
+        <span class="step-card__tag">Step 03</span>
+        <h3>Education &amp; compliance</h3>
+        <p>Education on required documentation, coding standards, and the compliance workflows that keep claims clean from the first submission.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 6. CUSTOMER STORY ============= -->
-<section class="tile tile--light" aria-label="Customer story: Heritage Rx">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">A Customer Story</span>
-      <h2 class="h-display">Heritage Rx: from spreadsheet billing<br>to $1.4M unlocked in year one.</h2>
-    </div>
-    <article class="story-card">
-      <div>
-        <p class="story-card__quote">"We have always known our pharmacists were doing the work. MedMe is the first system that lets us prove it, and get paid for it. The first 90 days alone covered the contract for the year."</p>
-        <p class="story-card__attrib"><strong>Joshua Holland, RPh</strong> &middot; VP Clinical Operations, Heritage Rx &middot; 9 stores, TN/KY</p>
-      </div>
-      <div class="story-card__stats">
-        <div>
-          <div class="story-card__stat-num">$1.4M</div>
-          <div class="story-card__stat-lbl">Net new reimbursement, year one</div>
-        </div>
-        <div>
-          <div class="story-card__stat-num">3.2&times;</div>
-          <div class="story-card__stat-lbl">Increase in CCM enrolment</div>
-        </div>
-        <div>
-          <div class="story-card__stat-num">98%</div>
-          <div class="story-card__stat-lbl">First-pass claim acceptance</div>
-        </div>
-        <div>
-          <div class="story-card__stat-num">11 days</div>
-          <div class="story-card__stat-lbl">Training to first billable encounter</div>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ============= 7. CLOSING CTA ============= -->
+<!-- ============= 6. CLOSING CTA ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="See it on your numbers">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">
-      <span class="kicker">Ready to See It On Your Numbers?</span>
-      <h2 class="h-display">Show us a week<br>of your encounter volume.</h2>
-      <p class="lead">20-minute screen-share. We will walk through your service mix, run the math live, and show you exactly which codes you are leaving on the table.</p>
+      <span class="kicker">Ready to Get Paid Faster?</span>
+      <h2 class="h-display">Show us a week of<br>your encounter volume.</h2>
+      <p class="lead">20-minute screen share. We'll walk through your service mix, run the math live, and show you exactly which codes you're leaving on the table.</p>
     </div>
     <div class="pill-cta-row pill-cta-row--center">
       <span class="pulse-rings" aria-hidden="true">
