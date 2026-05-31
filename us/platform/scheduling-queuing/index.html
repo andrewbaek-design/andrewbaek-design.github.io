@@ -3,20 +3,24 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Patient Scheduler, MedMe Health</title>
-<meta name="description" content="Online booking with eligibility verification at the moment of booking, intake forms flowing into the encounter, and automated recall outreach turning no-shows into ongoing relationships." />
+<title>Scheduling and Queuing, MedMe Health</title>
+<meta name="description" content="Take control of your workday and patient flow with MedMe's pharmacy-specific scheduling features like multi-calendar, multi-service booking, and external clinics. Reserve with Google included." />
 <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/scheduling-queuing" />
 <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css?v=62" />
+<link rel="stylesheet" href="/assets/brand.css?v=63" />
 <style>
   /* ============================================================
-     PATIENT SCHEDULER product page. Hero with a booking-flow
-     mockup as faded BG (service tiles + time-slot picker +
-     eligibility check). 5-step booking process flow. Three dark
-     capability cards. Stat band. Customer quote. Navy CTA.
+     SCHEDULING & QUEUING product page. Hero uses the real
+     Scheduler SVG mockup (a pharmacy store-locator + booking
+     calendar UI) as a faded BG above the headline. Sections
+     cover the core scheduling features (multi-calendar,
+     multi-service, external clinics, Reserve with Google),
+     hybrid walk-in + appointment workflow, automated reminders,
+     stat band, and a navy closing CTA. Intake-form content
+     lives on the dedicated Patient Intake page, not here.
      ============================================================ */
 
   /* ====== SUB-HERO ============================================= */
@@ -28,65 +32,39 @@
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 95%);
     pointer-events: none;
   }
+  .sub-hero__bg img {
+    display: block;
+    width: 100%;
+    max-width: 1080px;
+    height: auto;
+    margin: 0 auto;
+  }
   .sub-hero__text { text-align: center; max-width: 820px; margin: -140px auto 0; position: relative; z-index: 2; }
   .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
   .sub-hero h1.h-display .accent { color: var(--matcha); }
-  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 680px; }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 720px; }
   .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
   @media (max-width: 980px) { .sub-hero__text { margin-top: -90px; } }
   @media (max-width: 640px) { .sub-hero__text { margin-top: -60px; } }
 
-  /* Booking flow mockup */
-  .booking { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: 16px; padding: 20px 22px; box-shadow: 0 12px 40px rgba(6,62,84,0.06); font-family: var(--font-display); color: var(--indigo); }
-  .booking__head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid rgba(6,62,84,0.08); }
-  .booking__title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
-  .booking__brand { display: inline-flex; align-items: center; color: var(--indigo); height: 22px; }
-  .booking__brand svg { height: 22px; width: auto; display: block; }
-  .booking__layout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-  @media (max-width: 800px) { .booking__layout { grid-template-columns: 1fr; } }
-  .booking__step { background: rgba(6,62,84,0.04); border-radius: 10px; padding: 14px 16px; }
-  .booking__step-lbl { font-size: 10px; color: rgba(6,62,84,0.55); font-weight: 600; letter-spacing: 0.04em; margin-bottom: 8px; }
-  .booking__svc { display: flex; align-items: center; gap: 6px; padding: 6px 8px; margin-bottom: 6px; background: var(--white); border-radius: 6px; font-size: 11px; color: var(--indigo); border: 1px solid rgba(6,62,84,0.06); }
-  .booking__svc--active { border-color: var(--matcha); background: rgba(195,196,48,0.1); font-weight: 600; }
-  .booking__svc::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: rgba(6,62,84,0.18); }
-  .booking__svc--active::before { background: var(--matcha); }
-  .booking__slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-  .booking__slot { font-size: 10px; padding: 5px 4px; background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: 4px; text-align: center; color: rgba(6,62,84,0.7); }
-  .booking__slot--picked { background: var(--matcha); border-color: var(--matcha); color: var(--indigo); font-weight: 700; animation: booking-pick 4s ease-in-out infinite; }
-  @keyframes booking-pick {
-    0%, 60%, 100% { background: var(--matcha); }
-    30%           { background: rgba(195,196,48,0.4); }
-  }
-  .booking__check { background: var(--white); border: 1px solid rgba(195,196,48,0.3); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: var(--indigo); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-  .booking__check::before { content: "✓"; color: var(--matcha); font-weight: 700; font-size: 13px; }
-  @media (prefers-reduced-motion: reduce) { .booking__slot--picked { animation: none; } }
+  /* ====== CORE FEATURE CARDS (4, dark) ========================= */
+  .feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  @media (max-width: 800px) { .feat-grid { grid-template-columns: 1fr; } }
+  .feat-card { background: var(--indigo); color: var(--seashell); border: 1px solid rgba(195,196,48,0.18); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 12px 32px rgba(6,62,84,0.08); }
+  .feat-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
+  .feat-card__tag { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: inline-block; }
+  .feat-card h3 { margin: 0 0 0.5rem; font-size: 1.15rem; font-weight: 600; color: var(--seashell); letter-spacing: -0.012em; }
+  .feat-card p { margin: 0; color: rgba(250,249,245,0.78); line-height: 1.55; font-size: 0.95rem; }
 
-  /* ====== 5-STEP BOOKING PROCESS ============================== */
-  .chain { position: relative; }
-  .chain__steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; position: relative; }
-  @media (max-width: 1100px) { .chain__steps { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 700px)  { .chain__steps { grid-template-columns: 1fr; } }
-  .chain__steps::before {
-    content: ""; position: absolute;
-    top: 30px; left: 6%; right: 6%; height: 2px;
-    background: linear-gradient(90deg, rgba(195,196,48,0.4) 0%, rgba(195,196,48,0.85) 50%, rgba(195,196,48,0.4) 100%);
-    z-index: 0;
-  }
-  @media (max-width: 1100px) { .chain__steps::before { display: none; } }
-  .chain__step { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 1.5rem 1.25rem; position: relative; z-index: 1; transition: transform 0.25s ease, border-color 0.25s ease; }
-  .chain__step:hover { transform: translateY(-3px); border-color: rgba(6,62,84,0.18); }
-  .chain__step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--matcha); color: var(--indigo); font-size: 12px; font-weight: 700; margin-bottom: 0.75rem; }
-  .chain__step h4 { margin: 0 0 0.4rem; font-size: 1rem; font-weight: 600; color: var(--indigo); }
-  .chain__step p { margin: 0; font-size: 0.875rem; color: rgba(6,62,84,0.72); line-height: 1.5; }
-
-  /* ====== DARK CAPABILITIES (3 cards) ========================= */
-  .winners-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-  @media (max-width: 1000px) { .winners-grid { grid-template-columns: 1fr; } }
-  .winner-card { background: var(--indigo); color: var(--seashell); border: 1px solid rgba(195,196,48,0.18); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 12px 32px rgba(6,62,84,0.08); }
-  .winner-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
-  .winner-card__tag { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: inline-block; }
-  .winner-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--seashell); }
-  .winner-card p { margin: 0; color: rgba(250,249,245,0.78); line-height: 1.55; font-size: 0.95rem; }
+  /* ====== HYBRID WORKFLOW / REMINDERS (3 light cards) ========= */
+  .light-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .light-grid { grid-template-columns: 1fr; } }
+  .light-card { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease; }
+  .light-card:hover { transform: translateY(-3px); border-color: rgba(6,62,84,0.18); }
+  .light-card__icon { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; background: rgba(195, 196, 48, 0.14); border-radius: 10px; margin-bottom: 1rem; }
+  .light-card__icon svg { width: 22px; height: 22px; stroke: var(--matcha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .light-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; }
+  .light-card p { margin: 0; color: rgba(6,62,84,0.72); line-height: 1.55; font-size: 0.95rem; }
 
   /* ====== STAT BAND ============================================ */
   .stats-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -95,10 +73,26 @@
   .stats-band__num { font-family: var(--font-display); font-size: clamp(2rem, 3.4vw, 2.8rem); font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1.05; margin-bottom: 0.5rem; }
   .stats-band__label { font-size: 0.875rem; color: rgba(6,62,84,0.72); line-height: 1.4; max-width: 260px; margin: 0 auto; }
 
-  /* ====== CUSTOMER QUOTE ====================================== */
-  .quote-card { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 2.25rem; text-align: center; max-width: 820px; margin: 0 auto; }
-  .quote-card__text { font-family: var(--font-display); font-size: clamp(1.15rem, 1.7vw, 1.4rem); line-height: 1.45; font-weight: 500; color: var(--indigo); margin: 0 0 1.25rem; letter-spacing: -0.012em; }
-  .quote-card__attrib { margin: 0; font-size: 0.875rem; color: rgba(6,62,84,0.6); }
+  /* ====== RWG callout (matcha-tinted highlight band) ========== */
+  .rwg-band { background: rgba(195, 196, 48, 0.06); border: 1px solid rgba(195, 196, 48, 0.22); border-radius: 24px; padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; position: relative; overflow: hidden; }
+  .rwg-band::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--matcha);
+    opacity: 0.1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  @media (max-width: 800px) {
+    .rwg-band { grid-template-columns: 1fr; padding: 1.75rem; text-align: left; }
+  }
+  .rwg-band__text { max-width: 640px; position: relative; z-index: 1; }
+  .rwg-band__kicker { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: inline-block; }
+  .rwg-band h3 { margin: 0 0 0.5rem; font-size: 1.4rem; font-weight: 700; color: var(--indigo); letter-spacing: -0.018em; }
+  .rwg-band p { margin: 0; font-size: 1rem; line-height: 1.55; color: rgba(6,62,84,0.78); text-wrap: pretty; }
+  .rwg-band__cta { position: relative; z-index: 1; }
 </style>
 </head>
 <body>
@@ -290,58 +284,15 @@
 
 <main id="main">
 
-<!-- ============= 1. SUB-HERO (booking mockup as BG) ============= -->
+<!-- ============= 1. SUB-HERO (real Scheduler SVG mockup as BG) ============= -->
 <section class="sub-hero" aria-label="Hero">
   <div class="sub-hero__inner">
     <div class="sub-hero__bg" aria-hidden="true">
-      <div class="booking">
-        <div class="booking__head">
-          <span class="booking__title">Book an Appointment</span>
-          <span class="booking__brand"><svg viewBox="0 0 190 39" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MedMe">
-          <g>
-            <path d="M83.2942 11.6621C84.985 10.7174 86.8984 10.2439 88.835 10.2908C90.6783 10.2542 92.4978 10.7074 94.1081 11.6042C95.6073 12.4489 96.8456 13.6893 97.6873 15.19C98.554 16.7363 98.9987 18.4834 98.9761 20.2557V21.1857C98.9792 21.3417 98.9706 21.4977 98.9505 21.6524C98.9432 21.8095 98.8755 21.9577 98.7614 22.0662C98.6474 22.1747 98.4961 22.2351 98.3387 22.235H83.5004C83.5162 22.9344 83.6712 23.6237 83.9554 24.2629C84.2402 24.902 84.6489 25.4783 85.1582 25.9583C86.1463 26.8564 87.4419 27.3408 88.7771 27.3116C89.7219 27.3419 90.6545 27.0898 91.4554 26.5878C92.0538 26.2024 92.5503 25.6787 92.9028 25.0609C92.9522 24.9611 93.0291 24.8772 93.1236 24.8185C93.2188 24.7608 93.3273 24.7283 93.4384 24.7244H97.5171C97.6184 24.7247 97.7178 24.7496 97.8068 24.7968C97.8971 24.8452 97.974 24.9147 98.0313 24.9994C98.0868 25.0843 98.1216 25.1809 98.1326 25.2816C98.1399 25.3825 98.1252 25.4838 98.0893 25.5784C97.6989 26.5426 97.156 27.4381 96.4826 28.2306C95.5915 29.2858 94.4795 30.132 93.2249 30.7092C91.8262 31.3338 90.305 31.6391 88.7734 31.6029C86.882 31.6367 85.0131 31.1857 83.3448 30.2931C81.7852 29.4366 80.4994 28.1572 79.6351 26.6024C78.7098 24.9234 78.2438 23.0299 78.2853 21.1133C78.2505 19.1585 78.7067 17.2263 79.6137 15.494C80.4591 13.8987 81.7339 12.5715 83.2942 11.6621ZM92.1288 15.7364C91.2059 14.943 90.022 14.5201 88.8051 14.5494C87.5895 14.5331 86.4013 14.9143 85.4223 15.6351C84.386 16.4478 83.7096 17.6335 83.537 18.9386H93.6232C93.6061 18.3322 93.467 17.7353 93.2145 17.1837C92.9559 16.6317 92.5862 16.139 92.1288 15.7364Z" fill="currentColor"/>
-            <path d="M166.839 11.6625C168.529 10.7185 170.441 10.2449 172.376 10.2912C174.219 10.2546 176.038 10.7079 177.649 11.6047C179.148 12.4483 180.386 13.6891 181.225 15.1905C182.094 16.7357 182.54 18.4833 182.517 20.2562V21.1861C182.52 21.3422 182.512 21.4982 182.491 21.6529C182.484 21.81 182.416 21.9582 182.302 22.0667C182.189 22.1752 182.037 22.2356 181.88 22.2354H167.041C167.057 22.9349 167.212 23.6242 167.497 24.2633C167.781 24.9025 168.19 25.4787 168.699 25.9587C169.687 26.8571 170.983 27.3416 172.318 27.312C173.263 27.3418 174.195 27.0899 174.996 26.5883C175.594 26.2029 176.091 25.6791 176.443 25.0613C176.493 24.9616 176.57 24.8776 176.664 24.819C176.76 24.7616 176.868 24.7293 176.98 24.7249H181.062C181.163 24.7247 181.262 24.7496 181.351 24.7972C181.441 24.8457 181.518 24.9152 181.576 24.9999C181.633 25.084 181.668 25.1812 181.677 25.2824C181.687 25.3836 181.67 25.4856 181.63 25.5788C181.242 26.5436 180.701 27.4393 180.027 28.2311C179.137 29.2874 178.025 30.1338 176.77 30.7096C175.371 31.3342 173.85 31.6395 172.318 31.6034C170.426 31.6371 168.557 31.1862 166.889 30.2935C165.329 29.4361 164.042 28.1571 163.176 26.6028C162.253 24.9229 161.789 23.0298 161.83 21.1137C161.793 19.1588 162.25 17.2261 163.158 15.4945C164.003 13.8991 165.278 12.5719 166.839 11.6625ZM175.705 15.7369C174.781 14.9421 173.594 14.5191 172.376 14.55C171.156 14.5306 169.963 14.912 168.981 15.6355C167.945 16.4482 167.269 17.6339 167.095 18.9391H177.2C177.183 18.3326 177.044 17.7357 176.791 17.1842C176.533 16.6322 176.163 16.1395 175.705 15.7369Z" fill="currentColor"/>
-            <path d="M122.431 3.00001C122.512 3.00009 122.591 3.01613 122.665 3.04719C122.739 3.07825 122.806 3.12376 122.862 3.18097C122.978 3.29602 123.043 3.45217 123.043 3.61515V30.4599C123.043 30.5401 123.027 30.6195 122.996 30.6935C122.965 30.7674 122.92 30.8344 122.862 30.8905C122.748 31.0054 122.593 31.0715 122.431 31.075H118.878C118.735 31.0732 118.599 31.022 118.49 30.9303C118.379 30.8387 118.305 30.7103 118.28 30.5684L117.817 28.155C117.109 29.1035 116.229 29.9101 115.222 30.5323C113.94 31.2707 112.474 31.6284 110.995 31.5635C109.195 31.5881 107.425 31.104 105.889 30.1668C104.385 29.2323 103.157 27.9164 102.327 26.353C101.437 24.6597 100.988 22.7694 101.021 20.8567C100.985 18.9506 101.434 17.0666 102.327 15.3821C103.157 13.8306 104.386 12.5289 105.889 11.6117C107.429 10.6851 109.198 10.2087 110.995 10.2368C112.38 10.2035 113.755 10.4973 115.005 11.0944C116.127 11.6477 117.087 12.4816 117.792 13.515V3.61515C117.791 3.5343 117.806 3.45413 117.839 3.37998C117.868 3.3053 117.912 3.23751 117.969 3.18097C118.025 3.1235 118.093 3.07795 118.168 3.04707C118.243 3.01555 118.323 2.99952 118.403 3.00001H122.431ZM112.135 14.8463C110.586 14.8463 109.098 15.453 107.991 16.5364C107.44 17.1196 107.012 17.8074 106.732 18.559C106.453 19.3069 106.324 20.1024 106.352 20.9001C106.326 21.7051 106.456 22.5075 106.735 23.263C107.017 24.0141 107.444 24.7025 107.991 25.2892C108.518 25.845 109.156 26.2836 109.864 26.5767C110.572 26.8697 111.333 27.0105 112.099 26.9898V26.9717C112.877 27.0006 113.651 26.8635 114.372 26.5697C115.093 26.2758 115.743 25.832 116.279 25.2675C117.32 24.0514 117.893 22.503 117.893 20.9019C117.893 19.3009 117.32 17.7525 116.279 16.5364C115.171 15.453 113.684 14.8464 112.135 14.8463Z" fill="currentColor"/>
-            <path d="M50.0159 11.0907C51.1714 10.4953 52.4586 10.2015 53.7581 10.2367C56.8946 10.2367 59.1168 11.4537 60.4246 13.8877C61.1664 12.7584 62.1874 11.8398 63.3886 11.2209C64.6422 10.5611 66.0402 10.2229 67.4565 10.2367C70.1105 10.2367 72.1422 11.0303 73.5512 12.6175C74.9602 14.2048 75.6684 16.5327 75.6757 19.6011V30.4707C75.6751 30.6336 75.6104 30.7899 75.4945 30.9049C75.4384 30.9621 75.3713 31.0075 75.2975 31.0386C75.2237 31.0696 75.1444 31.0857 75.0639 31.0858H71.0394C70.8772 31.0839 70.7222 31.0183 70.6076 30.9033C70.4935 30.7882 70.4289 30.6329 70.4276 30.4707V20.075C70.4276 18.3237 70.094 16.9826 69.4255 16.0514C68.757 15.1203 67.728 14.6547 66.3385 14.6547C65.6877 14.6273 65.0399 14.7512 64.4452 15.0166C63.8539 15.2895 63.3326 15.6943 62.9218 16.1998C62.0628 17.2395 61.6345 18.6868 61.637 20.5418V30.4561C61.6365 30.6192 61.5715 30.7753 61.456 30.8904C61.3999 30.9478 61.3329 30.9933 61.259 31.0244C61.185 31.0555 61.1056 31.0714 61.0253 31.0713H57.0262C56.8644 31.0704 56.7095 31.0053 56.5955 30.8904C56.4813 30.7745 56.4165 30.6188 56.4145 30.4561V20.075C56.4145 18.3237 56.0743 16.9826 55.3939 16.0514C54.7135 15.1203 53.664 14.6547 52.2453 14.6547C51.6015 14.6359 50.9621 14.7672 50.3778 15.0383C49.7922 15.3093 49.2769 15.7117 48.8722 16.2143C48.0133 17.2539 47.5838 18.7013 47.5838 20.5563V30.4561C47.5804 30.6185 47.5158 30.7737 47.4029 30.8904C47.2889 31.0053 47.134 31.0704 46.9722 31.0713H42.9622C42.8011 31.0701 42.6467 31.0066 42.5315 30.894C42.4194 30.7781 42.3549 30.6246 42.3506 30.4635V11.3222C42.351 11.1592 42.416 11.0031 42.5315 10.888C42.647 10.7754 42.8009 10.7107 42.9622 10.7071H46.4511C46.5973 10.7068 46.7388 10.7594 46.8491 10.8555C46.9581 10.9482 47.0311 11.0763 47.0554 11.2173L47.4174 13.4535C48.0784 12.4662 48.9704 11.6552 50.0159 11.0907Z" fill="currentColor"/>
-            <path d="M133.781 11.0906C134.937 10.4955 136.224 10.2018 137.523 10.2367C140.66 10.2367 142.882 11.4536 144.19 13.8876C144.932 12.7583 145.953 11.8398 147.154 11.2209C148.407 10.5613 149.805 10.2231 151.222 10.2367C153.876 10.2367 155.907 11.0303 157.316 12.6176C158.725 14.2048 159.434 16.5327 159.441 19.6011V30.4706C159.44 30.6336 159.376 30.7898 159.26 30.9048C159.204 30.9622 159.137 31.0078 159.063 31.0389C158.989 31.0699 158.91 31.0859 158.829 31.0858H154.819C154.658 31.0848 154.503 31.0197 154.389 30.9048C154.276 30.7881 154.211 30.633 154.207 30.4706V20.075C154.207 18.3237 153.874 16.9825 153.209 16.0514C152.543 15.1203 151.513 14.6547 150.118 14.6547C149.467 14.6319 148.82 14.7609 148.227 15.0316C147.635 15.3023 147.114 15.7072 146.705 16.2142C145.846 17.2539 145.417 18.7012 145.417 20.5563V30.4561C145.416 30.6184 145.353 30.7741 145.239 30.8904C145.125 31.0058 144.968 31.0709 144.805 31.0712H140.795C140.632 31.0709 140.476 31.0058 140.361 30.8904C140.248 30.7736 140.183 30.6185 140.18 30.4561V20.075C140.18 18.3237 139.839 16.9825 139.159 16.0514C138.479 15.1203 137.429 14.6547 136.011 14.6547C135.366 14.637 134.726 14.7686 134.141 15.0391C133.556 15.3097 133.041 15.7119 132.638 16.2142C131.784 17.2539 131.354 18.7012 131.349 20.5563V30.4561C131.348 30.6184 131.284 30.7738 131.169 30.8888C131.055 31.0038 130.9 31.0694 130.738 31.0712H126.727C126.566 31.0701 126.412 31.0065 126.297 30.8939C126.185 30.7781 126.12 30.6245 126.116 30.4634V11.3222C126.116 11.1592 126.181 11.003 126.297 10.888C126.412 10.7759 126.566 10.7114 126.727 10.7071H130.216C130.362 10.7068 130.504 10.7594 130.614 10.8554C130.725 10.9471 130.798 11.0757 130.821 11.2172L131.183 13.4534C131.843 12.4662 132.736 11.6551 133.781 11.0906Z" fill="currentColor"/>
-            <path d="M24.0991 3.24596C26.0597 3.63474 27.8246 4.69174 29.0925 6.23655C30.3604 7.78136 31.0528 9.71826 31.0515 11.7166V19.8434H25.8544C25.7308 19.8426 25.6125 19.7932 25.5251 19.706C25.4802 19.6629 25.4446 19.6112 25.4204 19.554C25.3961 19.4967 25.3837 19.4352 25.3839 19.373V11.6623C25.3844 11.5389 25.3605 11.4167 25.3136 11.3026C25.2667 11.1884 25.1978 11.0847 25.1107 10.9973C25.0236 10.9099 24.92 10.8405 24.8061 10.7932C24.6922 10.7459 24.5699 10.7215 24.4465 10.7215H20.6972C20.4477 10.7228 20.2088 10.8215 20.0312 10.9965C19.9439 11.084 19.8746 11.1878 19.8274 11.3021C19.7802 11.4163 19.756 11.5387 19.7562 11.6623V19.373C19.7562 19.4348 19.7441 19.4961 19.7205 19.5532C19.697 19.6103 19.6623 19.6622 19.6186 19.706C19.5294 19.7928 19.4102 19.842 19.2857 19.8434H11.5877C11.464 19.8429 11.3415 19.867 11.2271 19.9141C11.1127 19.9612 11.0088 20.0304 10.9213 20.1179C10.8338 20.2054 10.7645 20.3093 10.7174 20.4236C10.6703 20.538 10.6463 20.6605 10.6468 20.7842V24.5365C10.6463 24.6601 10.6703 24.7827 10.7174 24.897C10.7645 25.0114 10.8338 25.1153 10.9213 25.2028C11.0088 25.2902 11.1127 25.3595 11.2271 25.4066C11.3415 25.4537 11.464 25.4777 11.5877 25.4773H19.2857C19.4102 25.4786 19.5294 25.5278 19.6186 25.6148C19.6623 25.6585 19.697 25.7104 19.7205 25.7675C19.7441 25.8246 19.7562 25.8858 19.7562 25.9476V31.1292H11.642C9.34987 31.1292 7.15164 30.2188 5.53085 28.5984C3.91006 26.9779 2.99951 24.7801 2.99951 22.4885C2.99951 20.1968 3.91006 17.9991 5.53085 16.3786C7.15164 14.7581 9.34987 13.8478 11.642 13.8478H13.7737V11.7202C13.7739 10.4429 14.0573 9.18156 14.6035 8.0269C15.1497 6.87225 15.9452 5.85302 16.9326 5.0426C17.9201 4.23218 19.075 3.65071 20.3142 3.34004C21.5533 3.02938 22.846 2.99725 24.0991 3.24596ZM25.3912 31.1292V26.1032C25.3921 25.9375 25.4584 25.7788 25.5756 25.6617C25.6928 25.5444 25.8515 25.4782 26.0173 25.4773H31.0551V31.1292H25.3912Z" fill="#C3C430"/>
-          </g>
-        </svg></span>
-        </div>
-        <div class="booking__layout">
-          <div class="booking__step">
-            <div class="booking__step-lbl">Step 1 &middot; Service</div>
-            <div class="booking__svc booking__svc--active">CCM Follow-up</div>
-            <div class="booking__svc">MTM Review</div>
-            <div class="booking__svc">Immunization</div>
-            <div class="booking__svc">POC Testing</div>
-          </div>
-          <div class="booking__step">
-            <div class="booking__step-lbl">Step 2 &middot; Time slot</div>
-            <div class="booking__slots">
-              <span class="booking__slot">9:00</span>
-              <span class="booking__slot">9:30</span>
-              <span class="booking__slot booking__slot--picked">10:00</span>
-              <span class="booking__slot">10:30</span>
-              <span class="booking__slot">11:00</span>
-              <span class="booking__slot">11:30</span>
-              <span class="booking__slot">1:00</span>
-              <span class="booking__slot">1:30</span>
-              <span class="booking__slot">2:00</span>
-            </div>
-          </div>
-          <div class="booking__step">
-            <div class="booking__step-lbl">Step 3 &middot; Eligibility</div>
-            <div class="booking__check">Medicare Part B verified</div>
-            <div class="booking__check">CCM not yet billed this month</div>
-            <div class="booking__check">Copay $0</div>
-          </div>
-        </div>
-      </div>
+      <img src="/assets/scheduler-mockup.svg" alt="" />
     </div>
     <div class="sub-hero__text">
-      <h1 class="h-display">Online booking and eligibility,<br><span class="accent">in one flow.</span></h1>
-      <p class="sub-hero__lede">Patients self-book on their phones while eligibility verification runs automatically, intake forms arrive before they walk in, and no-shows convert into ongoing relationships through automated recall outreach.</p>
+      <h1 class="h-display">Add predictability<br><span class="accent">to your workday.</span></h1>
+      <p class="sub-hero__lede">Take control of your workday and patient flow with MedMe's pharmacy-specific scheduling features like multi-calendar, multi-service booking, and external clinics.</p>
       <div class="sub-hero__cta">
         <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
       </div>
@@ -349,98 +300,138 @@
   </div>
 </section>
 
-<!-- ============= 2. NOT A GENERIC CALENDAR ============= -->
-<section class="tile tile--light" aria-label="Not a generic calendar">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Not a Generic Calendar Tool</span>
-      <h2 class="h-display">Every step integrates<br>with what makes the appointment billable.</h2>
-      <p class="lead">The scheduler automates the entire booking-to-encounter chain. Each step routes into your EHR, your eligibility checks, your billing workflow, and your patient outreach, so the appointment a patient books is the same appointment that ends in a paid claim.</p>
+<!--
+  Trusted by US pharmacy leaders.
+  Shared between the homepage and every pharmacy + platform
+  sub-page so the trust marquee + KPI stats render the same
+  everywhere. Source of truth, edit here once.
+-->
+<section class="trust" aria-label="Customer trust">
+  <div class="wrap">
+    <div class="trust__top">
+      <div class="trust__label">
+        <h2 class="h-display">Trusted by US pharmacy leaders</h2>
+      </div>
+    </div>
+    <div class="trust__logos" role="list" aria-label="Customer segments">
+      <div class="trust__logos-track" data-marquee>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Top-100 retail chain</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Multi-state regional</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">9-store specialty group</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Independent network</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Rural pharmacy cooperative</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Hospital outpatient pharmacy</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Long-term care partner</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">State pharmacy association</span></div>
+      </div>
+    </div>
+    <div class="trust__stats">
+      <div class="trust__stat"><div class="num">4,500+</div><div class="label">pharmacies powered</div></div>
+      <div class="trust__stat"><div class="num">30M+</div><div class="label">patient interactions</div></div>
+      <div class="trust__stat"><div class="num">16 + 10</div><div class="label">us states &middot; ca provinces</div></div>
+      <div class="trust__stat"><div class="num">99.99%</div><div class="label">platform uptime</div></div>
     </div>
   </div>
 </section>
 
-<!-- ============= 3. 5-STEP BOOKING PROCESS ============= -->
-<section class="tile tile--light" aria-label="Five-step booking process">
+<!-- ============= 3. CORE SCHEDULING FEATURES (4 dark cards) ============= -->
+<section class="tile tile--light" aria-label="Core scheduling features">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">The Five-Step Booking Process</span>
-      <h2 class="h-display">From self-serve booking<br>to a documented encounter.</h2>
+      <span class="kicker">Core Scheduling Features</span>
+      <h2 class="h-display">Pharmacy-specific scheduling,<br>end to end.</h2>
+      <p class="lead">Every feature is designed around how pharmacy clinical services actually run, from a single-store immunization clinic to a 40-store network coordinating walk-ins, appointments, rooms, and external clinics at the same time.</p>
     </div>
-    <div class="chain">
-      <div class="chain__steps">
-        <article class="chain__step">
-          <span class="chain__step-num">01</span>
-          <h4>Pick a service</h4>
-          <p>Patient selects CCM, MTM, vaccine, or POCT from a list of services your pharmacy actually delivers.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">02</span>
-          <h4>Select store and time</h4>
-          <p>Multi-store scheduler shows real-time availability across your network. Time slot lands in the pharmacist's day.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">03</span>
-          <h4>Confirm with eligibility</h4>
-          <p>Live 270/271 eligibility check runs in seconds. Copay, plan type, and CCM-this-month status surface before booking confirms.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">04</span>
-          <h4>Receive intake link</h4>
-          <p>Service-specific intake form lands by SMS. 60-second completion on the patient's phone, before the encounter.</p>
-        </article>
-        <article class="chain__step">
-          <span class="chain__step-num">05</span>
-          <h4>Get reminders</h4>
-          <p>Reminders go out at 24 hours and 1 hour. Two-way SMS reschedule lands the rebook back in the scheduler without a phone call.</p>
-        </article>
+    <div class="feat-grid">
+      <article class="feat-card">
+        <span class="feat-card__tag">Multi-Calendar</span>
+        <h3>Multi-calendar views and time blocks</h3>
+        <p>Coordinate every detail of your pharmacy's operations with a versatile multi-calendar system. Configure schedules for credentialed professionals, allocate consultation rooms, and block times to control when patients can book.</p>
+      </article>
+      <article class="feat-card">
+        <span class="feat-card__tag">Multi-Service</span>
+        <h3>Multi-service booking</h3>
+        <p>One booking can cover multiple services in the same visit. Patients pick the combinations your pharmacy offers, the scheduler routes the booking to the right pharmacist and room, and your team works the visit as one encounter.</p>
+      </article>
+      <article class="feat-card">
+        <span class="feat-card__tag">External Clinics</span>
+        <h3>Beyond the pharmacy walls</h3>
+        <p>Take services to workplaces, schools, community centers, and pop-up clinics. MedMe supports the setup and management of external clinics, with centralized scheduling across every location your pharmacists serve.</p>
+      </article>
+      <article class="feat-card">
+        <span class="feat-card__tag">Rooms &amp; Resources</span>
+        <h3>Rooms, queues, and resources</h3>
+        <p>Allocate consultation rooms, manage walk-in queues, and balance load across pharmacists in the same view. The scheduler enforces the rules your operations require, so the right service ends up in the right room with the right credentialed professional.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. RESERVE WITH GOOGLE callout ============= -->
+<section class="tile tile--light" aria-label="Reserve with Google">
+  <div class="tile__inner">
+    <div class="rwg-band">
+      <div class="rwg-band__text">
+        <span class="rwg-band__kicker">Reserve with Google</span>
+        <h3>Get found and booked from Google search.</h3>
+        <p>Reserve with Google integration puts your pharmacy's services in front of patients searching nearby. They tap the booking link straight from search results and land in the same MedMe scheduler your team already runs, so every walk-up patient becomes a booked appointment without a phone call.</p>
+      </div>
+      <div class="rwg-band__cta">
+        <a class="pill pill--solid" href="/us/contact">Talk to us <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= 4. CAPABILITIES (3 dark cards) ============= -->
-<section class="tile tile--light" aria-label="What the scheduler does">
+<!-- ============= 5. HYBRID WORKFLOW + REMINDERS (3 light cards) ============= -->
+<section class="tile tile--light" aria-label="Hybrid workflow and reminders">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">What the Scheduler Does</span>
-      <h2 class="h-display">Three places generic schedulers<br>fall apart for pharmacy.</h2>
+      <span class="kicker">Hybrid Walk-In and Appointment Flow</span>
+      <h2 class="h-display">Walk-ups and bookings,<br>handled in the same view.</h2>
+      <p class="lead">Pharmacy traffic is never purely walk-in or purely booked. The scheduler handles both in one queue, with automated reminders and recall outreach keeping the booked side full and your team's day predictable.</p>
     </div>
-    <div class="winners-grid">
-      <article class="winner-card">
-        <span class="winner-card__tag">Booking Widget</span>
-        <h3>Drop-in for any pharmacy site</h3>
-        <p>Mobile-first booking widget, ADA-compliant, with 12-language support. Embeds in your pharmacy's existing website and brand. 68% of bookings complete on the patient's phone in under 90 seconds.</p>
+    <div class="light-grid">
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/><circle cx="17" cy="6" r="2"/><path d="M17 14a3 3 0 0 1 3 3v2"/></svg>
+        </span>
+        <h3>Walk-ins and appointments together</h3>
+        <p>The queue accepts walk-ups and booked patients in the same view. Pharmacists see who is in the store now, what they came in for, and what's coming up later in the day.</p>
       </article>
-      <article class="winner-card">
-        <span class="winner-card__tag">Eligibility at Booking</span>
-        <h3>Real-time 270/271 verification</h3>
-        <p>Live eligibility checks against Medicare Part B and 200+ commercial payers, before the appointment is confirmed. Pharmacists never deliver a service the payer would not have covered.</p>
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <h3>Automated reminders and notifications</h3>
+        <p>SMS and email reminders go out on the cadence each service needs. Patients confirm or reschedule by replying. No-shows drop without manual follow-up calls.</p>
       </article>
-      <article class="winner-card">
-        <span class="winner-card__tag">Intake &amp; Recall</span>
-        <h3>Forms in. Patients back.</h3>
-        <p>Service-specific intake forms (CCM consent, MTM medication lists, VIS attestation) auto-send before the encounter. Recall campaigns pull due patients into SMS and email queues automatically.</p>
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9"/><polyline points="3 5 3 12 10 12"/></svg>
+        </span>
+        <h3>Recall outreach that books</h3>
+        <p>Bring back patients due for CCM, MTM, A1C, or seasonal vaccines through SMS or email campaigns. Replies route directly into the scheduler, so a single campaign turns into a queue of booked follow-ups.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 5. STAT BAND ============= -->
-<section class="tile tile--light" aria-label="The numbers customers post">
+<!-- ============= 6. STAT BAND ============= -->
+<section class="tile tile--light" aria-label="By the numbers">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">The Numbers Customers Post</span>
-      <h2 class="h-display">What "scheduler that<br>actually moves appointments" looks like.</h2>
+      <span class="kicker">By the Numbers</span>
+      <h2 class="h-display">North America's leading<br>pharmacy scheduler.</h2>
     </div>
     <div class="stats-band">
       <div class="stats-band__cell">
-        <div class="stats-band__num">410K+</div>
-        <div class="stats-band__label">Patient appointments booked through MedMe in the last 12 months.</div>
+        <div class="stats-band__num">4,500+</div>
+        <div class="stats-band__label">Pharmacies scheduling clinical services through MedMe.</div>
       </div>
       <div class="stats-band__cell">
-        <div class="stats-band__num">68%</div>
-        <div class="stats-band__label">Of bookings complete on the patient's phone in under 90 seconds.</div>
+        <div class="stats-band__num">410K+</div>
+        <div class="stats-band__label">Patient appointments booked in the last 12 months.</div>
       </div>
       <div class="stats-band__cell">
         <div class="stats-band__num">22%</div>
@@ -450,23 +441,13 @@
   </div>
 </section>
 
-<!-- ============= 6. CUSTOMER QUOTE ============= -->
-<section class="tile tile--light" aria-label="Customer quote">
-  <div class="tile__inner">
-    <div class="quote-card">
-      <p class="quote-card__text">"Recall outreach turned a 'we should call those CCM patients back' wishlist into 240 booked follow-ups in the first month. The eligibility check saved my MTM pharmacist 4 hours weekly on insurance calls."</p>
-      <p class="quote-card__attrib"><strong>Diana Park, PharmD</strong> &middot; Owner, Wellgrove Pharmacy &middot; 3 stores, OR</p>
-    </div>
-  </div>
-</section>
-
 <!-- ============= 7. CLOSING CTA ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="Let patients book themselves">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">
-      <span class="kicker">Tired of Phone-Tag and Clipboard Intake?</span>
-      <h2 class="h-display">Let patients book themselves.<br>Have eligibility in hand before they walk in.</h2>
-      <p class="lead">A 20-minute walkthrough on a real pharmacy booking flow. We will configure your services live, run an eligibility check on a sample patient, and show you the SMS the patient actually receives.</p>
+      <span class="kicker">Ready for Predictable Days?</span>
+      <h2 class="h-display">Let patients book themselves.<br>Walk into the day with a plan.</h2>
+      <p class="lead">A 20-minute walkthrough on a real pharmacy booking flow. We will configure your services live, show multi-calendar in action, and demo the Reserve with Google handoff end to end.</p>
     </div>
     <div class="pill-cta-row pill-cta-row--center">
       <span class="pulse-rings" aria-hidden="true">

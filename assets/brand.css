@@ -376,21 +376,159 @@ a.nav__dropdown-group-label[aria-current="page"] {
   box-shadow: var(--shadow-deep);
 }
 
-/* ============== TRUST BAND ============== */
-.trust { background: var(--seashell); color: var(--indigo); padding: 3rem 0; border-top: 1px solid var(--indigo-08); }
-.trust__top { display: grid; grid-template-columns: minmax(220px, 1fr) 2fr; gap: 3rem; align-items: center; }
-.trust__label .eyebrow { color: var(--matcha); }
-.trust__label .stat-line {
-  font-family: var(--font-display); font-weight: 600;
-  font-size: 1.5rem; line-height: 1.2;
-  margin-top: 0.5rem; color: var(--seashell);
+/* ============== TRUST BAND ==============
+   Site-wide trust component. Used on the homepage and via the
+   shared partials/trust-band-us.html on every pharmacy and
+   platform sub-page. Renders a seashell band with a centered
+   headline, an animated logo marquee that pauses on hover and
+   falls back to a flex-wrap layout under prefers-reduced-motion,
+   and a 4-column KPI stat row that drops to 2 columns under
+   640px. */
+.trust {
+  background: var(--seashell);
+  color: var(--indigo);
+  padding: 4rem 0 3rem;
+  border-top: 1px solid var(--indigo-08);
 }
-.trust__logos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; align-items: center; }
-.trust__logos--6 { grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
-.trust__logo { font-family: var(--font-display); font-weight: 600; font-size: 1rem; color: var(--seashell); opacity: 0.85; text-align: center; letter-spacing: 0.02em; }
-.trust__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(250,249,245,0.15); }
-.trust__stat .num { font-family: var(--font-display); font-weight: 600; font-size: 2.25rem; color: var(--matcha); line-height: 1; }
-.trust__stat .label { font-size: var(--fs-small); margin-top: 0.5rem; color: var(--seashell); opacity: 0.85; }
+.trust .wrap { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); }
+.trust__top {
+  display: block;
+  text-align: center;
+  margin: 0 auto 2rem;
+  max-width: 720px;
+}
+.trust__label { display: block; }
+.trust__label h2.h-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  margin: 0;
+  color: var(--indigo);
+}
+.trust__label .eyebrow {
+  color: var(--indigo);
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.15;
+}
+.trust__label .eyebrow::before { display: none; }
+.trust__label .stat-line {
+  margin-top: 1rem;
+  color: rgba(6, 62, 84, 0.72);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 580px;
+  margin-inline: auto;
+  text-align: center;
+}
+.trust__logos {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 0;
+  margin-bottom: 2.5rem;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.trust__logos-track {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  align-items: center;
+  animation: trust-marquee 42s linear infinite;
+}
+.trust__logos:hover .trust__logos-track { animation-play-state: paused; }
+@keyframes trust-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.trust__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: rgba(6, 62, 84, 0.55);
+  opacity: 1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  cursor: default;
+  text-align: left;
+}
+.trust__logo:hover {
+  color: var(--indigo);
+  transform: translateY(-1px);
+}
+.trust__mark { width: 26px; height: 26px; flex-shrink: 0; }
+.trust__name { line-height: 1; }
+.trust__name--wide {
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.trust__wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: rgba(6, 62, 84, 0.45);
+  letter-spacing: -0.02em;
+  filter: grayscale(100%) contrast(0.9);
+}
+.trust__wordmark--bold { font-weight: 800; letter-spacing: 0; }
+.trust__wordmark--script {
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.trust__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem 1rem;
+  margin-top: 0.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(6, 62, 84, 0.08);
+}
+.trust__stat { text-align: center; }
+.trust__stat .num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.875rem, 3vw, 2.5rem);
+  color: var(--indigo);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.trust__stat .label {
+  font-size: 0.875rem;
+  margin-top: 0.6rem;
+  color: rgba(6, 62, 84, 0.62);
+  line-height: 1.4;
+  max-width: 220px;
+  margin-inline: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .trust__logos { -webkit-mask-image: none; mask-image: none; }
+  .trust__logos-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem 3rem;
+    width: auto;
+    transform: none;
+  }
+}
+@media (max-width: 640px) {
+  .trust__logos-track { gap: 2.5rem; animation-duration: 30s; }
+  .trust__mark { width: 22px; height: 22px; }
+  .trust__logo { font-size: 1rem; }
+  .trust__stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+}
 
 /* ============== FEATURE LIST ============== */
 .features {
