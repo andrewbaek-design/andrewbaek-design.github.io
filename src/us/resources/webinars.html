@@ -5,207 +5,481 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Webinars, MedMe Health</title>
 <meta name="description" content="Live and on-demand webinars for US pharmacy operators, billing CCM, RHTP for operators, Heritage Rx's $1.4M year, AI Scribe in real consults, and provider-status legislation deep dives." />
-<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/resources/webinars/" />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/resources/webinars" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/brand.css?v=65" />
 <style>
-  .webinar-card { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
-  .webinar-card .article-card__type { display: flex; gap: 0.5rem; align-items: center; }
-  .webinar-meta { display: flex; gap: 0.65rem; flex-wrap: wrap; align-items: center; font-size: var(--fs-micro); color: var(--indigo-80); padding-top: 0.5rem; }
-  .webinar-meta .dot { color: var(--matcha); }
-  .webinar-pill { background: var(--matcha); color: var(--indigo); padding: 0.2rem 0.55rem; border-radius: 999px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.625rem; }
-  .webinar-pill.replay { background: var(--indigo); color: var(--seashell); }
-  .speaker-row { display: flex; gap: 0.5rem; align-items: center; font-size: var(--fs-small); color: var(--indigo-80); margin-top: 0.25rem; }
-  .speaker-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--indigo), var(--indigo-80)); color: var(--seashell); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 600; font-size: 0.75rem; flex-shrink: 0; }
+  /* ============================================================
+     WEBINARS page. Same template as blog/events. Each card is a
+     single session. Filter: All / Upcoming / On-demand. A LIVE
+     or REPLAY pill sits on the gradient media slot; date + speakers
+     in the body. CTA toggles between "Register" and "Watch replay".
+     ============================================================ */
+
+  /* ====== HERO ================================================ */
+  .sub-hero {
+    background: var(--seashell);
+    padding: 3.5rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sub-hero__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: 0 auto; }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto;
+    max-width: 660px;
+    text-wrap: pretty;
+  }
+  .sub-hero__breadcrumb {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.55);
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+  .sub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .sub-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+
+  /* ====== FILTER ============================================== */
+  .bl-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 0 2rem;
+  }
+  .bl-filter__pill {
+    background: var(--white);
+    border: 1.5px solid rgba(6, 62, 84, 0.12);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    line-height: 1.2;
+  }
+  .bl-filter__pill:hover {
+    border-color: var(--matcha);
+    background: rgba(195, 196, 48, 0.08);
+  }
+  .bl-filter__pill.is-active {
+    background: var(--matcha);
+    border-color: var(--matcha);
+    color: var(--indigo);
+  }
+  .bl-filter__pill:focus-visible {
+    outline: 2px solid var(--matcha);
+    outline-offset: 3px;
+  }
+  .bl-card.is-hidden { display: none; }
+
+  /* ====== WEBINAR CARDS ======================================= */
+  .bl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  @media (max-width: 1000px) { .bl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .bl-grid { grid-template-columns: 1fr; } }
+
+  .bl-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .bl-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+    box-shadow: 0 16px 40px rgba(6, 62, 84, 0.08);
+  }
+
+  /* Gradient placeholder with a centered play triangle overlay. */
+  .bl-card__media {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: linear-gradient(135deg, var(--indigo) 0%, rgba(6, 62, 84, 0.78) 100%);
+    overflow: hidden;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: var(--matcha);
+  }
+  .bl-card__media--matcha {
+    background: linear-gradient(135deg, rgba(195, 196, 48, 0.9) 0%, rgba(195, 196, 48, 0.55) 100%);
+    color: var(--indigo);
+  }
+  .bl-card__media-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .bl-card:hover .bl-card__media-icon {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  .bl-card__media-icon svg {
+    width: 64px;
+    height: 64px;
+  }
+  .bl-card__media-icon circle {
+    fill: rgba(250, 249, 245, 0.18);
+    stroke: currentColor;
+    stroke-width: 1.5;
+  }
+  .bl-card__media-icon polygon { fill: currentColor; }
+  .bl-card__media-pill {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+  }
+  .bl-card__media-pill--replay {
+    background: var(--seashell);
+    color: var(--indigo);
+  }
+  .bl-card__media-pill::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--indigo);
+    margin-right: 6px;
+    vertical-align: 1px;
+  }
+  .bl-card__media-pill--live::before {
+    background: #d6342f;
+    animation: webinar-blink 1.6s ease-in-out infinite;
+  }
+  @keyframes webinar-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bl-card__media-pill--live::before { animation: none; }
+  }
+
+  .bl-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75rem;
+  }
+  .bl-card__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    align-self: flex-start;
+    letter-spacing: 0.02em;
+  }
+  .bl-card__tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .bl-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.014em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .bl-card__meta {
+    font-size: 0.82rem;
+    color: rgba(6, 62, 84, 0.6);
+    line-height: 1.4;
+  }
+  .bl-card__lede {
+    margin: 0;
+    font-size: 0.92rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .bl-card__cta { margin-top: auto; padding-top: 0.75rem; }
+  .bl-card__cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1.5px solid var(--matcha);
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+  .bl-card__cta a:hover {
+    background: transparent;
+    color: var(--indigo);
+    transform: translateX(2px);
+  }
+  .bl-card__cta a .arrow { transition: transform 0.18s ease; }
+  .bl-card__cta a:hover .arrow { transform: translateX(2px); }
 </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
-
 {{> partials/util-bar-us }}
-
 {{> partials/nav-us }}
 
 <main id="main">
 
-<section class="page-hero">
-  <div class="wrap">
-    <div class="page-hero__breadcrumb">
-      <a href="/us">Home</a>
-      <span class="sep">/</span>
-      <a href="/us/resources">Resources</a>
-      <span class="sep">/</span>
-      <span>Webinars</span>
-    </div>
-    <div class="page-hero__content">
-      <span class="eyebrow eyebrow--matcha">Webinars</span>
-      <h1>Live and on-demand <span class="accent">pharmacy webinars.</span></h1>
-      <p class="page-hero__lede">Operator-to-operator conversations with the people doing the work, billing CCM, partnering with state RHTP plans, deploying AI scribe in real consults, and working through provider-status legislation.</p>
+<!-- ============= 1. SUB-HERO ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__text">
+      <div class="sub-hero__breadcrumb">
+        <a href="/us">Home</a><span class="sep">/</span><a href="/us/resources">Resources</a><span class="sep">/</span><span>Webinars</span>
+      </div>
+      <span class="kicker kicker--matcha">Webinars</span>
+      <h1 class="h-display">Live and on-demand<br>pharmacy webinars.</h1>
+      <p class="sub-hero__lede">Operator-to-operator conversations with the people doing the work, billing CCM, partnering with state RHTP plans, deploying AI scribe in real consults, and working through provider-status legislation.</p>
     </div>
   </div>
 </section>
 
-<section class="bg-seashell" style="padding-top: 0;">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow eyebrow--matcha">Upcoming</span>
-      <h2>Live sessions on the calendar.</h2>
+<!-- ============= 2. WEBINAR GRID ============= -->
+<section class="tile tile--light" aria-label="Webinars">
+  <div class="tile__inner">
+    <div class="bl-filter" role="group" aria-label="Filter webinars">
+      <button type="button" class="bl-filter__pill is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="bl-filter__pill" data-filter="upcoming" aria-pressed="false">Upcoming</button>
+      <button type="button" class="bl-filter__pill" data-filter="on-demand" aria-pressed="false">On-demand</button>
     </div>
-    <div class="article-grid">
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill">LIVE</span> Webinar · Live</span>
-        <h3>Billing CCM in pharmacy: Q2 2026 update</h3>
-        <p>The 2026 PFS expanded what pharmacists can document under general supervision. We'll walk through the updated CCM rules, the time-tracking expectations CMS has clarified for 2026, and the three audit findings we're seeing in the field this quarter.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">DR</span><span><strong>Dr. Diana Reyes, PharmD</strong> · MedMe Clinical Lead</span>
+
+    <div class="bl-grid">
+
+      <article class="bl-card" data-tag="upcoming">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--live">LIVE</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Upcoming</span>
+          <h3>Billing CCM in pharmacy: Q2 2026 update</h3>
+          <p class="bl-card__meta">Tue, May 28, 2026 &middot; 1:00 PM ET &middot; 45 min + Q&amp;A<br>Diana Reyes, PharmD &middot; Jamie Chen, MBA</p>
+          <p class="bl-card__lede">Updated CCM rules in the 2026 PFS, CMS time-tracking expectations, and the three audit findings we are seeing in the field this quarter.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Register <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-        <div class="speaker-row">
-          <span class="speaker-avatar">JC</span><span><strong>Jamie Chen, MBA</strong> · Director of Billing Operations, MedMe</span>
+      </article>
+
+      <article class="bl-card" data-tag="upcoming">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--live">LIVE</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Upcoming</span>
+          <h3>RHTP for operators: what to do now</h3>
+          <p class="bl-card__meta">Wed, Jun 11, 2026 &middot; 2:00 PM ET &middot; 60 min + Q&amp;A<br>Purya Sarmadi, RPh &middot; Marcus Okafor, PharmD</p>
+          <p class="bl-card__lede">$50B over 5 years and pharmacy is a named delivery partner in nearly every approved state plan. State-by-state status and the 90-day operator readiness checklist.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Register <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-        <div class="webinar-meta">
-          <span><strong>Tue, May 28, 2026</strong></span><span class="dot">·</span><span>1:00 PM ET</span><span class="dot">·</span><span>45 min + Q&amp;A</span>
+      </article>
+
+      <article class="bl-card" data-tag="upcoming">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--live">LIVE</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Upcoming</span>
+          <h3>Provider status legislation: 2026 deep dive</h3>
+          <p class="bl-card__meta">Thu, Jul 16, 2026 &middot; 1:00 PM ET &middot; 50 min + Q&amp;A<br>Marcus Okafor, PharmD &middot; Christine Lim, MBA</p>
+          <p class="bl-card__lede">H.R. 1770 has the most realistic shot at the floor in a decade. Where state-level efforts stand in Idaho, Montana, New Mexico, Utah, and North Carolina, plus what to do regardless.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Register <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-      </a>
-      <a class="article-card webinar-card" href="#" id="rhtp">
-        <span class="article-card__type"><span class="webinar-pill">LIVE</span> Webinar · Live</span>
-        <h3>RHTP for operators: what to do now</h3>
-        <p>The Rural Health Transformation Program puts $50B over 5 years into rural health delivery starting Q3 2026, and pharmacy is a named delivery partner in nearly every approved state plan. We'll walk through the state-by-state status, eligibility requirements, and the 90-day operator readiness checklist.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">PS</span><span><strong>Purya Sarmadi, RPh</strong> · Co-founder &amp; CEO, MedMe</span>
+      </article>
+
+      <article class="bl-card" data-tag="on-demand">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--replay">REPLAY</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">On-demand</span>
+          <h3>Heritage Rx: how we unlocked $1.4M in year one</h3>
+          <p class="bl-card__meta">Recorded Mar 2026 &middot; 45 min &middot; Most-watched<br>Joshua Holland, RPh &middot; Anika Tremblay, PharmD</p>
+          <p class="bl-card__lede">A 45-minute walkthrough of how an 8-store independent in central Pennsylvania built a billable services line from scratch, and what they would do differently.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Watch replay <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-        <div class="speaker-row">
-          <span class="speaker-avatar">MO</span><span><strong>Marcus Okafor, PharmD</strong> · VP Government Affairs, MedMe</span>
+      </article>
+
+      <article class="bl-card" data-tag="on-demand">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--replay">REPLAY</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">On-demand</span>
+          <h3>AI Scribe in real pharmacy consults</h3>
+          <p class="bl-card__meta">Recorded Feb 2026 &middot; 52 min<br>Ravi Desai, PharmD &middot; Diana Reyes, PharmD</p>
+          <p class="bl-card__lede">Three customer pharmacies recorded live consults with patient consent. We walked the audience through what AI Scribe captured, what pharmacists kept, and what they edited.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Watch replay <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-        <div class="webinar-meta">
-          <span><strong>Wed, June 11, 2026</strong></span><span class="dot">·</span><span>2:00 PM ET</span><span class="dot">·</span><span>60 min + Q&amp;A</span>
+      </article>
+
+      <article class="bl-card" data-tag="on-demand">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--replay">REPLAY</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">On-demand</span>
+          <h3>Three Rivers: building MTM at 14 stores</h3>
+          <p class="bl-card__meta">Recorded Jan 2026 &middot; 40 min<br>Elena Wozniak, PharmD, MS</p>
+          <p class="bl-card__lede">How a 14-store community pharmacy across western Pennsylvania and Ohio rolled MTM as a region-wide program, sourced commercial-payer contracts, and landed its staffing model.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Watch replay <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-      </a>
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill">LIVE</span> Webinar · Live</span>
-        <h3>Provider status legislation: 2026 deep dive</h3>
-        <p>Federal H.R. 1770 has the most realistic shot at the floor in a decade. Several states (Idaho, Montana, New Mexico, Utah, North Carolina) have moved on state-level pharmacist provider status. We'll go through where things actually stand and what to do regardless of how the federal vote breaks.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">MO</span><span><strong>Marcus Okafor, PharmD</strong> · VP Government Affairs, MedMe</span>
+      </article>
+
+      <article class="bl-card" data-tag="on-demand">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--replay">REPLAY</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">On-demand</span>
+          <h3>Incident-to billing for pharmacy: a 2026 walkthrough</h3>
+          <p class="bl-card__meta">Recorded Dec 2025 &middot; 48 min<br>Jamie Chen, MBA</p>
+          <p class="bl-card__lede">The mechanics of incident-to under Medicare Part B for pharmacy clinical services: supervision posture, documentation, scope of practice, and the OIG audit findings flagged in 2025.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Watch replay <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-        <div class="speaker-row">
-          <span class="speaker-avatar">CL</span><span><strong>Christine Lim, MBA</strong> · Chief Commercial Officer, MedMe</span>
+      </article>
+
+      <article class="bl-card" data-tag="on-demand">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--replay">REPLAY</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">On-demand</span>
+          <h3>POCT at the counter: what the math actually says</h3>
+          <p class="bl-card__meta">Recorded Nov 2025 &middot; 42 min<br>Diana Reyes, PharmD</p>
+          <p class="bl-card__lede">Strep-A, influenza, RSV, COVID, lipid panels, A1c. Per-test reimbursement at 2026 PFS rates, supply costs, and the staffing assumptions for a typical multi-store operator.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Watch replay <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-        <div class="webinar-meta">
-          <span><strong>Thu, July 16, 2026</strong></span><span class="dot">·</span><span>1:00 PM ET</span><span class="dot">·</span><span>50 min + Q&amp;A</span>
+      </article>
+
+      <article class="bl-card" data-tag="on-demand">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--replay">REPLAY</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">On-demand</span>
+          <h3>Behavioral health collaborative: an introduction</h3>
+          <p class="bl-card__meta">Recorded Oct 2025 &middot; 55 min<br>Diana Reyes, PharmD &middot; Marcus Okafor, PharmD</p>
+          <p class="bl-card__lede">The 2026 PFS expanded BHI codes for pharmacist-delivered medication management in collaborative care arrangements. G0511, G0512, and the 99492 to 99494 series in real workflows.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Watch replay <span class="arrow">&rarr;</span></a>
+          </div>
         </div>
-      </a>
+      </article>
+
+      <article class="bl-card" data-tag="on-demand">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-pill bl-card__media-pill--replay">REPLAY</span>
+          <span class="bl-card__media-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><polygon points="26 20 46 32 26 44 26 20"/></svg></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">On-demand</span>
+          <h3>Why generic EHRs don't work in pharmacy</h3>
+          <p class="bl-card__meta">Recorded Sep 2025 &middot; 38 min<br>Purya Sarmadi, RPh</p>
+          <p class="bl-card__lede">The same patient encounter documented in three systems: a generic ambulatory EHR, a dispensing-system add-on, and MedMe. Where each one breaks down for clinical-services billing.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Watch replay <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
 
-<section class="bg-seashell" style="padding-top: 0;">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow eyebrow--matcha">On-demand</span>
-      <h2>Replay recent sessions.</h2>
+<!-- ============= 3. CLOSING CTA (navy) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Subscribe">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Get The Sessions</span>
+      <h2 class="h-display">Every new session<br>in your inbox.</h2>
+      <p class="lead">One email when new live sessions go on the calendar. No drip cadence, no marketing sequence dressed up as content.</p>
     </div>
-    <div class="article-grid">
-      <a class="article-card webinar-card" href="#" id="heritage">
-        <span class="article-card__type"><span class="webinar-pill replay">REPLAY</span> Webinar · On-demand</span>
-        <h3>Heritage Rx: how we unlocked $1.4M in year one</h3>
-        <p>A 45-minute conversation with the Heritage Rx clinical team on how an 8-store pharmacy in central Pennsylvania built a billable services line from scratch, what they billed, what they bid, what they staffed, and what they would do differently.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">JH</span><span><strong>Joshua Holland, RPh</strong> · Director of Clinical Services, Heritage Rx</span>
-        </div>
-        <div class="speaker-row">
-          <span class="speaker-avatar">AT</span><span><strong>Anika Tremblay, PharmD</strong> · Lead Clinical Pharmacist, Heritage Rx</span>
-        </div>
-        <div class="webinar-meta">
-          <span>Recorded Mar 2026</span><span class="dot">·</span><span>45 min</span><span class="dot">·</span><span>Most-watched</span>
-        </div>
-      </a>
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill replay">REPLAY</span> Webinar · On-demand</span>
-        <h3>AI Scribe in real pharmacy consults</h3>
-        <p>We invited three customers to record live consults with their patients' permission and then walked the audience through what AI Scribe captured, what the pharmacists kept, and what they edited. A demo of how documentation actually shows up in CCM and MTM workflows.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">RD</span><span><strong>Ravi Desai, PharmD</strong> · Lead Pharmacist, Carter Wellness Pharmacy</span>
-        </div>
-        <div class="speaker-row">
-          <span class="speaker-avatar">DR</span><span><strong>Dr. Diana Reyes, PharmD</strong> · MedMe Clinical Lead</span>
-        </div>
-        <div class="webinar-meta">
-          <span>Recorded Feb 2026</span><span class="dot">·</span><span>52 min</span>
-        </div>
-      </a>
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill replay">REPLAY</span> Webinar · On-demand</span>
-        <h3>Three Rivers: building MTM at 14 stores</h3>
-        <p>Three Rivers operates 14 community pharmacies across western Pennsylvania and Ohio. Their VP of Pharmacy Practice walks through how they rolled MTM as a region-wide program, how they sourced commercial-payer contracts, and the staffing model they landed on.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">EW</span><span><strong>Elena Wozniak, PharmD, MS</strong> · VP Pharmacy Practice, Three Rivers</span>
-        </div>
-        <div class="webinar-meta">
-          <span>Recorded Jan 2026</span><span class="dot">·</span><span>40 min</span>
-        </div>
-      </a>
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill replay">REPLAY</span> Webinar · On-demand</span>
-        <h3>Incident-to billing for pharmacy: a 2026 walkthrough</h3>
-        <p>The mechanics of incident-to under Medicare Part B for pharmacy clinical services, supervision posture, documentation, scope-of-practice, and the audit findings the OIG flagged in its 2025 report.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">JC</span><span><strong>Jamie Chen, MBA</strong> · Director of Billing Operations, MedMe</span>
-        </div>
-        <div class="webinar-meta">
-          <span>Recorded Dec 2025</span><span class="dot">·</span><span>48 min</span>
-        </div>
-      </a>
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill replay">REPLAY</span> Webinar · On-demand</span>
-        <h3>POCT at the counter: what the math actually says</h3>
-        <p>Strep-A, influenza, RSV, COVID, lipid panels, A1c. We walked through the per-test reimbursement at 2026 PFS rates, the supply costs, and the staffing assumptions for a typical multi-store operator looking to add POCT.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">DR</span><span><strong>Dr. Diana Reyes, PharmD</strong> · MedMe Clinical Lead</span>
-        </div>
-        <div class="webinar-meta">
-          <span>Recorded Nov 2025</span><span class="dot">·</span><span>42 min</span>
-        </div>
-      </a>
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill replay">REPLAY</span> Webinar · On-demand</span>
-        <h3>Behavioral health collaborative: an introduction</h3>
-        <p>The 2026 PFS expanded BHI codes for pharmacist-delivered medication management in collaborative care arrangements. We walk through G0511, G0512, the 99492-99494 series, and how the work shows up day-to-day in a community pharmacy.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">DR</span><span><strong>Dr. Diana Reyes, PharmD</strong> · MedMe Clinical Lead</span>
-        </div>
-        <div class="speaker-row">
-          <span class="speaker-avatar">MO</span><span><strong>Marcus Okafor, PharmD</strong> · VP Government Affairs, MedMe</span>
-        </div>
-        <div class="webinar-meta">
-          <span>Recorded Oct 2025</span><span class="dot">·</span><span>55 min</span>
-        </div>
-      </a>
-      <a class="article-card webinar-card" href="#">
-        <span class="article-card__type"><span class="webinar-pill replay">REPLAY</span> Webinar · On-demand</span>
-        <h3>Why generic EHRs don't work in pharmacy</h3>
-        <p>We show the same patient encounter documented in three systems, a generic ambulatory EHR, a dispensing-system add-on, and MedMe, and walk through where each one breaks down for clinical-services billing.</p>
-        <div class="speaker-row">
-          <span class="speaker-avatar">PS</span><span><strong>Purya Sarmadi, RPh</strong> · Co-founder &amp; CEO, MedMe</span>
-        </div>
-        <div class="webinar-meta">
-          <span>Recorded Sept 2025</span><span class="dot">·</span><span>38 min</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="wrap">
-    <div>
-      <h2>Get every new session in your inbox.</h2>
-      <p>One email when new live sessions go on the calendar. We don't spam.</p>
-    </div>
-    <div class="cta-band__buttons">
-      <a class="btn btn-primary--accent" href="/us/contact">Subscribe <span class="arrow">→</span></a>
-      <a class="btn btn-ghost btn-ghost--on-indigo" href="/us/resources/blog">Read the blog</a>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Subscribe <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -213,5 +487,28 @@
 </main>
 
 {{> partials/footer-us }}
+<script src="/assets/site.js" defer></script>
+<script>
+  /* Webinar Upcoming / On-demand filter, identical pattern to blog. */
+  (function webinarsFilter() {
+    var pills = document.querySelectorAll('.bl-filter__pill');
+    var cards = document.querySelectorAll('.bl-card');
+    if (!pills.length || !cards.length) return;
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = pill.getAttribute('data-filter');
+        pills.forEach(function (p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-tag') === filter;
+          card.classList.toggle('is-hidden', !match);
+        });
+      });
+    });
+  })();
+</script>
 </body>
 </html>

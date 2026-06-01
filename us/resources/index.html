@@ -4,283 +4,200 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Resources, MedMe Health</title>
-<meta name="description" content="Reimbursement calculators, CPT/HCPCS guides, RHTP briefs, webinars, and blog, pharmacy-specific content from MedMe." />
-<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/resources/" />
+<meta name="description" content="Pharmacy-specific content built for the work you do. Blog, webinars, white papers, events, and the reimbursement calculator." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/resources" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=65" />
 <style>
-  .res-hero {
+  /* ============================================================
+     RESOURCES hub page. Built off the blog template
+     (.sub-hero text-only / .bl-card grid / navy CTA) so all five
+     pages under Resources share visual language.
+
+     Hub variant: cards represent the five Resource sub-pages
+     (Blog, Webinars, White Papers, Events, ROI Calculator) and
+     use an icon-on-matcha-gradient hero block instead of a
+     photo, so the page reads as navigation, not as a feed.
+     ============================================================ */
+
+  /* ====== HERO: text-only, no mockup =========================== */
+  .sub-hero {
     background: var(--seashell);
-    padding: 3.5rem 0 2rem;
+    padding: 3.5rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
   }
-  .res-hero__inner {
-    max-width: 980px;
+  .sub-hero__inner {
+    max-width: var(--container);
     margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
+    padding-inline: var(--tile-pad-x);
+    position: relative;
   }
-  .res-hero h1.h-display { margin: 0.5rem auto 1rem; }
-  .res-hero__lede {
+  .sub-hero__text {
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
     font-size: 1.1rem;
     line-height: 1.55;
-    color: rgba(6, 62, 84, 0.78);
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto 0;
     max-width: 660px;
-    margin: 0 auto;
+    text-wrap: pretty;
   }
-
-  /* Featured resource - hero card */
-  .featured-res {
-    background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 100%);
-    border-radius: 18px;
-    padding: 2.5rem;
-    color: var(--seashell);
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 2rem;
-    align-items: center;
-    margin-top: 2.5rem;
-  }
-  .featured-res__eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--matcha);
-    margin-bottom: 0.5rem;
-  }
-  .featured-res h2 {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--seashell);
-    margin: 0 0 0.75rem;
-    letter-spacing: -0.012em;
-    line-height: 1.15;
-  }
-  .featured-res p {
-    font-size: 1rem;
-    color: rgba(250, 249, 245, 0.85);
-    line-height: 1.55;
-    margin: 0 0 1.5rem;
-  }
-  .featured-res__visual {
-    background: rgba(250, 249, 245, 0.06);
-    border: 1px solid rgba(250, 249, 245, 0.12);
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-  .featured-res__stat {
-    display: flex; align-items: baseline; gap: 0.5rem;
-    margin-bottom: 0.75rem;
-  }
-  .featured-res__stat-num {
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--matcha);
-    letter-spacing: -0.022em;
-  }
-  .featured-res__stat-unit {
-    font-size: 0.95rem;
-    color: rgba(250, 249, 245, 0.7);
-  }
-  .featured-res__stat-desc {
-    font-size: 0.9rem;
-    color: rgba(250, 249, 245, 0.75);
-    line-height: 1.5;
-  }
-  @media (max-width: 880px) {
-    .featured-res { grid-template-columns: 1fr; padding: 2rem; }
-    .featured-res h2 { font-size: 1.5rem; }
-  }
-
-  /* Resource type cards (Calculators, Guides, Briefs) */
-  .res-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-  .res-card {
-    background: #fff;
-    border-radius: 16px;
-    border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 2rem;
-    display: flex; flex-direction: column;
-    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
-    text-decoration: none;
-    color: inherit;
-  }
-  .res-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(6, 62, 84, 0.18);
-    box-shadow: 0 14px 30px -16px rgba(6, 62, 84, 0.20);
-  }
-  .res-card__icon {
-    width: 48px; height: 48px;
-    border-radius: 10px;
-    background: rgba(195, 196, 48, 0.18);
-    color: var(--indigo);
-    display: grid; place-items: center;
+  .sub-hero__breadcrumb {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.55);
     margin-bottom: 1.25rem;
+    text-align: center;
   }
-  .res-card__icon svg {
-    width: 22px; height: 22px;
+  .sub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .sub-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+
+  /* ====== HUB CARD GRID ======================================== */
+  .bl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  @media (max-width: 1000px) { .bl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .bl-grid { grid-template-columns: 1fr; } }
+
+  .bl-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .bl-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+    box-shadow: 0 16px 40px rgba(6, 62, 84, 0.08);
+  }
+
+  /* Gradient placeholder media slot, icon-centered. */
+  .bl-card__media {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(195, 196, 48, 0.95) 0%, rgba(195, 196, 48, 0.55) 100%);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--indigo);
+    text-decoration: none;
+    transition: filter 0.25s ease;
+  }
+  .bl-card:hover .bl-card__media { filter: brightness(1.04); }
+  .bl-card__media svg {
+    width: 56px;
+    height: 56px;
     stroke: currentColor;
     fill: none;
-    stroke-width: 1.8;
+    stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .res-card__type {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(6, 62, 84, 0.55);
-    margin-bottom: 0.5rem;
+  /* Per-card tint variants to give the hub visual rhythm. */
+  .bl-card__media--indigo {
+    background: linear-gradient(135deg, var(--indigo) 0%, rgba(6, 62, 84, 0.75) 100%);
+    color: var(--matcha);
   }
-  .res-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 700;
+  .bl-card__media--seashell {
+    background: linear-gradient(135deg, rgba(195, 196, 48, 0.22) 0%, rgba(6, 62, 84, 0.08) 100%);
     color: var(--indigo);
-    margin: 0 0 0.5rem;
-    letter-spacing: -0.012em;
   }
-  .res-card p {
-    font-size: 0.9rem;
-    color: rgba(6, 62, 84, 0.7);
-    line-height: 1.5;
-    margin: 0 0 1.25rem;
+
+  .bl-card__body {
+    padding: 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
     flex: 1;
+    gap: 0.75rem;
   }
-  .res-card__link {
-    font-size: 0.875rem;
+  .bl-card__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    align-self: flex-start;
+    letter-spacing: 0.02em;
+  }
+  .bl-card__tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .bl-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--indigo);
+    letter-spacing: -0.014em;
+    line-height: 1.25;
+    text-wrap: balance;
   }
-  .res-card__link::after { content: ' →'; }
-  @media (max-width: 900px) {
-    .res-cards { grid-template-columns: 1fr; }
-  }
-
-  /* Blog post list */
-  .blog-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-  .blog-post {
-    background: #fff;
-    border-radius: 14px;
-    border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 1.75rem;
-    display: flex; flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.18s, transform 0.18s;
-  }
-  .blog-post:hover {
-    transform: translateY(-2px);
-    border-color: rgba(6, 62, 84, 0.18);
-  }
-  .blog-post__meta {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.8rem;
-    color: rgba(6, 62, 84, 0.6);
-    margin-bottom: 0.75rem;
-  }
-  .blog-post__tag {
-    background: rgba(195, 196, 48, 0.18);
-    color: var(--indigo);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .blog-post h3 {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--indigo);
-    margin: 0 0 0.5rem;
-    letter-spacing: -0.005em;
-    line-height: 1.3;
-  }
-  .blog-post p {
-    font-size: 0.9rem;
-    color: rgba(6, 62, 84, 0.7);
-    line-height: 1.5;
+  .bl-card__lede {
     margin: 0;
+    font-size: 0.92rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
     flex: 1;
   }
-  @media (max-width: 900px) {
-    .blog-list { grid-template-columns: 1fr; }
+  .bl-card__cta {
+    margin-top: auto;
+    padding-top: 0.75rem;
   }
-
-  /* Webinars list */
-  .webinar-list {
-    display: grid;
-    gap: 1rem;
-    margin-top: 2.5rem;
-  }
-  .webinar-row {
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 1.5rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1.5rem;
+  .bl-card__cta a {
+    display: inline-flex;
     align-items: center;
-  }
-  .webinar-row__date {
-    text-align: center;
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
-    background: rgba(195, 196, 48, 0.15);
-    min-width: 70px;
-  }
-  .webinar-row__month {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    gap: 6px;
+    background: var(--matcha);
     color: var(--indigo);
-  }
-  .webinar-row__day {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--indigo);
-    line-height: 1;
-  }
-  .webinar-row h3 {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
     font-weight: 700;
+    font-size: 0.88rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1.5px solid var(--matcha);
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+  .bl-card__cta a:hover {
+    background: transparent;
     color: var(--indigo);
-    margin: 0 0 0.25rem;
+    transform: translateX(2px);
   }
-  .webinar-row__meta {
-    font-size: 0.85rem;
-    color: rgba(6, 62, 84, 0.6);
-  }
-  @media (max-width: 700px) {
-    .webinar-row { grid-template-columns: 1fr; text-align: center; }
-    .webinar-row__date { margin: 0 auto; }
-  }
+  .bl-card__cta a .arrow { transition: transform 0.18s ease; }
+  .bl-card__cta a:hover .arrow { transform: translateX(2px); }
 </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
-
 <div class="util-bar" role="region" aria-label="Site announcement">
   <div class="wrap util-bar--center">
     <div class="news">
@@ -546,168 +463,129 @@
 
 <main id="main">
 
-<section class="res-hero">
-  <div class="res-hero__inner">
-    <span class="kicker kicker--matcha">Resources</span>
-    <h1 class="h-display h-display--xl">Pharmacy-specific content<br>built for the work you do.</h1>
-    <p class="res-hero__lede">
-      Reimbursement calculators, code references, policy briefs, and field-tested workflows, written for community pharmacy operators.
-    </p>
-  </div>
-</section>
-
-<!-- ============= FEATURED RESOURCE (light) ============= -->
-<section class="tile tile--light" aria-label="Featured resource" style="padding-top: 1.5rem;">
-  <div class="tile__inner">
-    <div class="featured-res">
-      <div>
-        <div class="featured-res__eyebrow">New brief</div>
-        <h2>The pharmacist's guide to the<br>Rural Health Transformation Program.</h2>
-        <p>$50B over 10 years. State-level distribution. How community pharmacy can participate, from RHC enrollment to outcome reporting. Written for operators, not policy wonks.</p>
-        <a class="btn btn-primary" href="/us/resources/rhtp-brief">Read the brief <span class="arrow">→</span></a>
+<!-- ============= 1. SUB-HERO (text-only) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__text">
+      <div class="sub-hero__breadcrumb">
+        <a href="/us">Home</a><span class="sep">/</span><span>Resources</span>
       </div>
-      <div class="featured-res__visual">
-        <div class="featured-res__stat">
-          <span class="featured-res__stat-num">$50B</span>
-          <span class="featured-res__stat-unit">over 10 years</span>
-        </div>
-        <p class="featured-res__stat-desc">Rural-health funding earmarked across all 50 states. Pharmacy is explicitly named as a participating provider in 31 of them.</p>
-      </div>
+      <span class="kicker kicker--matcha">Resources</span>
+      <h1 class="h-display">Pharmacy-specific content<br>built for the work you do.</h1>
+      <p class="sub-hero__lede">Reimbursement calculators, code references, policy briefs, customer stories, and field-tested workflows, written for community pharmacy operators.</p>
     </div>
   </div>
 </section>
 
-<!-- ============= TOP TOOLS (light) ============= -->
-<section class="tile tile--light" aria-label="Top tools">
+<!-- ============= 2. RESOURCE CATEGORY CARDS ============= -->
+<section class="tile tile--light" aria-label="Resource categories">
   <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Top tools</span>
-      <h2 class="h-display">Start with these.</h2>
-    </div>
-    <div class="res-cards">
-      <a class="res-card" href="/us/resources/calculator">
-        <span class="res-card__icon"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M8 14h4"/><circle cx="16" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg></span>
-        <div class="res-card__type">Calculator</div>
-        <h3>Reimbursement calculator</h3>
-        <p>Estimate your annual Medicare Part B revenue based on your encounter volume and service mix. Interactive, no email gate.</p>
-        <span class="res-card__link">Run the calculator</span>
-      </a>
-      <a class="res-card" href="/us/resources/cpt-hcpcs-guide">
-        <span class="res-card__icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M9 4v16M4 12h16"/></svg></span>
-        <div class="res-card__type">Reference</div>
-        <h3>CPT / HCPCS guide</h3>
-        <p>The pharmacist's reference for every billing code you'll actually use. 80+ codes across CCM, MTM, RHC, immunizations, POCT.</p>
-        <span class="res-card__link">Browse the guide</span>
-      </a>
-      <a class="res-card" href="/us/resources/rhtp-brief">
-        <span class="res-card__icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-        <div class="res-card__type">Brief</div>
-        <h3>RHTP brief</h3>
-        <p>The $50B Rural Health Transformation Program explained for community pharmacy. Eligibility, timelines, and how to participate.</p>
-        <span class="res-card__link">Read the brief</span>
-      </a>
+    <div class="bl-grid">
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="/us/resources/blog" aria-hidden="true" tabindex="-1">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Blog</span>
+          <h3>Stories from the front lines of clinical pharmacy</h3>
+          <p class="bl-card__lede">Operator playbooks, code-level deep dives, and policy primers, written by the pharmacists and operators who do the work.</p>
+          <div class="bl-card__cta">
+            <a href="/us/resources/blog">Read the blog <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media bl-card__media--indigo" href="/us/resources/webinars" aria-hidden="true" tabindex="-1">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Webinars</span>
+          <h3>Live and on-demand pharmacy webinars</h3>
+          <p class="bl-card__lede">Operator-to-operator sessions on billing CCM, deploying AI scribe, navigating RHTP, and the provider-status legislation moving in 2026.</p>
+          <div class="bl-card__cta">
+            <a href="/us/resources/webinars">See the sessions <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media bl-card__media--seashell" href="/us/resources/white-papers" aria-hidden="true" tabindex="-1">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">White Papers</span>
+          <h3>Research and policy briefs for pharmacy operators</h3>
+          <p class="bl-card__lede">Written for the operator on the floor, not the policy wonk. State scope of practice, payer-mix benchmarks, RHTP impact, and the case studies behind them.</p>
+          <div class="bl-card__cta">
+            <a href="/us/resources/white-papers">Browse the library <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="/us/resources/events" aria-hidden="true" tabindex="-1">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Events</span>
+          <h3>Where you'll see MedMe in person this year</h3>
+          <p class="bl-card__lede">Conference booths, partner dinners, regional roundtables. Pharmacy operators come up to us; we don't run booth bingo.</p>
+          <div class="bl-card__cta">
+            <a href="/us/resources/events">See the calendar <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media bl-card__media--indigo" href="/us/resources/roi-calculator" aria-hidden="true" tabindex="-1">
+          <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="8" y1="18" x2="14" y2="18"/></svg>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Calculator</span>
+          <h3>Run the math on your reimbursement potential</h3>
+          <p class="bl-card__lede">Drop in store count and weekly clinical encounter volume. Get a per-code annual estimate at your current capture rate versus full documentation.</p>
+          <div class="bl-card__cta">
+            <a href="/us/resources/roi-calculator">Run the calculator <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media bl-card__media--seashell" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Newsletter</span>
+          <h3>One short email a week</h3>
+          <p class="bl-card__lede">The new posts, the new webinar dates, the policy shifts that actually matter. No fluff, no marketing cadence dressed up as content.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Subscribe <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
 
-<!-- ============= LATEST FROM THE BLOG (dark) ============= -->
-<section class="tile tile--light" aria-label="Latest from the blog">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Latest from the blog</span>
-      <h2 class="h-display">Stories from clinical<br>community pharmacy.</h2>
+<!-- ============= 3. CLOSING CTA (navy) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Talk to MedMe">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Talk To Our Team</span>
+      <h2 class="h-display">See your real number<br>on a 20-minute call.</h2>
+      <p class="lead">Send a week of your encounter volume. We will back-of-envelope your annual reimbursement and walk through the codes that move the needle for your service mix.</p>
     </div>
-    <div class="blog-list">
-      <a class="blog-post" href="/us/resources/blog">
-        <div class="blog-post__meta">
-          <span class="blog-post__tag">Billing</span>
-          <span>5 min read</span>
-        </div>
-        <h3>How a 6-store Indiana operator unlocked $486K in Q1 CCM billing.</h3>
-        <p>The 3-month rollout, the first denials, and the dashboard that finally made the math defensible to the board.</p>
-      </a>
-      <a class="blog-post" href="/us/resources/blog">
-        <div class="blog-post__meta">
-          <span class="blog-post__tag">Workflows</span>
-          <span>7 min read</span>
-        </div>
-        <h3>The pharmacist's case for AI scribing, and what it doesn't replace.</h3>
-        <p>Why AI-drafted SOAP notes save 8 minutes per encounter, and where human judgement still does the heavy lifting.</p>
-      </a>
-      <a class="blog-post" href="/us/resources/blog">
-        <div class="blog-post__meta">
-          <span class="blog-post__tag">Policy</span>
-          <span>4 min read</span>
-        </div>
-        <h3>State-by-state pharmacy provider status: where we are in 2026.</h3>
-        <p>A live tracker of state-level pharmacy scope-of-practice and billing pathways, updated quarterly.</p>
-      </a>
-    </div>
-    <p style="text-align:center; margin-top: 1.5rem;">
-      <a href="/us/resources/blog" class="alink alink--on-dark">All blog posts &rarr;</a>
-    </p>
-  </div>
-</section>
-
-<!-- ============= WEBINARS (light) ============= -->
-<section class="tile tile--light" aria-label="Upcoming webinars">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Upcoming webinars</span>
-      <h2 class="h-display">Live sessions with pharmacy<br>operators and billing specialists.</h2>
-    </div>
-    <div class="webinar-list">
-      <a class="webinar-row" href="/us/resources/webinars">
-        <div class="webinar-row__date">
-          <div class="webinar-row__month">Jun</div>
-          <div class="webinar-row__day">12</div>
-        </div>
-        <div>
-          <h3>From SOAP note to clean claim: the 30-day go-live</h3>
-          <div class="webinar-row__meta">Wednesday &middot; 2:00pm ET &middot; 45 min &middot; with Heritage Rx</div>
-        </div>
-        <span class="pill pill--solid">Register</span>
-      </a>
-      <a class="webinar-row" href="/us/resources/webinars">
-        <div class="webinar-row__date">
-          <div class="webinar-row__month">Jun</div>
-          <div class="webinar-row__day">26</div>
-        </div>
-        <div>
-          <h3>Maximizing CCM revenue across multi-store independents</h3>
-          <div class="webinar-row__meta">Wednesday &middot; 1:00pm ET &middot; 45 min &middot; with Patel Family Pharmacy</div>
-        </div>
-        <span class="pill pill--solid">Register</span>
-      </a>
-      <a class="webinar-row" href="/us/resources/webinars">
-        <div class="webinar-row__date">
-          <div class="webinar-row__month">Jul</div>
-          <div class="webinar-row__day">10</div>
-        </div>
-        <div>
-          <h3>RHTP rollout 101: what rural pharmacies need to do now</h3>
-          <div class="webinar-row__meta">Wednesday &middot; 2:00pm ET &middot; 60 min &middot; policy + product panel</div>
-        </div>
-        <span class="pill pill--solid">Register</span>
-      </a>
-    </div>
-    <p style="text-align:center; margin-top: 1.5rem;">
-      <a href="/us/resources/webinars" class="alink">All webinars &amp; recordings &rarr;</a>
-    </p>
-  </div>
-</section>
-
-<!-- ============= FINAL CTA ============= -->
-<section class="tile tile--light tile--prominent" aria-label="Subscribe">
-  <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Stay current</span>
-      <h2 class="h-display">One monthly digest.<br>Pharmacy-only content.</h2>
-      <p class="lead">New code rulings, policy updates, customer wins, and product releases, in your inbox once a month. No marketing spam, ever.</p>
-      <form style="margin-top: 1.75rem; display: flex; gap: 8px; max-width: 480px; margin-inline: auto;">
-        <input type="email" placeholder="you@pharmacy.com" required style="flex:1; padding: 12px 14px; border-radius: 8px; border: 1px solid rgba(250, 249, 245, 0.2); background: rgba(250, 249, 245, 0.06); color: var(--seashell); font-size: 14px; font-family: inherit;">
-        <button type="submit" class="btn btn-primary">Subscribe</button>
-      </form>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -802,6 +680,5 @@
   </div>
 </footer>
 <script src="/assets/site.js" defer></script>
-
 </body>
 </html>

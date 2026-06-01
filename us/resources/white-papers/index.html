@@ -4,30 +4,253 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>White Papers, MedMe Health</title>
-<meta name="description" content="Written for the operator on the floor, not the policy wonk. State-by-state scope of practice, payer-mix benchmarks, RHTP impact, and the case studies behind them." />
+<meta name="description" content="Research and policy briefs for pharmacy operators. State-by-state scope of practice, payer-mix benchmarks, RHTP impact, and the case studies behind them." />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/resources/white-papers" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=65" />
 <style>
-  /* TODO: content pass, replace stub hero with full page structure. */
-  .stub-hero { background: var(--seashell, #FAF9F5); padding: 3.5rem 0 2.5rem; }
-  .stub-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
-  .stub-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .stub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .stub-hero__breadcrumb a:hover { color: var(--indigo, #063E54); }
-  .stub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .stub-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 880px; }
-  .stub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 720px; margin: 0 auto 2rem; }
-  .stub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-  .stub-todo { max-width: 720px; margin: 2rem auto 0; padding: 1.25rem 1.5rem; background: rgba(195, 196, 48, 0.12); border: 1px dashed rgba(195, 196, 48, 0.55); border-radius: 12px; color: #5a5b14; font-size: 0.875rem; line-height: 1.55; text-align: left; }
-  .stub-todo b { color: var(--indigo, #063E54); font-weight: 700; }
-  .legal-hub-list { max-width: 760px; margin: 2.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 2rem; }
-  .legal-hub-card { background: #fff; border: 1px solid rgba(6, 62, 84, 0.08); border-radius: 12px; padding: 1.5rem; text-decoration: none; color: inherit; transition: border-color .18s ease, transform .18s ease; display: block; }
-  .legal-hub-card:hover { border-color: rgba(6, 62, 84, 0.25); transform: translateY(-2px); }
-  .legal-hub-card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; font-weight: 700; color: var(--indigo, #063E54); }
-  .legal-hub-card p { margin: 0; font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); line-height: 1.5; }
-  @media (max-width: 600px) { .legal-hub-list { grid-template-columns: 1fr; } }
+  /* ============================================================
+     WHITE PAPERS page. Same template as the blog/events/webinars
+     pages. Each card is a single paper with a "cover" gradient
+     visual that has the paper title typeset over it like the
+     front of a printed brief.
+     ============================================================ */
+
+  /* ====== HERO ================================================ */
+  .sub-hero {
+    background: var(--seashell);
+    padding: 3.5rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sub-hero__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: 0 auto; }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto;
+    max-width: 660px;
+    text-wrap: pretty;
+  }
+  .sub-hero__breadcrumb {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.55);
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+  .sub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .sub-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+
+  /* ====== FILTER ============================================== */
+  .bl-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 0 2rem;
+  }
+  .bl-filter__pill {
+    background: var(--white);
+    border: 1.5px solid rgba(6, 62, 84, 0.12);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    line-height: 1.2;
+  }
+  .bl-filter__pill:hover {
+    border-color: var(--matcha);
+    background: rgba(195, 196, 48, 0.08);
+  }
+  .bl-filter__pill.is-active {
+    background: var(--matcha);
+    border-color: var(--matcha);
+    color: var(--indigo);
+  }
+  .bl-filter__pill:focus-visible {
+    outline: 2px solid var(--matcha);
+    outline-offset: 3px;
+  }
+  .bl-card.is-hidden { display: none; }
+
+  /* ====== WHITE PAPER CARDS =================================== */
+  .bl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  @media (max-width: 1000px) { .bl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .bl-grid { grid-template-columns: 1fr; } }
+
+  .bl-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .bl-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+    box-shadow: 0 16px 40px rgba(6, 62, 84, 0.08);
+  }
+
+  /* Paper "cover" gradient with the paper title set inside. */
+  .bl-card__media {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    background: linear-gradient(135deg, var(--indigo) 0%, rgba(6, 62, 84, 0.78) 100%);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: var(--seashell);
+  }
+  .bl-card__media--matcha {
+    background: linear-gradient(135deg, rgba(195, 196, 48, 0.95) 0%, rgba(195, 196, 48, 0.55) 100%);
+    color: var(--indigo);
+  }
+  .bl-card__media--seashell {
+    background: linear-gradient(135deg, rgba(195, 196, 48, 0.22) 0%, rgba(6, 62, 84, 0.12) 100%);
+    color: var(--indigo);
+  }
+  .bl-card__media::after {
+    /* subtle paper-fold sheen running across the cover */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 0%, transparent 55%, rgba(250, 249, 245, 0.06) 60%, transparent 70%);
+    pointer-events: none;
+  }
+  .bl-card__cover-title {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.15;
+    letter-spacing: -0.012em;
+    z-index: 1;
+    max-width: 86%;
+    text-wrap: balance;
+  }
+  .bl-card__cover-band {
+    position: absolute;
+    left: 1.25rem;
+    top: 1.25rem;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+  }
+  .bl-card__media--matcha .bl-card__cover-band {
+    background: var(--indigo);
+    color: var(--matcha);
+  }
+  .bl-card__media--seashell .bl-card__cover-band {
+    background: var(--matcha);
+    color: var(--indigo);
+  }
+
+  .bl-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75rem;
+  }
+  .bl-card__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    align-self: flex-start;
+    letter-spacing: 0.02em;
+  }
+  .bl-card__tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .bl-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.014em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .bl-card__meta {
+    font-size: 0.82rem;
+    color: rgba(6, 62, 84, 0.6);
+    line-height: 1.4;
+  }
+  .bl-card__lede {
+    margin: 0;
+    font-size: 0.92rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .bl-card__cta { margin-top: auto; padding-top: 0.75rem; }
+  .bl-card__cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1.5px solid var(--matcha);
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+  .bl-card__cta a:hover {
+    background: transparent;
+    color: var(--indigo);
+    transform: translateX(2px);
+  }
+  .bl-card__cta a .arrow { transition: transform 0.18s ease; }
+  .bl-card__cta a:hover .arrow { transform: translateX(2px); }
 </style>
 </head>
 <body>
@@ -296,22 +519,202 @@
 </header>
 
 <main id="main">
-<section class="stub-hero">
-  <div class="stub-hero__inner">
-    <div class="stub-hero__breadcrumb"><a href="/us">Home</a><span class="sep">/</span><a href="/us/resources">Resources</a><span class="sep">/</span><span>White Papers</span></div>
-    <span class="kicker kicker--matcha">White Papers</span>
-    <h1 class="h-display h-display--xl">Research and policy briefs<br>for pharmacy operators.</h1>
-    <p class="stub-hero__lede">Written for the operator on the floor, not the policy wonk. State-by-state scope of practice, payer-mix benchmarks, RHTP impact, and the case studies behind them.</p>
-    <div class="stub-hero__cta">
-      <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+
+<!-- ============= 1. SUB-HERO ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__text">
+      <div class="sub-hero__breadcrumb">
+        <a href="/us">Home</a><span class="sep">/</span><a href="/us/resources">Resources</a><span class="sep">/</span><span>White Papers</span>
+      </div>
+      <span class="kicker kicker--matcha">White Papers</span>
+      <h1 class="h-display">Research and policy briefs<br>for pharmacy operators.</h1>
+      <p class="sub-hero__lede">Written for the operator on the floor, not the policy wonk. State scope of practice, payer-mix benchmarks, RHTP impact, and the case studies behind them.</p>
     </div>
-    <!-- TODO: content pass, full page sections go here. -->
-    <div class="stub-todo">
-      <b>Stub page.</b> Full content lands during the per-page content pass. Hero copy and breadcrumb are wired to v11 naming, body sections, mocks, and CTAs to follow.
-    </div>
-    
   </div>
 </section>
+
+<!-- ============= 2. WHITE PAPER GRID ============= -->
+<section class="tile tile--light" aria-label="White papers">
+  <div class="tile__inner">
+    <div class="bl-filter" role="group" aria-label="Filter white papers">
+      <button type="button" class="bl-filter__pill is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="bl-filter__pill" data-filter="policy" aria-pressed="false">Policy</button>
+      <button type="button" class="bl-filter__pill" data-filter="benchmark" aria-pressed="false">Benchmark</button>
+      <button type="button" class="bl-filter__pill" data-filter="case-study" aria-pressed="false">Case Study</button>
+      <button type="button" class="bl-filter__pill" data-filter="operator-guide" aria-pressed="false">Operator Guide</button>
+    </div>
+
+    <div class="bl-grid">
+
+      <article class="bl-card" data-tag="policy">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Policy Brief</span>
+          <p class="bl-card__cover-title">The pharmacist's guide to RHTP, by state.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Policy</span>
+          <h3>The pharmacist's guide to the Rural Health Transformation Program</h3>
+          <p class="bl-card__meta">28 pages &middot; 14 min read &middot; Updated May 2026</p>
+          <p class="bl-card__lede">$50B over 5 years. State-level distribution. How community pharmacy can participate, from RHC enrollment to outcome reporting, with the 90-day operator readiness checklist.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="policy">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Policy Brief</span>
+          <p class="bl-card__cover-title">State-by-state pharmacy scope of practice.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Policy</span>
+          <h3>State-by-state pharmacy scope of practice: 2026 edition</h3>
+          <p class="bl-card__meta">42 pages &middot; 22 min read &middot; Updated Apr 2026</p>
+          <p class="bl-card__lede">A live tracker of state-level pharmacy scope-of-practice authority and billing pathways. Covers all 50 states plus DC, with specific notes on protocols, payment, and supervision.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="policy">
+        <a class="bl-card__media bl-card__media--seashell" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Policy Brief</span>
+          <p class="bl-card__cover-title">Provider status: 2026 federal and state outlook.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Policy</span>
+          <h3>Pharmacist provider status: 2026 federal and state outlook</h3>
+          <p class="bl-card__meta">18 pages &middot; 9 min read &middot; Updated Mar 2026</p>
+          <p class="bl-card__lede">H.R. 1770 has the most realistic shot in a decade. State-level efforts in Idaho, Montana, New Mexico, Utah, and North Carolina, plus the operator-level moves to make regardless.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="benchmark">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Benchmark</span>
+          <p class="bl-card__cover-title">2026 pharmacy payer mix benchmarks.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Benchmark</span>
+          <h3>2026 community pharmacy payer mix benchmarks</h3>
+          <p class="bl-card__meta">32 pages &middot; 16 min read &middot; Published Feb 2026</p>
+          <p class="bl-card__lede">Medicare, Medicaid, commercial, and cash payer-mix benchmarks by store size, region, and service line. Useful for comparing your network's posture against the field.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="benchmark">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Benchmark</span>
+          <p class="bl-card__cover-title">Clinical services denial-rate benchmarks.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Benchmark</span>
+          <h3>Clinical-services denial-rate benchmarks by code and payer</h3>
+          <p class="bl-card__meta">24 pages &middot; 12 min read &middot; Published Jan 2026</p>
+          <p class="bl-card__lede">Median, 90th-percentile, and best-in-class denial rates for the highest-volume clinical-service codes. Where the field is, where the leaders are, and what they do differently.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="case-study">
+        <a class="bl-card__media" href="/us/customers/heritage-rx" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Case Study</span>
+          <p class="bl-card__cover-title">Heritage Rx: $1.4M in year one.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Case Study</span>
+          <h3>Heritage Rx: a year-one operator postmortem</h3>
+          <p class="bl-card__meta">14 pages &middot; 8 min read &middot; Published Feb 2026</p>
+          <p class="bl-card__lede">An 8-store Pennsylvania independent unlocked $1.4M in clinical-service reimbursement in its first 12 months on MedMe. The rollout playbook, the staffing model, and the five things they would change.</p>
+          <div class="bl-card__cta">
+            <a href="/us/customers/heritage-rx">Read the case study <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="case-study">
+        <a class="bl-card__media bl-card__media--seashell" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Case Study</span>
+          <p class="bl-card__cover-title">NCAP Member Pilot: early outcomes.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Case Study</span>
+          <h3>NCAP Member Pilot: early outcomes from the first cohort</h3>
+          <p class="bl-card__meta">22 pages &middot; 11 min read &middot; Published May 2026</p>
+          <p class="bl-card__lede">10 to 15 North Carolina pharmacies, three statewide protocols, a four-month structure. Service utilization, claim performance, and the workflow refinements that landed during optimization.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="operator-guide">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Operator Guide</span>
+          <p class="bl-card__cover-title">The CCM documentation discipline playbook.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Operator Guide</span>
+          <h3>The CCM documentation discipline playbook</h3>
+          <p class="bl-card__meta">36 pages &middot; 18 min read &middot; Updated Mar 2026</p>
+          <p class="bl-card__lede">Real-time time tracking, code stacking discipline, and audit-defensible note structure for 99490, 99439, 99491. The operator-level practice that turns a 19-minute call into a clean claim.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="operator-guide">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__cover-band">Operator Guide</span>
+          <p class="bl-card__cover-title">Medical billing implementation guide.</p>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Operator Guide</span>
+          <h3>The medical billing implementation guide for community pharmacy</h3>
+          <p class="bl-card__meta">52 pages &middot; 26 min read &middot; Updated Apr 2026</p>
+          <p class="bl-card__lede">End-to-end. Credentialing, enrollment, supervising practitioner agreements, claim cycle, denial triage, and the first ninety days of optimization in operating detail.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Download <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. CLOSING CTA (navy) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Get the briefs">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Get The Briefs</span>
+      <h2 class="h-display">Every new brief<br>in your inbox.</h2>
+      <p class="lead">A short email when a new brief or operator guide drops. No drip cadence, no marketing sequence dressed up as content.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Subscribe <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!--
@@ -402,5 +805,27 @@
   </div>
 </footer>
 <script src="/assets/site.js" defer></script>
+<script>
+  /* White paper category filter, same pattern as blog/events/webinars. */
+  (function papersFilter() {
+    var pills = document.querySelectorAll('.bl-filter__pill');
+    var cards = document.querySelectorAll('.bl-card');
+    if (!pills.length || !cards.length) return;
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = pill.getAttribute('data-filter');
+        pills.forEach(function (p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-tag') === filter;
+          card.classList.toggle('is-hidden', !match);
+        });
+      });
+    });
+  })();
+</script>
 </body>
 </html>
