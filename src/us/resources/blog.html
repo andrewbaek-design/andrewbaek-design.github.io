@@ -77,6 +77,45 @@
     opacity: 0.4;
   }
 
+  /* ====== CATEGORY FILTER ======================================
+     Radio-style pill row that filters .bl-card by data-tag.
+     Default state: "All" pill active, no cards hidden. */
+  .bl-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 0 2rem;
+  }
+  .bl-filter__pill {
+    background: var(--white);
+    border: 1.5px solid rgba(6, 62, 84, 0.12);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    line-height: 1.2;
+  }
+  .bl-filter__pill:hover {
+    border-color: var(--matcha);
+    background: rgba(195, 196, 48, 0.08);
+  }
+  .bl-filter__pill.is-active {
+    background: var(--matcha);
+    border-color: var(--matcha);
+    color: var(--indigo);
+  }
+  .bl-filter__pill:focus-visible {
+    outline: 2px solid var(--matcha);
+    outline-offset: 3px;
+  }
+  /* Hidden cards collapse out of the grid so the layout reflows. */
+  .bl-card.is-hidden { display: none; }
+
   /* ====== ARTICLE GRID ========================================= */
   .bl-grid {
     display: grid;
@@ -218,9 +257,17 @@
 <!-- ============= 2. ARTICLE GRID ============= -->
 <section class="tile tile--light" aria-label="Articles">
   <div class="tile__inner">
+    <div class="bl-filter" role="group" aria-label="Filter articles by category">
+      <button type="button" class="bl-filter__pill is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="bl-filter__pill" data-filter="pharmacy-practice" aria-pressed="false">Pharmacy Practice</button>
+      <button type="button" class="bl-filter__pill" data-filter="product-launch" aria-pressed="false">Product Launch</button>
+      <button type="button" class="bl-filter__pill" data-filter="press-release" aria-pressed="false">Press Release</button>
+      <button type="button" class="bl-filter__pill" data-filter="digital-health" aria-pressed="false">Digital Health</button>
+      <button type="button" class="bl-filter__pill" data-filter="team-stories" aria-pressed="false">Team Stories</button>
+    </div>
     <div class="bl-grid">
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/how-iowa-pharmacies-can-benefit-from-iowas-997m-in-rht-funding" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
         </a>
@@ -234,7 +281,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/opportunity-for-pharmacies-in-connecticuts-938-4-million-rht-rural-health-transformation-program" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
         </a>
@@ -248,7 +295,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/colorados-rural-health-transformation-pharmacy-funding-opportunity" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
         </a>
@@ -262,7 +309,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/alaskas-rural-health-transformation-program-for-pharmacies" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
         </a>
@@ -276,7 +323,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/how-arkansas-pharmacies-can-access-1b-in-rht-funding" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
         </a>
@@ -290,7 +337,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/travel-transcription-prescription-authority-canadian-pharmacists" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
         </a>
@@ -304,7 +351,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="product-launch">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/minor-ailments-module-is-live-in-alberta" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb3d5ffed65c32c80a_655501eb7500f765c65b9ae4_Godwin%2520Chan%2527s%2520Profile%2520Photo.jpeg" alt="" loading="lazy" />
         </a>
@@ -318,7 +365,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="press-release">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/medme-health-cofounders-named-to-forbes-30-under-30-2024-healthcare-list" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb3d5ffed65c32c80a_655501eb7500f765c65b9ae4_Godwin%2520Chan%2527s%2520Profile%2520Photo.jpeg" alt="" loading="lazy" />
         </a>
@@ -332,7 +379,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/navigating-the-2023-flu-season-what-pharmacies-need-to-know" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb3d5ffed65c32c80a_655501eb7500f765c65b9ae4_Godwin%2520Chan%2527s%2520Profile%2520Photo.jpeg" alt="" loading="lazy" />
         </a>
@@ -346,7 +393,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="digital-health">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/a-patients-guide-to-minor-ailments-in-ontario" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc2d1eaa841b86ec88_63dbda5116824a5892ae8166_SDePol.jpeg" alt="" loading="lazy" />
         </a>
@@ -360,7 +407,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="press-release">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/vigilance-sante-and-medme-health-joining-forces-to-support-expanded-scope-of-practice-for-canadian-pharmacists" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb4cd3463fcf03bcf6_63a3596394065219bc88a8ec_Alducente%252C%2520Charina%25201%2520(1).jpeg" alt="" loading="lazy" />
         </a>
@@ -374,7 +421,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="press-release">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/mapflow-and-medme-health-partner-to-provide-end-to-end-pharmacy-workflow-support-for-ontario-minor-ailments-program" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb4cd3463fcf03bcf6_63a3596394065219bc88a8ec_Alducente%252C%2520Charina%25201%2520(1).jpeg" alt="" loading="lazy" />
         </a>
@@ -388,7 +435,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="team-stories">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/students-of-medme-blog" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb6d247b52a3c800c3_62393e8ab8fd11ed0170c84e_IMG_0338.jpeg" alt="" loading="lazy" />
         </a>
@@ -402,7 +449,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="press-release">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/medme-health-announces-soc-2-certification" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb6d247b52a3c800c3_62393e8ab8fd11ed0170c84e_IMG_0338.jpeg" alt="" loading="lazy" />
         </a>
@@ -416,7 +463,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="team-stories">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/a-day-in-the-life-at-medme" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb1338732775d7c109_61e632f53c30554f21b0cdf4_Janelle%2520(1).jpeg" alt="" loading="lazy" />
         </a>
@@ -430,7 +477,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="press-release">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/medme-health-joins-y-combinator-w21" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc70e0b8e448e6a422_6059a56c77471831591795c3_Purya%2520Sarmadi%25201.png" alt="" loading="lazy" />
         </a>
@@ -444,7 +491,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/covid-vaccine-efficacy-safety" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
         </a>
@@ -458,7 +505,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/the-covid-vaccine-rollout-in-canada" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
         </a>
@@ -472,7 +519,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/information-for-pharmacists-everything-you-need-to-know-about-the-covid-vaccines" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
         </a>
@@ -486,7 +533,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/covid-vaccines" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
         </a>
@@ -500,7 +547,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/pandemic-solutions" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb52fda08cba02c06b_5ffc5ef2bf5a6150750c7e83_screen_shot_2021-01-11_at_9.08.53_am.png" alt="" loading="lazy" />
         </a>
@@ -514,7 +561,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="press-release">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/covid19testing" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc2d1eaa841b86ec81_5f1f87229c53f62232ca258c_Rui%2520Su%2520Photo%2520.png" alt="" loading="lazy" />
         </a>
@@ -528,7 +575,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="team-stories">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/students-of-medme" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecbd85793188800af6a_5f0b7dfe1509ac6bcf178b64_6.png" alt="" loading="lazy" />
         </a>
@@ -542,7 +589,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="digital-health">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/pharmacy-virtual-care-guidelines-in-canada" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecbb94be4f0a4367fca_5ef39a987d49fd739058c867_Untitled%2520design%2520(6).png" alt="" loading="lazy" />
         </a>
@@ -556,7 +603,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="digital-health">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/what-is-virtual-care" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc1aeb59d4a1afa2d6_5ecddc794aa1f872345ac978_May.png" alt="" loading="lazy" />
         </a>
@@ -570,7 +617,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="digital-health">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/engaging-older-adults-with-digital-health" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616ceccc86319e9625e92f6_5ee3d572f68eac4d5e9d777e_Engaging%2520seniors%2520Thumbnail%2520(1).png" alt="" loading="lazy" />
         </a>
@@ -584,7 +631,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/to-administer-or-not-a-patient-case-discussion-on-vaccinations-during-covid-19-part-ii" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc1aeb59d4a1afa2d6_5ecddc794aa1f872345ac978_May.png" alt="" loading="lazy" />
         </a>
@@ -598,7 +645,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/vaccinations-during-covid-part1" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc1aeb59d4a1afa2d6_5ecddc794aa1f872345ac978_May.png" alt="" loading="lazy" />
         </a>
@@ -612,7 +659,7 @@
         </div>
       </article>
 
-      <article class="bl-card">
+      <article class="bl-card" data-tag="pharmacy-practice">
         <a class="bl-card__media" href="https://www.medmehealth.com/blog/pharmacists-are-not-pill-counters" aria-hidden="true" tabindex="-1">
           <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616ceccc31e03ec3b0dc55b_5ec2646d2f007d0d73a7c497_Nick%2520Hui.jpeg" alt="" loading="lazy" />
         </a>
@@ -654,5 +701,29 @@
 
 {{> partials/footer-us }}
 <script src="/assets/site.js" defer></script>
+<script>
+  /* Blog category filter: toggle .is-hidden on .bl-card when its
+     data-tag doesn't match the active filter pill. "all" clears
+     the filter and shows everything. Single-active pill semantics. */
+  (function blogFilter() {
+    var pills = document.querySelectorAll('.bl-filter__pill');
+    var cards = document.querySelectorAll('.bl-card');
+    if (!pills.length || !cards.length) return;
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = pill.getAttribute('data-filter');
+        pills.forEach(function (p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-tag') === filter;
+          card.classList.toggle('is-hidden', !match);
+        });
+      });
+    });
+  })();
+</script>
 </body>
 </html>
