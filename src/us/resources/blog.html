@@ -5,147 +5,647 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The MedMe blog, stories from the front lines of clinical pharmacy</title>
 <meta name="description" content="The MedMe blog. Operator playbooks, code-level deep dives, and policy primers for US pharmacy clinical services, written by pharmacists and operators who do the work." />
-<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/resources/blog/" />
+<link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/resources/blog" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/assets/brand.css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/brand.css?v=65" />
+<style>
+  /* ============================================================
+     BLOG index sub-page. Built off the Enterprises template
+     (.sub-hero / .sub-hero__inner / .tile patterns) but the hero
+     is text-only (no mockup) per direction, and the body is a
+     featured-image article grid with a CTA button on each card.
+
+     Article cards are scoped here (.bl-card) so the grid pattern
+     doesn't conflict with the homepage .h-card / partner-card
+     styles. Two-up grid by default, drops to one column under
+     680px. Image goes on top of each card in a fixed-aspect
+     frame so different image dimensions still align visually.
+     ============================================================ */
+
+  /* ====== HERO: text-only, no mockup =========================== */
+  .sub-hero {
+    background: var(--seashell);
+    padding: 3.5rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sub-hero__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+    position: relative;
+  }
+  .sub-hero__text {
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto 0;
+    max-width: 660px;
+    text-wrap: pretty;
+  }
+  .sub-hero__breadcrumb {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.55);
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+  .sub-hero__breadcrumb a {
+    color: rgba(6, 62, 84, 0.55);
+    text-decoration: none;
+  }
+  .sub-hero__breadcrumb a:hover {
+    color: var(--indigo);
+  }
+  .sub-hero__breadcrumb .sep {
+    margin: 0 0.5rem;
+    opacity: 0.4;
+  }
+
+  /* ====== ARTICLE GRID ========================================= */
+  .bl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  @media (max-width: 1000px) { .bl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .bl-grid { grid-template-columns: 1fr; } }
+
+  .bl-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .bl-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+    box-shadow: 0 16px 40px rgba(6, 62, 84, 0.08);
+  }
+
+  /* Featured-image frame, fixed 16:9 aspect so cards align. */
+  .bl-card__media {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: rgba(6, 62, 84, 0.05);
+    overflow: hidden;
+    position: relative;
+  }
+  .bl-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .bl-card:hover .bl-card__media img {
+    transform: scale(1.03);
+  }
+
+  .bl-card__body {
+    padding: 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75rem;
+  }
+  .bl-card__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    align-self: flex-start;
+    letter-spacing: 0.02em;
+  }
+  .bl-card__tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .bl-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.014em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .bl-card__meta {
+    font-size: 0.82rem;
+    color: rgba(6, 62, 84, 0.6);
+    line-height: 1.4;
+  }
+  .bl-card__cta {
+    margin-top: auto;
+    padding-top: 0.75rem;
+  }
+  .bl-card__cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1.5px solid var(--matcha);
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+  .bl-card__cta a:hover {
+    background: transparent;
+    color: var(--indigo);
+    transform: translateX(2px);
+  }
+  .bl-card__cta a .arrow {
+    transition: transform 0.18s ease;
+  }
+  .bl-card__cta a:hover .arrow {
+    transform: translateX(2px);
+  }
+</style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
-
 {{> partials/util-bar-us }}
-
 {{> partials/nav-us }}
 
 <main id="main">
 
-<section class="page-hero">
-  <div class="wrap">
-    <div class="page-hero__breadcrumb">
-      <a href="/us">Home</a>
-      <span class="sep">/</span>
-      <a href="/us/resources">Resources</a>
-      <span class="sep">/</span>
-      <span>Blog</span>
-    </div>
-    <div class="page-hero__content">
-      <span class="eyebrow eyebrow--matcha">Blog</span>
-      <h1>Stories from the front lines of <span class="accent">clinical pharmacy.</span></h1>
-      <p class="page-hero__lede">Operator playbooks, code-level deep dives, and policy primers, written by the pharmacists, billing leads, and operators who do the work every day.</p>
-    </div>
-  </div>
-</section>
-
-<section class="bg-seashell" style="padding-top: 0;">
-  <div class="wrap">
-    <div style="margin-bottom: 2rem;">
-      <div class="tags">
-        <span class="tag tag--matcha">All</span>
-        <span class="tag">Billing</span>
-        <span class="tag">CCM</span>
-        <span class="tag">MTM</span>
-        <span class="tag">POCT</span>
-        <span class="tag">Vaccines</span>
-        <span class="tag">RHTP</span>
-        <span class="tag">Provider status</span>
-        <span class="tag">Operator</span>
-        <span class="tag">Customer</span>
-        <span class="tag">Policy</span>
+<!-- ============= 1. SUB-HERO (text-only, no mockup) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__text">
+      <div class="sub-hero__breadcrumb">
+        <a href="/us">Home</a><span class="sep">/</span><a href="/us/resources">Resources</a><span class="sep">/</span><span>Blog</span>
       </div>
-    </div>
-    <div class="article-grid">
-      <a class="article-card" href="#" id="bill-99490">
-        <span class="article-card__type">Blog · Billing</span>
-        <h3>How to bill 99490 cleanly</h3>
-        <p>The most-billed CCM code is also the most-denied. Here's the documentation discipline that turns a 19-minute med-rec call into a clean $65 claim, and the three audit findings we see most.</p>
-        <span class="article-card__meta">Diana Reyes, PharmD · 8 min read · Apr 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · Operator</span>
-        <h3>What we learned from 50+ MedMe deployments</h3>
-        <p>Patterns we see in the first 90 days of pharmacy clinical-services rollouts, what predicts a high-revenue site, what predicts a stalled rollout, and the four things every operator gets wrong before they get it right.</p>
-        <span class="article-card__meta">Christine Lim · 12 min read · Mar 2026</span>
-      </a>
-      <a class="article-card" href="/us/resources/rhtp-brief">
-        <span class="article-card__type">Blog · Policy</span>
-        <h3>RHTP, explained for community pharmacy</h3>
-        <p>$50B over 5 years. Pharmacy is a named delivery partner in nearly every approved state plan. Here's a community-pharmacy translation of the program, what it is, who's eligible, and what to do this quarter.</p>
-        <span class="article-card__meta">Marcus Okafor, PharmD · 14 min read · Apr 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · Operator</span>
-        <h3>Why generic EHRs don't work in pharmacy</h3>
-        <p>We compare the same encounter documented in a generic ambulatory EHR, in a dispensing-system add-on, and in MedMe. The gaps aren't features, they're shape.</p>
-        <span class="article-card__meta">Purya Sarmadi, RPh · 9 min read · Mar 2026</span>
-      </a>
-      <a class="article-card" href="#" id="provider-status">
-        <span class="article-card__type">Blog · Policy</span>
-        <h3>Pharmacist provider status: 2026 update</h3>
-        <p>H.R. 1770 has the most realistic shot at the floor in a decade. Several states (Idaho, Montana, New Mexico, Utah, North Carolina) have moved on state-level legislation. Where things actually stand, and what to do regardless.</p>
-        <span class="article-card__meta">Marcus Okafor, PharmD · 11 min read · Apr 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · MTM</span>
-        <h3>The commercial MTM contract no one is talking about</h3>
-        <p>Part D MTM is crowded. The bigger margins for most of our customers come from employer / commercial-payer MTM contracts that go through PBMs. Here's what the contract terms look like and how to land one.</p>
-        <span class="article-card__meta">Jamie Chen · 10 min read · Mar 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · Customer</span>
-        <h3>Heritage Rx: a year-one operator postmortem</h3>
-        <p>An 8-store Pennsylvania independent unlocked $1.4M in clinical-service reimbursement in their first 12 months on MedMe. Their clinical lead walks through the five things they'd do differently if they were starting over.</p>
-        <span class="article-card__meta">Joshua Holland, RPh · 13 min read · Feb 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · Billing</span>
-        <h3>The audit findings the OIG flagged in 2025</h3>
-        <p>The OIG report on pharmacy clinical-services billing dropped in late 2025. Three patterns dominate. We summarize what auditors flagged, what they recommended, and what it means for documentation discipline going forward.</p>
-        <span class="article-card__meta">Jamie Chen · 7 min read · Feb 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · POCT</span>
-        <h3>Strep, flu, and RSV at the counter: the 2026 math</h3>
-        <p>POCT pays, when you have the right CPA, the right paired E/M code, and the supply contracts. We break down per-test economics for the four highest-volume POC tests in pharmacy at 2026 PFS rates.</p>
-        <span class="article-card__meta">Diana Reyes, PharmD · 9 min read · Jan 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · Operator</span>
-        <h3>The pharmacist-as-bottleneck problem</h3>
-        <p>Every clinical-services rollout we see eventually hits the same wall: pharmacist time is the constraint. We walk through the three operator strategies that work, task delegation, AI scribe, and incident-to scope.</p>
-        <span class="article-card__meta">Christine Lim · 11 min read · Jan 2026</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · CCM</span>
-        <h3>Time-tracking discipline: the $80K-per-store difference</h3>
-        <p>The same patient encounter documented at a 6-store pharmacy can yield $0 or $80K in annual reimbursement, depending entirely on whether you track time in real time. Here's the operator-side fix.</p>
-        <span class="article-card__meta">Diana Reyes, PharmD · 8 min read · Dec 2025</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · Vaccines</span>
-        <h3>Why vaccine admin denial rates spiked in late 2025</h3>
-        <p>Three MAC regions tightened supervision posture documentation requirements in Q4 2025. We walk through what changed, who was caught flat-footed, and how to bring vaccine-admin denial rates back under 4%.</p>
-        <span class="article-card__meta">Jamie Chen · 6 min read · Dec 2025</span>
-      </a>
-      <a class="article-card" href="#">
-        <span class="article-card__type">Blog · BHI</span>
-        <h3>Behavioral health collaborative care, for pharmacists who haven't started</h3>
-        <p>The 2026 PFS expanded the BHI codes pharmacists can bill in collaborative arrangements. The work is medication management, exactly what pharmacists do already. Here's how to start, end-to-end.</p>
-        <span class="article-card__meta">Marcus Okafor, PharmD · 12 min read · Nov 2025</span>
-      </a>
+      <span class="kicker kicker--matcha">Blog</span>
+      <h1 class="h-display">Stories from the front lines<br>of clinical pharmacy.</h1>
+      <p class="sub-hero__lede">Operator playbooks, code-level deep dives, and policy primers, written by the pharmacists, billing leads, and operators who do the work every day.</p>
     </div>
   </div>
 </section>
 
-<section class="cta-band">
-  <div class="wrap">
-    <div>
-      <h2>One short email a week.</h2>
-      <p>The new posts, the new webinar dates, the policy shifts that actually matter. No fluff.</p>
+<!-- ============= 2. ARTICLE GRID ============= -->
+<section class="tile tile--light" aria-label="Articles">
+  <div class="tile__inner">
+    <div class="bl-grid">
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/how-iowa-pharmacies-can-benefit-from-iowas-997m-in-rht-funding" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>How Iowa Pharmacies Can Benefit from Iowa's $997M in RHT Funding</h3>
+          <p class="bl-card__meta">MedMe Team &middot; Jan 2026</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/how-iowa-pharmacies-can-benefit-from-iowas-997m-in-rht-funding">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/opportunity-for-pharmacies-in-connecticuts-938-4-million-rht-rural-health-transformation-program" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Opportunity for Pharmacies in Connecticut's $938.4 Million RHT Program</h3>
+          <p class="bl-card__meta">MedMe Team &middot; Jan 2026</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/opportunity-for-pharmacies-in-connecticuts-938-4-million-rht-rural-health-transformation-program">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/colorados-rural-health-transformation-pharmacy-funding-opportunity" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Colorado's Rural Health Transformation Program: Pharmacy Funding Opportunity</h3>
+          <p class="bl-card__meta">MedMe Team &middot; Jan 2026</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/colorados-rural-health-transformation-pharmacy-funding-opportunity">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/alaskas-rural-health-transformation-program-for-pharmacies" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Opportunity for Pharmacies: Alaska's $6.7 Billion Rural Health Transformation Program</h3>
+          <p class="bl-card__meta">MedMe Team &middot; Jan 2026</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/alaskas-rural-health-transformation-program-for-pharmacies">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/how-arkansas-pharmacies-can-access-1b-in-rht-funding" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>How Arkansas Pharmacies Can Access $1B in RHT Funding</h3>
+          <p class="bl-card__meta">MedMe Team &middot; Jan 2026</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/how-arkansas-pharmacies-can-access-1b-in-rht-funding">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/travel-transcription-prescription-authority-canadian-pharmacists" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/679d0d51b9246fa4c039b257_medme%20colored%20logo.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Travel Medications Prescription Authority for Canadian Pharmacists by Province</h3>
+          <p class="bl-card__meta">Brianna Anderson &amp; Taneya Raguram &middot; Jan 2025</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/travel-transcription-prescription-authority-canadian-pharmacists">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/minor-ailments-module-is-live-in-alberta" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb3d5ffed65c32c80a_655501eb7500f765c65b9ae4_Godwin%2520Chan%2527s%2520Profile%2520Photo.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Product Launch</span>
+          <h3>Minor Ailments Module Is Live in Alberta</h3>
+          <p class="bl-card__meta">Godwin Chan &middot; Nov 2023</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/minor-ailments-module-is-live-in-alberta">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/medme-health-cofounders-named-to-forbes-30-under-30-2024-healthcare-list" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb3d5ffed65c32c80a_655501eb7500f765c65b9ae4_Godwin%2520Chan%2527s%2520Profile%2520Photo.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Press Release</span>
+          <h3>MedMe Health Cofounders Named to Forbes 30 Under 30 2024 Healthcare List</h3>
+          <p class="bl-card__meta">Godwin Chan &middot; Nov 2023</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/medme-health-cofounders-named-to-forbes-30-under-30-2024-healthcare-list">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/navigating-the-2023-flu-season-what-pharmacies-need-to-know" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb3d5ffed65c32c80a_655501eb7500f765c65b9ae4_Godwin%2520Chan%2527s%2520Profile%2520Photo.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Navigating the 2023 Flu Season: What Pharmacies Need to Know</h3>
+          <p class="bl-card__meta">Godwin Chan &middot; Nov 2023</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/navigating-the-2023-flu-season-what-pharmacies-need-to-know">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/a-patients-guide-to-minor-ailments-in-ontario" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc2d1eaa841b86ec88_63dbda5116824a5892ae8166_SDePol.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Digital Health</span>
+          <h3>A Patient's Guide to Minor Ailments in Ontario</h3>
+          <p class="bl-card__meta">Stephanie De Pol &middot; Feb 2023</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/a-patients-guide-to-minor-ailments-in-ontario">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/vigilance-sante-and-medme-health-joining-forces-to-support-expanded-scope-of-practice-for-canadian-pharmacists" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb4cd3463fcf03bcf6_63a3596394065219bc88a8ec_Alducente%252C%2520Charina%25201%2520(1).jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Press Release</span>
+          <h3>Vigilance Sante and MedMe Health: Joining Forces to Support Expanded Scope of Practice for Canadian Pharmacists</h3>
+          <p class="bl-card__meta">Charina Alducente &middot; Jan 2023</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/vigilance-sante-and-medme-health-joining-forces-to-support-expanded-scope-of-practice-for-canadian-pharmacists">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/mapflow-and-medme-health-partner-to-provide-end-to-end-pharmacy-workflow-support-for-ontario-minor-ailments-program" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb4cd3463fcf03bcf6_63a3596394065219bc88a8ec_Alducente%252C%2520Charina%25201%2520(1).jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Press Release</span>
+          <h3>MAPflow and MedMe Health Partner to Provide End-to-End Pharmacy Workflow Support for Ontario Minor Ailments Program</h3>
+          <p class="bl-card__meta">Charina Alducente &middot; Dec 2022</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/mapflow-and-medme-health-partner-to-provide-end-to-end-pharmacy-workflow-support-for-ontario-minor-ailments-program">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/students-of-medme-blog" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb6d247b52a3c800c3_62393e8ab8fd11ed0170c84e_IMG_0338.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Team Stories</span>
+          <h3>Students of MedMe Blog</h3>
+          <p class="bl-card__meta">Camille Huo &middot; Aug 2022</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/students-of-medme-blog">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/medme-health-announces-soc-2-certification" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb6d247b52a3c800c3_62393e8ab8fd11ed0170c84e_IMG_0338.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Press Release</span>
+          <h3>MedMe Health Announces SOC-2 Certification</h3>
+          <p class="bl-card__meta">Camille Huo &middot; Mar 2022</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/medme-health-announces-soc-2-certification">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/a-day-in-the-life-at-medme" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb1338732775d7c109_61e632f53c30554f21b0cdf4_Janelle%2520(1).jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Team Stories</span>
+          <h3>A Day in the Life at MedMe</h3>
+          <p class="bl-card__meta">Janelle Pretti &middot; Aug 2021</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/a-day-in-the-life-at-medme">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/medme-health-joins-y-combinator-w21" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc70e0b8e448e6a422_6059a56c77471831591795c3_Purya%2520Sarmadi%25201.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Press Release</span>
+          <h3>MedMe Health Joins Y Combinator (W21)</h3>
+          <p class="bl-card__meta">Purya Sarmadi &middot; Mar 2021</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/medme-health-joins-y-combinator-w21">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/covid-vaccine-efficacy-safety" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Efficacy and Safety of the COVID Vaccines: A Closer Look</h3>
+          <p class="bl-card__meta">Gabrielle Busque &middot; Jan 2021</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/covid-vaccine-efficacy-safety">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/the-covid-vaccine-rollout-in-canada" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>The COVID Vaccine Rollout in Canada</h3>
+          <p class="bl-card__meta">Gabrielle Busque &middot; Jan 2021</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/the-covid-vaccine-rollout-in-canada">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/information-for-pharmacists-everything-you-need-to-know-about-the-covid-vaccines" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Information for Pharmacists: Everything You Need to Know About the COVID Vaccines</h3>
+          <p class="bl-card__meta">Gabrielle Busque &middot; Jan 2021</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/information-for-pharmacists-everything-you-need-to-know-about-the-covid-vaccines">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/covid-vaccines" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb851c12ed61f5dd47_5ffda64db4a70770959f2952_1570501052321.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Information for the Public: Everything You Need to Know About the COVID Vaccines</h3>
+          <p class="bl-card__meta">Gabrielle Busque &middot; Jan 2021</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/covid-vaccines">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/pandemic-solutions" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecb52fda08cba02c06b_5ffc5ef2bf5a6150750c7e83_screen_shot_2021-01-11_at_9.08.53_am.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>How One Pharmacy Used MedMe as a Crystal Ball to Offer Patients Exceptional Services During COVID-19</h3>
+          <p class="bl-card__meta">Linda Lu &middot; Jan 2021</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/pandemic-solutions">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/covid19testing" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc2d1eaa841b86ec81_5f1f87229c53f62232ca258c_Rui%2520Su%2520Photo%2520.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Press Release</span>
+          <h3>MedMe Health Launches COVID-19 Module to Support Asymptomatic Testing in Select Alberta Pharmacies</h3>
+          <p class="bl-card__meta">Rui Su &middot; Jul 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/covid19testing">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/students-of-medme" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecbd85793188800af6a_5f0b7dfe1509ac6bcf178b64_6.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Team Stories</span>
+          <h3>Students of MedMe</h3>
+          <p class="bl-card__meta">Matthew Lau &middot; Jul 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/students-of-medme">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/pharmacy-virtual-care-guidelines-in-canada" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecbb94be4f0a4367fca_5ef39a987d49fd739058c867_Untitled%2520design%2520(6).png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Digital Health</span>
+          <h3>Pharmacy Virtual Care Guidelines in Canada</h3>
+          <p class="bl-card__meta">Ashrin Jan &amp; May Zheng &middot; Jun 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/pharmacy-virtual-care-guidelines-in-canada">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/what-is-virtual-care" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc1aeb59d4a1afa2d6_5ecddc794aa1f872345ac978_May.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Digital Health</span>
+          <h3>What Is Virtual Care?</h3>
+          <p class="bl-card__meta">May Zheng &middot; Jun 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/what-is-virtual-care">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/engaging-older-adults-with-digital-health" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616ceccc86319e9625e92f6_5ee3d572f68eac4d5e9d777e_Engaging%2520seniors%2520Thumbnail%2520(1).png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Digital Health</span>
+          <h3>Engaging Older Adults with Digital Health Technology</h3>
+          <p class="bl-card__meta">Michelle Yee &middot; Jun 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/engaging-older-adults-with-digital-health">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/to-administer-or-not-a-patient-case-discussion-on-vaccinations-during-covid-19-part-ii" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc1aeb59d4a1afa2d6_5ecddc794aa1f872345ac978_May.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>To Administer or Not? A Patient Case Discussion on Vaccinations During COVID-19: Part II</h3>
+          <p class="bl-card__meta">May Zheng &middot; Jun 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/to-administer-or-not-a-patient-case-discussion-on-vaccinations-during-covid-19-part-ii">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/vaccinations-during-covid-part1" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616cecc1aeb59d4a1afa2d6_5ecddc794aa1f872345ac978_May.png" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>To Administer or Not? Vaccinations During COVID-19: Part I</h3>
+          <p class="bl-card__meta">May Zheng &middot; May 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/vaccinations-during-covid-part1">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card">
+        <a class="bl-card__media" href="https://www.medmehealth.com/blog/pharmacists-are-not-pill-counters" aria-hidden="true" tabindex="-1">
+          <img src="https://cdn.prod.website-files.com/65e9ff837f404a49b2f7d21d/6616ceccc31e03ec3b0dc55b_5ec2646d2f007d0d73a7c497_Nick%2520Hui.jpeg" alt="" loading="lazy" />
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Pharmacy Practice</span>
+          <h3>Pharmacists Are NOT Pill Counters</h3>
+          <p class="bl-card__meta">Nick Hui &middot; May 2020</p>
+          <div class="bl-card__cta">
+            <a href="https://www.medmehealth.com/blog/pharmacists-are-not-pill-counters">Read article <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
     </div>
-    <div class="cta-band__buttons">
-      <a class="btn btn-primary--accent" href="/us/contact">Subscribe <span class="arrow">→</span></a>
-      <a class="btn btn-ghost btn-ghost--on-indigo" href="/us/resources/webinars">See the webinars</a>
+  </div>
+</section>
+
+<!-- ============= 3. CLOSING CTA (navy, newsletter) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Subscribe to the newsletter">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Get The Newsletter</span>
+      <h2 class="h-display">One short email a week.</h2>
+      <p class="lead">The new posts, the new webinar dates, the policy shifts that actually matter. No fluff, no marketing email cadence dressed up as content.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Subscribe <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -153,5 +653,6 @@
 </main>
 
 {{> partials/footer-us }}
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
