@@ -9,28 +9,141 @@
 <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/about" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/brand.css?v=65" />
 <style>
-  .about-hero {
+  /* ============================================================
+     ABOUT page. Built off the Enterprises template
+     (.sub-hero / .sub-hero__bg / .sub-hero__text overlap +
+     .tile patterns). Hero replaces the dashboard mockup with a
+     16:9 video frame intended to host the upcoming offsite team
+     footage. Until the file lands, the frame shows a brand
+     gradient + play-icon poster.
+
+     Sections: video hero, trust band, mission manifesto, four
+     journey milestones (dark cards like Modular Architecture),
+     four belief cards, investor strip, navy closing CTA.
+     Leadership section moved out to /us/company/our-team.
+     ============================================================ */
+
+  /* ====== HERO: video frame as faded BG above text ============= */
+  .sub-hero {
     background: var(--seashell);
-    padding: 4rem 0 3rem;
+    padding: 2rem 1.5rem 3.5rem;
+    position: relative;
+    overflow: hidden;
   }
-  .about-hero__inner {
-    max-width: 1000px;
+  .sub-hero__inner {
+    max-width: var(--container);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding-inline: var(--tile-pad-x);
+    position: relative;
+  }
+  .sub-hero__bg {
+    position: relative;
+    max-width: 1120px;
+    margin: 0 auto;
+    /* Same bottom fade pattern as the Enterprises hero so the
+       headline rises out of the video into a clean seashell field. */
+    -webkit-mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 50%,
+                          rgba(0, 0, 0, 0) 95%);
+            mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 50%,
+                          rgba(0, 0, 0, 0) 95%);
+    pointer-events: none;
+  }
+  .sub-hero__text {
     text-align: center;
+    max-width: 820px;
+    margin: -150px auto 0;
+    position: relative;
+    z-index: 2;
   }
-  .about-hero h1.h-display { margin: 0.5rem auto 1.25rem; max-width: 880px; }
-  .about-hero__lede {
-    font-size: 1.15rem;
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
     line-height: 1.55;
-    color: rgba(6, 62, 84, 0.78);
-    max-width: 720px;
-    margin: 0 auto;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto 1.75rem;
+    max-width: 660px;
+    text-wrap: pretty;
+  }
+  .sub-hero__cta {
+    display: inline-flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -100px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -70px; } }
+
+  /* Video frame, 16:9 with brand-gradient placeholder behind the
+     <video>. Real footage drops in via the inner <source>; until
+     then the play-icon placeholder reads as intentional. */
+  .hero-video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--indigo) 0%, rgba(6, 62, 84, 0.78) 100%);
+    box-shadow: 0 12px 40px rgba(6, 62, 84, 0.12);
+  }
+  .hero-video__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  .hero-video__placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(195, 196, 48, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 70%, rgba(195, 196, 48, 0.08) 0%, transparent 55%),
+      linear-gradient(135deg, var(--indigo) 0%, rgba(6, 62, 84, 0.78) 100%);
+  }
+  .hero-video__play {
+    width: 96px;
+    height: 96px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--matcha);
+    animation: hero-video-pulse 3.4s ease-in-out infinite;
+  }
+  .hero-video__play svg { width: 100%; height: 100%; }
+  .hero-video__play circle {
+    fill: rgba(250, 249, 245, 0.06);
+    stroke: var(--matcha);
+    stroke-width: 1.5;
+  }
+  .hero-video__play polygon { fill: currentColor; }
+  @keyframes hero-video-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.85; }
+    50%      { transform: scale(1.06); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video__play { animation: none; opacity: 1; }
   }
 
+  /* ====== OUR MISSION manifesto =============================== */
   .manifesto {
     max-width: 760px;
     margin: 0 auto;
@@ -38,96 +151,116 @@
   }
   .manifesto p {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    line-height: 1.55;
-    color: var(--seashell);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: var(--indigo);
     font-weight: 500;
     letter-spacing: -0.012em;
     margin: 0 0 1.5rem;
+    text-wrap: pretty;
   }
   .manifesto p:last-child { margin-bottom: 0; }
   .manifesto .accent { color: var(--matcha); font-weight: 600; }
   @media (max-width: 700px) {
-    .manifesto p { font-size: 1.2rem; }
+    .manifesto p { font-size: 1.15rem; }
   }
 
-  .about-timeline {
-    margin-top: 2.5rem;
+  /* ====== OUR JOURNEY (dark milestone tier cards) ============= */
+  .journey-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
   }
-  .about-tl__year {
+  @media (max-width: 1000px) { .journey-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .journey-grid { grid-template-columns: 1fr; } }
+
+  .journey-card {
+    background: var(--indigo);
+    border: 1px solid rgba(195, 196, 48, 0.18);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 32px rgba(6, 62, 84, 0.08);
+  }
+  .journey-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--matcha);
+    box-shadow: 0 16px 38px rgba(6, 62, 84, 0.16);
+  }
+  .journey-card__year {
     font-family: var(--font-display);
-    font-size: 2rem;
     font-weight: 700;
+    font-size: 2rem;
     color: var(--matcha);
     letter-spacing: -0.022em;
     margin-bottom: 0.5rem;
+    line-height: 1;
   }
-  .about-tl__title {
-    font-family: var(--font-display);
+  .journey-card h3 {
+    margin: 0 0 0.5rem;
     font-size: 1.05rem;
     font-weight: 600;
     color: var(--seashell);
-    margin: 0 0 0.5rem;
+    letter-spacing: -0.012em;
   }
-  .about-tl__desc {
+  .journey-card p {
+    margin: 0;
     font-size: 0.9rem;
-    color: rgba(250, 249, 245, 0.7);
+    color: rgba(250, 249, 245, 0.78);
     line-height: 1.55;
-    margin: 0;
-  }
-  @media (max-width: 800px) {
-    .about-timeline { grid-template-columns: repeat(2, 1fr); }
   }
 
-  .team-grid {
+  /* ====== WHAT WE BELIEVE (2x2 light cards) =================== */
+  .belief-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-top: 2.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
   }
-  .team-card {
-    background: #fff;
-    border-radius: 14px;
+  @media (max-width: 760px) { .belief-grid { grid-template-columns: 1fr; } }
+
+  .belief-card {
+    background: var(--white);
     border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 1.5rem;
-    text-align: center;
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
   }
-  .team-avatar {
-    width: 84px; height: 84px;
-    border-radius: 50%;
-    margin: 0 auto 1rem;
-    background: linear-gradient(135deg, var(--indigo), var(--indigo-dark));
+  .belief-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .belief-card__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
     color: var(--matcha);
-    display: grid; place-items: center;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.6rem;
   }
-  .team-name {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 700;
+  .belief-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
     color: var(--indigo);
+    letter-spacing: -0.014em;
+    text-wrap: balance;
+  }
+  .belief-card p {
     margin: 0;
-    letter-spacing: -0.005em;
-  }
-  .team-role {
-    font-size: 0.825rem;
-    color: rgba(6, 62, 84, 0.6);
-    margin: 0.25rem 0 0;
-  }
-  @media (max-width: 900px) {
-    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
   }
 
+  /* ====== BACKED BY (investor strip) ========================== */
   .investor-strip {
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 3rem;
-    margin-top: 2.5rem;
+    gap: 2.5rem;
+    margin-top: 1rem;
   }
   .investor-strip__item {
     font-family: var(--font-display);
@@ -135,172 +268,138 @@
     font-weight: 600;
     color: rgba(6, 62, 84, 0.55);
     letter-spacing: -0.005em;
+    padding: 0.5rem 0;
   }
-
-  .values-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-  .values-grid .h-card { padding: 2rem; }
-  .values-grid h3 {
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem;
-    color: var(--indigo);
-    letter-spacing: -0.012em;
-  }
-  .values-grid p { font-size: 0.95rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
-  @media (max-width: 800px) { .values-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
-
 {{> partials/util-bar-us }}
 {{> partials/nav-us }}
 
 <main id="main">
 
-<section class="about-hero">
-  <div class="about-hero__inner">
-    <span class="kicker kicker--matcha">About MedMe Health</span>
-    <h1 class="h-display h-display--xl">Pharmacy is the most under-used<br>care setting in the US.</h1>
-    <p class="about-hero__lede">
-      We're building the platform that fixes it. Pharmacy-specific EHR, AI-drafted SOAP notes, and Medicare Part B billing, so the work pharmacists already do finally gets reimbursed.
-    </p>
+<!-- ============= 1. SUB-HERO (video frame as BG above text) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="hero-video">
+        <video class="hero-video__media" autoplay muted loop playsinline aria-label="MedMe team video">
+          <!-- TODO: drop the offsite team video URL into the source below
+               once the footage from the June 2026 offsite is cut. -->
+          <source src="" type="video/mp4">
+        </video>
+        <div class="hero-video__placeholder">
+          <span class="hero-video__play" aria-hidden="true">
+            <svg viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="30"/>
+              <polygon points="26 20 46 32 26 44 26 20"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="sub-hero__text">
+      <span class="kicker kicker--matcha">About MedMe Health</span>
+      <h1 class="h-display">Pharmacy is the most under-used<br>care setting in the US.</h1>
+      <p class="sub-hero__lede">We are building the platform that fixes it. Pharmacy-specific EHR, AI-drafted SOAP notes, and Medicare Part B billing, so the work pharmacists already do finally gets reimbursed.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Talk to our team <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
   </div>
 </section>
 
+{{> partials/trust-band-us }}
+
+<!-- ============= 2. OUR MISSION (manifesto) ============= -->
 <section class="tile tile--light" aria-label="Our mission">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Our mission</span>
+      <span class="kicker">Our Mission</span>
       <h2 class="h-display">Help pharmacy do the clinical<br>work it's paid to do.</h2>
     </div>
     <div class="manifesto">
       <p>The US pharmacy workforce already does counseling, immunization administration, chronic-care follow-up, transitions-of-care, and adherence monitoring. <span class="accent">Less than 20% of it gets billed.</span></p>
-      <p>The reason is not clinical capability. It's documentation, coding, eligibility, and claim infrastructure built for medical groups, not for community pharmacy.</p>
+      <p>The reason is not clinical capability. It is documentation, coding, eligibility, and claim infrastructure built for medical groups, not for community pharmacy.</p>
       <p>MedMe ships the missing layer: an EHR pharmacists actually want to use, an AI scribe that drafts the note, and a billing engine that converts the encounter into a clean claim. <span class="accent">One platform, no swivel-chair.</span></p>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="The journey">
+<!-- ============= 3. OUR JOURNEY (4 dark milestone cards) ============= -->
+<section class="tile tile--light" aria-label="Our journey">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Our journey</span>
+      <span class="kicker">Our Journey</span>
       <h2 class="h-display">Six years building<br>for pharmacy.</h2>
+      <p class="lead">From a Toronto COVID immunization-rollout pivot to a US pharmacy platform powering thousands of stores. Four moments that defined how we built and who we built for.</p>
     </div>
-    <div class="about-timeline">
-      <div>
-        <div class="about-tl__year">2020</div>
-        <h3 class="about-tl__title">Founded</h3>
-        <p class="about-tl__desc">Started in Toronto by Nick Hui, Rui Su, and Purya Sarmadi after the COVID immunization rollout exposed how little clinical software pharmacy actually had.</p>
-      </div>
-      <div>
-        <div class="about-tl__year">2022</div>
-        <h3 class="about-tl__title">EHR launches</h3>
-        <p class="about-tl__desc">Full pharmacy EHR + scheduling deployed across 4,500+ Canadian pharmacies. The first platform built end-to-end for clinical pharmacy services.</p>
-      </div>
-      <div>
-        <div class="about-tl__year">2024</div>
-        <h3 class="about-tl__title">US expansion</h3>
-        <p class="about-tl__desc">AI Scribe and Medical Billing launch for US community pharmacy. First 100 stores go live. $48M in clinical reimbursement processed in year one.</p>
-      </div>
-      <div>
-        <div class="about-tl__year">2026</div>
-        <h3 class="about-tl__title">Today</h3>
-        <p class="about-tl__desc">12M+ patients managed, 4,500+ pharmacies enrolled. Now serving independents, regional chains, top-100 systems, and payvider partners.</p>
-      </div>
+    <div class="journey-grid">
+      <article class="journey-card">
+        <div class="journey-card__year">2020</div>
+        <h3>Founded</h3>
+        <p>Started in Toronto by Nick Hui, Rui Su, and Purya Sarmadi after the COVID immunization rollout exposed how little clinical software pharmacy actually had.</p>
+      </article>
+      <article class="journey-card">
+        <div class="journey-card__year">2022</div>
+        <h3>EHR Launches</h3>
+        <p>Full pharmacy EHR and scheduling deployed across 4,500+ Canadian pharmacies. The first platform built end-to-end for clinical pharmacy services.</p>
+      </article>
+      <article class="journey-card">
+        <div class="journey-card__year">2024</div>
+        <h3>US Expansion</h3>
+        <p>AI Scribe and Medical Billing launch for US community pharmacy. First 100 stores go live. $48M in clinical reimbursement processed in year one.</p>
+      </article>
+      <article class="journey-card">
+        <div class="journey-card__year">2026</div>
+        <h3>Today</h3>
+        <p>12M+ patients managed, 4,500+ pharmacies enrolled. Now serving independents, regional chains, top-100 systems, and payvider partners.</p>
+      </article>
     </div>
   </div>
 </section>
 
+<!-- ============= 4. WHAT WE BELIEVE (2x2 belief cards) ============= -->
 <section class="tile tile--light" aria-label="What we believe">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">What we believe</span>
+      <span class="kicker">What We Believe</span>
       <h2 class="h-display">Pharmacy-shaped opinions<br>we ship into the product.</h2>
+      <p class="lead">Four operating principles that show up in every PRD, every quarterly roadmap, and every customer call. They are why the platform looks the way it does.</p>
     </div>
-    <div class="values-grid">
-      <article class="h-card">
+    <div class="belief-grid">
+      <article class="belief-card">
+        <p class="belief-card__num">01</p>
         <h3>Workflow first, features second</h3>
-        <p>The pharmacist's hour is the most expensive resource in the building. Every feature pays its rent in minutes saved per encounter, or it doesn't ship.</p>
+        <p>The pharmacist's hour is the most expensive resource in the building. Every feature pays its rent in minutes saved per encounter, or it does not ship.</p>
       </article>
-      <article class="h-card">
+      <article class="belief-card">
+        <p class="belief-card__num">02</p>
         <h3>Clinical scope is a revenue strategy</h3>
         <p>Reimbursement codes exist for the services pharmacy is already delivering. The job is to make billing trivial, not to convince pharmacists to do new clinical work.</p>
       </article>
-      <article class="h-card">
+      <article class="belief-card">
+        <p class="belief-card__num">03</p>
         <h3>Independents matter</h3>
-        <p>Most clinical pharmacy platforms target chains. We start with the 60% of US retail pharmacy that's independent, because that's where community care actually happens.</p>
+        <p>Most clinical pharmacy platforms target chains. We start with the 60% of US retail pharmacy that is independent, because that is where community care actually happens.</p>
       </article>
-      <article class="h-card">
+      <article class="belief-card">
+        <p class="belief-card__num">04</p>
         <h3>Operators set the roadmap</h3>
-        <p>Every quarter, top-decile customer operators tell us what's broken. We ship against their list, not ours. Our PRDs come from the field, not the conference room.</p>
+        <p>Every quarter, top-decile customer operators tell us what is broken. We ship against their list, not ours. Our PRDs come from the field, not the conference room.</p>
       </article>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="Leadership">
+<!-- ============= 5. BACKED BY (investor strip) ============= -->
+<section class="tile tile--light" aria-label="Backed by">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Leadership</span>
-      <h2 class="h-display">Founders + operators<br>building this with you.</h2>
-    </div>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar">NH</div>
-        <h3 class="team-name">Nick Hui</h3>
-        <p class="team-role">Co-founder &amp; CEO</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">RS</div>
-        <h3 class="team-name">Rui Su</h3>
-        <p class="team-role">Co-founder &amp; CTO</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">PS</div>
-        <h3 class="team-name">Purya Sarmadi</h3>
-        <p class="team-role">Co-founder &amp; COO</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">JG</div>
-        <h3 class="team-name">Jenna Greene, PharmD</h3>
-        <p class="team-role">Chief Clinical Officer</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">MC</div>
-        <h3 class="team-name">Marcus Chen</h3>
-        <p class="team-role">VP, Engineering</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">AL</div>
-        <h3 class="team-name">Aisha Laghari</h3>
-        <p class="team-role">VP, Revenue</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">DT</div>
-        <h3 class="team-name">Diego Torres</h3>
-        <p class="team-role">VP, Product</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">SK</div>
-        <h3 class="team-name">Sara Kim, PharmD</h3>
-        <p class="team-role">Head of US Implementation</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="tile tile--light" aria-label="Backed by" style="padding-top: 0;">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Backed by</span>
+      <span class="kicker">Backed By</span>
       <h2 class="h-display">Operators who've built<br>at healthcare scale.</h2>
-      <p class="lead">Capital and counsel from investors who've shipped clinical software, run pharmacy chains, and stood up payer partnerships.</p>
+      <p class="lead">Capital and counsel from investors who have shipped clinical software, run pharmacy chains, and stood up payer partnerships.</p>
     </div>
     <div class="investor-strip">
       <span class="investor-strip__item">Y Combinator</span>
@@ -313,16 +412,22 @@
   </div>
 </section>
 
-<section class="tile tile--light tile--prominent" aria-label="Join us">
-  <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Talk to us</span>
+<!-- ============= 6. CLOSING CTA (navy, centered, pulse-rings) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Talk to us">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Talk To Us</span>
       <h2 class="h-display">Want to see what MedMe<br>looks like in your pharmacy?</h2>
-      <p class="lead">15 minutes, customized to your service mix and store count. We'll show you the unlock and leave you with a written estimate either way.</p>
-      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a class="btn btn-primary" href="/us/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/company/careers">See open roles</a>
-      </div>
+      <p class="lead">15 minutes, customized to your service mix and store count. We will show you the unlock and leave you with a written estimate either way.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -331,6 +436,5 @@
 
 {{> partials/footer-us }}
 <script src="/assets/site.js" defer></script>
-
 </body>
 </html>
