@@ -534,6 +534,53 @@
     text-wrap: pretty;
   }
 
+  /* ====== IMPACT FUND CALLOUT BAND (per Andrew #201) =========== */
+  .impact-band {
+    background: rgba(195, 196, 48, 0.06);
+    border: 1px solid rgba(195, 196, 48, 0.22);
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1.1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .impact-band::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--matcha);
+    opacity: 0.1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  @media (max-width: 800px) {
+    .impact-band { grid-template-columns: 1fr; padding: 1.75rem; }
+  }
+  .impact-band__text { max-width: 720px; position: relative; z-index: 1; }
+  .impact-band__kicker {
+    font-size: 11px; color: var(--matcha); font-weight: 700;
+    letter-spacing: 0.08em; margin-bottom: 0.5rem; display: inline-block;
+  }
+  .impact-band h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.018em;
+  }
+  .impact-band p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.78);
+    text-wrap: pretty;
+  }
+  .impact-band__cta { position: relative; z-index: 1; }
+
   /* ====== NAVY STORY (member benefit + 4 commercial models) ===== */
   .tile--navy { position: relative; overflow: hidden; }
   .tile--navy .tile__inner { position: relative; z-index: 1; }
@@ -997,21 +1044,21 @@
   </div>
 </section>
 
-<!-- ============= 3. NCAP CASE STUDY (partner playbook + pilot process) ============= -->
-<section class="tile tile--light" aria-label="Partner case study: NCAP medical billing pilot">
+<!-- ============= 3. CASE STUDY (North Carolina Association of Pharmacists, partner playbook + pilot process) ============= -->
+<section class="tile tile--light" aria-label="Partner case study: North Carolina Association of Pharmacists medical billing pilot">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Partner Case Study</span>
-      <h2 class="h-display">How we partnered with NCAP<br>to launch statewide medical billing.</h2>
-      <p class="lead">When the North Carolina Association of Pharmacists wanted to help member pharmacies build sustainable revenue beyond dispensing, they partnered with MedMe to run a four-month medical billing pilot, protocol-aligned, member-priced, and built around the workflow their pharmacies actually run. This is the partnership playbook we run with banners, co-ops, and PSAOs.</p>
+      <h2 class="h-display">Launching statewide medical billing<br>with North Carolina's pharmacy association.</h2>
+      <p class="lead">When the North Carolina Association of Pharmacists wanted to help member pharmacies build sustainable revenue beyond dispensing, they partnered with MedMe on a four-month medical billing pilot, protocol-aligned, member-priced, and built around the workflow their pharmacies actually run. This is the partnership playbook we run with banners, co-ops, and PSAOs.</p>
     </div>
 
     <!-- Partnership banner: who, what scope, key facts -->
     <div class="case-banner">
       <div class="case-banner__brand">
         <span class="case-banner__brand-label">Partnership</span>
-        <span class="case-banner__brand-pair">NCAP<span class="x">×</span>MedMe</span>
-        <span class="case-banner__brand-sub">North Carolina Association of Pharmacists, in partnership with MedMe Health.</span>
+        <span class="case-banner__brand-pair">North Carolina Association of Pharmacists<span class="x">&times;</span>MedMe</span>
+        <span class="case-banner__brand-sub">A statewide pharmacy association in partnership with MedMe Health.</span>
       </div>
       <div class="case-banner__stats">
         <div class="case-banner__stat">
@@ -1020,11 +1067,11 @@
         </div>
         <div class="case-banner__stat">
           <span class="case-banner__stat-val">3</span>
-          <span class="case-banner__stat-lbl">Statewide-protocol services in scope</span>
+          <span class="case-banner__stat-lbl">Pilot services covered</span>
         </div>
         <div class="case-banner__stat">
-          <span class="case-banner__stat-val">$0</span>
-          <span class="case-banner__stat-lbl">Platform fee for members during the pilot</span>
+          <span class="case-banner__stat-val">Member</span>
+          <span class="case-banner__stat-lbl">Pricing for participating pharmacies</span>
         </div>
       </div>
     </div>
@@ -1045,7 +1092,7 @@
           <span class="case-step__num">01</span>
           <span class="case-step__phase">Pre-launch</span>
           <h4>Onboarding</h4>
-          <p>Payer review, billing setup, EDI enrollment, and finalized go-live date. Workflow configuration shaped around the statewide protocols. Two to four weeks.</p>
+          <p>Payer review, billing setup, EDI enrollment, and finalized go-live date. Workflow configuration shaped around the statewide protocols.</p>
         </article>
         <article class="case-step">
           <span class="case-step__num">02</span>
@@ -1063,7 +1110,7 @@
           <span class="case-step__num">04</span>
           <span class="case-step__phase">Month 4</span>
           <h4>Outcomes and scaling</h4>
-          <p>Consolidate outcomes and ROI insights, share back with NCAP, and align on next steps for scaling services and onboarding additional sites across the network.</p>
+          <p>Consolidate outcomes and ROI insights, share back with the association, and align on next steps for scaling services and onboarding additional sites across the network.</p>
         </article>
       </div>
     </div>
@@ -1076,7 +1123,23 @@
   </div>
 </section>
 
-<!-- ============= 4. NAVY STORY (member benefit + 4 commercial models) ============= -->
+<!-- ============= 4. IMPACT FUND CALLOUT (per Andrew #201) ============= -->
+<section class="tile tile--light" aria-label="MedMe Impact Fund">
+  <div class="tile__inner">
+    <div class="impact-band">
+      <div class="impact-band__text">
+        <span class="impact-band__kicker">The MedMe Impact Fund</span>
+        <h3>Network partnerships qualify for the Impact Fund.</h3>
+        <p>The MedMe Impact Fund supports pharmacy research, community programs, and statewide advocacy in collaboration with our network and association partners. Partner networks can sponsor member-led research projects, statewide-protocol pilots, and policy-impact studies through the Fund, with MedMe co-investing alongside.</p>
+      </div>
+      <div class="impact-band__cta">
+        <a class="pill pill--solid" href="/us/contact">Talk to our partnerships team <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. NAVY STORY (member benefit + 4 commercial models) ============= -->
 <section class="tile tile--navy" aria-label="A member benefit, not just a vendor">
   <div class="story-bg-pattern" aria-hidden="true"></div>
   <div class="tile__inner">
