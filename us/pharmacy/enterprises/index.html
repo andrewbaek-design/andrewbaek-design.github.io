@@ -791,6 +791,67 @@
   }
   .rollout-card p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; font-size: 0.95rem; }
 
+  /* ====== ENTERPRISE MATURITY (4 stages, per Andrew #198) ======= */
+  .maturity-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .maturity-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .maturity-grid { grid-template-columns: 1fr; } }
+  .maturity-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .maturity-card:hover { transform: translateY(-3px); border-color: rgba(6, 62, 84, 0.18); }
+  .maturity-card__stage {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--matcha);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+  }
+  .maturity-card__dots {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 0.85rem;
+  }
+  .maturity-card__dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(195, 196, 48, 0.22);
+  }
+  .maturity-card__dots span.is-on { background: var(--matcha); }
+  .maturity-card h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.014em;
+  }
+  .maturity-card__sub {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    color: rgba(6, 62, 84, 0.55);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .maturity-card p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+  }
+
 </style>
 </head>
 <body>
@@ -1184,7 +1245,56 @@
   </div>
 </section>
 
-<!-- ============= 3. MODULAR ARCHITECTURE (4 integration tiers, expanded copy) ============= -->
+<!-- ============= 3. ENTERPRISE MATURITY (4 stages, per Andrew #198) ============= -->
+<section class="tile tile--light" aria-label="Enterprise maturity">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Where You Are On The Curve</span>
+      <h2 class="h-display">Four stages of enterprise<br>clinical-services maturity.</h2>
+      <p class="lead">Every enterprise pharmacy we work with sits somewhere on a clinical-services maturity curve, from a still-mostly-dispensing operation to a multi-state, payer-contracted clinical operation. The modules you adopt, the rollout pattern, and the commercial structure all hinge on where you are today and where you want to be next.</p>
+    </div>
+    <div class="maturity-grid">
+      <article class="maturity-card">
+        <span class="maturity-card__stage">Stage 01</span>
+        <span class="maturity-card__dots" aria-hidden="true">
+          <span class="is-on"></span><span></span><span></span><span></span>
+        </span>
+        <h3>Foundation</h3>
+        <p class="maturity-card__sub">Vaccines, dispensing-led</p>
+        <p>Clinical services are limited to immunizations and the occasional MTM. Scheduling is on the dispensing system. Billing is largely cash and PBM-routed. The opportunity is to start running clinical services as a distinct revenue line.</p>
+      </article>
+      <article class="maturity-card">
+        <span class="maturity-card__stage">Stage 02</span>
+        <span class="maturity-card__dots" aria-hidden="true">
+          <span class="is-on"></span><span class="is-on"></span><span></span><span></span>
+        </span>
+        <h3>Emerging</h3>
+        <p class="maturity-card__sub">First clinical services, ad hoc</p>
+        <p>Some stores have started MTM and POCT. Documentation lives in spreadsheets or the dispensing add-on. Billing runs through one MAC region. The opportunity is to standardize the workflow and turn what is working into a program.</p>
+      </article>
+      <article class="maturity-card">
+        <span class="maturity-card__stage">Stage 03</span>
+        <span class="maturity-card__dots" aria-hidden="true">
+          <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span></span>
+        </span>
+        <h3>Established</h3>
+        <p class="maturity-card__sub">Full clinical program live</p>
+        <p>CCM, MTM, POCT, vaccines, and incident-to billing are running. There is a dedicated clinical-services lead. Documentation discipline is consistent across stores. The opportunity is to scale across states and contract directly with payers.</p>
+      </article>
+      <article class="maturity-card">
+        <span class="maturity-card__stage">Stage 04</span>
+        <span class="maturity-card__dots" aria-hidden="true">
+          <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span class="is-on"></span>
+        </span>
+        <h3>Advanced</h3>
+        <p class="maturity-card__sub">Multi-state, payer-contracted</p>
+        <p>Clinical services run as a network-wide line of business. Multi-MAC billing, direct payer contracts, and structured outcomes reporting are in place. The opportunity is interoperability, RHTP participation, and provider-status pathways.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. MODULAR ARCHITECTURE (4 integration tiers, expanded copy) ============= -->
 <section class="tile tile--light" aria-label="Modular architecture">
   <div class="tile__inner">
     <div class="tile__head">
@@ -1252,7 +1362,7 @@
   </div>
 </section>
 
-<!-- ============= 4. INTEROPERABILITY (future-forward, 4 cards) ============= -->
+<!-- ============= 5. INTEROPERABILITY (future-forward, 4 cards) ============= -->
 <section class="tile tile--light" aria-label="Interoperability and future-forward">
   <div class="tile__inner">
     <div class="tile__head">
@@ -1289,7 +1399,7 @@
   </div>
 </section>
 
-<!-- ============= 5. ROLLOUT PLAYBOOK (case patterns) ============= -->
+<!-- ============= 6. ROLLOUT PLAYBOOK (case patterns) ============= -->
 <section class="tile tile--light" aria-label="Rollout playbook">
   <div class="tile__inner">
     <div class="tile__head">
@@ -1350,7 +1460,7 @@
   </div>
 </section>
 
-<!-- ============= 6. CLOSING CTA (navy, centered, pulse-rings motion) ============= -->
+<!-- ============= 7. CLOSING CTA (navy, centered, pulse-rings motion) ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="Talk to our enterprise team">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">

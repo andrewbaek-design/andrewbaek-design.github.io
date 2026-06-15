@@ -646,6 +646,81 @@
 
   /* Book-a-demo CTA tucked under the attribution in the left column. */
   .story-cta { margin-top: 1.75rem; }
+
+  /* ====== CREDIBILITY / PARTNERSHIP LANDSCAPE (per Andrew #202) === */
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .partner-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .partner-grid { grid-template-columns: 1fr; } }
+  .partner-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .partner-card:hover { transform: translateY(-3px); border-color: rgba(195, 196, 48, 0.42); }
+  .partner-card__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+  }
+  .partner-card__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .partner-card h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+  }
+  .partner-card p {
+    margin: 0 0 0.5rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+  .partner-card__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(6, 62, 84, 0.08);
+  }
+  .partner-card__list li {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--indigo);
+    background: rgba(6, 62, 84, 0.05);
+    border-radius: 999px;
+    padding: 4px 9px;
+    letter-spacing: 0.02em;
+  }
 </style>
 </head>
 <body>
@@ -1121,7 +1196,75 @@
   </div>
 </section>
 
-<!-- ============= 3. STORY (navy band, quote + 4 value blocks in 2-col split) ============= -->
+<!-- ============= 3. PARTNERSHIP LANDSCAPE (per Andrew #202) ============= -->
+<section class="tile tile--light" aria-label="Partnership landscape">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Embedded In The Pharmacy Ecosystem</span>
+      <h2 class="h-display">Built alongside the partners<br>independent pharmacy already trusts.</h2>
+      <p class="lead">MedMe sits inside the independent pharmacy ecosystem, not next to it. State and national associations, dispensing-system partners, payer networks, and standards bodies are part of how the platform was built and how it keeps moving.</p>
+    </div>
+    <div class="partner-grid">
+      <article class="partner-card">
+        <span class="partner-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v2a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M5 22h14M9 22V9M15 22V9"/><path d="M5 9h14"/></svg>
+        </span>
+        <h3>Pharmacy Associations</h3>
+        <p>Partnerships with state and national pharmacy associations on member pilots, scope-of-practice advocacy, and protocol-aligned workflows.</p>
+        <ul class="partner-card__list">
+          <li>NCPA</li>
+          <li>APhA</li>
+          <li>NACDS</li>
+          <li>NCAP</li>
+          <li>State associations</li>
+        </ul>
+      </article>
+      <article class="partner-card">
+        <span class="partner-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+        </span>
+        <h3>Dispensing System Partners</h3>
+        <p>Two-way integrations with the dispensing systems independents already run, so the clinical record stays in sync with the prescription record.</p>
+        <ul class="partner-card__list">
+          <li>PioneerRx</li>
+          <li>BestRx</li>
+          <li>McKesson</li>
+          <li>Liberty</li>
+          <li>Open API</li>
+        </ul>
+      </article>
+      <article class="partner-card">
+        <span class="partner-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="14" x2="10" y2="14"/></svg>
+        </span>
+        <h3>Clearinghouses and Payers</h3>
+        <p>Direct claim submission rails for Medicare Part B, state Medicaid, and commercial payers, with denial-management built into the claim workflow.</p>
+        <ul class="partner-card__list">
+          <li>Medicare Part B</li>
+          <li>State Medicaid</li>
+          <li>Commercial payers</li>
+          <li>Clearinghouse partners</li>
+        </ul>
+      </article>
+      <article class="partner-card">
+        <span class="partner-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <h3>Standards and Compliance Bodies</h3>
+        <p>FHIR-native data model and HIPAA-compliant infrastructure, aligned with the industry standards that govern pharmacy clinical-services exchange.</p>
+        <ul class="partner-card__list">
+          <li>FHIR</li>
+          <li>HIPAA</li>
+          <li>NCPDP</li>
+          <li>QHIN</li>
+          <li>SOC 2</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. STORY (navy band, quote + 4 value blocks in 2-col split) ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="A clear path to reimbursement">
   <div class="story-bg-pattern" aria-hidden="true"></div>
   <div class="tile__inner">
