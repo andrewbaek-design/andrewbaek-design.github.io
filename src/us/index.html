@@ -41,7 +41,7 @@ page.title: MedMe, United States Homepage Mockup
 }
 </script>
 
-<link rel="stylesheet" href="/assets/homepage-us.css?v=2" />
+<link rel="stylesheet" href="/assets/homepage-us.css?v=3" />
 </head>
 <body>
 
@@ -52,28 +52,28 @@ page.title: MedMe, United States Homepage Mockup
 
 <main id="main">
 
-<!-- ============= 1. HERO (centered headline + AI-scribe mockup) ============= -->
-<section class="hero-end" aria-label="Hero">
-  <div class="tile__inner">
-    <span class="hero-pill">
-      <span class="hero-pill__dot" aria-hidden="true"></span>
-      North America's Pharmacy Clinical Services Platform
-    </span>
-    <h1>
-      <span>The end-to-end platform for <span style="color: var(--matcha); display: inline;">pharmacy clinical services</span>.</span>
-      <span>From launch to reimbursement.</span>
-    </h1>
-    <p class="sub">
-      <span>MedMe gives pharmacies the infrastructure to launch, scale, and get paid for clinical services.</span>
-      <span>AI-native, modular, API-driven, built for how pharmacy actually works.</span>
-    </p>
-    <div class="cta-row">
-      <a class="btn btn-primary btn--lg" href="/us/contact">Book a 20-Min Demo <span class="arrow">&rarr;</span></a>
-      <a class="btn btn-ghost btn--lg" href="/us/resources/roi-calculator">Run the ROI calculator</a>
+<!-- ============= 1. HERO (2-column: text left, product mockup carousel right, per Fawad #203) ============= -->
+<section class="hero-2col" aria-label="Hero">
+  <div class="hero-2col__inner">
+    <div class="hero-2col__text hero-end">
+      <span class="hero-pill">
+        <span class="hero-pill__dot" aria-hidden="true"></span>
+        North America's Pharmacy Clinical Services Platform
+      </span>
+      <h1>
+        <span>The end-to-end platform for <span style="color: var(--matcha); display: inline;">pharmacy clinical services</span>.</span>
+        <span>From launch to reimbursement.</span>
+      </h1>
+      <p class="sub">
+        <span>MedMe gives pharmacies the infrastructure to launch, scale, and get paid for clinical services.</span>
+        <span>AI-native, modular, API-driven, built for how pharmacy actually works.</span>
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn--lg" href="/us/contact">Book a 20-Min Demo <span class="arrow">&rarr;</span></a>
+        <a class="btn btn-ghost btn--lg" href="/us/resources/roi-calculator">Run the ROI calculator</a>
+      </div>
     </div>
-  </div>
-</section>
-
+    <div class="hero-2col__media">
 
 <!-- ============= LEGACY MOCKUPS (now ACTIVE, auto-rotate, tab bar hidden via .tab-bar-wrap { display: none }) ============= -->
 <div class="legacy-mockups">
@@ -548,9 +548,12 @@ page.title: MedMe, United States Homepage Mockup
   </div>
 </div>
 <!-- end .legacy-mockups -->
+    </div><!-- end .hero-2col__media -->
+  </div><!-- end .hero-2col__inner -->
+</section><!-- end .hero-2col -->
 
-<!-- ============= 1b. TRUSTED BY US PHARMACY LEADERS (indigo tile + logo marquee + KPI stats) ============= -->
-<section class="trust" aria-label="Customer trust">
+<!-- ============= 1b. TRUSTED BY US PHARMACY LEADERS (indigo, dark mode per review tweak) ============= -->
+<section class="trust trust--dark" aria-label="Customer trust">
   <div class="wrap">
     <div class="trust__top">
       <div class="trust__label">
@@ -587,19 +590,19 @@ page.title: MedMe, United States Homepage Mockup
       <p class="lead">Your dispensing stack is solid. The clinical side is where everything falls apart, and that's exactly where the growth is.</p>
     </div>
     <div class="tile-grid tile-grid--2 problem-grid">
-      <article class="h-card h-card--navy problem-card">
+      <article class="h-card problem-card">
         <h3>Clinical services live outside your tech stack</h3>
         <p>Vaccines, MTM, point-of-care testing, your team is already delivering the work. But the documentation, scheduling, and follow-up live in spreadsheets, paper, and disconnected portals.</p>
       </article>
-      <article class="h-card h-card--navy problem-card">
+      <article class="h-card problem-card">
         <h3>Your PMS dispenses; nothing else fits</h3>
         <p>Your pharmacy management system runs the fill. It was never built for booking visits, drafting SOAP notes, tracking encounters, or submitting medical claims.</p>
       </article>
-      <article class="h-card h-card--navy problem-card">
+      <article class="h-card problem-card">
         <h3>AI is everywhere, integrated nowhere</h3>
         <p>Every vendor demos an AI tool. Most can't see your patients, your dispensing history, or your scheduled visits, so the agents can't act on what's actually happening in your pharmacy.</p>
       </article>
-      <article class="h-card h-card--navy problem-card">
+      <article class="h-card problem-card">
         <h3>Scaling clinical services means restarting</h3>
         <p>Every new store, every new program, every new payer launches like it's the first time. No standardized playbook. No infrastructure that travels with you.</p>
       </article>
@@ -622,7 +625,7 @@ page.title: MedMe, United States Homepage Mockup
         </span>
         <h3>For independents</h3>
         <p>Launch clinical services and start getting paid for them. Built for owner-operated pharmacies.</p>
-        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
       </a>
       <a href="/us/pharmacy/enterprises" class="h-card segment-card">
         <span class="segment-card__icon" aria-hidden="true">
@@ -630,7 +633,7 @@ page.title: MedMe, United States Homepage Mockup
         </span>
         <h3>For enterprise chains</h3>
         <p>The strategic platform partner for corporate-owned pharmacy networks. Modular, API-driven, enterprise-grade.</p>
-        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
       </a>
       <a href="/us/pharmacy/networks" class="h-card segment-card">
         <span class="segment-card__icon" aria-hidden="true">
@@ -638,7 +641,7 @@ page.title: MedMe, United States Homepage Mockup
         </span>
         <h3>For banners &amp; co-ops</h3>
         <p>A platform your members will actually adopt, with network-level reporting that strengthens your value proposition.</p>
-        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
       </a>
       <a href="/us/pharmacy/specialty" class="h-card segment-card">
         <span class="segment-card__icon" aria-hidden="true">
@@ -646,7 +649,7 @@ page.title: MedMe, United States Homepage Mockup
         </span>
         <h3>For specialty pharmacy</h3>
         <p>Infrastructure that matches the operational complexity of specialty care. AI agents purpose-built for coordination.</p>
-        <span class="pill pill--solid segment-card__cta">Learn more <span class="arrow">→</span></span>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
       </a>
     </div>
   </div>
@@ -848,8 +851,8 @@ page.title: MedMe, United States Homepage Mockup
   </div>
 </section>
 
-<!-- ============= 7. AI AGENTS (3-col, navy-themed boxes, AI-Native by Design) ============= -->
-<section class="tile tile--light" aria-label="AI agents">
+<!-- ============= 7. AI AGENTS (full dark section, AI-Native by Design) ============= -->
+<section class="tile tile--ai-dark" aria-label="AI agents">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">AI-Native by Design</span>

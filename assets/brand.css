@@ -251,6 +251,58 @@ section { padding-block: var(--space-section); }
 .btn:hover .arrow { transform: translateX(5px); }
 .btn--sm { padding: 0.55rem 1rem; font-size: var(--fs-micro); }
 
+/* ============================================================
+   BUTTON STYLE 3, .btn-underline
+   Low-visual-weight CTA. Use when a section has multiple
+   parallel CTAs and a full .btn-primary or .btn-ghost would
+   over-emphasize each one (e.g. card grids where every card
+   has its own Learn more). Text + arrow only, with an underline
+   that sits under the text and an arrow that slides on hover.
+   ============================================================ */
+.btn-underline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--indigo);
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  line-height: 1.4;
+  border-bottom: 1.5px solid var(--matcha);
+  padding-bottom: 2px;
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+.btn-underline:hover {
+  color: var(--indigo);
+  border-bottom-color: var(--indigo);
+}
+.btn-underline .arrow {
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+.btn-underline:hover .arrow { transform: translateX(4px); }
+.btn-underline:focus-visible {
+  outline: 2px solid var(--matcha);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+/* On dark / navy backgrounds, the matcha underline + indigo
+   text would invert. Use .btn-underline--on-dark there. */
+.btn-underline--on-dark {
+  color: var(--seashell);
+  border-bottom-color: var(--matcha);
+}
+.btn-underline--on-dark:hover {
+  color: var(--matcha);
+  border-bottom-color: var(--matcha);
+}
+
 /* ============== UTILITY BAR ============== */
 .util-bar { background: var(--indigo); color: var(--seashell); font-size: var(--fs-micro); padding: 0.625rem 0; }
 .util-bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
@@ -1189,7 +1241,9 @@ footer.site-footer {
    stays hidden via the rule below.
    ============================================================ */
 .nav__dropdown-link {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
   padding: 0.6rem 0.75rem;
   border-radius: 8px;
   color: var(--indigo);
@@ -1200,7 +1254,37 @@ footer.site-footer {
   transition: background 0.15s ease;
 }
 .nav__dropdown-link:hover { background: var(--matcha-08); }
-.nav__dropdown-icon { display: none; }
+/* Leading icon, sits to the left of the title/desc block in
+   every dropdown menu item per Fawad's review note. */
+.nav__dropdown-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(195, 196, 48, 0.14);
+  border-radius: 7px;
+  color: var(--indigo);
+  margin-top: 1px;
+}
+.nav__dropdown-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.nav__dropdown-link:hover .nav__dropdown-icon,
+.nav__dropdown-tile:hover .nav__dropdown-tile-icon {
+  background: rgba(195, 196, 48, 0.28);
+}
+.nav__dropdown-content {
+  display: block;
+  min-width: 0;
+}
 .nav__dropdown-title {
   display: block;
   color: var(--indigo);
@@ -1420,7 +1504,9 @@ a.nav__dropdown-group-label:hover {
   border-bottom-color: var(--matcha);
 }
 .nav__dropdown-tile {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
   padding: 0.6rem 0.7rem;
   border-radius: 8px;
   text-decoration: none;
@@ -1432,7 +1518,32 @@ a.nav__dropdown-group-label:hover {
   transform: translateX(2px);
   outline: none;
 }
-.nav__dropdown-tile-icon { display: none; }
+.nav__dropdown-tile-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(195, 196, 48, 0.14);
+  border-radius: 7px;
+  color: var(--indigo);
+  margin-top: 1px;
+  transition: background 0.15s ease;
+}
+.nav__dropdown-tile-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.nav__dropdown-tile-content {
+  display: block;
+  min-width: 0;
+}
 .nav__dropdown-tile-title {
   display: block;
   font-size: 0.875rem;

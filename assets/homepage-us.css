@@ -3765,3 +3765,164 @@
     100% { transform: scale(1); }
   }
 
+  /* =====================================================================
+     2026-06-15 review tweaks
+     Hero -> 2-column (#203, Fawad), trust band dark mode, Why MedMe
+     light cards (#WHY), segment CTA -> underline-arrow, hide Platform
+     CTAs, AI-Native section to full dark mode.
+     ===================================================================== */
+
+  /* ----- HERO 2-COL ------------------------------------------------ */
+  .hero-2col {
+    background: var(--seashell);
+    padding: 2.5rem 0 1.5rem;
+  }
+  .hero-2col__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (max-width: 1000px) {
+    .hero-2col__inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+  .hero-2col__text {
+    text-align: left;
+  }
+  /* Reset hero-end's centered alignment when nested in the 2-col layout. */
+  .hero-2col__text.hero-end,
+  .hero-2col .hero-end {
+    padding: 0;
+    text-align: left;
+  }
+  .hero-2col__text h1,
+  .hero-2col .hero-end h1 {
+    text-align: left;
+    margin-inline: 0;
+  }
+  .hero-2col__text .sub,
+  .hero-2col .hero-end .sub {
+    max-width: 540px;
+    margin: 0;
+    text-align: left;
+  }
+  .hero-2col__text .cta-row,
+  .hero-2col .hero-end .cta-row {
+    justify-content: flex-start;
+  }
+  .hero-2col__media {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+  }
+  .hero-2col__media .legacy-mockups {
+    width: 100%;
+    max-width: 640px;
+  }
+  @media (max-width: 1000px) {
+    .hero-2col__text,
+    .hero-2col__text.hero-end,
+    .hero-2col .hero-end {
+      text-align: center;
+    }
+    .hero-2col__text h1,
+    .hero-2col .hero-end h1,
+    .hero-2col__text .sub,
+    .hero-2col .hero-end .sub {
+      text-align: center;
+      margin-inline: auto;
+    }
+    .hero-2col__text .cta-row,
+    .hero-2col .hero-end .cta-row {
+      justify-content: center;
+    }
+    .hero-2col__media { justify-content: center; }
+    .hero-2col__media .legacy-mockups { max-width: 100%; }
+  }
+
+  /* ----- TRUST BAND DARK MODE ------------------------------------- */
+  /* The base .trust block above uses !important on bg + color to win
+     against the global tile reset; we mirror that here so .trust--dark
+     overrides land. */
+  .trust.trust--dark {
+    background: var(--indigo) !important;
+    color: var(--seashell) !important;
+    border-top-color: rgba(250, 249, 245, 0.1) !important;
+  }
+  .trust.trust--dark .trust__label h2,
+  .trust.trust--dark h2.h-display { color: var(--seashell) !important; }
+  .trust.trust--dark .trust__wordmark { color: rgba(250, 249, 245, 0.78) !important; }
+  .trust.trust--dark .trust__stat .num { color: var(--matcha) !important; }
+  .trust.trust--dark .trust__stat .label { color: rgba(250, 249, 245, 0.62) !important; }
+  .trust.trust--dark .trust__logos { border-color: rgba(250, 249, 245, 0.1) !important; }
+  .trust.trust--dark .trust__logo { color: var(--seashell) !important; }
+
+  /* ----- "WHY MEDME" — light variant cards ------------------------ */
+  .problem-grid .h-card {
+    background: var(--white);
+    color: var(--indigo);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+  }
+  .problem-grid .h-card h3 { color: var(--indigo); }
+  .problem-grid .h-card p { color: rgba(6, 62, 84, 0.72); }
+
+  /* ----- BUILT FOR EVERY PHARMACY — underline CTA ----------------- */
+  .segments-grid .segment-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 0 2px;
+    background: transparent;
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 0;
+    border-bottom: 1.5px solid var(--matcha);
+    border-radius: 0;
+    box-shadow: none;
+    transition: border-color 0.18s ease, color 0.18s ease;
+    margin-top: 0.75rem;
+    align-self: flex-start;
+  }
+  .segments-grid .segment-card__cta:hover {
+    background: transparent;
+    color: var(--indigo);
+    border-bottom-color: var(--indigo);
+  }
+  .segments-grid .segment-card__cta .arrow {
+    display: inline-block;
+    transition: transform 0.18s ease;
+  }
+  .segments-grid .segment-card:hover .segment-card__cta .arrow {
+    transform: translateX(4px);
+  }
+
+  /* ----- "THE PLATFORM" — hide Learn-more pills ------------------- */
+  #billing .audience-card__cta { display: none; }
+
+  /* ----- "AI-NATIVE BY DESIGN" — full dark mode ------------------- */
+  .tile.tile--ai-dark {
+    background: var(--indigo);
+    color: var(--seashell);
+  }
+  .tile.tile--ai-dark .kicker { color: var(--matcha); }
+  .tile.tile--ai-dark h2.h-display { color: var(--seashell); }
+  .tile.tile--ai-dark .lead { color: rgba(250, 249, 245, 0.72); }
+  /* The dark section already had .h-card--navy cards; tint them
+     so they read as lighter cards on the now-dark background. */
+  .tile.tile--ai-dark .ai-card.h-card--navy {
+    background: rgba(250, 249, 245, 0.04);
+    border-color: rgba(195, 196, 48, 0.22);
+  }
+  .tile.tile--ai-dark .ai-card.h-card--navy:hover {
+    border-color: var(--matcha);
+  }
+
