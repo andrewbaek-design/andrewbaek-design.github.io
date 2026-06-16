@@ -3008,3 +3008,60 @@ a.nav__dropdown-group-label:hover {
 }
 .tile p { line-height: 1.47; }
 
+/* ============================================================
+   SUB-HERO. Shared page-top hero container used on most sub-pages.
+   The canonical pattern lives here; pages can still override any
+   piece inline if a layout needs a custom mask-fade, negative
+   margin, or padding tweak.
+
+   Family:
+     .sub-hero            outer seashell band
+     .sub-hero__inner     centered content max-width
+     .sub-hero__bg        visual / mockup slot (page-specific styling)
+     .sub-hero__text      text block (page-specific overlap margins)
+     .sub-hero__lede      lede paragraph (page-specific max-width)
+     .sub-hero__cta       inline-flex CTA row
+     .sub-hero__breadcrumb tiny breadcrumb above the kicker
+
+   Promoted in Round C of the 2026-06-17 maintainability audit.
+   Pages that previously inlined these definitions had their copies
+   removed where the values matched canonical exactly. Pages with
+   custom padding, breadcrumb alignment, etc. still inline their
+   overrides.
+   ============================================================ */
+.sub-hero {
+  background: var(--seashell);
+  padding: 2rem 1.5rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.sub-hero__inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-inline: var(--tile-pad-x);
+  position: relative;
+}
+.sub-hero__cta {
+  display: inline-flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.sub-hero__breadcrumb {
+  font-size: 13px;
+  color: rgba(6, 62, 84, 0.55);
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+.sub-hero__breadcrumb a {
+  color: rgba(6, 62, 84, 0.55);
+  text-decoration: none;
+}
+.sub-hero__breadcrumb a:hover {
+  color: var(--indigo);
+}
+.sub-hero__breadcrumb .sep {
+  margin: 0 0.5rem;
+  opacity: 0.4;
+}
+
