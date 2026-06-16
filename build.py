@@ -33,13 +33,19 @@ NOTES
 """
 
 from __future__ import annotations
+import hashlib
 import re
 import sys
 from pathlib import Path
 
-INCLUDE_RE = re.compile(r"\{\{>\s*([^\s}]+)\s*\}\}")
-VAR_RE     = re.compile(r"\{\{\s*([a-zA-Z_][\w.]*)\s*\}\}")
-COMMENT_RE = re.compile(r"\{\{#[^}]*\}\}")
+INCLUDE_RE   = re.compile(r"\{\{>\s*([^\s}]+)\s*\}\}")
+VAR_RE       = re.compile(r"\{\{\s*([a-zA-Z_][\w.]*)\s*\}\}")
+COMMENT_RE   = re.compile(r"\{\{#[^}]*\}\}")
+# Auto-rewrite stale ?v=N query strings on asset references so cache
+# busting no longer drifts across pages. The build picks a fresh key
+# (an 8-char content hash of the referenced file) and stamps every
+# matching <link>/<script> reference in the rendered output.
+ASSET_VER_RE = re.compile(r'(/assets/([^"\?]+))\?v=[^"\s>]+')
 MAX_INCLUDE_DEPTH = 50
 
 
@@ -97,12 +103,37 @@ def expand_includes(text: str, partials_dir: Path) -> str:
     )
 
 
-def build_one(template: Path, partials_dir: Path) -> str:
+def asset_hash(path: Path) -> str:
+    """Return a short content hash for an asset file. Used to replace
+    the manual `?v=N` cache-busting query strings with a key that
+    changes whenever the underlying file changes."""
+    h = hashlib.sha256(path.read_bytes()).hexdigest()
+    return h[:8]
+
+
+def rewrite_asset_versions(body: str, assets_dir: Path, cache: dict[str, str]) -> str:
+    """Replace every `/assets/foo.css?v=N` (or ?v=anything) reference
+    with a content-hash version. Missing files are left untouched so a
+    typo doesn't silently strip the version."""
+    def _sub(m: re.Match) -> str:
+        full_path = m.group(1)          # e.g. /assets/brand.css
+        rel       = m.group(2)          # e.g. brand.css
+        local     = assets_dir / rel
+        if not local.exists():
+            return m.group(0)           # leave reference untouched
+        if rel not in cache:
+            cache[rel] = asset_hash(local)
+        return f"{full_path}?v={cache[rel]}"
+    return ASSET_VER_RE.sub(_sub, body)
+
+
+def build_one(template: Path, partials_dir: Path, assets_dir: Path, hash_cache: dict[str, str]) -> str:
     raw = template.read_text(encoding="utf-8")
     vars_, body = parse_frontmatter(raw)
     body = COMMENT_RE.sub("", body)
     body = expand_includes(body, partials_dir)
     body = VAR_RE.sub(lambda m: resolve_var(m.group(1).strip(), vars_), body)
+    body = rewrite_asset_versions(body, assets_dir, hash_cache)
     return body
 
 
@@ -110,7 +141,9 @@ def main(argv: list[str]) -> int:
     root         = Path(__file__).parent.resolve()
     src_dir      = root / "src"
     partials_dir = root / "partials"
+    assets_dir   = root / "assets"
     check_only   = "--check" in argv
+    hash_cache: dict[str, str] = {}     # asset rel-path -> 8-char content hash
 
     if not src_dir.exists():
         print(f"error: src/ not found at {src_dir}", file=sys.stderr)
@@ -139,7 +172,7 @@ def main(argv: list[str]) -> int:
             output_path = root / rel.parent / rel.stem / "index.html"
         output_path.parent.mkdir(parents=True, exist_ok=True)
         try:
-            new = build_one(tpl, partials_dir)
+            new = build_one(tpl, partials_dir, assets_dir, hash_cache)
         except Exception as e:
             print(f"  ✗ {tpl.name}: {e}", file=sys.stderr)
             return 1

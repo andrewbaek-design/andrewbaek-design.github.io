@@ -2654,7 +2654,6 @@
   .tile-grid--bento .h-card .fa-ehr-bar::after                { animation-delay: -2.5s !important; }   /* 39% of 6.4s = bar filled */
   .tile-grid--bento .h-card .fa-ehr-check                     { animation-delay: -2.5s !important; }   /* 39% of 6.4s = check visible */
   .tile-grid--bento .h-card .feat-anim--sched .fa-grid i.new  { animation-delay: -3s !important; }     /* 50% of 6s = slot filled */
-  .tile-grid--bento .h-card .feat-anim--analytics .fa-bars i  { animation-delay: -2s !important; }     /* 55% of 3.6s = bar at peak */
   .tile-grid--bento .h-card .fa-int-pulse                     { animation-delay: -2s !important; }     /* 83% of 2.4s = packet near node */
 
   /* On hover: run animations + restore original staggered delays so
@@ -2685,12 +2684,6 @@
   .tile-grid--bento .h-card:hover .feat-anim--sched .fa-grid i.new--2 { animation-delay: 1.5s !important; }
   .tile-grid--bento .h-card:hover .feat-anim--sched .fa-grid i.new--3 { animation-delay: 3s !important; }
   .tile-grid--bento .h-card:hover .feat-anim--sched .fa-grid i.new--4 { animation-delay: 4.5s !important; }
-
-  .tile-grid--bento .h-card:hover .feat-anim--analytics .fa-bars i:nth-child(1) { animation-delay: 0s !important; }
-  .tile-grid--bento .h-card:hover .feat-anim--analytics .fa-bars i:nth-child(2) { animation-delay: 0.18s !important; }
-  .tile-grid--bento .h-card:hover .feat-anim--analytics .fa-bars i:nth-child(3) { animation-delay: 0.36s !important; }
-  .tile-grid--bento .h-card:hover .feat-anim--analytics .fa-bars i:nth-child(4) { animation-delay: 0.54s !important; }
-  .tile-grid--bento .h-card:hover .feat-anim--analytics .fa-bars i:nth-child(5) { animation-delay: 0.72s !important; }
 
   .tile-grid--bento .h-card:hover .fa-int-pulse--n { animation-delay: 0s !important; }
   .tile-grid--bento .h-card:hover .fa-int-pulse--e { animation-delay: 0.6s !important; }
@@ -3160,30 +3153,7 @@
     .fa-intake-box { border-color: var(--matcha); background: rgba(195, 196, 48, 0.2); }
   }
 
-  /* 5. Analytics, staggered bar chart */
-  .feat-anim--analytics .fa-bars {
-    display: flex; align-items: flex-end; justify-content: center;
-    gap: 10px; height: 80px;
-  }
-  .feat-anim--analytics .fa-bars i {
-    display: block; width: 14px;
-    background: var(--indigo);
-    border-radius: 3px 3px 0 0;
-    height: 8px;
-    animation: 3.6s ease-in-out infinite;
-  }
-  .feat-anim--analytics .fa-bars i:nth-child(1) { animation-name: fa-bar-30; animation-delay: 0.00s; }
-  .feat-anim--analytics .fa-bars i:nth-child(2) { animation-name: fa-bar-55; animation-delay: 0.18s; }
-  .feat-anim--analytics .fa-bars i:nth-child(3) { animation-name: fa-bar-42; animation-delay: 0.36s; }
-  .feat-anim--analytics .fa-bars i:nth-child(4) { animation-name: fa-bar-68; animation-delay: 0.54s; }
-  .feat-anim--analytics .fa-bars i:nth-child(5) { animation-name: fa-bar-85; animation-delay: 0.72s; background: var(--matcha); }
-  @keyframes fa-bar-30 { 0%, 100% { height: 8px; } 45%, 70% { height: 26px; } }
-  @keyframes fa-bar-55 { 0%, 100% { height: 8px; } 45%, 70% { height: 40px; } }
-  @keyframes fa-bar-42 { 0%, 100% { height: 8px; } 45%, 70% { height: 32px; } }
-  @keyframes fa-bar-68 { 0%, 100% { height: 8px; } 45%, 70% { height: 52px; } }
-  @keyframes fa-bar-85 { 0%, 100% { height: 8px; } 45%, 70% { height: 66px; } }
-
-  /* 6. Integrations, hub + satellites + animated data packets flying
+  /* 5. Integrations, hub + satellites + animated data packets flying
         out from the center to each node, plus a continuous radial ring
         expanding from the center for added energy. */
   .feat-anim--integrations .fa-hub {
