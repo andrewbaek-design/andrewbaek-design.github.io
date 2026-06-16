@@ -4,12 +4,12 @@
    ============================================================ */
 :root {
   /* Primary palette */
-  --indigo: #063E54;
-  --seashell: #FAF9F5;
-  --matcha: #C3C430;
+  --indigo: var(--indigo);
+  --seashell: var(--seashell);
+  --matcha: var(--matcha);
 
   /* Tints */
-  --indigo-dark: #042B3B;          /* deepest navy, emphasis boxes on dark tiles */
+  --indigo-dark: var(--indigo-dark);          /* deepest navy, emphasis boxes on dark tiles */
   --indigo-95: #0a4a63;
   --indigo-80: #1f5670;
   --indigo-12: rgba(6,62,84,0.12);
@@ -1423,7 +1423,7 @@ footer.site-footer {
   gap: 0.85rem;
   padding: 0.85rem 0.9rem;
   border-radius: 6px;
-  color: #063E54;
+  color: var(--indigo);
   text-decoration: none;
   font-size: 1rem;
   font-weight: 700;
@@ -2510,7 +2510,7 @@ a.nav__dropdown-group-label:hover {
    re-tints the hairline dividers, and flips the pill buttons
    to matcha so they read on indigo.
    Uses --indigo-95 (#0a4a63), a hair lighter than the base
-   --indigo (#063E54) the footer uses, so the section reads as
+   --indigo (var(--indigo)) the footer uses, so the section reads as
    a distinct band from the footer instead of bleeding into it.
    ============================================================ */
 .tile--navy {

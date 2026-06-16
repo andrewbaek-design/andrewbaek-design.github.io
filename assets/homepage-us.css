@@ -413,10 +413,10 @@
     background: #fff;
     border: 1px solid rgba(0,0,0,0.08);
   }
-  .pmock-queue-item.is-up { border-color: #c3c430; background: #fffbe1; }
+  .pmock-queue-item.is-up { border-color: var(--matcha); background: #fffbe1; }
   .pmock-queue-item.is-in { border-color: #073e54; background: rgba(7,62,84,0.06); }
   .pmock-queue-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(6,62,84,0.3); }
-  .pmock-queue-item.is-up .pmock-queue-dot { background: #c3c430; }
+  .pmock-queue-item.is-up .pmock-queue-dot { background: var(--matcha); }
   .pmock-queue-item.is-in .pmock-queue-dot { background: #073e54; }
   .pmock-queue-name { font-size: 12.5px; font-weight: 600; }
   .pmock-queue-meta { font-size: 11px; color: rgba(6,62,84,0.55); margin-left: auto; }
@@ -431,7 +431,7 @@
   .pmock-cal .cal-time { font-size: 11px; color: rgba(6,62,84,0.5); align-self: center; padding: 4px 0; font-weight: 600; }
   .pmock-cal .cal-slot { height: 28px; border-radius: 4px; background: rgba(6,62,84,0.04); border: 1px solid rgba(0,0,0,0.06); }
   .pmock-cal .cal-slot.booked { background: rgba(6,62,84,0.18); border-color: rgba(6,62,84,0.2); }
-  .pmock-cal .cal-slot.new   { background: #c3c430; border-color: #9C9D26; }
+  .pmock-cal .cal-slot.new   { background: var(--matcha); border-color: #9C9D26; }
 
   /* Pane 2, Patient Intake Forms */
   .pmock-steps {
@@ -444,7 +444,7 @@
   .pmock-step { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: rgba(6,62,84,0.5); }
   .pmock-step .num { width: 22px; height: 22px; border-radius: 50%; background: rgba(6,62,84,0.08); display: grid; place-items: center; font-weight: 700; }
   .pmock-step.done { color: #073e54; }
-  .pmock-step.done .num { background: #c3c430; color: #1c2308; }
+  .pmock-step.done .num { background: var(--matcha); color: #1c2308; }
   .pmock-step.active { color: #073e54; }
   .pmock-step.active .num { background: #073e54; color: #fff; }
   .pmock-step-line { flex: 1; height: 1px; background: rgba(0,0,0,0.10); margin: 0 10px; }
@@ -454,7 +454,7 @@
   .pmock-pill-grp { display: flex; flex-wrap: wrap; gap: 6px; }
   .pmock-pill { padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.12); font-size: 12px; background: #fff; }
   .pmock-pill.on { background: #073e54; color: #fff; border-color: #073e54; }
-  .pmock-pill.matcha { background: #c3c430; color: #1c2308; border-color: #c3c430; }
+  .pmock-pill.matcha { background: var(--matcha); color: #1c2308; border-color: var(--matcha); }
   .pmock-input { width: 100%; height: 36px; border: 1px solid rgba(0,0,0,0.16); border-radius: 4px; padding: 0 12px; display: flex; align-items: center; font-size: 13px; background: #fff; }
   .pmock-row { display: flex; gap: 12px; margin-top: 10px; }
   .pmock-row > * { flex: 1; }
@@ -475,7 +475,7 @@
     font-size: 11.5px; font-weight: 600;
     color: #1c2308;
   }
-  .pmock-ai-chip::before { content: "AI"; font-size: 10px; font-weight: 800; background: #c3c430; color: #1c2308; padding: 1px 5px; border-radius: 4px; }
+  .pmock-ai-chip::before { content: "AI"; font-size: 10px; font-weight: 800; background: var(--matcha); color: #1c2308; padding: 1px 5px; border-radius: 4px; }
 
   /* Pane 4, Messaging & Follow-Ups */
   .pmock-msg-list { display: flex; flex-direction: column; gap: 6px; }
@@ -517,7 +517,7 @@
   .pmock-phone-body { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: #f6f7f8; overflow: hidden; }
   .pmock-phone-msg { max-width: 80%; padding: 9px 12px; border-radius: 14px; font-size: 12.5px; line-height: 1.45; }
   .pmock-phone-msg.bot { background: #fff; border: 1px solid rgba(0,0,0,0.08); align-self: flex-start; border-bottom-left-radius: 4px; }
-  .pmock-phone-msg.you { background: #c3c430; color: #1c2308; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .pmock-phone-msg.you { background: var(--matcha); color: #1c2308; align-self: flex-end; border-bottom-right-radius: 4px; }
   .pmock-phone-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
   .pmock-phone-pill { padding: 6px 12px; background: #fff; border: 1px solid #073e54; color: #073e54; border-radius: 999px; font-size: 11.5px; font-weight: 600; }
 
@@ -549,7 +549,7 @@
   .pmock-bridge-mid { display: grid; place-items: center; }
   .pmock-bridge-arrow {
     width: 36px; height: 36px; border-radius: 50%;
-    background: #c3c430;
+    background: var(--matcha);
     display: grid; place-items: center;
     color: #1c2308; font-weight: 800;
     box-shadow: 0 4px 14px rgba(195,196,48,0.4);
@@ -640,7 +640,7 @@
     --teal: #073e54;
     --teal-2: #09435b;
     --teal-3: #0c5c7a;
-    --lime: #c3c430;
+    --lime: var(--matcha);
     --lime-ink: #1c2308;
     font-family: "Montserrat", system-ui, -apple-system, sans-serif;
     color: var(--ink);
@@ -678,7 +678,7 @@
   .mockup-host .top { position: absolute; top: 0; left: 248px; right: 248px; height: 56px; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-bottom: 1px solid var(--line); background: #fff; z-index: 2; }
   .mockup-host .pill { height: 32px; border-radius: 4px; border: 1px solid var(--line-2); background: #fff; color: #0c1217; padding: 0 12px; font-size: 12.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
   .mockup-host .pill.ghost { border-color: transparent; background: #eef1f3; }
-  .mockup-host .pill.flash { background: #fffbe1; border-color: #c3c430; color: #1c2308; transition: background .25s, border-color .25s; }
+  .mockup-host .pill.flash { background: #fffbe1; border-color: var(--matcha); color: #1c2308; transition: background .25s, border-color .25s; }
   .mockup-host .top .spacer { flex: 1; }
   .mockup-host .top .x { width: 32px; height: 32px; border-radius: 4px; display: inline-grid; place-items: center; }
 
@@ -751,7 +751,7 @@
     margin: 0;
     font-size: 22px; font-weight: 800;
     letter-spacing: -0.012em;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .sched-book-divider {
     margin: 10px 0 18px;
@@ -770,7 +770,7 @@
     font-size: 14px; font-weight: 600;
     color: #386576;
   }
-  .mockup-host .sched-radio--active { color: #042B3B; }
+  .mockup-host .sched-radio--active { color: var(--indigo-dark); }
   .mockup-host .sched-radio-circle {
     width: 18px; height: 18px;
     border-radius: 50%;
@@ -780,14 +780,14 @@
     box-sizing: border-box;
   }
   .mockup-host .sched-radio--active .sched-radio-circle {
-    border-color: #042B3B;
+    border-color: var(--indigo-dark);
   }
   .mockup-host .sched-radio--active .sched-radio-circle::after {
     content: '';
     position: absolute;
     inset: 3px;
     border-radius: 50%;
-    background: #042B3B;
+    background: var(--indigo-dark);
   }
 
   /* Inner white card */
@@ -815,7 +815,7 @@
   .mockup-host .sched-nav-label {
     font-size: 14px;
     font-weight: 700;
-    color: #042B3B;
+    color: var(--indigo-dark);
     letter-spacing: -0.005em;
   }
 
@@ -849,7 +849,7 @@
   .mockup-host .sched-col-day {
     font-size: 22px;
     font-weight: 700;
-    color: #042B3B;
+    color: var(--indigo-dark);
     letter-spacing: -0.008em;
     line-height: 1;
   }
@@ -861,7 +861,7 @@
     padding: 18px 14px;
     font-size: 17px;
     font-weight: 600;
-    color: #042B3B;
+    color: var(--indigo-dark);
     font-family: inherit;
     cursor: pointer;
     text-align: center;
@@ -873,8 +873,8 @@
     border-color: rgba(4, 43, 59, 0.30);
   }
   .mockup-host .sched-slot.is-booked {
-    background: #042B3B;
-    border-color: #042B3B;
+    background: var(--indigo-dark);
+    border-color: var(--indigo-dark);
     color: #fff;
     animation: sched-slot-pop 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
@@ -924,7 +924,7 @@
     margin: 0 0 14px;
     font-size: 17px;
     font-weight: 800;
-    color: #042B3B;
+    color: var(--indigo-dark);
     letter-spacing: -0.01em;
   }
   .mockup-host .sched-map {
@@ -981,7 +981,7 @@
     padding: 0 32px;
     z-index: 2;
   }
-  .mockup-host .intake-logo { color: #042B3B; }
+  .mockup-host .intake-logo { color: var(--indigo-dark); }
   .mockup-host .intake-logo svg { display: block; height: 24px; width: auto; }
 
   .mockup-host .intake-body {
@@ -1010,7 +1010,7 @@
     font-size: 24px;
     font-weight: 800;
     letter-spacing: -0.012em;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
 
   /* Horizontal step indicator: 8 circles, 7 connector lines */
@@ -1030,12 +1030,12 @@
     transition: background 0.3s ease, border-color 0.3s ease;
   }
   .mockup-host .intake-step.is-done {
-    background: #042B3B;
-    border-color: #042B3B;
+    background: var(--indigo-dark);
+    border-color: var(--indigo-dark);
   }
   .mockup-host .intake-step.is-active {
     background: #fff;
-    border-color: #042B3B;
+    border-color: var(--indigo-dark);
   }
   .mockup-host .intake-step.is-active::after {
     content: '';
@@ -1054,13 +1054,13 @@
     transition: background 0.3s ease;
   }
   .mockup-host .intake-step-line.is-done {
-    background: #042B3B;
+    background: var(--indigo-dark);
   }
   .mockup-host .intake-step-line .fill {
     position: absolute;
     left: 0; top: 0; bottom: 0;
     width: 0%;
-    background: #042B3B;
+    background: var(--indigo-dark);
   }
 
   /* Inner white form card */
@@ -1074,7 +1074,7 @@
     margin: 0 0 4px;
     font-size: 15px;
     font-weight: 700;
-    color: #042B3B;
+    color: var(--indigo-dark);
     letter-spacing: -0.005em;
   }
   .mockup-host .intake-form-sub {
@@ -1115,7 +1115,7 @@
   .mockup-host .intake-field-value {
     font-size: 13.5px;
     font-weight: 500;
-    color: #042B3B;
+    color: var(--indigo-dark);
     line-height: 1;
     margin-top: 6px;
     white-space: nowrap;
@@ -1125,7 +1125,7 @@
     content: '';
     display: inline-block;
     width: 1.5px; height: 14px;
-    background: #042B3B;
+    background: var(--indigo-dark);
     margin-left: 2px;
     vertical-align: -2px;
     animation: intake-caret 0.7s steps(2) infinite;
@@ -1144,7 +1144,7 @@
   .mockup-host .intake-section-h {
     font-size: 15px;
     font-weight: 700;
-    color: #042B3B;
+    color: var(--indigo-dark);
     margin: 16px 0 12px;
     letter-spacing: -0.005em;
   }
@@ -1152,7 +1152,7 @@
   .mockup-host .intake-cta {
     position: relative;
     margin-top: 22px;
-    background: #042B3B;
+    background: var(--indigo-dark);
     color: #fff;
     padding: 11px 28px;
     border: 0;
@@ -1919,7 +1919,7 @@
   .mockup-host .intake-summary-title {
     font-size: 17px;
     font-weight: 800;
-    color: #042B3B;
+    color: var(--indigo-dark);
     margin: 0 0 4px;
     letter-spacing: -0.01em;
   }
@@ -1927,7 +1927,7 @@
     display: flex; align-items: flex-start;
     gap: 10px;
     font-size: 12.5px;
-    color: #042B3B;
+    color: var(--indigo-dark);
     line-height: 1.45;
   }
   .mockup-host .intake-summary-row svg {
@@ -1964,25 +1964,25 @@
     transition: border-color 0.3s ease, background 0.3s ease;
   }
   .mockup-host .intake-vstep.is-active {
-    color: #042B3B;
+    color: var(--indigo-dark);
     font-weight: 600;
   }
   .mockup-host .intake-vstep.is-active .intake-vstep-dot {
-    border-color: #042B3B;
+    border-color: var(--indigo-dark);
   }
   .mockup-host .intake-vstep.is-active .intake-vstep-dot::after {
     content: '';
     position: absolute;
     inset: 3px;
     border-radius: 50%;
-    background: #042B3B;
+    background: var(--indigo-dark);
   }
   .mockup-host .intake-vstep.is-done {
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .intake-vstep.is-done .intake-vstep-dot {
-    background: #042B3B;
-    border-color: #042B3B;
+    background: var(--indigo-dark);
+    border-color: var(--indigo-dark);
   }
 
   /* ============================================================
@@ -2010,7 +2010,7 @@
     position: relative;
     display: flex; flex-direction: column;
     font-family: -apple-system, "SF Pro Text", "Montserrat", system-ui, sans-serif;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   /* iOS-style status bar */
   .mockup-host .msg-status {
@@ -2020,17 +2020,17 @@
     padding: 0 22px 8px;
     font-size: 13.5px;
     font-weight: 600;
-    color: #042B3B;
+    color: var(--indigo-dark);
     background: #fff;
   }
-  .mockup-host .msg-status-icons { display: inline-flex; gap: 5px; align-items: center; color: #042B3B; }
+  .mockup-host .msg-status-icons { display: inline-flex; gap: 5px; align-items: center; color: var(--indigo-dark); }
   .mockup-host .msg-status-icons svg { display: block; }
 
   /* Logo strip on email phones */
   .mockup-host .msg-logo {
     flex-shrink: 0;
     padding: 4px 18px 8px;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .msg-logo svg { height: 20px; width: auto; display: block; }
 
@@ -2040,7 +2040,7 @@
     padding: 4px 18px 16px;
     font-size: 11.5px;
     line-height: 1.4;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .msg-email-body p { margin: 0 0 8px; }
   .mockup-host .msg-email-body p.bold { font-weight: 700; }
@@ -2061,16 +2061,16 @@
   }
   .mockup-host .msg-card-row .lbl {
     flex-shrink: 0; width: 44px;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .msg-card-row span:not(.lbl) {
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .msg-card-foot {
     margin-top: 10px;
     text-align: center;
     font-size: 10.5px;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .msg-card-links {
     text-align: center;
@@ -2078,7 +2078,7 @@
     font-size: 10.5px;
   }
   .mockup-host .msg-card-links a {
-    color: #042B3B;
+    color: var(--indigo-dark);
     text-decoration: underline;
     margin: 0 6px;
   }
@@ -2087,7 +2087,7 @@
     margin: 4px 0 0;
     padding-left: 16px;
     font-size: 10.5px;
-    color: #042B3B;
+    color: var(--indigo-dark);
   }
   .mockup-host .msg-email-body ul li { margin-bottom: 5px; }
 
@@ -2125,7 +2125,7 @@
   .mockup-host .msg-sms-name {
     font-size: 12.5px;
     font-weight: 600;
-    color: #042B3B;
+    color: var(--indigo-dark);
     line-height: 1.1;
   }
   .mockup-host .msg-sms-status {
@@ -2163,7 +2163,7 @@
     align-self: flex-start;
     max-width: 84%;
     background: #E9E9EB;
-    color: #042B3B;
+    color: var(--indigo-dark);
     padding: 10px 12px 18px;
     border-radius: 16px 16px 16px 4px;
     font-size: 11px;
@@ -2248,7 +2248,7 @@
   .mockup-host .msg-sms-home::before {
     content: '';
     width: 110px; height: 4px;
-    background: #042B3B;
+    background: var(--indigo-dark);
     border-radius: 2px;
   }
 
@@ -2597,7 +2597,7 @@
     color: rgba(6,62,84,0.55);
   }
   /* Dark-tile variant, the inner card flips to the DEEPEST navy
-     (#042B3B / --indigo-dark) so it pops against the section's regular
+     (var(--indigo-dark) / --indigo-dark) so it pops against the section's regular
      indigo. Labels switch to seashell tints; inputs use a translucent
      seashell fill so they still read as form fields. *
   /* ============================================================
