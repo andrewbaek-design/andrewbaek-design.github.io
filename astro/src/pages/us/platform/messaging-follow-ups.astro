@@ -1,0 +1,592 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LogoMedme from '../../../components/LogoMedme.astro';
+import TrustBandUs from '../../../components/TrustBandUs.astro';
+---
+<BaseLayout
+  title="Messaging and Follow-Ups, MedMe Health"
+  description="Automated SMS and email campaigns keep patients engaged before and after the visit, driving adherence, follow-up bookings, and repeat service revenue."
+  showAnnouncement={false}
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/messaging-follow-ups" />
+    <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
+  </Fragment>
+
+<style>
+
+  /* ============================================================
+     MESSAGING & FOLLOW-UPS product page. Hero uses the front-page
+     "Messaging & Follow-Ups" pane motion graphic, three phones
+     side by side showing booking confirmation email, an SMS
+     reminder thread, and a follow-up reminder email. Lifted from
+     /assets/homepage-us.css and scoped here to .msg-stage so the
+     page is self-contained and doesn't require homepage-us.css
+     to load. Bubbles + typing indicator default to visible
+     (no JS-driven `is-on` flag), with the typing dots animating
+     in place via the existing keyframes.
+     ============================================================ */
+
+  /* ====== SUB-HERO ============================================= */
+  .sub-hero { background: var(--seashell); padding: 2rem 1.5rem 3.5rem; position: relative; overflow: hidden; }
+  .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
+  .sub-hero__bg {
+    position: relative; max-width: 1120px; margin: 0 auto;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: -120px auto 0; position: relative; z-index: 2; }
+  .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
+  .sub-hero h1.h-display .accent { color: var(--matcha); }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 720px; }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -90px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -60px; } }
+
+  /* ====== 3-PHONE MESSAGING SCENE (from homepage hero pane) ==== */
+  .msg-stage {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 22px 22px;
+  }
+  .msg-phone {
+    width: 248px;
+    height: 540px;
+    background: #fff;
+    border-radius: 32px;
+    box-shadow:
+      0 0 0 1px rgba(4, 43, 59, 0.06),
+      0 18px 36px -12px rgba(4, 43, 59, 0.18),
+      0 6px 14px -4px rgba(4, 43, 59, 0.10);
+    overflow: hidden;
+    position: relative;
+    display: flex; flex-direction: column;
+    font-family: -apple-system, "SF Pro Text", "Montserrat", system-ui, sans-serif;
+    color: var(--indigo-dark);
+    flex-shrink: 0;
+  }
+  /* iOS-style status bar */
+  .msg-status {
+    flex-shrink: 0;
+    height: 32px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 20px 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--indigo-dark);
+    background: #fff;
+  }
+  .msg-status-icons { display: inline-flex; gap: 5px; align-items: center; color: var(--indigo-dark); }
+  .msg-status-icons svg { display: block; }
+
+  /* Logo strip on email phones */
+  .msg-logo {
+    flex-shrink: 0;
+    padding: 4px 16px 8px;
+    color: var(--indigo-dark);
+  }
+  .msg-logo svg { height: 18px; width: auto; display: block; }
+
+  .msg-email-body {
+    flex: 1; min-height: 0;
+    overflow: hidden;
+    padding: 4px 16px 16px;
+    font-size: 10.5px;
+    line-height: 1.4;
+    color: var(--indigo-dark);
+  }
+  .msg-email-body p { margin: 0 0 7px; }
+  .msg-email-body p.bold { font-weight: 700; }
+  .msg-email-body p.muted { color: rgba(4, 43, 59, 0.7); }
+
+  .msg-card {
+    background: #E7EFF5;
+    border-radius: 8px;
+    padding: 12px 13px 11px;
+    margin: 7px 0 10px;
+    font-size: 9.5px;
+    line-height: 1.45;
+  }
+  .msg-card-row {
+    display: flex; align-items: flex-start;
+    gap: 7px;
+    margin-bottom: 4px;
+  }
+  .msg-card-row .lbl {
+    flex-shrink: 0; width: 40px;
+    color: var(--indigo-dark);
+  }
+  .msg-card-row span:not(.lbl) {
+    color: var(--indigo-dark);
+  }
+  .msg-card-foot {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 9.5px;
+    color: var(--indigo-dark);
+  }
+  .msg-card-links {
+    text-align: center;
+    margin-top: 3px;
+    font-size: 9.5px;
+  }
+  .msg-card-links a {
+    color: var(--indigo-dark);
+    text-decoration: underline;
+    margin: 0 5px;
+  }
+
+  .msg-email-body ul {
+    margin: 4px 0 0;
+    padding-left: 14px;
+    font-size: 9.5px;
+    color: var(--indigo-dark);
+  }
+  .msg-email-body ul li { margin-bottom: 4px; }
+
+  /* SMS phone */
+  .msg-sms-header {
+    flex-shrink: 0;
+    height: 52px;
+    background: #F2F2F2;
+    border-bottom: 1px solid rgba(4, 43, 59, 0.06);
+    display: flex; align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .msg-sms-back {
+    color: #5B7DE0;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0 4px;
+    font-weight: 300;
+  }
+  .msg-sms-back-badge {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #5B7DE0;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: -2px;
+  }
+  .msg-sms-name-block {
+    flex: 1; min-width: 0;
+    text-align: center;
+  }
+  .msg-sms-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--indigo-dark);
+    line-height: 1.1;
+  }
+  .msg-sms-status {
+    font-size: 9.5px;
+    color: rgba(4, 43, 59, 0.55);
+    line-height: 1.2;
+    margin-top: 2px;
+  }
+  .msg-sms-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7a8a8e 0%, #4a5559 100%);
+    flex-shrink: 0;
+  }
+
+  .msg-sms-body {
+    flex: 1; min-height: 0;
+    background: #fff;
+    padding: 12px 12px 0;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    gap: 9px;
+  }
+  .msg-date-pill {
+    align-self: center;
+    background: rgba(4, 43, 59, 0.08);
+    color: rgba(4, 43, 59, 0.6);
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .msg-bubble {
+    align-self: flex-start;
+    max-width: 84%;
+    background: #E9E9EB;
+    color: var(--indigo-dark);
+    padding: 9px 11px 16px;
+    border-radius: 16px 16px 16px 4px;
+    font-size: 10.5px;
+    line-height: 1.4;
+    position: relative;
+  }
+  .msg-bubble b { font-weight: 700; }
+  .msg-bubble .t {
+    position: absolute;
+    right: 10px; bottom: 5px;
+    font-size: 8.5px;
+    color: rgba(4, 43, 59, 0.5);
+  }
+
+  .msg-typing {
+    align-self: flex-start;
+    background: #E9E9EB;
+    padding: 10px 13px;
+    border-radius: 16px 16px 16px 4px;
+    display: inline-flex; gap: 4px;
+  }
+  .msg-typing span {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(4, 43, 59, 0.4);
+    animation: msg-typing-dot 1.4s infinite ease-in-out both;
+  }
+  .msg-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .msg-typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes msg-typing-dot {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40%           { transform: scale(1);   opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .msg-typing span { animation: none; opacity: 1; } }
+
+  .msg-sms-input {
+    flex-shrink: 0;
+    background: #F2F2F2;
+    border-top: 1px solid rgba(4, 43, 59, 0.06);
+    padding: 8px 10px 12px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .msg-sms-input-pill {
+    flex: 1;
+    height: 28px;
+    background: #fff;
+    border: 1px solid rgba(4, 43, 59, 0.10);
+    border-radius: 999px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 8px 0 12px;
+    color: rgba(4, 43, 59, 0.45);
+    font-size: 10.5px;
+  }
+  .msg-sms-input-pill .icons-r {
+    display: inline-flex; gap: 6px; align-items: center;
+    color: rgba(4, 43, 59, 0.5);
+  }
+  .msg-sms-input-pill .icons-r svg { display: block; }
+  .msg-sms-input-clip { color: rgba(4, 43, 59, 0.55); display: inline-flex; }
+  .msg-sms-input-clip svg { display: block; }
+  .msg-sms-home {
+    flex-shrink: 0;
+    height: 4px;
+    width: 100%;
+    background: transparent;
+    display: flex; justify-content: center;
+    padding-bottom: 7px;
+  }
+  .msg-sms-home::before {
+    content: '';
+    width: 100px; height: 3.5px;
+    background: var(--indigo-dark);
+    border-radius: 2px;
+  }
+
+  /* Responsive scale, drop phones and shrink the scene gradually
+     so all three remain visible into smaller viewports. */
+  @media (max-width: 980px) {
+    .msg-stage { gap: 16px; }
+    .msg-phone { width: 220px; height: 480px; }
+  }
+  @media (max-width: 820px) {
+    .msg-stage { gap: 12px; padding: 16px 12px; }
+    .msg-phone { width: 195px; height: 430px; }
+    .msg-email-body { font-size: 9.5px; padding: 3px 14px 14px; }
+    .msg-card { font-size: 8.5px; padding: 10px 11px 9px; }
+    .msg-card-row .lbl { width: 36px; }
+    .msg-bubble { font-size: 9.5px; padding: 8px 10px 14px; }
+  }
+  @media (max-width: 700px) {
+    /* On mobile, hide the outer email phones and center the SMS one. */
+    .msg-stage { gap: 0; padding: 16px 0; }
+    .msg-phone--email { display: none; }
+    .msg-phone--sms { width: 260px; height: 480px; }
+    .msg-email-body, .msg-card, .msg-bubble { font-size: 11px; }
+    .msg-bubble { padding: 9px 11px 16px; }
+  }
+
+  /* ====== LIGHT CARD GRID (Campaigns & Announcements) ========== */
+  .light-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .light-grid { grid-template-columns: 1fr; } }
+  .light-card { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease; }
+  .light-card:hover { transform: translateY(-3px); border-color: rgba(6,62,84,0.18); }
+  .light-card__icon { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; background: rgba(195, 196, 48, 0.14); border-radius: 10px; margin-bottom: 1rem; }
+  .light-card__icon svg { width: 22px; height: 22px; stroke: var(--matcha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .light-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; }
+  .light-card p { margin: 0; color: rgba(6,62,84,0.72); line-height: 1.55; font-size: 0.95rem; }
+
+  /* ====== DARK CARD GRID (Automated Follow-Ups) =============== */
+  .dark-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .dark-grid { grid-template-columns: 1fr; } }
+  .dark-card { background: var(--indigo); color: var(--seashell); border: 1px solid rgba(195,196,48,0.18); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 12px 32px rgba(6,62,84,0.08); }
+  .dark-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
+  .dark-card__tag { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: inline-block; }
+  .dark-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--seashell); letter-spacing: -0.012em; }
+  .dark-card p { margin: 0; color: rgba(250,249,245,0.78); line-height: 1.55; font-size: 0.95rem; }
+
+  /* ====== MATCHA CALLOUT BAND (Secure File Sharing) =========== */
+  .file-band { background: rgba(195, 196, 48, 0.06); border: 1px solid rgba(195, 196, 48, 0.22); border-radius: 24px; padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; position: relative; overflow: hidden; }
+  .file-band::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--matcha);
+    opacity: 0.1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  @media (max-width: 800px) {
+    .file-band { grid-template-columns: 1fr; padding: 1.75rem; text-align: left; }
+  }
+  .file-band__text { max-width: 640px; position: relative; z-index: 1; }
+  .file-band__kicker { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: inline-block; }
+  .file-band h3 { margin: 0 0 0.5rem; font-size: 1.4rem; font-weight: 700; color: var(--indigo); letter-spacing: -0.018em; }
+  .file-band p { margin: 0; font-size: 1rem; line-height: 1.55; color: rgba(6,62,84,0.78); text-wrap: pretty; }
+  .file-band__cta { position: relative; z-index: 1; }
+</style>
+
+<!-- ============= 1. SUB-HERO (3-phone messaging motion graphic) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="msg-stage">
+
+        <!-- PHONE 1: booking confirmation email -->
+        <div class="msg-phone msg-phone--email">
+          <div class="msg-status">
+            <span>9:41</span>
+            <span class="msg-status-icons">
+              <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+              <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+              <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+            </span>
+          </div>
+          <div class="msg-logo"><LogoMedme /></div>
+          <div class="msg-email-body">
+            <p>Hi John,</p>
+            <p>Thank you for booking with us!</p>
+            <p class="muted">Your appointment details:</p>
+            <div class="msg-card">
+              <div class="msg-card-row"><span class="lbl">What:</span><span>Flu Shot (Regular)</span></div>
+              <div class="msg-card-row"><span class="lbl">When:</span><span>Wednesday, November 26<br>10:00 AM EST.</span></div>
+              <div class="msg-card-row"><span class="lbl">Where:</span><span>MedMe Pharmacy<br>5900 6th Street<br>Los Angeles, CA 90036-1234</span></div>
+              <div class="msg-card-foot">Need to manage your appointment?</div>
+              <div class="msg-card-links"><a href="#">Reschedule</a> or <a href="#">Cancel</a></div>
+            </div>
+            <p class="muted">Next steps for your appointment:</p>
+            <p class="bold">Flu Shot (Regular)</p>
+            <ul>
+              <li>A day before your appointment, you&rsquo;ll receive a text/email reminder.</li>
+              <li>Please arrive 5-10 minutes before your appointment time, and let the pharmacist know when you arrive.</li>
+              <li>Please bring your insurance information, prescription (if you have one), and wear clothing that makes it easy to access the injection site (most often the upper arm).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PHONE 2: SMS conversation -->
+        <div class="msg-phone msg-phone--sms">
+          <div class="msg-status">
+            <span>9:41</span>
+            <span class="msg-status-icons">
+              <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+              <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+              <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+            </span>
+          </div>
+          <div class="msg-sms-header">
+            <span class="msg-sms-back">&#x2039;</span>
+            <span class="msg-sms-back-badge">5</span>
+            <div class="msg-sms-name-block">
+              <div class="msg-sms-name">MedMe Pharmacy</div>
+              <div class="msg-sms-status">last seen today at 3:12pm</div>
+            </div>
+            <span class="msg-sms-avatar"></span>
+          </div>
+          <div class="msg-sms-body">
+            <div class="msg-date-pill">March 3</div>
+            <div class="msg-bubble">
+              Hi John! Your Flu Shot Regular appointment for 1 person(s) with MedMe Pharmacy is <b>tomorrow</b> at Nov-26 10:00 AM EST.
+              <span class="t">12:31pm</span>
+            </div>
+            <div class="msg-bubble">
+              Hi John! Just a reminder that your Flu Shot Regular appointment for 1 person(s) with MedMe Pharmacy is <b>starting in an hour</b>.<br>It is scheduled for Wednesday, November 26 at 10:00 AM EST.
+              <span class="t">12:31pm</span>
+            </div>
+            <div class="msg-typing">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="msg-sms-input">
+            <span class="msg-sms-input-clip">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+            </span>
+            <div class="msg-sms-input-pill">
+              <span>Message</span>
+              <span class="icons-r">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+              </span>
+            </div>
+          </div>
+          <div class="msg-sms-home"></div>
+        </div>
+
+        <!-- PHONE 3: reminder email -->
+        <div class="msg-phone msg-phone--email">
+          <div class="msg-status">
+            <span>9:41</span>
+            <span class="msg-status-icons">
+              <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+              <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+              <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+            </span>
+          </div>
+          <div class="msg-logo"><LogoMedme /></div>
+          <div class="msg-email-body">
+            <p>Hi John,</p>
+            <p>This is a reminder for your upcoming appointment.</p>
+            <p class="muted">Your appointment details:</p>
+            <div class="msg-card">
+              <div class="msg-card-row"><span class="lbl">What:</span><span>Flu Shot (Regular)</span></div>
+              <div class="msg-card-row"><span class="lbl">When:</span><span>Wednesday, November 26<br>10:00 AM EST.</span></div>
+              <div class="msg-card-row"><span class="lbl">Where:</span><span>MedMe Pharmacy<br>5900 6th Street<br>Los Angeles, CA 90036-1234</span></div>
+              <div class="msg-card-foot">Need to manage your appointment?</div>
+              <div class="msg-card-links"><a href="#">Reschedule</a> or <a href="#">Cancel</a></div>
+            </div>
+            <p class="muted">Next steps for your appointment:</p>
+            <p class="bold">Flu Shot (Regular)</p>
+            <ul>
+              <li>A day before your appointment, you&rsquo;ll receive a text/email reminder.</li>
+              <li>Please arrive 5-10 minutes before your appointment time, and let the pharmacist know when you arrive.</li>
+              <li>Please bring your insurance information, prescription (if you have one), and wear clothing that makes it easy to access the injection site (most often the upper arm).</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="sub-hero__text">
+      <h1 class="h-display">Keep patients engaged.<br><span class="accent">Before and after every visit.</span></h1>
+      <p class="sub-hero__lede">Automated SMS and email campaigns keep patients engaged before and after the visit, driving adherence, follow-up bookings, and repeat service revenue.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<TrustBandUs />
+
+<!-- ============= 2. CAMPAIGNS & ANNOUNCEMENTS (light cards) ============= -->
+<section class="tile tile--light" aria-label="Campaigns and announcements">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Campaigns and Announcements</span>
+      <h2 class="h-display">Keep your patients informed<br>about what your pharmacy offers.</h2>
+      <p class="lead">Targeted SMS and email campaigns for seasonal updates, new service launches, and clinical program announcements. Reach the right audience quickly so flu season, a new CCM program, or a hormonal contraception service is in patients' hands the day it goes live.</p>
+    </div>
+    <div class="light-grid">
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </span>
+        <h3>Audience targeting</h3>
+        <p>Segment by service history, demographics, prior visits, or any custom attribute. Send the right campaign to the right cohort instead of blasting everyone on the list.</p>
+      </article>
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </span>
+        <h3>Seasonal campaigns</h3>
+        <p>Flu shots, RSV, COVID boosters, allergy season, smoking-cessation kickoffs. Schedule once, send to the cohort, watch bookings land in the scheduler.</p>
+      </article>
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <h3>New service launches</h3>
+        <p>Announce a new clinical program (CCM, MTM, point-of-care testing) directly to the patients eligible for it. Day-one awareness, not month-three.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. AUTOMATED FOLLOW-UP REMINDERS (dark cards) ============= -->
+<section class="tile tile--light" aria-label="Automated follow-up reminders">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Automated Follow-Up Reminders</span>
+      <h2 class="h-display">Simplify task management.<br>Follow-ups that send themselves.</h2>
+      <p class="lead">Automate follow-up actions tailored to each patient's needs. Appointment reminders, check-in messages, and recall outreach for ongoing care, all scheduled on the cadence the protocol requires and routed back into the scheduler when patients reply.</p>
+    </div>
+    <div class="dark-grid">
+      <article class="dark-card">
+        <span class="dark-card__tag">Appointments</span>
+        <h3>Appointment reminders</h3>
+        <p>Reminders go out at 24 hours and 1 hour. Patients confirm or reschedule by replying. Reschedules route back into the scheduler without a phone call.</p>
+      </article>
+      <article class="dark-card">
+        <span class="dark-card__tag">Adherence</span>
+        <h3>Check-in messages</h3>
+        <p>Refill check-ins, adherence nudges, and care-plan touchpoints scheduled by therapy class. Replies land in the patient's chart for the pharmacist to action.</p>
+      </article>
+      <article class="dark-card">
+        <span class="dark-card__tag">Recall</span>
+        <h3>Recall outreach that books</h3>
+        <p>Identify patients due for CCM, MTM, A1C, or seasonal vaccines. Send a campaign, accept replies into the scheduler, and watch encounters book without a phone call.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. SECURE FILE SHARING (matcha callout band) ============= -->
+<section class="tile tile--light" aria-label="Secure file sharing">
+  <div class="tile__inner">
+    <div class="file-band">
+      <div class="file-band__text">
+        <span class="file-band__kicker">Secure File Sharing</span>
+        <h3>Organize post-care effortlessly.</h3>
+        <p>Send and receive sensitive documents (care summaries, prescriptions, lab reports) through an encrypted platform. Post-visit communication stays in MedMe, not in a personal text thread or an unsecured email, with the audit trail your compliance posture requires.</p>
+      </div>
+      <div class="file-band__cta">
+        <a class="pill pill--solid" href="/us/contact">Talk to us <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. CLOSING CTA ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="See the messaging engine">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">See the Messaging Engine</span>
+      <h2 class="h-display">Send a sample campaign.<br>Watch the replies land back in the chart.</h2>
+      <p class="lead">A 20-minute walkthrough on a real recall campaign. We will configure the cohort live, send a test SMS, and show you what happens when the patient replies.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>

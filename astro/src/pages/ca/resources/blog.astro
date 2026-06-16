@@ -1,0 +1,142 @@
+---
+import BaseLayoutCa from '../../../layouts/BaseLayoutCa.astro';
+---
+<BaseLayoutCa
+  title="The MedMe blog, stories from the front lines of clinical pharmacy"
+  description="The MedMe blog. Operator playbooks, code-level deep dives, and policy primers for Canadian pharmacy clinical services, written by pharmacists and operators who do the work."
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/resources/blog/" />
+  </Fragment>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="page-hero__breadcrumb">
+      <a href="/ca">Home</a>
+      <span class="sep">/</span>
+      <a href="/ca/resources">Resources</a>
+      <span class="sep">/</span>
+      <span>Blog</span>
+    </div>
+    <div class="page-hero__content">
+      <span class="eyebrow eyebrow--matcha">Blog</span>
+      <h1>Stories from the front lines of <span class="accent">clinical pharmacy.</span></h1>
+      <p class="page-hero__lede">Operator playbooks, code-level deep dives, and policy primers, written by the pharmacists, billing leads, and operators who do the work every day.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-seashell" style="padding-top: 0;">
+  <div class="wrap">
+    <div style="margin-bottom: 2rem;">
+      <div class="tags">
+        <span class="tag tag--matcha">All</span>
+        <span class="tag">Billing</span>
+        <span class="tag">MedsCheck</span>
+        <span class="tag">Med review</span>
+        <span class="tag">POCT</span>
+        <span class="tag">Vaccines</span>
+        <span class="tag">Provincial scope</span>
+        <span class="tag">Provider status</span>
+        <span class="tag">Operator</span>
+        <span class="tag">Customer</span>
+        <span class="tag">Policy</span>
+      </div>
+    </div>
+    <div class="article-grid">
+      <a class="article-card" href="#" id="bill-MC-01">
+        <span class="article-card__type">Blog · Billing</span>
+        <h3>How to bill MC-01 cleanly</h3>
+        <p>The most-billed MedsCheck code is also the most-denied. Here's the documentation discipline that turns a 19-minute med-rec call into a clean $65 claim, and the three audit findings we see most.</p>
+        <span class="article-card__meta">Diana Reyes, PharmD · 8 min read · Apr 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · Operator</span>
+        <h3>What we learned from 50+ MedMe deployments</h3>
+        <p>Patterns we see in the first 90 days of pharmacy clinical-services rollouts, what predicts a high-revenue site, what predicts a stalled rollout, and the four things every operator gets wrong before they get it right.</p>
+        <span class="article-card__meta">Christine Lim · 12 min read · Mar 2026</span>
+      </a>
+      <a class="article-card" href="/ca/resources/rhtp-brief">
+        <span class="article-card__type">Blog · Policy</span>
+        <h3>Provincial scope, explained for community pharmacy</h3>
+        <p>$50B over 5 years. Pharmacy is a named delivery partner in nearly every approved state plan. Here's a community-pharmacy translation of the program, what it is, who's eligible, and what to do this quarter.</p>
+        <span class="article-card__meta">Marcus Okafor, PharmD · 14 min read · Apr 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · Operator</span>
+        <h3>Why generic EHRs don't work in pharmacy</h3>
+        <p>We compare the same encounter documented in a generic ambulatory EHR, in a dispensing-system add-on, and in MedMe. The gaps aren't features, they're shape.</p>
+        <span class="article-card__meta">Purya Sarmadi, RPh · 9 min read · Mar 2026</span>
+      </a>
+      <a class="article-card" href="#" id="provider-status">
+        <span class="article-card__type">Blog · Policy</span>
+        <h3>Pharmacist provider status: 2026 update</h3>
+        <p>H.R. 1770 has the most realistic shot at the floor in a decade. Several states (Idaho, Montana, New Mexico, Utah, North Carolina) have moved on state-level legislation. Where things actually stand, and what to do regardless.</p>
+        <span class="article-card__meta">Marcus Okafor, PharmD · 11 min read · Apr 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · Med review</span>
+        <h3>The commercial Med review contract no one is talking about</h3>
+        <p>Part D Med review is crowded. The bigger margins for most of our customers come from employer / commercial-payer Med review contracts that go through PBMs. Here's what the contract terms look like and how to land one.</p>
+        <span class="article-card__meta">Jamie Chen · 10 min read · Mar 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · Customer</span>
+        <h3>Whole Health Pharmacy: a year-one operator postmortem</h3>
+        <p>An 8-store Pennsylvania independent unlocked $1.4M in clinical-service reimbursement in their first 12 months on MedMe. Their clinical lead walks through the five things they'd do differently if they were starting over.</p>
+        <span class="article-card__meta">Joshua Holland, RPh · 13 min read · Feb 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · Billing</span>
+        <h3>The audit findings the OIG flagged in 2025</h3>
+        <p>The OIG report on pharmacy clinical-services billing dropped in late 2025. Three patterns dominate. We summarize what auditors flagged, what they recommended, and what it means for documentation discipline going forward.</p>
+        <span class="article-card__meta">Jamie Chen · 7 min read · Feb 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · POCT</span>
+        <h3>Strep, flu, and RSV at the counter: the 2026 math</h3>
+        <p>POCT pays, when you have the right CPA, the right paired E/M code, and the supply contracts. We break down per-test economics for the four highest-volume POC tests in pharmacy at 2026 PFS rates.</p>
+        <span class="article-card__meta">Diana Reyes, PharmD · 9 min read · Jan 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · Operator</span>
+        <h3>The pharmacist-as-bottleneck problem</h3>
+        <p>Every clinical-services rollout we see eventually hits the same wall: pharmacist time is the constraint. We walk through the three operator strategies that work, task delegation, AI scribe, and incident-to scope.</p>
+        <span class="article-card__meta">Christine Lim · 11 min read · Jan 2026</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · MedsCheck</span>
+        <h3>Time-tracking discipline: the $80K-per-store difference</h3>
+        <p>The same patient encounter documented at a 6-store pharmacy can yield $0 or $80K in annual reimbursement, depending entirely on whether you track time in real time. Here's the operator-side fix.</p>
+        <span class="article-card__meta">Diana Reyes, PharmD · 8 min read · Dec 2025</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · Vaccines</span>
+        <h3>Why vaccine admin denial rates spiked in late 2025</h3>
+        <p>Three MAC regions tightened supervision posture documentation requirements in Q4 2025. We walk through what changed, who was caught flat-footed, and how to bring vaccine-admin denial rates back under 4%.</p>
+        <span class="article-card__meta">Jamie Chen · 6 min read · Dec 2025</span>
+      </a>
+      <a class="article-card" href="#">
+        <span class="article-card__type">Blog · BHI</span>
+        <h3>Behavioral health collaborative care, for pharmacists who haven't started</h3>
+        <p>The 2026 PFS expanded the BHI codes pharmacists can bill in collaborative arrangements. The work is medication management, exactly what pharmacists do already. Here's how to start, end-to-end.</p>
+        <span class="article-card__meta">Marcus Okafor, PharmD · 12 min read · Nov 2025</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <div>
+      <h2>One short email a week.</h2>
+      <p>The new posts, the new webinar dates, the policy shifts that actually matter. No fluff.</p>
+    </div>
+    <div class="cta-band__buttons">
+      <a class="btn btn-primary--accent" href="/ca/contact">Subscribe <span class="arrow">→</span></a>
+      <a class="btn btn-ghost btn-ghost--on-indigo" href="/ca/resources/webinars">See the webinars</a>
+    </div>
+  </div>
+</section>
+
+</BaseLayoutCa>

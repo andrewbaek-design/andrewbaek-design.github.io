@@ -21,35 +21,25 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: astro
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          python-version: "3.11"
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: astro/package-lock.json
 
-      - name: Build site
-        run: python3 build.py
+      - name: Install dependencies
+        run: npm ci
 
-      # Stage only the files that should be served. Built routes live at
-      # the repo root after build.py runs (us/, ca/, legal/, company/,
-      # plus the root geo-redirect index.html). assets/ stays as-is.
-      # Source folders (src/, partials/) and dev tools (_dev/) are
-      # deliberately excluded from the deployed artifact.
-      - name: Stage Pages artifact
-        run: |
-          mkdir -p _site
-          cp -r assets _site/
-          cp -r us _site/
-          cp -r ca _site/
-          cp -r legal _site/
-          cp -r company _site/
-          cp index.html _site/
-          # Pages already disables Jekyll on artifact-mode deploys, but
-          # an explicit .nojekyll keeps it predictable.
-          touch _site/.nojekyll
+      - name: Build Astro site
+        run: npm run build
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -57,7 +47,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: ./astro/dist
 
   deploy:
     needs: build

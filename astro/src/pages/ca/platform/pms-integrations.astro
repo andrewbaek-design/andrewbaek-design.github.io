@@ -1,0 +1,210 @@
+---
+import BaseLayoutCa from '../../../layouts/BaseLayoutCa.astro';
+---
+<BaseLayoutCa
+  title="Integrations, MedMe Health"
+  description="Pharmacy management systems, clearinghouses, payer eligibility, and registries, MedMe sits next to your existing stack, not on top of it."
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/integrations" />
+  </Fragment>
+
+<style>
+
+  .prod-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
+  .prod-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
+  .prod-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
+  .prod-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .prod-hero__breadcrumb a:hover { color: var(--indigo); }
+  .prod-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+  .prod-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 920px; }
+  .prod-hero__lede { font-size: 1.15rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 760px; margin: 0 auto 2rem; }
+  .prod-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+  /* Integration category groups */
+  .integ-group { margin-top: 2.5rem; }
+  .integ-group__title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--indigo);
+    margin: 0 0 1rem;
+    letter-spacing: -0.005em;
+  }
+  .tile--dark .integ-group__title { color: var(--seashell); }
+  .integ-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .integ-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    padding: 1.25rem;
+    text-align: center;
+    transition: border-color 0.18s, transform 0.18s;
+  }
+  .integ-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .tile--dark .integ-card {
+    background: rgba(250, 249, 245, 0.04);
+    border-color: rgba(250, 249, 245, 0.12);
+  }
+  .integ-card__name {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--indigo);
+    margin: 0;
+  }
+  .tile--dark .integ-card__name { color: var(--seashell); }
+  .integ-card__type {
+    font-size: 0.75rem;
+    color: rgba(6, 62, 84, 0.55);
+    margin-top: 0.25rem;
+  }
+  .tile--dark .integ-card__type { color: rgba(250, 249, 245, 0.6); }
+  @media (max-width: 900px) { .integ-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .integ-grid { grid-template-columns: 1fr; } }
+
+  /* Approach cards */
+  .approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+  .approach-grid .h-card { padding: 2rem; }
+  .approach-grid h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--indigo); margin: 0 0 0.5rem; }
+  .approach-grid p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.7); line-height: 1.55; margin: 0; }
+  @media (max-width: 900px) { .approach-grid { grid-template-columns: 1fr; } }
+</style>
+
+<section class="prod-hero">
+  <div class="prod-hero__inner">
+    <div class="prod-hero__breadcrumb">
+      <a href="/ca">Home</a><span class="sep">/</span>
+      <a href="/ca/platform/integrations">Platform</a><span class="sep">/</span>
+      <span>Integrations</span>
+    </div>
+    <span class="kicker kicker--matcha">Integrations</span>
+    <h1 class="h-display h-display--xl">Sits next to your stack,<br>not on top of it.</h1>
+    <p class="prod-hero__lede">MedMe doesn't replace your pharmacy management system, your clearinghouse, or your registries. We connect to all of them, pre-built, so your dispensing workflow doesn't change.</p>
+    <div class="prod-hero__cta">
+      <a class="btn btn-primary" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="/ca/platform/medical-billing">See billing</a>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light" aria-label="Pharmacy management systems">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">PMS integrations</span>
+      <h2 class="h-display">Talks to the system<br>your bench already uses.</h2>
+      <p class="lead">Pre-built bi-directional sync for the major Canadian pharmacy management systems. Patient records, Rx history, refill data, all available in the encounter view without re-keying.</p>
+    </div>
+    <div class="integ-group">
+      <div class="integ-grid">
+        <div class="integ-card"><h3 class="integ-card__name">Kroll</h3><div class="integ-card__type">PMS &middot; native API</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Fillware</h3><div class="integ-card__type">PMS &middot; native API</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">BD Pharmacy Management Enterprise</h3><div class="integ-card__type">PMS &middot; HL7 + API</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Telus PHS</h3><div class="integ-card__type">PMS &middot; native API</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">NRx</h3><div class="integ-card__type">PMS &middot; native API</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Datascan</h3><div class="integ-card__type">PMS &middot; HL7</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Rx30</h3><div class="integ-card__type">PMS &middot; native API</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Speed Script</h3><div class="integ-card__type">PMS &middot; HL7</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light" aria-label="Clearinghouses">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Clearinghouses</span>
+      <h2 class="h-display">Push 837P claims to<br>whichever clearinghouse you use.</h2>
+      <p class="lead">If you already have a clearinghouse relationship, MedMe pushes clean claims to them via API or SFTP. If you don't, we'll help you stand one up during implementation.</p>
+    </div>
+    <div class="integ-group">
+      <div class="integ-grid">
+        <div class="integ-card"><h3 class="integ-card__name">Change Healthcare</h3><div class="integ-card__type">Clearinghouse</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Availity</h3><div class="integ-card__type">Clearinghouse</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Office Ally</h3><div class="integ-card__type">Clearinghouse</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Waystar</h3><div class="integ-card__type">Clearinghouse</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">SSI</h3><div class="integ-card__type">Clearinghouse</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Trizetto</h3><div class="integ-card__type">Clearinghouse</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Inovalon</h3><div class="integ-card__type">Clearinghouse</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Private biller</h3><div class="integ-card__type">SFTP / API</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light" aria-label="Registries & eligibility">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Registries &amp; eligibility</span>
+      <h2 class="h-display">Every state registry,<br>every major payer.</h2>
+    </div>
+    <div class="integ-group">
+      <h3 class="integ-group__title">State immunization registries</h3>
+      <div class="integ-grid">
+        <div class="integ-card"><h3 class="integ-card__name">All 50 states</h3><div class="integ-card__type">VFC + commercial</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">DC + PR + USVI</h3><div class="integ-card__type">VFC + commercial</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">CDC VTrckS</h3><div class="integ-card__type">VFC inventory</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">VAERS</h3><div class="integ-card__type">Adverse event</div></div>
+      </div>
+    </div>
+    <div class="integ-group">
+      <h3 class="integ-group__title">Eligibility &amp; benefits</h3>
+      <div class="integ-grid">
+        <div class="integ-card"><h3 class="integ-card__name">Medicare Health Canada</h3><div class="integ-card__type">Eligibility, Part A/B/D</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Medicaid (50 states)</h3><div class="integ-card__type">Eligibility, MCO routing</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Aetna</h3><div class="integ-card__type">Commercial</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">UHC / Optum</h3><div class="integ-card__type">Commercial</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Cigna</h3><div class="integ-card__type">Commercial</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Humana</h3><div class="integ-card__type">Commercial + MA</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">Anthem / Elevance</h3><div class="integ-card__type">Commercial + BCBS</div></div>
+        <div class="integ-card"><h3 class="integ-card__name">All BCBS plans</h3><div class="integ-card__type">Commercial</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light" aria-label="How we integrate">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Our integration approach</span>
+      <h2 class="h-display">Why none of this requires<br>a six-month IT project.</h2>
+    </div>
+    <div class="approach-grid">
+      <article class="h-card">
+        <h3>Pre-built, not bespoke</h3>
+        <p>Every integration listed is shipped as a managed connector. No custom engineering, no third-party integration tax, no project plan that lives in someone's email.</p>
+      </article>
+      <article class="h-card">
+        <h3>Bi-directional sync</h3>
+        <p>Patient records flow from your PMS into MedMe. Encounter outcomes and codes flow back. Nothing duplicated, nothing manually re-keyed.</p>
+      </article>
+      <article class="h-card">
+        <h3>HL7 + FHIR + custom</h3>
+        <p>HL7v2 for legacy. FHIR for modern. SFTP for batch. REST API for everything else. If your stack speaks data, we connect to it.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile--light tile--prominent" aria-label="Get started">
+  <div class="tile__inner">
+    <div class="tile__head" style="text-align:center;">
+      <span class="kicker">Don't see your system?</span>
+      <h2 class="h-display">Ask us. Custom connectors<br>are part of enterprise.</h2>
+      <p class="lead">Top-100 chains and health systems often need a custom EHR or claim-routing connector. That's part of our Full Platform tier, not a bolt-on cost.</p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+        <a class="btn btn-primary" href="/ca/contact">Talk to integrations <span class="arrow">→</span></a>
+        <a class="btn btn-ghost" href="/ca/pricing">See pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</BaseLayoutCa>

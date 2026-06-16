@@ -7,6 +7,13 @@
       "runtimeArgs": ["-c", "python3 -m http.server $PORT"],
       "port": 8000,
       "autoPort": true
+    },
+    {
+      "name": "medme-astro",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd astro && npx astro dev --port $PORT --host"],
+      "port": 4321,
+      "autoPort": true
     }
   ]
 }

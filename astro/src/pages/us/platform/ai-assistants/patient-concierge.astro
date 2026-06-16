@@ -1,0 +1,341 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import TrustBandUs from '../../../../components/TrustBandUs.astro';
+---
+<BaseLayout
+  title="Patient Concierge, MedMe Health"
+  description="Voice and chat agents that handle routine patient touchpoints so your team can focus on dispensing and clinical care. Augments your pharmacy staff, never replaces them."
+  showAnnouncement={false}
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/ai-assistants/patient-concierge" />
+    <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
+  </Fragment>
+
+<style>
+
+  /* ============================================================
+     PATIENT CONCIERGE product page. Hero is an embedded motion
+     graphic (Cloudflare Worker iframe). Section flow: hero with
+     light overlap (less aggressive than v1 per Audrey #222),
+     trust band, three impactful cap-checks (#228), three channel
+     cards (toned down per #227), narrowed use-case grid without
+     channel tags (#229, #230), with appointment booking
+     campaigns added (#226), refill-specific framing softened to
+     inbound calls (#231), platform-trust callout band, navy
+     closing CTA.
+     ============================================================ */
+
+  /* ====== SUB-HERO ============================================= */
+  .sub-hero { background: var(--seashell); padding: 2rem 1.5rem 3.5rem; position: relative; overflow: hidden; }
+  .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
+  .sub-hero__bg {
+    position: relative; max-width: 1120px; margin: 0 auto;
+    /* Lighter fade so the headline sits below the motion graphic
+       with only a small visual overlap (#222). */
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 78%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 78%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: -60px auto 0; position: relative; z-index: 2; }
+  .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
+  .sub-hero h1.h-display .accent { color: var(--matcha); }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 720px; }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: -40px; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: -20px; } }
+
+  /* ====== CAPABILITY CHECK ROW (3 cards, shorter impactful copy) */
+  .cap-checks {
+    list-style: none; padding: 0;
+    margin: 0 auto; max-width: 1120px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 900px) { .cap-checks { grid-template-columns: 1fr; max-width: 720px; gap: 1rem; } }
+  .cap-checks li {
+    display: flex; flex-direction: column;
+    align-items: flex-start; gap: 1rem;
+    font-size: 1.02rem; color: rgba(6, 62, 84, 0.82);
+    line-height: 1.5;
+    padding: 1.6rem 1.5rem;
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+    text-align: left;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .cap-checks li:hover { transform: translateY(-3px); border-color: rgba(195, 196, 48, 0.42); }
+  .cap-checks li::before {
+    content: "";
+    flex-shrink: 0;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--matcha);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'><path d='M5 9.5l2.5 2.5L13 6.5' stroke='%23063E54' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px 22px;
+  }
+
+  /* ====== HERO MOTION-GRAPHIC IFRAME =========================== */
+  .pc-frame {
+    display: block;
+    width: 100%;
+    max-width: 1120px;
+    height: 620px;
+    border: 0;
+    border-radius: 22px;
+    margin: 0 auto;
+    background: var(--seashell);
+  }
+  @media (max-width: 1100px) { .pc-frame { height: 540px; } }
+  @media (max-width: 820px)  { .pc-frame { height: 460px; border-radius: 18px; } }
+  @media (max-width: 540px)  { .pc-frame { height: 360px; border-radius: 14px; } }
+
+  /* ====== THREE-CHANNEL DARK CARDS ============================= */
+  .ch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .ch-grid { grid-template-columns: 1fr; } }
+  .ch-card {
+    background: var(--indigo);
+    color: var(--seashell);
+    border: 1px solid rgba(195, 196, 48, 0.18);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 12px 32px rgba(6, 62, 84, 0.08);
+    display: flex; flex-direction: column; gap: 0.65rem;
+  }
+  .ch-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6, 62, 84, 0.16); }
+  .ch-card__tag {
+    font-size: 11px; color: var(--matcha); font-weight: 700;
+    letter-spacing: 0.08em; margin-bottom: 0.4rem; display: inline-block;
+  }
+  .ch-card h3 { margin: 0 0 0.4rem; font-size: 1.2rem; font-weight: 600; color: var(--seashell); letter-spacing: -0.012em; line-height: 1.25; }
+  .ch-card p { margin: 0; color: rgba(250, 249, 245, 0.78); line-height: 1.55; font-size: 0.95rem; }
+
+  /* ====== USE-CASE LIGHT CARD GRID (no channel tags, #229) ===== */
+  .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .feat-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.5rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+    display: flex; flex-direction: column; gap: 0.55rem;
+  }
+  .feat-card:hover { transform: translateY(-3px); border-color: rgba(195, 196, 48, 0.42); }
+  .feat-card__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--matcha);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+  .feat-card h3 { margin: 0 0 0.25rem; font-size: 1.05rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; line-height: 1.3; }
+  .feat-card p { margin: 0; font-size: 0.92rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; }
+
+  /* ====== TRUST CALLOUT BAND (compliance + scope, brief) ======= */
+  .trust-band {
+    background: rgba(195, 196, 48, 0.06);
+    border: 1px solid rgba(195, 196, 48, 0.22);
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .trust-band::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--matcha);
+    opacity: 0.1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  @media (max-width: 800px) {
+    .trust-band { grid-template-columns: 1fr; padding: 1.75rem; }
+  }
+  .trust-band__text { max-width: 720px; position: relative; z-index: 1; }
+  .trust-band__kicker { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: inline-block; }
+  .trust-band h3 { margin: 0 0 0.5rem; font-size: 1.4rem; font-weight: 700; color: var(--indigo); letter-spacing: -0.018em; }
+  .trust-band p { margin: 0; font-size: 1rem; line-height: 1.55; color: rgba(6,62,84,0.78); text-wrap: pretty; }
+  .trust-band__pills {
+    position: relative; z-index: 1;
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .trust-band__pill {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--indigo);
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.12);
+    border-radius: 999px;
+    padding: 6px 12px;
+    letter-spacing: 0.04em;
+  }
+</style>
+
+<!-- ============= 1. SUB-HERO (motion-graphic iframe, light overlap) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <iframe
+        class="pc-frame"
+        src="https://motion-graphics.hwajongbaek.workers.dev/"
+        title="Patient Concierge motion graphic"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allow="autoplay; encrypted-media">
+      </iframe>
+    </div>
+    <div class="sub-hero__text">
+      <h1 class="h-display">Your new patient<br>communications <span class="accent">coordinator.</span></h1>
+      <p class="sub-hero__lede">A dedicated AI agent that runs alongside your team, handling routine patient touchpoints so your pharmacists and technicians can stay focused on dispensing and clinical care.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<TrustBandUs />
+
+<!-- ============= 2. WHAT IT DOES (3 punchier cap-checks, #228) ============= -->
+<section class="tile tile--light" aria-label="What Patient Concierge does">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">What It Does</span>
+      <h2 class="h-display">Three jobs taken off<br>your team's plate.</h2>
+      <p class="lead">Patient Concierge takes the routine touchpoints off your team's plate so they can stay focused on dispensing and clinical care.</p>
+    </div>
+    <ul class="cap-checks">
+      <li>Answers inbound calls so your counter can stay focused on dispensing.</li>
+      <li>Runs outbound campaigns at scale without a phone-tag spiral.</li>
+      <li>Greets every website visitor with a real conversation, 24/7.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============= 3. THREE CHANNELS (dark cards, toned down per #227) ============= -->
+<section class="tile tile--light" aria-label="Three patient communication channels">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Three Channels, One Coordinator</span>
+      <h2 class="h-display">One agent across every channel<br>your patients use.</h2>
+      <p class="lead">Patient Concierge runs inbound voice, outbound voice, and digital chat as a single coordinator. Conversations and outcomes route back into MedMe so the chart stays current, and your team stays in the loop on the inquiries that matter.</p>
+    </div>
+    <div class="ch-grid">
+      <article class="ch-card">
+        <span class="ch-card__tag">Outbound Voice Agents</span>
+        <h3>End the manual outreach loop.</h3>
+        <p>Used by retail and specialty pharmacies across North America, MedMe's enterprise-grade voice agents launch call campaigns that reach hundreds of patients with just a few clicks, scaling specialty programs and delivery logistics alongside your team.</p>
+      </article>
+      <article class="ch-card">
+        <span class="ch-card__tag">Inbound Voice Agents</span>
+        <h3>Offload the constant ring so your team can focus on care.</h3>
+        <p>Inbound voice agents work alongside or in front of your IVR to intercept and resolve routine calls before they reach your counter, filtering out the noise so your team can focus on safe dispensing and top-of-license clinical counseling.</p>
+      </article>
+      <article class="ch-card">
+        <span class="ch-card__tag">Digital Chat Agents</span>
+        <h3>Reach patients where they are.</h3>
+        <p>Our digital chat agent provides a conversational experience that greets patients the moment they arrive on your website, answering routine questions and guiding them to the right services.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. USE CASES (narrowed, no channel tags) ============= -->
+<section class="tile tile--light" aria-label="Patient Concierge use cases">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Use Cases</span>
+      <h2 class="h-display">Six places it lifts the load,<br>tuned to how pharmacy actually runs.</h2>
+      <p class="lead">Trusted by retail and specialty pharmacies across North America. Each use case is built around how your team actually operates, with flexible implementations per pharmacy.</p>
+    </div>
+    <div class="feat-grid">
+      <article class="feat-card">
+        <p class="feat-card__num">01</p>
+        <h3>Delivery coordination and logistics</h3>
+        <p>Automates scheduling for initial medication drop-offs and handles rescheduling against complex delivery windows.</p>
+      </article>
+      <article class="feat-card">
+        <p class="feat-card__num">02</p>
+        <h3>Automated adherence and follow-ups</h3>
+        <p>Scales adherence checks and post-consultation follow-ups so every patient gets the touchpoint your team would otherwise miss.</p>
+      </article>
+      <article class="feat-card">
+        <p class="feat-card__num">03</p>
+        <h3>Inbound call handling</h3>
+        <p>Picks up patient calls and resolves common inquiries naturally over voice or text. Items that need your team route directly into your dispensary workflow.</p>
+      </article>
+      <article class="feat-card">
+        <p class="feat-card__num">04</p>
+        <h3>Top-of-license triage</h3>
+        <p>Handles routine questions like store hours and "is my script ready?", and redirects clinical inquiries to your pharmacists.</p>
+      </article>
+      <article class="feat-card">
+        <p class="feat-card__num">05</p>
+        <h3>Appointment booking and campaigns</h3>
+        <p>Patients can book appointments by phone or web, and outbound campaigns can run targeted booking outreach (flu season, MTM, follow-up reviews). Bookings sync straight into your MedMe calendar.</p>
+      </article>
+      <article class="feat-card">
+        <p class="feat-card__num">06</p>
+        <h3>24/7 availability with actionable summaries</h3>
+        <p>Picks up the line when your team is busy or the pharmacy is closed, then summarizes every conversation and flags only the items that need a human follow-up.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. PLATFORM TRUST CALLOUT (brief, no overclaim) ============= -->
+<section class="tile tile--light" aria-label="Built for healthcare-grade communication">
+  <div class="tile__inner">
+    <div class="trust-band">
+      <div class="trust-band__text">
+        <span class="trust-band__kicker">Built For Healthcare-Grade Communication</span>
+        <h3>Configured for clinical scope, healthcare privacy, and AI-communication law.</h3>
+        <p>Voice and chat conversations stay inside the scope your protocols define. Custom conversational logic is built with your team to reflect the way your pharmacy talks to patients, with controlled escalation back to your pharmacists when a conversation needs them.</p>
+      </div>
+      <div class="trust-band__pills">
+        <span class="trust-band__pill">HIPAA</span>
+        <span class="trust-band__pill">PIPEDA</span>
+        <span class="trust-band__pill">TCPA</span>
+        <span class="trust-band__pill">FCC</span>
+        <span class="trust-band__pill">CRTC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 6. CLOSING CTA ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Ready to enhance your pharmacy's clinical practice">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Ready To Enhance Your Clinical Practice?</span>
+      <h2 class="h-display">Place a sample call.<br>Listen to the concierge handle it.</h2>
+      <p class="lead">A 20-minute walkthrough on a live Patient Concierge call. We will configure a campaign for your service mix, dial it on a test number, and let you listen to the conversation end to end.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Book a demo <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>

@@ -1,0 +1,1415 @@
+---
+import BaseLayoutCa from '../../layouts/BaseLayoutCa.astro';
+import LogoMedme from '../../components/LogoMedme.astro';
+---
+<BaseLayoutCa
+  title="MedMe Health, The clinical operating system for Canadian community pharmacy"
+  description="MedMe is the pharmacy-specific EHR that documents every encounter and turns it into a documented, reimbursable service. Built with Canadian pharmacy operators."
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/" />
+    <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
+    <link rel="alternate" hreflang="x-default" href="https://medmehealth.com/ca/" />
+    <link rel="stylesheet" href="/assets/homepage-ca.css" />
+    <script type="application/ld+json" is:inline set:html={`{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "MedMe Health",
+  "url": "https://medmehealth.com",
+  "logo": "https://medmehealth.com/logo.svg",
+  "sameAs": ["https://www.linkedin.com/company/medme-health/"]
+}`}></script>
+    <script type="application/ld+json" is:inline set:html={`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MedMe Care Platform for Canadian Pharmacy",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "offers": {"@type":"Offer","price":"0","priceCurrency":"USD","description":"Contact sales for pricing"},
+  "audience": {"@type":"Audience","audienceType":"Pharmacy operators in Canada"}
+}`}></script>
+  </Fragment>
+
+<!-- ============= 1. HERO (centered headline + AI-scribe mockup) ============= -->
+<section class="hero-end" aria-label="Hero">
+  <div class="tile__inner">
+    <h1>
+      <span>The end-to-end platform for pharmacy clinical services.</span>
+      <span>From launch to reimbursement.</span>
+    </h1>
+    <div class="cta-row">
+      <a class="btn btn-primary btn--lg" href="/ca/contact">Book a demo <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="tab-bar-wrap">
+  <div class="tab-bar" role="tablist" aria-label="Product mockup tabs">
+    <button class="tab tab--active"   type="button" data-tab="scheduling"    role="tab" aria-selected="true">Scheduling &amp; Queueing</button>
+    <button class="tab"               type="button" data-tab="intake"        role="tab" aria-selected="false">Patient Intake Forms</button>
+    <button class="tab"               type="button" data-tab="documentation" role="tab" aria-selected="false">Assisted Documentation</button>
+    <button class="tab"               type="button" data-tab="messaging"     role="tab" aria-selected="false">Messaging &amp; Follow-Ups</button>
+  </div>
+</div>
+
+<div class="visual-wrap" aria-hidden="true">
+  <div class="visual-halo"></div>
+  <div class="visual-frame">
+
+    <!-- ===== PANE: Scheduling & Queueing ===== -->
+    <div class="mockup-pane mockup-pane--active" data-pane="scheduling" role="tabpanel">
+      <div class="mockup-host" id="schedHost">
+        <div class="frame-inner" id="schedFrame">
+
+          <!-- LEFT CARD, MedMe Pharmacy booking widget -->
+          <section class="sched-book" aria-label="Booking widget">
+            <h2 class="sched-book-title">MedMe Pharmacy</h2>
+            <div class="sched-book-divider"></div>
+
+            <div class="sched-radios" role="radiogroup" aria-label="Visit type">
+              <span class="sched-radio" role="radio" aria-checked="false">
+                <span class="sched-radio-circle"></span>
+                <span>Walk-in</span>
+              </span>
+              <span class="sched-radio sched-radio--active" role="radio" aria-checked="true">
+                <span class="sched-radio-circle"></span>
+                <span>Book Appointment</span>
+              </span>
+            </div>
+
+            <div class="sched-grid-card">
+              <div class="sched-grid-nav">
+                <button class="sched-nav-arrow" type="button" aria-label="Previous week">&#x2039;</button>
+                <span class="sched-nav-label">Wed Aug 13 - Tue Aug 19</span>
+                <button class="sched-nav-arrow" type="button" aria-label="Next week">&#x203A;</button>
+              </div>
+
+              <div class="sched-grid">
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 13</div><div class="sched-col-day">Today</div></div>
+                  <button class="sched-slot" type="button">8:00 AM</button>
+                  <button class="sched-slot" type="button">8:15 AM</button>
+                  <button class="sched-slot" type="button">8:30 AM</button>
+                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 14</div><div class="sched-col-day">Thu</div></div>
+                  <button class="sched-slot" type="button">8:00 AM</button>
+                  <button class="sched-slot" type="button">8:15 AM</button>
+                  <button class="sched-slot" type="button">8:30 AM</button>
+                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <button class="sched-slot" type="button" id="schTargetSlot">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 15</div><div class="sched-col-day">Fri</div></div>
+                  <button class="sched-slot" type="button">8:00 AM</button>
+                  <button class="sched-slot" type="button">8:15 AM</button>
+                  <button class="sched-slot" type="button">8:30 AM</button>
+                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 16</div><div class="sched-col-day">Sat</div></div>
+                  <button class="sched-slot" type="button">8:00 AM</button>
+                  <button class="sched-slot" type="button">8:15 AM</button>
+                  <button class="sched-slot" type="button">8:30 AM</button>
+                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 17</div><div class="sched-col-day">Sun</div></div>
+                  <button class="sched-slot" type="button">8:00 AM</button>
+                  <button class="sched-slot" type="button">8:15 AM</button>
+                  <button class="sched-slot" type="button">8:30 AM</button>
+                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 18</div><div class="sched-col-day">Mon</div></div>
+                  <button class="sched-slot" type="button">8:00 AM</button>
+                  <button class="sched-slot" type="button">8:15 AM</button>
+                  <button class="sched-slot" type="button">8:30 AM</button>
+                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 19</div><div class="sched-col-day">Tue</div></div>
+                  <button class="sched-slot" type="button">8:00 AM</button>
+                  <button class="sched-slot" type="button">8:15 AM</button>
+                  <button class="sched-slot" type="button">8:30 AM</button>
+                  <button class="sched-slot" type="button">8:45 AM</button>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- RIGHT CARD, Store Locator -->
+          <section class="sched-locator" aria-label="Store locator">
+            <h3 class="sched-locator-title">Store Locator</h3>
+            <div class="sched-map">
+              <svg class="sched-map-bg" viewBox="0 0 250 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <!-- park blocks -->
+                <ellipse cx="170" cy="120" rx="70" ry="55" fill="rgba(150, 188, 140, 0.30)"/>
+                <ellipse cx="40" cy="270" rx="55" ry="40" fill="rgba(150, 188, 140, 0.22)"/>
+                <ellipse cx="200" cy="380" rx="45" ry="35" fill="rgba(150, 188, 140, 0.18)"/>
+                <!-- subtle building blocks -->
+                <rect x="80" y="30" width="40" height="30" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
+                <rect x="20" y="180" width="50" height="35" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
+                <rect x="140" y="220" width="45" height="40" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
+                <rect x="90" y="320" width="50" height="35" rx="3" fill="rgba(4, 43, 59, 0.05)"/>
+                <!-- roads -->
+                <path d="M-10 90 Q70 100 130 80 T260 100"  stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
+                <path d="M-10 210 Q90 195 160 215 T260 215" stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
+                <path d="M50 -10 Q60 130 50 240 T70 490"     stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
+                <path d="M180 -10 Q170 140 195 260 T205 490" stroke="rgba(4, 43, 59, 0.10)" stroke-width="2" fill="none"/>
+                <!-- river -->
+                <path d="M-15 340 Q60 320 130 345 T265 360" stroke="rgba(120, 175, 205, 0.55)" stroke-width="22" fill="none" stroke-linecap="round"/>
+              </svg>
+
+              <div class="sched-pin" style="left:42%; top:24%;">
+                <svg viewBox="0 0 24 32" fill="none"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="var(--indigo-dark)"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>
+              </div>
+              <div class="sched-pin sched-pin--active" style="left:58%; top:44%;">
+                <svg viewBox="0 0 24 32" fill="none"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="var(--indigo-dark)"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>
+              </div>
+              <div class="sched-pin" style="left:64%; top:82%;">
+                <svg viewBox="0 0 24 32" fill="none"><path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="var(--indigo-dark)"/><circle cx="12" cy="12" r="4.5" fill="#fff"/></svg>
+              </div>
+            </div>
+          </section>
+
+          <div class="cursor" id="schCursor">
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
+              <path d="M2 1.5l14.5 9.4-6.4 1.6-2.6 6.5L2 1.5z" fill="#0c1217" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            <span class="ripple" id="schRipple"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANE: Patient Intake Forms ===== -->
+    <div class="mockup-pane" data-pane="intake" role="tabpanel">
+      <div class="mockup-host" id="intakeHost">
+        <div class="frame-inner" id="intakeFrame">
+
+          <!-- Top header with logo -->
+          <div class="intake-topbar">
+            <div class="intake-logo"><LogoMedme /></div>
+          </div>
+
+          <div class="intake-body">
+            <!-- LEFT: form section -->
+            <div class="intake-card-left">
+              <h2 class="intake-h1">Contact Information</h2>
+
+              <!-- 8-step horizontal indicator. Steps 1=done, 2=active, 3-8=pending -->
+              <div class="intake-steps" id="intakeSteps">
+                <span class="intake-step is-done"></span>
+                <span class="intake-step-line is-done"></span>
+                <span class="intake-step is-active"></span>
+                <span class="intake-step-line"><span class="fill" id="intakeProgress"></span></span>
+                <span class="intake-step"></span>
+                <span class="intake-step-line"></span>
+                <span class="intake-step"></span>
+                <span class="intake-step-line"></span>
+                <span class="intake-step"></span>
+                <span class="intake-step-line"></span>
+                <span class="intake-step"></span>
+                <span class="intake-step-line"></span>
+                <span class="intake-step"></span>
+                <span class="intake-step-line"></span>
+                <span class="intake-step"></span>
+              </div>
+
+              <!-- Inner white form card -->
+              <div class="intake-form">
+                <h3 class="intake-form-h">Personal Information for individual(s) receiving service</h3>
+                <p class="intake-form-sub">Please enter the required information for yourself and anyone else in your booking.</p>
+
+                <div class="intake-fields-row row-2-1">
+                  <div class="intake-field" id="fldFirstName">
+                    <span class="intake-field-label">First Name *</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                  <div class="intake-field" id="fldLastName">
+                    <span class="intake-field-label">Last Name *</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+                <div class="intake-fields-row row-half">
+                  <div class="intake-field" id="fldDOB">
+                    <span class="intake-field-label">Date of Birth (YYYY-MM-DD) *</span>
+                    <div class="intake-field-value"></div>
+                    <span class="intake-field-icon" aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="intake-section-h">Address</div>
+                <div class="intake-fields-row row-1">
+                  <div class="intake-field" id="fldAddress">
+                    <span class="intake-field-label">Continue</span>
+                    <div class="intake-field-value"></div>
+                    <span class="intake-field-icon" aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+                    </span>
+                  </div>
+                </div>
+                <div class="intake-fields-row row-3">
+                  <div class="intake-field" id="fldCity">
+                    <span class="intake-field-label">City *</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                  <div class="intake-field" id="fldProvince">
+                    <span class="intake-field-label">Province *</span>
+                    <div class="intake-field-value"></div>
+                    <span class="intake-field-icon" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 5 6 8 9 5"/></svg>
+                    </span>
+                  </div>
+                  <div class="intake-field" id="fldPostal">
+                    <span class="intake-field-label">Postal Code *</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+
+                <button class="intake-cta" type="button" id="intakeCta">Continue</button>
+              </div>
+            </div>
+
+            <!-- RIGHT: booking summary -->
+            <aside class="intake-card-right">
+              <h3 class="intake-summary-title">Flu Shot (Regular)</h3>
+              <div class="intake-summary-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span>Sun Nov 30, 8:30AM</span>
+              </div>
+              <div class="intake-summary-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Approximately 15 minutes</span>
+              </div>
+              <div class="intake-summary-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>1 person</span>
+              </div>
+              <div class="intake-summary-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>MedMe Pharmacy<br>175 Bloor Street East<br>Toronto, ON M4W 3R8</span>
+              </div>
+              <div class="intake-summary-divider"></div>
+              <ul class="intake-vsteps" id="intakeVSteps">
+                <li class="intake-vstep is-active"><span class="intake-vstep-dot"></span>Contact Information</li>
+                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Medical Information</li>
+                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Flu Screening</li>
+                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Consent</li>
+                <li class="intake-vstep"><span class="intake-vstep-dot"></span>Review and Submit</li>
+              </ul>
+            </aside>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANE: Messaging & Follow-Ups ===== -->
+    <div class="mockup-pane" data-pane="messaging" role="tabpanel">
+      <div class="mockup-host" id="msgHost">
+        <div class="frame-inner" id="msgFrame">
+          <div class="msg-stage">
+
+            <!-- PHONE 1, booking confirmation email -->
+            <div class="msg-phone msg-phone--email">
+              <div class="msg-status">
+                <span>9:41</span>
+                <span class="msg-status-icons">
+                  <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+                  <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+                  <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+                </span>
+              </div>
+              <div class="msg-logo"><LogoMedme /></div>
+              <div class="msg-email-body">
+                <p>Hi John,</p>
+                <p>Thank you for booking with us!</p>
+                <p class="muted">Your appointment details:</p>
+                <div class="msg-card">
+                  <div class="msg-card-row"><span class="lbl">What:</span><span>Flu Shot (Regular)</span></div>
+                  <div class="msg-card-row"><span class="lbl">When:</span><span>Wednesday, November 26<br>10:00 AM EST.</span></div>
+                  <div class="msg-card-row"><span class="lbl">Where:</span><span>MedMe Pharmacy<br>175 Bloor Street East<br>Toronto, ON 90036-1234</span></div>
+                  <div class="msg-card-foot">Need to manage your appointment?</div>
+                  <div class="msg-card-links"><a href="#">Reschedule</a> or <a href="#">Cancel</a></div>
+                </div>
+                <p class="muted">Next steps for your appointment:</p>
+                <p class="bold">Flu Shot (Regular)</p>
+                <ul>
+                  <li>A day before your appointment, you&rsquo;ll receive a text/email reminder.</li>
+                  <li>Please arrive 5-10 minutes before your appointment time, and let the pharmacist know when you arrive.</li>
+                  <li>Please bring your insurance information, prescription (if you have one), and wear clothing that makes it easy to access the injection site (most often the upper arm)</li>
+                  <li>You may be asked to wait up to 15 minutes after your</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- PHONE 2, SMS conversation -->
+            <div class="msg-phone msg-phone--sms">
+              <div class="msg-status">
+                <span>9:41</span>
+                <span class="msg-status-icons">
+                  <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+                  <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+                  <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+                </span>
+              </div>
+              <div class="msg-sms-header">
+                <span class="msg-sms-back">&#x2039;</span>
+                <span class="msg-sms-back-badge">5</span>
+                <div class="msg-sms-name-block">
+                  <div class="msg-sms-name">MedMe Pharmacy</div>
+                  <div class="msg-sms-status">last seen today at 3:12pm</div>
+                </div>
+                <span class="msg-sms-avatar"></span>
+              </div>
+              <div class="msg-sms-body" id="msgSmsBody">
+                <div class="msg-date-pill">March 3</div>
+                <div class="msg-bubble" id="msgBubble1">
+                  Hi John! Your Flu Shot Regular appointment for 1 person(s) with MedMe Pharmacy is <b>tomorrow</b> at Nov-26 10:00 AM EST.
+                  <span class="t">12:31pm</span>
+                </div>
+                <div class="msg-bubble" id="msgBubble2">
+                  Hi John! Just a reminder that your Flu Shot Regular appointment for 1 person(s) with MedMe Pharmacy is <b>starting in an hour</b>.<br>It is scheduled for Wednesday, November 26 at 10:00 AM EST.
+                  <span class="t">12:31pm</span>
+                </div>
+                <div class="msg-typing" id="msgTyping">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="msg-sms-input">
+                <span class="msg-sms-input-clip">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </span>
+                <div class="msg-sms-input-pill">
+                  <span>Message</span>
+                  <span class="icons-r">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+                  </span>
+                </div>
+              </div>
+              <div class="msg-sms-home"></div>
+            </div>
+
+            <!-- PHONE 3, reminder email -->
+            <div class="msg-phone msg-phone--email">
+              <div class="msg-status">
+                <span>9:41</span>
+                <span class="msg-status-icons">
+                  <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+                  <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+                  <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+                </span>
+              </div>
+              <div class="msg-logo"><LogoMedme /></div>
+              <div class="msg-email-body">
+                <p>Hi John,</p>
+                <p>This is a reminder for your upcoming appointment.</p>
+                <p class="muted">Your appointment details:</p>
+                <div class="msg-card">
+                  <div class="msg-card-row"><span class="lbl">What:</span><span>Flu Shot (Regular)</span></div>
+                  <div class="msg-card-row"><span class="lbl">When:</span><span>Wednesday, November 26<br>10:00 AM EST.</span></div>
+                  <div class="msg-card-row"><span class="lbl">Where:</span><span>MedMe Pharmacy<br>175 Bloor Street East<br>Toronto, ON 90036-1234</span></div>
+                  <div class="msg-card-foot">Need to manage your appointment?</div>
+                  <div class="msg-card-links"><a href="#">Reschedule</a> or <a href="#">Cancel</a></div>
+                </div>
+                <p class="muted">Next steps for your appointment:</p>
+                <p class="bold">Flu Shot (Regular)</p>
+                <ul>
+                  <li>A day before your appointment, you&rsquo;ll receive a text/email reminder.</li>
+                  <li>Please arrive 5-10 minutes before your appointment time, and let the pharmacist know when you arrive.</li>
+                  <li>Please bring your insurance information, prescription (if you have one), and wear clothing that makes it easy to access the injection site (most often the upper arm)</li>
+                  <li>You may be asked to wait up to 15 minutes after your</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANE: Assisted Documentation (Clinical Assistant motion graphic) ===== -->
+    <div class="mockup-pane" data-pane="documentation" role="tabpanel">
+      <div class="mockup-host" id="mockupHost">
+        <div class="frame-inner" id="frame">
+        <aside class="side">
+          <h2>Medication Review &ndash;<br>Ontario</h2>
+          <div class="scribe-card">
+            <div class="scribe-title">Clinical Assistant</div>
+            <div class="scribe-row">
+              <span class="timer" id="timer">00:00</span>
+              <span class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            </div>
+            <div class="scribe-bar"><i id="barFill"></i></div>
+            <button class="scribe-btn" id="scribeBtn" type="button">
+              <span class="tri" id="tri"></span><span id="scribeLabel">Start Scribe</span>
+            </button>
+          </div>
+          <nav class="nav-list">
+            <a class="active" href="#">Contact Information</a>
+            <a href="#">Medical Information</a>
+            <a href="#">MedsCheck Patient Intake</a>
+            <a href="#">MedsCheck Patient's Conse&hellip;</a>
+            <a href="#">Clinical Need for Service &amp; S&hellip;</a>
+            <a href="#">Prescriptions</a>
+            <a href="#">OTCs &amp; NHPSs</a>
+            <a href="#">Patient Medical History &amp; All&hellip;</a>
+            <a href="#">Lifestyle</a>
+          </nav>
+        </aside>
+
+        <div class="top">
+          <button class="pill" id="populate" type="button">Populate fields</button>
+          <div class="spacer"></div>
+          <button class="pill ghost" type="button">Hide transcription and notes</button>
+          <span class="x"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        </div>
+
+        <main class="main">
+          <h3 class="h-mo-2">Contact Information</h3>
+          <h4 class="h-mo-3">Personal Information</h4>
+          <div class="row">
+            <div class="field" id="f-first" data-target="Sophia"><span class="label">First Name *</span><span class="val"><span class="typed"></span></span></div>
+            <div class="field" id="f-last" data-target="Ramirez"><span class="label">Last Name *</span><span class="val"><span class="typed"></span></span></div>
+          </div>
+          <div class="row">
+            <div class="field" id="f-dob" data-target="1993-02-01" style="max-width:340px">
+              <span class="label">Date of Birth (YYYY-MM-DD) *</span>
+              <span class="val"><span class="typed"></span></span>
+              <span class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            </div>
+          </div>
+
+          <h4 class="h-mo-3" style="margin-top:24px">Home address</h4>
+          <div class="row">
+            <div class="field" id="f-street" data-target="118 Queen Street West">
+              <span class="placeholder">Street address *</span>
+              <span class="val"><span class="typed"></span></span>
+              <span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field" id="f-apt" data-target="Apt 402">
+              <span class="placeholder">Apartment, suite, etc.</span>
+              <span class="val"><span class="typed"></span></span>
+            </div>
+          </div>
+          <div class="row grid-3" style="display:grid">
+            <div class="field" id="f-city" data-target="Toronto"><span class="placeholder">City *</span><span class="val"><span class="typed"></span></span></div>
+            <div class="field" id="f-prov" data-target="Ontario">
+              <span class="placeholder">Province *</span>
+              <span class="val"><span class="typed"></span></span>
+              <span class="icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </div>
+            <div class="field" id="f-post" data-target="M5H 2N2"><span class="placeholder">Postal Code *</span><span class="val"><span class="typed"></span></span></div>
+          </div>
+
+          <div class="footer-row"><button class="btn-cont" id="continue" type="button">Continue</button></div>
+
+<script is:inline slot="end-of-body" set:html={`/* ============================================================
+   Hero AI-Scribe motion graphic, 16-second loop:
+   cursor → Start Scribe → record/wave/transcription stream →
+   Populate fields → per-field auto-type → note typing →
+   Continue pulse. Mockup scales to fit its responsive container.
+   ============================================================ */
+(function(){
+  'use strict';
+  var host = document.getElementById('mockupHost');
+  var inner = document.getElementById('frame');
+  if (!host || !inner) return;
+
+  function fitMockup(){
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fitMockup);
+  requestAnimationFrame(function(){ requestAnimationFrame(fitMockup); });
+  window.addEventListener('load', fitMockup);
+
+  function $(id){ return document.getElementById(id); }
+  var TOTAL = 16000;
+
+  var SEQ = {
+    cursorToScribe:   { at: 300,   dur: 900 },
+    clickScribe:      { at: 1200 },
+    recordWindow:     { from: 1300, to: 6800 },
+    cursorToPopulate: { at: 6800,  dur: 800 },
+    clickPopulate:    { at: 7600 },
+    fill: [
+      { id: 'f-first',  at: 7800 },
+      { id: 'f-last',   at: 8200 },
+      { id: 'f-dob',    at: 8600 },
+      { id: 'f-street', at: 9100 },
+      { id: 'f-apt',    at: 9550 },
+      { id: 'f-city',   at: 10000 },
+      { id: 'f-prov',   at: 10400 },
+      { id: 'f-post',   at: 10800 }
+    ],
+    cursorToNote:     { at: 11200, dur: 700 },
+    typeNote:         { from: 11900, to: 13200 },
+    cursorToContinue: { at: 13400, dur: 700 },
+    pulseContinue:    { at: 14100 }
+  };
+
+  var TRANS = [
+    { t: "Patient: ", speaker: true },
+    { t: "Hi, I'm Sophia Ramirez. " },
+    { t: "My date of birth is February 1st, 1993. " },
+    { t: "I live at 118 Queen Street West, Apartment 402, in Toronto, Ontario, " },
+    { t: "postal code M5H 2N2. " },
+    { t: "\nPharmacist: ", speaker: true },
+    { t: "Thanks Sophia. I'll book a follow-up next month." }
+  ];
+
+  /* Build the transcription DOM safely (no innerHTML for user-style strings) */
+  (function(){
+    var stream = $('stream');
+    if (!stream) return;
+    TRANS.forEach(function(tok){
+      var wrap = tok.speaker ? document.createElement('span') : stream;
+      if (tok.speaker) { wrap.className = 'speaker'; stream.appendChild(wrap); }
+      tok.t.split('').forEach(function(c){
+        var node = document.createElement('span');
+        if (c === '\n') { node.appendChild(document.createElement('br')); }
+        else if (c === ' ') { node.appendChild(document.createTextNode(' ')); }
+        else { node.textContent = c; }
+        wrap.appendChild(node);
+      });
+    });
+  })();
+
+  function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+
+  function moveCursor(target, dur){
+    dur = dur || 800;
+    var cur = $('cursor');
+    var fr = inner.getBoundingClientRect();
+    var r = target.getBoundingClientRect();
+    var m = new DOMMatrixReadOnly(getComputedStyle(inner).transform);
+    var sx = m.a, sy = m.d;
+    var fx = (r.left - fr.left) / sx + r.width / sx / 2 - 6;
+    var fy = (r.top  - fr.top)  / sy + r.height / sy / 2 - 4;
+    cur.style.transition = 'transform ' + dur + 'ms cubic-bezier(.5,.05,.2,1)';
+    cur.style.transform  = 'translate(' + fx + 'px,' + fy + 'px)';
+  }
+  function moveInstant(x, y){
+    var c = $('cursor');
+    c.style.transition = 'none';
+    c.style.transform  = 'translate(' + x + 'px,' + y + 'px)';
+  }
+  function ripple(){
+    var r = $('ripple');
+    r.classList.remove('go');
+    void r.offsetWidth;
+    r.classList.add('go');
+  }
+
+  var step = -1;
+  var clicked = {};
+
+  function reset(){
+    step = -1;
+    clicked = {};
+    $('scribeBtn').classList.remove('recording','pressed');
+    $('scribeLabel').textContent = 'Start Scribe';
+    $('wave').classList.remove('live');
+    $('barFill').style.width = '0%';
+    $('timer').textContent = '00:00';
+    $('populate').classList.remove('flash');
+    $('continue').classList.remove('pulse');
+    $('stream').style.display = 'none';
+    $('transPh').style.display = 'block';
+    document.querySelectorAll('#stream span').forEach(function(s){ s.classList.remove('on'); });
+    SEQ.fill.forEach(function(it){
+      var f = $(it.id); if (!f) return;
+      f.classList.remove('lit','has-val','filled');
+      var typed = f.querySelector('.typed');
+      typed.textContent = '';
+      typed.classList.remove('caret');
+    });
+    $('notePh').style.display = 'block';
+    $('noteVal').style.display = 'none';
+    $('noteVal').textContent = '';
+    $('noteField').classList.remove('lit');
+  }
+
+  function tick(now){
+    var t = now % TOTAL;
+
+    if (t < 200 && step !== 0) { reset(); step = 0; moveInstant(60, 540); }
+
+    if (t >= SEQ.cursorToScribe.at && step === 0) {
+      moveCursor($('scribeBtn'), SEQ.cursorToScribe.dur); step = 1;
+    }
+    if (t >= SEQ.clickScribe.at && !clicked.scribe) {
+      clicked.scribe = true;
+      ripple();
+      var b = $('scribeBtn');
+      b.classList.add('pressed');
+      setTimeout(function(){ b.classList.remove('pressed'); }, 150);
+      setTimeout(function(){
+        b.classList.add('recording');
+        $('scribeLabel').textContent = 'Stop Scribe';
+        $('wave').classList.add('live');
+      }, 180);
+    }
+    if (t >= SEQ.cursorToPopulate.at && step === 1) {
+      moveCursor($('populate'), SEQ.cursorToPopulate.dur); step = 2;
+    }
+    if (t >= SEQ.clickPopulate.at && !clicked.populate) {
+      clicked.populate = true;
+      ripple();
+      $('populate').classList.add('flash');
+    }
+    if (t >= SEQ.cursorToNote.at && step === 2) {
+      moveCursor($('addBtn'), SEQ.cursorToNote.dur); step = 3;
+    }
+    if (t >= SEQ.cursorToContinue.at && step === 3) {
+      moveCursor($('continue'), SEQ.cursorToContinue.dur); step = 4;
+    }
+    if (t >= SEQ.pulseContinue.at && !clicked.cont) {
+      clicked.cont = true;
+      ripple();
+      $('continue').classList.add('pulse');
+    }
+
+    var rw = SEQ.recordWindow;
+    if (t >= rw.from) {
+      var e = Math.min(rw.to, t) - rw.from;
+      $('timer').textContent = fmt(Math.min(22, Math.floor(e / 1000 * 4)));
+      $('barFill').style.width = (15 + Math.min(1, e / (rw.to - rw.from)) * 70) + '%';
+      var stream = $('stream');
+      var spans = stream.querySelectorAll('span:not(.speaker)');
+      if (stream.style.display !== 'block') {
+        stream.style.display = 'block';
+        $('transPh').style.display = 'none';
+      }
+      var p = Math.min(1, (t - rw.from) / (rw.to - rw.from - 200));
+      var upto = Math.floor(p * spans.length);
+      for (var i = 0; i < spans.length; i++) {
+        if (i < upto) spans[i].classList.add('on');
+      }
+    }
+
+    SEQ.fill.forEach(function(item){
+      var f = $(item.id); if (!f) return;
+      var target = f.dataset.target;
+      var DUR = 380;
+      if (t >= item.at) {
+        f.classList.add('lit','has-val','filled');
+        var typed = f.querySelector('.typed');
+        var p = Math.min(1, (t - item.at) / DUR);
+        var n = Math.floor(p * target.length);
+        typed.textContent = target.slice(0, n);
+        if (p < 1) typed.classList.add('caret'); else typed.classList.remove('caret');
+        if (t - item.at > 700) f.classList.remove('lit');
+      }
+    });
+
+    if (t >= SEQ.typeNote.from) {
+      var txt = "Schedule MedsCheck follow-up in 4 weeks";
+      var pn = Math.min(1, (t - SEQ.typeNote.from) / (SEQ.typeNote.to - SEQ.typeNote.from));
+      var nn = Math.floor(pn * txt.length);
+      $('notePh').style.display = 'none';
+      var v = $('noteVal');
+      v.style.display = 'inline';
+      v.textContent = txt.slice(0, nn);
+      $('noteField').classList.add('lit');
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Marquee carousel, duplicate each track's children once so a
+   translateX(-50%) loop wraps seamlessly (the second set takes
+   the first set's place at the wrap point).
+   ============================================================ */
+(function(){
+  'use strict';
+  document.querySelectorAll('[data-marquee]').forEach(function(track){
+    var originals = Array.prototype.slice.call(track.children);
+    originals.forEach(function(node){
+      var clone = node.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+  });
+})();
+
+/* ============================================================
+   Counter animation, ticks numeric values from 0 to their target
+   when first scrolled into view. Uses easeOutCubic for a smooth
+   settle. Honors prefers-reduced-motion (sets the final value
+   directly without animating).
+   ============================================================ */
+(function(){
+  'use strict';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function format(value, decimals, prefix, suffix){
+    if (decimals > 0) {
+      return prefix + value.toFixed(decimals) + suffix;
+    }
+    return prefix + Math.floor(value).toLocaleString('en-US') + suffix;
+  }
+  function animateCount(el){
+    var target   = parseFloat(el.dataset.count);
+    var decimals = parseInt(el.dataset.decimals || '0', 10);
+    var prefix   = el.dataset.prefix || '';
+    var suffix   = el.dataset.suffix || '';
+    if (isNaN(target)) return;
+    if (reduce) { el.textContent = format(target, decimals, prefix, suffix); return; }
+
+    var duration = 1500;
+    var start = performance.now();
+    function tick(now){
+      var p = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - p, 3); /* easeOutCubic */
+      el.textContent = format(target * eased, decimals, prefix, suffix);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('[data-count]').forEach(animateCount);
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){
+        animateCount(e.target);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(function(el){ observer.observe(el); });
+})();
+
+/* ============================================================
+   Scroll reveal, fades + rises elements as they enter the
+   viewport. Auto-staggers siblings within grid containers.
+   ============================================================ */
+(function(){
+  'use strict';
+  if (!('IntersectionObserver' in window)) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* Targets: every card/stat that should reveal on scroll. */
+  var selectors = [
+    '.h-card',
+    '.trust__stat',
+    '.calc-card',
+    '.tile__head'
+  ];
+  var nodes = document.querySelectorAll(selectors.join(','));
+
+  nodes.forEach(function(node){
+    node.classList.add('reveal');
+    /* Stagger siblings that share a parent grid/row */
+    var parent = node.parentElement;
+    if (!parent) return;
+    var siblings = Array.prototype.filter.call(parent.children, function(c){
+      return c.matches && c.matches(selectors.join(','));
+    });
+    var idx = siblings.indexOf(node);
+    if (idx >= 0 && idx < 6) node.classList.add('is-stagger-' + (idx + 1));
+  });
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){
+        e.target.classList.add('is-visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+})();
+
+/* ============================================================
+   Testimonial slider, auto-rotates every 6s, dot click jumps,
+   hover pauses, respects prefers-reduced-motion (no auto-rotate).
+   ============================================================ */
+(function(){
+  'use strict';
+  var stage = document.querySelector('[data-testimonials]');
+  if (!stage) return;
+  var slides = stage.querySelectorAll('.testimonial');
+  var dots = stage.querySelectorAll('.testimonials__dots button');
+  if (!slides.length) return;
+  var idx = 0;
+  var timer;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function go(i){
+    idx = (i + slides.length) % slides.length;
+    slides.forEach(function(s, j){ s.classList.toggle('testimonial--active', j === idx); });
+    dots.forEach(function(d, j){ d.classList.toggle('active', j === idx); });
+  }
+  function advance(){ go(idx + 1); }
+  function play(){ if (!reduce) timer = setInterval(advance, 6000); }
+  function pause(){ clearInterval(timer); }
+
+  dots.forEach(function(d, i){
+    d.addEventListener('click', function(){ go(i); pause(); play(); });
+  });
+  stage.addEventListener('mouseenter', pause);
+  stage.addEventListener('mouseleave', play);
+  play();
+})();
+
+/* ============================================================
+   Scheduling & Queueing mockup, cursor moves to an empty slot,
+   tooltip appears with patient details, slot fills matcha, and a
+   new queue entry slides in from the top. ~12-second loop.
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('schedHost');
+  var inner = document.getElementById('schedFrame');
+  if (!host || !inner) return;
+
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+  var TOTAL = 9000;
+  var SEQ = {
+    cursorToSlot: { at: 400,  dur: 1600 },
+    slotHover:    { at: 2000 },
+    clickSlot:    { at: 3300 },
+    slotBooked:   { at: 3400 },
+    reset:        { at: 7500 }
+  };
+
+  function moveCursor(target, dur) {
+    dur = dur || 800;
+    var cur = $('schCursor');
+    var fr = inner.getBoundingClientRect();
+    var r = target.getBoundingClientRect();
+    var m = new DOMMatrixReadOnly(getComputedStyle(inner).transform);
+    var sx = m.a, sy = m.d;
+    var fx = (r.left - fr.left) / sx + r.width / sx / 2 - 6;
+    var fy = (r.top - fr.top) / sy + r.height / sy / 2 - 4;
+    cur.style.transition = 'transform ' + dur + 'ms cubic-bezier(.5,.05,.2,1)';
+    cur.style.transform = 'translate(' + fx + 'px,' + fy + 'px)';
+  }
+  function moveInstant(x, y) {
+    var c = $('schCursor');
+    c.style.transition = 'none';
+    c.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+  function ripple() {
+    var r = $('schRipple');
+    r.classList.remove('go');
+    void r.offsetWidth;
+    r.classList.add('go');
+  }
+
+  var step = -1;
+  var clicked = {};
+  var wasHidden = true;
+  var startTime = 0;
+
+  function reset(now) {
+    step = 0;
+    clicked = {};
+    startTime = now || performance.now();
+    var slot = $('schTargetSlot');
+    if (slot) slot.classList.remove('is-hover', 'is-booked');
+    moveInstant(80, 580);
+  }
+
+  function tick(now) {
+    /* Pane is display:none on inactive tabs, host has zero dimensions
+       and DOMMatrixReadOnly would throw parsing 'none'. Skip until the
+       host is visible (Scheduling tab is active). */
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+
+    if (t < 200 && step !== 0) reset(now);
+
+    if (t >= SEQ.cursorToSlot.at && step === 0) {
+      moveCursor($('schTargetSlot'), SEQ.cursorToSlot.dur);
+      step = 1;
+    }
+    if (t >= SEQ.slotHover.at && step === 1) {
+      $('schTargetSlot').classList.add('is-hover');
+      step = 2;
+    }
+    if (t >= SEQ.clickSlot.at && !clicked.slot) {
+      clicked.slot = true;
+      ripple();
+    }
+    if (t >= SEQ.slotBooked.at && step === 2) {
+      var slot = $('schTargetSlot');
+      slot.classList.remove('is-hover');
+      slot.classList.add('is-booked');
+      step = 3;
+    }
+    if (t >= SEQ.reset.at && step === 3) {
+      var s = $('schTargetSlot');
+      if (s) s.classList.remove('is-booked');
+      step = 4;
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Patient Intake motion graphic
+   - Types into 7 form fields one at a time
+   - Progress bar segment between step 2 (current) and step 3
+     fills proportional to typed characters
+   - Cursor clicks Continue → step 2 fills, step 3 activates
+   - Right-side vertical step list updates too
+   - 14-second loop
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('intakeHost');
+  var inner = document.getElementById('intakeFrame');
+  if (!host || !inner) return;
+
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+
+  var FIELDS = [
+    { id: 'fldFirstName', text: 'Jane' },
+    { id: 'fldLastName',  text: 'Doe' },
+    { id: 'fldDOB',       text: '1993-02-01' },
+    { id: 'fldAddress',   text: '311-38 Cameron Street' },
+    { id: 'fldCity',      text: 'Toronto' },
+    { id: 'fldProvince',  text: 'Ontario' },
+    { id: 'fldPostal',    text: 'M5T 0C3' }
+  ];
+  var TOTAL_CHARS = FIELDS.reduce(function (a, f) { return a + f.text.length; }, 0);
+
+  var TOTAL       = 14000;
+  var TYPE_START  = 900;
+  var TYPE_END    = 8700;
+  var CTA_START   = 9200;
+  var CTA_END     = 10100;
+  var CLICK       = 10300;
+  var ADVANCE     = 10500;
+  var RESET_VIS   = 12800;
+
+  var step = -1;
+  var typedIdx = -1;
+  var clicked = false;
+  var wasHidden = true;
+  var startTime = 0;
+
+  function setStepsBaseline() {
+    var steps = host.querySelectorAll('.intake-step');
+    var lines = host.querySelectorAll('.intake-step-line');
+    steps.forEach(function (s, i) {
+      s.classList.remove('is-done', 'is-active');
+      if (i === 0) s.classList.add('is-done');
+      if (i === 1) s.classList.add('is-active');
+    });
+    lines.forEach(function (l, i) {
+      l.classList.toggle('is-done', i === 0);
+    });
+    var vsteps = host.querySelectorAll('.intake-vstep');
+    vsteps.forEach(function (v, i) {
+      v.classList.remove('is-done', 'is-active');
+      if (i === 0) v.classList.add('is-active');
+    });
+  }
+
+  function reset(now) {
+    step = 0;
+    typedIdx = -1;
+    clicked = false;
+    startTime = now || performance.now();
+    FIELDS.forEach(function (f) {
+      var fld = $(f.id);
+      if (!fld) return;
+      fld.classList.remove('is-typing');
+      var v = fld.querySelector('.intake-field-value');
+      if (v) v.textContent = '';
+    });
+    var prog = $('intakeProgress');
+    if (prog) prog.style.width = '0%';
+    setStepsBaseline();
+  }
+
+  function tick(now) {
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+    if (t < 200 && step !== 0) reset(now);
+
+    if (t >= TYPE_START && t < TYPE_END) {
+      var pct = (t - TYPE_START) / (TYPE_END - TYPE_START);
+      if (pct < 0) pct = 0;
+      if (pct > 1) pct = 1;
+      var targetChars = Math.floor(pct * TOTAL_CHARS);
+
+      var consumed = 0;
+      var currentTypingIdx = -1;
+      for (var i = 0; i < FIELDS.length; i++) {
+        var f = FIELDS[i];
+        var fld = $(f.id);
+        if (!fld) continue;
+        var v = fld.querySelector('.intake-field-value');
+        var avail = targetChars - consumed;
+        if (avail <= 0) {
+          if (v) v.textContent = '';
+          fld.classList.remove('is-typing');
+          consumed += 0;
+          continue;
+        }
+        if (avail >= f.text.length) {
+          if (v) v.textContent = f.text;
+          fld.classList.remove('is-typing');
+          consumed += f.text.length;
+        } else {
+          if (v) v.textContent = f.text.substring(0, avail);
+          fld.classList.add('is-typing');
+          currentTypingIdx = i;
+          consumed = targetChars;
+          break;
+        }
+      }
+      var prog = $('intakeProgress');
+      if (prog) prog.style.width = (pct * 100) + '%';
+    } else if (t >= TYPE_END) {
+      var allDone = $('intakeProgress');
+      if (allDone) allDone.style.width = '100%';
+      FIELDS.forEach(function (f) {
+        var fld = $(f.id);
+        if (fld) fld.classList.remove('is-typing');
+        var v = fld && fld.querySelector('.intake-field-value');
+        if (v && v.textContent !== f.text) v.textContent = f.text;
+      });
+    }
+
+    if (t >= CTA_START && step === 0) {
+      step = 1;
+    }
+    if (t >= CLICK && !clicked) {
+      clicked = true;
+    }
+    if (t >= ADVANCE && step === 1) {
+      var steps = host.querySelectorAll('.intake-step');
+      var lines = host.querySelectorAll('.intake-step-line');
+      if (steps[1]) { steps[1].classList.remove('is-active'); steps[1].classList.add('is-done'); }
+      if (lines[1]) { lines[1].classList.add('is-done'); }
+      if (steps[2]) { steps[2].classList.add('is-active'); }
+      var vsteps = host.querySelectorAll('.intake-vstep');
+      if (vsteps[0]) { vsteps[0].classList.remove('is-active'); vsteps[0].classList.add('is-done'); }
+      if (vsteps[1]) { vsteps[1].classList.add('is-active'); }
+      step = 2;
+    }
+    if (t >= RESET_VIS && step === 2) {
+      step = 3;
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Medical Billing pane, fits the 1192x656 frame to the host.
+   No motion graphic (static dashboard).
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('billHost');
+  var inner = document.getElementById('billFrame');
+  if (!host || !inner) return;
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+})();
+
+/* ============================================================
+   Messaging & Follow-Ups motion graphic
+   - 3 phone screens visible side-by-side
+   - Phone 2 (SMS) animates: typing indicator → bubble 1 → typing → bubble 2 → reset
+   - ~10s loop
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('msgHost');
+  var inner = document.getElementById('msgFrame');
+  if (!host || !inner) return;
+
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+
+  var TOTAL = 10000;
+  var SEQ = {
+    typing1On:  500,
+    typing1Off: 1700,
+    bubble1On:  1800,
+    typing2On:  3700,
+    typing2Off: 4900,
+    bubble2On:  5000,
+    reset:      9000
+  };
+
+  var step = -1;
+  var wasHidden = true;
+  var startTime = 0;
+
+  function reset(now) {
+    step = 0;
+    startTime = now || performance.now();
+    var b1 = $('msgBubble1'); if (b1) b1.classList.remove('is-on');
+    var b2 = $('msgBubble2'); if (b2) b2.classList.remove('is-on');
+    var ty = $('msgTyping');  if (ty) ty.classList.remove('is-on');
+  }
+
+  function tick(now) {
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+    if (t < 200 && step !== 0) reset(now);
+
+    if (t >= SEQ.typing1On  && step === 0) { $('msgTyping').classList.add('is-on');    step = 1; }
+    if (t >= SEQ.typing1Off && step === 1) { $('msgTyping').classList.remove('is-on'); step = 2; }
+    if (t >= SEQ.bubble1On  && step === 2) { $('msgBubble1').classList.add('is-on');   step = 3; }
+    if (t >= SEQ.typing2On  && step === 3) { $('msgTyping').classList.add('is-on');    step = 4; }
+    if (t >= SEQ.typing2Off && step === 4) { $('msgTyping').classList.remove('is-on'); step = 5; }
+    if (t >= SEQ.bubble2On  && step === 5) { $('msgBubble2').classList.add('is-on');   step = 6; }
+    if (t >= SEQ.reset      && step === 6) {
+      $('msgBubble1').classList.remove('is-on');
+      $('msgBubble2').classList.remove('is-on');
+      step = 7;
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Product mockup tabs, swap which mockup-pane is visible.
+   Scribe pane re-runs fitMockup() on activation so the inner
+   1192×656 frame scales correctly after being display:none.
+   ============================================================ */
+(function(){
+  'use strict';
+  var tabs = document.querySelectorAll('.tab[data-tab]');
+  var panes = document.querySelectorAll('.mockup-pane[data-pane]');
+
+  function activate(key){
+    tabs.forEach(function(t){
+      var on = t.getAttribute('data-tab') === key;
+      t.classList.toggle('tab--active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    panes.forEach(function(p){
+      p.classList.toggle('mockup-pane--active', p.getAttribute('data-pane') === key);
+    });
+
+    /* Re-fit motion-graphic mockups when their pane becomes active.
+       While display:none, the host had zero dimensions and the inner
+       1192×656 frame's scale collapsed. */
+    function refit(hostId, innerId) {
+      var host = document.getElementById(hostId);
+      var inner = document.getElementById(innerId);
+      if (!host || !inner) return;
+      requestAnimationFrame(function(){
+        var r = host.getBoundingClientRect();
+        var s = Math.min(r.width / 1192, r.height / 656);
+        if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+      });
+    }
+    if (key === 'documentation') refit('mockupHost', 'frame');
+    if (key === 'scheduling')    refit('schedHost', 'schedFrame');
+    if (key === 'intake')        refit('intakeHost', 'intakeFrame');
+    if (key === 'messaging')     refit('msgHost', 'msgFrame');
+    if (key === 'billing')       refit('billHost', 'billFrame');
+  }
+
+  /* ----------------------------------------------------------
+     Auto-rotate tabs every 10 seconds, with a matcha progress
+     bar that fills under the active tab.
+     - Only runs while the tab bar is in the viewport.
+     - Pauses when the browser tab is hidden.
+     - Stops permanently once the user clicks a tab.
+     ---------------------------------------------------------- */
+  var ROTATE_MS    = 10000;
+  var rotateTimer  = null;
+  var userTouched  = false;
+  var inView       = false;
+  var tabBar       = document.querySelector('.tab-bar');
+
+  function activeIdx() {
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].classList.contains('tab--active')) return i;
+    }
+    return 0;
+  }
+  function advance() {
+    if (userTouched || !inView || document.hidden) return;
+    var next = (activeIdx() + 1) % tabs.length;
+    activate(tabs[next].getAttribute('data-tab'));
+    /* Restart the CSS progress animation on the new active tab.
+       The animation runs on .tab--active::after and is keyed to the
+       same 10s as ROTATE_MS, so the bar reaches 100% just as the
+       next interval fires. Forcing reflow guarantees a clean restart
+       even when the same tab key is somehow re-activated. */
+    if (tabBar) {
+      tabBar.classList.remove('is-rotating');
+      void tabBar.offsetWidth;
+      tabBar.classList.add('is-rotating');
+    }
+  }
+  function startRotation() {
+    if (rotateTimer || userTouched) return;
+    if (tabBar) tabBar.classList.add('is-rotating');
+    rotateTimer = setInterval(advance, ROTATE_MS);
+  }
+  function stopRotation() {
+    if (rotateTimer) { clearInterval(rotateTimer); rotateTimer = null; }
+    if (tabBar) tabBar.classList.remove('is-rotating');
+  }
+
+  if (tabBar && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        inView = e.isIntersecting;
+        if (inView && !userTouched) startRotation();
+        else stopRotation();
+      });
+    }, { threshold: 0.3 }).observe(tabBar);
+  } else {
+    inView = true;
+    startRotation();
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stopRotation();
+    else if (inView && !userTouched) startRotation();
+  });
+
+  /* Manual click: stop rotation, activate the chosen tab. The active
+     tab keeps its full-width matcha underline (no animation), so the
+     bar remains a clean static indicator after user interaction. */
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      userTouched = true;
+      stopRotation();
+      activate(t.getAttribute('data-tab'));
+    });
+  });
+})();
+
+/* ============================================================
+   Reimbursement calculator, live update on input change
+   ============================================================ */
+(function(){
+  'use strict';
+  document.querySelectorAll('[data-calc-widget]').forEach(function(widget){
+    var stores = widget.querySelector('[data-calc-stores]');
+    var enc    = widget.querySelector('[data-calc-encounters]');
+    var out    = widget.querySelector('[data-calc-result]');
+    if (!stores || !enc || !out) return;
+
+    var AVG_PER_ENC = 74;
+    var WEEKS = 50;
+    var CAPTURE = 0.78;
+
+    function recalc(){
+      var s = Math.max(0, parseInt(stores.value, 10) || 0);
+      var e = Math.max(0, parseInt(enc.value, 10) || 0);
+      var unlock = Math.round(s * e * WEEKS * AVG_PER_ENC * CAPTURE);
+      out.textContent = '$' + unlock.toLocaleString('en-US');
+    }
+    stores.addEventListener('input', recalc);
+    enc.addEventListener('input', recalc);
+    recalc();
+  });
+})();`}></script>
+</BaseLayoutCa>

@@ -1,0 +1,1098 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LogoMedme from '../../../components/LogoMedme.astro';
+import TrustBandUs from '../../../components/TrustBandUs.astro';
+---
+<BaseLayout
+  title="For Pharmacy Associations, MedMe Health"
+  description="MedMe partners with state and national pharmacy associations to launch clinical-service pilots, expand member revenue, and produce the outcomes data associations need to advance pharmacist scope of practice."
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/partners/pharmacy-associations" />
+  </Fragment>
+
+<style>
+
+  /* ============================================================
+     PHARMACY ASSOCIATIONS sub-page. Built off the Enterprises
+     template (.sub-hero overlap pattern, .tier-grid for dark
+     benefit cards, .rollout-grid for the pilot timeline) plus a
+     bespoke hero "constellation" motion graphic that visualizes
+     the MedMe / Association / Member Pharmacy relationship.
+
+     Featured case study: NCAP Member Pilot. Anchored on the
+     North Carolina Association of Pharmacists collaboration so
+     the page reads as a working proof point, not a pitch deck.
+     ============================================================ */
+
+  /* ====== HERO: constellation motion graphic, faded BG above text */
+  .sub-hero__bg {
+    position: relative;
+    max-width: 1120px;
+    margin: 0 auto;
+    -webkit-mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 50%,
+                          rgba(0, 0, 0, 0) 95%);
+            mask-image: linear-gradient(to bottom,
+                          rgba(0, 0, 0, 1) 0%,
+                          rgba(0, 0, 0, 1) 50%,
+                          rgba(0, 0, 0, 0) 95%);
+    pointer-events: none;
+  }
+  .sub-hero__text {
+    text-align: center;
+    max-width: 760px;
+    margin: -150px auto 0;
+    position: relative;
+    z-index: 2;
+  }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto 1.75rem;
+    max-width: 640px;
+  }
+  @media (max-width: 980px) {
+    .sub-hero__text { margin-top: -100px; }
+  }
+  @media (max-width: 640px) {
+    .sub-hero__text { margin-top: -70px; }
+  }
+
+  /* ====== CONSTELLATION =====================================
+     Three layers, top-down:
+       1. MedMe brand node (center, pulse rings emanating).
+       2. Three association nodes (NCAP front-and-centre, plus
+          two generic state / national labels) in an upper arc.
+       3. Twelve member-pharmacy dots scattered below, each
+          tethered to an association by a tracing line.
+     The whole canvas breathes via stroke-dash and subtle
+     opacity loops so it feels alive without competing with the
+     headline that rises into the bottom fade.
+  */
+  .const {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: 20px;
+    padding: 28px 32px 24px;
+    box-shadow: 0 12px 40px rgba(6, 62, 84, 0.06);
+    position: relative;
+  }
+  .const__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(6, 62, 84, 0.08);
+    font-family: var(--font-display);
+  }
+  .const__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.01em;
+  }
+  .const__legend {
+    display: flex;
+    gap: 14px;
+    font-size: 11px;
+    color: rgba(6, 62, 84, 0.6);
+    font-weight: 500;
+  }
+  .const__legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .const__legend i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .const__stage {
+    position: relative;
+    width: 100%;
+    height: 360px;
+  }
+  .const__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  /* Connection lines: stroke-dash trace continuously */
+  .const__svg .c-line {
+    fill: none;
+    stroke-width: 1.25;
+    stroke-linecap: round;
+    stroke-dasharray: 4 6;
+    animation: const-flow 6s linear infinite;
+  }
+  .const__svg .c-line--up   { stroke: rgba(6, 62, 84, 0.45); }
+  .const__svg .c-line--down { stroke: rgba(195, 196, 48, 0.7); }
+  @keyframes const-flow {
+    from { stroke-dashoffset: 60; }
+    to   { stroke-dashoffset: 0; }
+  }
+  /* Stagger each line a bit so the flow does not feel mechanical */
+  .const__svg .c-line:nth-of-type(2)  { animation-delay: 0.20s; }
+  .const__svg .c-line:nth-of-type(3)  { animation-delay: 0.40s; }
+  .const__svg .c-line:nth-of-type(4)  { animation-delay: 0.60s; }
+  .const__svg .c-line:nth-of-type(5)  { animation-delay: 0.80s; }
+  .const__svg .c-line:nth-of-type(6)  { animation-delay: 1.00s; }
+  .const__svg .c-line:nth-of-type(7)  { animation-delay: 1.20s; }
+  .const__svg .c-line:nth-of-type(8)  { animation-delay: 1.40s; }
+  .const__svg .c-line:nth-of-type(9)  { animation-delay: 1.60s; }
+  .const__svg .c-line:nth-of-type(10) { animation-delay: 1.80s; }
+  .const__svg .c-line:nth-of-type(11) { animation-delay: 2.00s; }
+  .const__svg .c-line:nth-of-type(12) { animation-delay: 2.20s; }
+  .const__svg .c-line:nth-of-type(13) { animation-delay: 2.40s; }
+  .const__svg .c-line:nth-of-type(14) { animation-delay: 2.60s; }
+  .const__svg .c-line:nth-of-type(15) { animation-delay: 2.80s; }
+
+  /* Pharmacy dots: gentle breathe */
+  .const__svg .c-pharm {
+    fill: var(--indigo);
+    animation: const-breathe 4.2s ease-in-out infinite;
+  }
+  .const__svg .c-pharm:nth-of-type(2)  { animation-delay: 0.15s; }
+  .const__svg .c-pharm:nth-of-type(3)  { animation-delay: 0.30s; }
+  .const__svg .c-pharm:nth-of-type(4)  { animation-delay: 0.45s; }
+  .const__svg .c-pharm:nth-of-type(5)  { animation-delay: 0.60s; }
+  .const__svg .c-pharm:nth-of-type(6)  { animation-delay: 0.75s; }
+  .const__svg .c-pharm:nth-of-type(7)  { animation-delay: 0.90s; }
+  .const__svg .c-pharm:nth-of-type(8)  { animation-delay: 1.05s; }
+  .const__svg .c-pharm:nth-of-type(9)  { animation-delay: 1.20s; }
+  .const__svg .c-pharm:nth-of-type(10) { animation-delay: 1.35s; }
+  .const__svg .c-pharm:nth-of-type(11) { animation-delay: 1.50s; }
+  .const__svg .c-pharm:nth-of-type(12) { animation-delay: 1.65s; }
+  @keyframes const-breathe {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.18); }
+    transform-origin: center;
+  }
+
+  /* Association badges: positioned absolutely over SVG, labeled */
+  .const__assn {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1.5px solid var(--indigo);
+    border-radius: 999px;
+    padding: 7px 14px 7px 9px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--indigo);
+    box-shadow: 0 6px 18px rgba(6, 62, 84, 0.08);
+    font-family: var(--font-display);
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+  .const__assn::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--matcha);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(195, 196, 48, 0.25);
+  }
+  .const__assn--ncap  { left: 16%;  top: 18px; }
+  .const__assn--state { left: 46%;  top: 4px;  transform: translateX(-50%); }
+  .const__assn--natl  { right: 16%; top: 18px; }
+  .const__assn--featured { border-color: var(--matcha); background: rgba(195, 196, 48, 0.08); }
+
+  /* MedMe central node, anchored to the middle of the stage */
+  .const__center {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--seashell);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    z-index: 3;
+    box-shadow: 0 8px 24px rgba(6, 62, 84, 0.18);
+  }
+  .const__center svg {
+    width: 56px;
+    height: auto;
+    color: var(--seashell);
+  }
+  .const__center-label {
+    font-size: 9px;
+    color: var(--matcha);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  /* Pulse rings around the center MedMe node */
+  .const__rings {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    width: 0;
+    height: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .const__rings span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1.5px solid rgba(195, 196, 48, 0.5);
+    width: 110px;
+    height: 110px;
+    opacity: 0;
+    animation: const-ring 5s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+  .const__rings span:nth-child(2) { animation-delay: 1.25s; }
+  .const__rings span:nth-child(3) { animation-delay: 2.5s; }
+  .const__rings span:nth-child(4) { animation-delay: 3.75s; }
+  @keyframes const-ring {
+    0%   { transform: translate(-50%, -50%) scale(0.85); opacity: 0; }
+    15%  { opacity: 0.55; }
+    100% { transform: translate(-50%, -50%) scale(3.2); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .const__svg .c-line,
+    .const__svg .c-pharm,
+    .const__rings span { animation: none; }
+    .const__svg .c-line { stroke-dasharray: 0; }
+    .const__svg .c-pharm { opacity: 1; }
+  }
+  @media (max-width: 900px) {
+    .const__stage { height: 320px; }
+    .const__center { width: 92px; height: 92px; }
+    .const__rings span { width: 92px; height: 92px; }
+    .const__assn { font-size: 11px; padding: 6px 12px 6px 8px; }
+  }
+  @media (max-width: 640px) {
+    .const { padding: 18px 16px; }
+    .const__legend { display: none; }
+    .const__stage { height: 280px; }
+    .const__center { width: 76px; height: 76px; }
+    .const__rings span { width: 76px; height: 76px; }
+    .const__assn--ncap  { left: 4%; }
+    .const__assn--natl  { right: 4%; }
+  }
+
+  /* ====== HOW WE PARTNER: 3-card grid (mirrors Strategic Partnership) */
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .partner-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .partner-grid { grid-template-columns: 1fr; } }
+  .partner-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .partner-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .partner-card__graphic {
+    width: 100%;
+    height: 130px;
+    background: rgba(195, 196, 48, 0.06);
+    border-radius: 10px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .partner-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .partner-card p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; }
+
+  /* Card 1: Endorsed platform, three concentric layers fanning out */
+  .pg-endorse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pg-endorse svg { width: 100%; height: 100%; }
+  .pg-endorse .pg-ring {
+    fill: none;
+    stroke: var(--matcha);
+    stroke-width: 1.5;
+    animation: pg-pulse 3.5s ease-in-out infinite;
+    transform-origin: 100px 65px;
+  }
+  .pg-endorse .pg-ring:nth-of-type(1) { animation-delay: 0s;    }
+  .pg-endorse .pg-ring:nth-of-type(2) { animation-delay: 0.4s;  }
+  .pg-endorse .pg-ring:nth-of-type(3) { animation-delay: 0.8s;  }
+  .pg-endorse .pg-dot { fill: var(--indigo); }
+  @keyframes pg-pulse {
+    0%, 100% { opacity: 0.25; transform: scale(0.95); }
+    50%      { opacity: 1;    transform: scale(1.05); }
+  }
+
+  /* Card 2: Pilot cohort, sequenced row of pharmacy nodes lighting up */
+  .pg-cohort {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .pg-cohort .pg-node {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(195, 196, 48, 0.2);
+    border: 1.5px solid rgba(195, 196, 48, 0.4);
+    animation: pg-light 3.2s ease-in-out infinite;
+  }
+  .pg-cohort .pg-node:nth-child(1) { animation-delay: 0s; }
+  .pg-cohort .pg-node:nth-child(2) { animation-delay: 0.18s; }
+  .pg-cohort .pg-node:nth-child(3) { animation-delay: 0.36s; }
+  .pg-cohort .pg-node:nth-child(4) { animation-delay: 0.54s; }
+  .pg-cohort .pg-node:nth-child(5) { animation-delay: 0.72s; }
+  .pg-cohort .pg-node:nth-child(6) { animation-delay: 0.90s; }
+  .pg-cohort .pg-node:nth-child(7) { animation-delay: 1.08s; }
+  @keyframes pg-light {
+    0%, 70%, 100% { background: rgba(195, 196, 48, 0.2); border-color: rgba(195, 196, 48, 0.4); transform: scale(1); }
+    20%, 50%      { background: var(--matcha); border-color: var(--matcha); transform: scale(1.25); }
+  }
+
+  /* Card 3: Outcomes return, ascending bars (data flow back to association) */
+  .pg-data {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 6px;
+    padding: 18px 28px;
+  }
+  .pg-data .pg-bar {
+    width: 14px;
+    background: var(--matcha);
+    border-radius: 3px;
+    animation: pg-bar-grow 4s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  .pg-data .pg-bar:nth-child(1) { height: 30px; animation-delay: 0s; }
+  .pg-data .pg-bar:nth-child(2) { height: 44px; animation-delay: 0.12s; }
+  .pg-data .pg-bar:nth-child(3) { height: 58px; animation-delay: 0.24s; }
+  .pg-data .pg-bar:nth-child(4) { height: 72px; animation-delay: 0.36s; }
+  .pg-data .pg-bar:nth-child(5) { height: 86px; animation-delay: 0.48s; }
+  @keyframes pg-bar-grow {
+    0%, 100% { transform: scaleY(0.8); opacity: 0.55; }
+    50%      { transform: scaleY(1);   opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pg-endorse .pg-ring,
+    .pg-cohort .pg-node,
+    .pg-data .pg-bar { animation: none; opacity: 1; }
+  }
+
+  /* ====== NCAP CASE STUDY SPOTLIGHT =========================
+     A featured navy panel that frames the NCAP pilot as the
+     working proof point. Includes a small "logo-mark" header,
+     the pilot framing, four goal pills, and three service rows.
+  */
+  .ncap {
+    background: var(--indigo);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 2.25rem;
+    color: var(--seashell);
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+    box-shadow: 0 18px 48px rgba(6, 62, 84, 0.16);
+  }
+  @media (max-width: 900px) { .ncap { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 1.5rem; } }
+  .ncap__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(195, 196, 48, 0.18);
+    color: var(--matcha);
+    border-radius: 999px;
+    padding: 5px 12px 5px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-display);
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  .ncap__chip::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .ncap h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.65rem;
+    font-weight: 600;
+    color: var(--seashell);
+    letter-spacing: -0.018em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .ncap__lede {
+    margin: 0 0 1.5rem;
+    color: rgba(250, 249, 245, 0.78);
+    line-height: 1.55;
+    font-size: 1rem;
+  }
+  .ncap__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .ncap__stat {
+    background: rgba(250, 249, 245, 0.06);
+    border: 1px solid rgba(195, 196, 48, 0.18);
+    border-radius: 10px;
+    padding: 0.85rem 0.9rem;
+  }
+  .ncap__stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--matcha);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 4px;
+  }
+  .ncap__stat-label {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(250, 249, 245, 0.65);
+    line-height: 1.3;
+  }
+  .ncap__goals {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .ncap__goals li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.92rem;
+    color: rgba(250, 249, 245, 0.85);
+    line-height: 1.5;
+  }
+  .ncap__goals li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--matcha);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+  /* Right column, services list */
+  .ncap__col-label {
+    font-size: 0.78rem;
+    color: rgba(195, 196, 48, 0.85);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.85rem;
+  }
+  .ncap__svc {
+    background: rgba(250, 249, 245, 0.04);
+    border: 1px solid rgba(250, 249, 245, 0.08);
+    border-radius: 12px;
+    padding: 1rem 1.15rem;
+    margin-bottom: 0.75rem;
+  }
+  .ncap__svc h4 {
+    margin: 0 0 0.3rem;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--seashell);
+  }
+  .ncap__svc p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(250, 249, 245, 0.7);
+    line-height: 1.5;
+  }
+  .ncap__svc-tag {
+    display: inline-block;
+    background: rgba(195, 196, 48, 0.14);
+    color: var(--matcha);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-bottom: 0.45rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ====== MEMBER BENEFITS (4 light cards, mirrors Modular Architecture grid) */
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .benefit-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .benefit-grid { grid-template-columns: 1fr; } }
+  .benefit {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .benefit:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .benefit__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .benefit__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .benefit h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .benefit p {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    font-size: 0.92rem;
+  }
+
+  /* ====== SERVICE MARKETING (4 channel cards, per Sayna #251) === */
+  .mkt-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .mkt-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .mkt-grid { grid-template-columns: 1fr; } }
+  .mkt-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.6rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .mkt-card:hover { transform: translateY(-3px); border-color: rgba(195, 196, 48, 0.42); }
+  .mkt-card__icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+  }
+  .mkt-card__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .mkt-card h3 {
+    margin: 0 0 0.2rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+  }
+  .mkt-card p {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+
+  /* ====== PILOT TIMELINE (4-month flow, mirrors Rollout playbook) */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 900px) { .timeline-grid { grid-template-columns: 1fr; } }
+  .tl-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .tl-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  .tl-card__num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    color: rgba(6, 62, 84, 0.55);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
+  }
+  .tl-card h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .tl-card p { margin: 0; color: rgba(6, 62, 84, 0.72); line-height: 1.55; font-size: 0.95rem; }
+  .tl-card__shape {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tl-card__shape .tl-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .tl-card__shape .tl-dot--dim {
+    background: rgba(195, 196, 48, 0.25);
+  }
+  .tl-card__shape .tl-line {
+    flex: 1;
+    height: 2px;
+    background: rgba(6, 62, 84, 0.12);
+  }
+</style>
+
+<!-- ============= 1. SUB-HERO (constellation motion graphic + headline overlap) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="const">
+        <div class="const__head">
+          <span class="const__title">Association Partnership Network</span>
+          <div class="const__legend">
+            <span><i style="background:var(--indigo)"></i>MedMe</span>
+            <span><i style="background:var(--matcha);box-shadow:0 0 0 2px rgba(195,196,48,0.25)"></i>Association partner</span>
+            <span><i style="background:var(--indigo);opacity:0.55"></i>Member pharmacy</span>
+          </div>
+        </div>
+
+        <div class="const__stage">
+          <!-- Three association badges anchored at top -->
+          <span class="const__assn const__assn--ncap const__assn--featured">NCAP</span>
+          <span class="const__assn const__assn--state">State Association</span>
+          <span class="const__assn const__assn--natl">National Association</span>
+
+          <!-- Pulse rings around the MedMe center -->
+          <div class="const__rings" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <!-- Connection lines + pharmacy member dots.
+               preserveAspectRatio="none" so x in viewBox maps 1:1 to
+               container percentage, aligning the line endpoints with
+               the association badges (which use CSS left percentages). -->
+          <svg class="const__svg" viewBox="0 0 800 360" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Lines from MedMe (center, 400/176) UP to the 3 associations -->
+            <!-- NCAP at ~16% left, top 36px:  approx (128, 32) -->
+            <!-- State at center top:           approx (400, 18) -->
+            <!-- Natl at ~16% right, top 36px:  approx (672, 32) -->
+            <path class="c-line c-line--up" d="M 400 176 L 128 32" />
+            <path class="c-line c-line--up" d="M 400 176 L 400 18" />
+            <path class="c-line c-line--up" d="M 400 176 L 672 32" />
+
+            <!-- Lines from each association DOWN to a cluster of member pharmacies -->
+            <!-- NCAP cluster: 4 pharmacies in the lower-left quadrant -->
+            <path class="c-line c-line--down" d="M 128 32 L  90 280" />
+            <path class="c-line c-line--down" d="M 128 32 L 170 320" />
+            <path class="c-line c-line--down" d="M 128 32 L 240 290" />
+            <path class="c-line c-line--down" d="M 128 32 L 300 330" />
+
+            <!-- State Association cluster: 4 pharmacies in the center-bottom -->
+            <path class="c-line c-line--down" d="M 400 18 L 360 305" />
+            <path class="c-line c-line--down" d="M 400 18 L 430 335" />
+            <path class="c-line c-line--down" d="M 400 18 L 470 290" />
+            <path class="c-line c-line--down" d="M 400 18 L 510 320" />
+
+            <!-- National Association cluster: 4 pharmacies in the lower-right quadrant -->
+            <path class="c-line c-line--down" d="M 672 32 L 560 295" />
+            <path class="c-line c-line--down" d="M 672 32 L 620 335" />
+            <path class="c-line c-line--down" d="M 672 32 L 680 290" />
+            <path class="c-line c-line--down" d="M 672 32 L 720 320" />
+
+            <!-- Member-pharmacy dots, 12 total -->
+            <circle class="c-pharm" cx="90"  cy="280" r="5" />
+            <circle class="c-pharm" cx="170" cy="320" r="5" />
+            <circle class="c-pharm" cx="240" cy="290" r="5" />
+            <circle class="c-pharm" cx="300" cy="330" r="5" />
+            <circle class="c-pharm" cx="360" cy="305" r="5" />
+            <circle class="c-pharm" cx="430" cy="335" r="5" />
+            <circle class="c-pharm" cx="470" cy="290" r="5" />
+            <circle class="c-pharm" cx="510" cy="320" r="5" />
+            <circle class="c-pharm" cx="560" cy="295" r="5" />
+            <circle class="c-pharm" cx="620" cy="335" r="5" />
+            <circle class="c-pharm" cx="680" cy="290" r="5" />
+            <circle class="c-pharm" cx="720" cy="320" r="5" />
+          </svg>
+
+          <!-- MedMe brand center node, anchored to middle of stage -->
+          <div class="const__center" aria-hidden="true">
+            <LogoMedme />
+            <span class="const__center-label">PLATFORM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-hero__text">
+      <span class="kicker kicker--matcha">For Pharmacy Associations</span>
+      <h1 class="h-display">You passed the legislation.<br>Now turn it into everyday practice.</h1>
+      <p class="sub-hero__lede">MedMe helps turn expanded scope into everyday practice. We work with your association to equip members with an all-in-one, AI-enabled platform that gives them the workflows, clinical tools, documentation support, and billing capabilities they need to launch clinical services, operate with confidence, and get reimbursed for the care they are now able to provide as clinicians.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/us/contact">Partnerships inquiry <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<TrustBandUs />
+
+<!-- ============= 2. HOW WE PARTNER (3 motion cards, repositioned per Sayna #245 and #247) ============= -->
+<section class="tile tile--light" aria-label="How we partner with associations">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">How We Partner With Associations</span>
+      <h2 class="h-display">Built around the priorities<br>that matter most to your association.</h2>
+      <p class="lead">Associations are in two businesses at once: attracting and retaining the members who pay your dues, and advancing pharmacy advocacy with policymakers and payers. MedMe is built to support both, with an all-in-one platform members can rally around and outcomes data your team can take to the table.</p>
+    </div>
+    <div class="partner-grid">
+      <article class="partner-card">
+        <div class="partner-card__graphic pg-endorse" aria-hidden="true">
+          <svg viewBox="0 0 200 130" preserveAspectRatio="xMidYMid meet">
+            <circle class="pg-ring" cx="100" cy="65" r="22" />
+            <circle class="pg-ring" cx="100" cy="65" r="38" />
+            <circle class="pg-ring" cx="100" cy="65" r="54" />
+            <circle class="pg-dot" cx="100" cy="65" r="6" />
+          </svg>
+        </div>
+        <h3>Attract and retain members</h3>
+        <p>Offer your members unmatched access to an all-in-one, AI-enabled platform that helps pharmacies get reimbursed, run more successful businesses, and scale their clinical service offerings with minimal additional headcount.</p>
+      </article>
+      <article class="partner-card">
+        <div class="partner-card__graphic pg-data" aria-hidden="true">
+          <span class="pg-bar"></span>
+          <span class="pg-bar"></span>
+          <span class="pg-bar"></span>
+          <span class="pg-bar"></span>
+          <span class="pg-bar"></span>
+        </div>
+        <h3>Advance your advocacy</h3>
+        <p>Surface billing and clinical-service data your team can share with legislators and policymakers to demonstrate the impact of pharmacist-delivered care, and with payers to advance pharmacist reimbursement models.</p>
+      </article>
+      <article class="partner-card">
+        <div class="partner-card__graphic pg-cohort" aria-hidden="true">
+          <span class="pg-node"></span>
+          <span class="pg-node"></span>
+          <span class="pg-node"></span>
+          <span class="pg-node"></span>
+          <span class="pg-node"></span>
+          <span class="pg-node"></span>
+          <span class="pg-node"></span>
+        </div>
+        <h3>Hand in hand on statewide protocols</h3>
+        <p>We work alongside your team to configure custom workflows aligned to statewide protocols, making clinical knowledge accessible to pharmacies at the point of care.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. CASE STUDY SPOTLIGHT (North Carolina Association of Pharmacists) ============= -->
+<section class="tile tile--light" aria-label="North Carolina Association of Pharmacists Member Pilot case study">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Featured Case Study</span>
+      <h2 class="h-display">The North Carolina Association<br>of Pharmacists Member Pilot.</h2>
+      <p class="lead">The North Carolina Association of Pharmacists is partnering with MedMe to support North Carolina community pharmacies as they expand pharmacist-provided clinical services under statewide protocols. A working blueprint for how association partnerships can move from policy to operations.</p>
+    </div>
+
+    <div class="ncap">
+      <div class="ncap__left">
+        <span class="ncap__chip">North Carolina Association of Pharmacists &times; MedMe Health</span>
+        <h3>A limited pilot, designed to make it easier to deliver, document, and get paid for eligible clinical services.</h3>
+        <p class="ncap__lede">A focused cohort of North Carolina pharmacies, helping the Association and MedMe evaluate workflows, billing readiness, and operational impact as pharmacist scope of practice continues to expand across the state.</p>
+
+        <div class="ncap__stats">
+          <div class="ncap__stat">
+            <span class="ncap__stat-value">10 to 15</span>
+            <span class="ncap__stat-label">Pharmacies in the cohort</span>
+          </div>
+          <div class="ncap__stat">
+            <span class="ncap__stat-value">~4 mo.</span>
+            <span class="ncap__stat-label">Pilot duration</span>
+          </div>
+          <div class="ncap__stat">
+            <span class="ncap__stat-value">3</span>
+            <span class="ncap__stat-label">Pilot services</span>
+          </div>
+        </div>
+
+        <ul class="ncap__goals">
+          <li>Grow sustainable revenue beyond dispensing as margins remain compressed.</li>
+          <li>Increase prescription fills and front-of-house sales by bringing more patients into the pharmacy setting.</li>
+          <li>Practice at the top of your license, with less time on manual documentation and billing follow-up.</li>
+          <li>Improve access to affordable care in your community, outside higher-cost care settings.</li>
+        </ul>
+      </div>
+
+      <div class="ncap__right">
+        <p class="ncap__col-label">Pilot Services</p>
+
+        <div class="ncap__svc">
+          <span class="ncap__svc-tag">Reimbursement active</span>
+          <h4>Hormonal Contraceptives</h4>
+          <p>NC Medicaid opened enrollment for pharmacists to bill medical claims under the Self-Administered Hormonal Contraceptive Protocol beginning January 2024.</p>
+        </div>
+
+        <div class="ncap__svc">
+          <span class="ncap__svc-tag">Reimbursement active</span>
+          <h4>Nicotine Replacement Therapy</h4>
+          <p>NC Medicaid added clinical-service reimbursement for pharmacies using the statewide NRT protocol effective August 1, 2024.</p>
+        </div>
+
+        <div class="ncap__svc">
+          <span class="ncap__svc-tag">Authority defined</span>
+          <h4>Influenza Test and Treat</h4>
+          <p>Legal authority is defined with an October 1, 2025 effective timeline and a required standing order. During the pilot, services can be supported as cash pay while reimbursement operationalizes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. WHAT MEMBERS GET (4 benefit cards) ============= -->
+<section class="tile tile--light" aria-label="What member pharmacies get">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">What Member Pharmacies Get</span>
+      <h2 class="h-display">Workflows, billing, and pricing,<br>tuned to your protocols.</h2>
+      <p class="lead">Member benefits are structured around the four things that move clinical services from on-paper authority to in-practice revenue: protocol-aligned workflows, medical billing support, ROI clarity, and association-discounted pricing.</p>
+    </div>
+    <div class="benefit-grid">
+      <article class="benefit">
+        <span class="benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="16" height="18" rx="2" />
+            <path d="M8 8h8M8 12h8M8 16h5" />
+          </svg>
+        </span>
+        <h3>Protocol-aligned digital workflows</h3>
+        <p>State protocol-aligned intake, consent, and documentation flows so each clinical service is captured the way the protocol expects.</p>
+      </article>
+      <article class="benefit">
+        <span class="benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M5 9h14M5 15h14" />
+          </svg>
+        </span>
+        <h3>Medical billing workflows and support</h3>
+        <p>Medicaid medical billing where reimbursement is active, with claim quality checks and submission tracking built into the service workflow.</p>
+      </article>
+      <article class="benefit">
+        <span class="benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 17l5-5 4 4 8-8" />
+            <path d="M14 8h6v6" />
+          </svg>
+        </span>
+        <h3>State-tailored ROI calculator</h3>
+        <p>An ROI calculator tuned to each state's reimbursement environment, so members can estimate impact by service volume before they ramp up.</p>
+      </article>
+      <article class="benefit">
+        <span class="benefit__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 4h12l-1 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 4z" />
+            <path d="M9 8h6M10 12h4" />
+          </svg>
+        </span>
+        <h3>Member pricing and pilot support</h3>
+        <p>Discounted subscription plus reduced billing fees compared to typical rates, alongside scheduled check-ins to capture outcomes and refine workflows.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. SERVICE MARKETING (4 channel cards, per Sayna #251) ============= -->
+<section class="tile tile--light" aria-label="Service marketing capabilities">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Service Marketing Capabilities</span>
+      <h2 class="h-display">Help members fill the chairs,<br>not just open the door.</h2>
+      <p class="lead">Once members are live with clinical services, marketing them is the next hurdle. The MedMe platform ships with the service-marketing tools your members need to find patients and bring them through the door, built into the same workflow they use to book and document the visit.</p>
+    </div>
+    <div class="mkt-grid">
+      <article class="mkt-card">
+        <span class="mkt-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="11" r="8"/><circle cx="12" cy="11" r="3"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+        </span>
+        <h3>Reserve with Google</h3>
+        <p>Member pharmacies surface directly in Google Search and Maps. Patients book a clinical service straight from the listing into the pharmacy's MedMe calendar.</p>
+      </article>
+      <article class="mkt-card">
+        <span class="mkt-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
+        </span>
+        <h3>Mass email and SMS</h3>
+        <p>Targeted patient-outreach campaigns from the same place pharmacies run booking and documentation. Send flu-season reminders, MTM follow-ups, and adherence nudges in a few clicks.</p>
+      </article>
+      <article class="mkt-card">
+        <span class="mkt-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+        </span>
+        <h3>In-store collateral library</h3>
+        <p>Print-ready posters, shelf-talkers, and counter handouts for every clinical service your members offer. Co-branded with the association when partnerships call for it.</p>
+      </article>
+      <article class="mkt-card">
+        <span class="mkt-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <h3>Patient outreach campaigns</h3>
+        <p>Voice and chat campaigns that book the appointment, not just remind about it. Pair Reserve with Google with outbound calls for end-to-end demand generation.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 6. PILOT TIMELINE (4-month structure, 3 phase cards) ============= -->
+<section class="tile tile--light" aria-label="Pilot timeline">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">A Four-Month Pilot Structure</span>
+      <h2 class="h-display">A clear path from go-live<br>to a statewide scaling plan.</h2>
+      <p class="lead">Every association pilot follows the same three-phase structure: stand it up, optimize it, then bring outcomes back to the table. Designed so leadership has decision-ready insights before the pilot window closes.</p>
+    </div>
+    <div class="timeline-grid">
+      <article class="tl-card">
+        <div class="tl-card__shape" aria-hidden="true">
+          <span class="tl-dot"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot tl-dot--dim"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot tl-dot--dim"></span>
+        </div>
+        <p class="tl-card__num">Month 01</p>
+        <h3>Go-live and ramp-up</h3>
+        <p>Pilot pharmacies launch services and begin delivering appointments through MedMe workflows. Onboarding, training, and protocol configuration land in the first month.</p>
+      </article>
+      <article class="tl-card">
+        <div class="tl-card__shape" aria-hidden="true">
+          <span class="tl-dot"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot tl-dot--dim"></span>
+        </div>
+        <p class="tl-card__num">Months 02 to 03</p>
+        <h3>Evaluation and optimization</h3>
+        <p>Track utilization, claim submission performance, and pharmacy feedback. Optimize workflows, documentation, and billing rules to improve results across the cohort.</p>
+      </article>
+      <article class="tl-card">
+        <div class="tl-card__shape" aria-hidden="true">
+          <span class="tl-dot"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot"></span>
+        </div>
+        <p class="tl-card__num">Month 04</p>
+        <h3>Outcomes and scaling plan</h3>
+        <p>Consolidate outcomes and ROI insights, then align with the association on next steps for scaling services and onboarding additional sites across the state.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 7. CLOSING CTA (navy, centered, pulse-rings motion) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Partner with us">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Partner With Us</span>
+      <h2 class="h-display">Let's build the pilot<br>that moves your members forward.</h2>
+      <p class="lead">A 30-minute conversation with our partnerships team. We will scope a pilot cohort, walk through the protocols your members are ready to launch, and outline the outcomes structure your association would receive.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Partnerships inquiry <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>

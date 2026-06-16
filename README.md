@@ -1,119 +1,77 @@
-# MedMe Health — Website Mockup
+# MedMe Health, Website
 
-Static HTML mockups of a redesigned MedMe Health marketing site, with
-two regional homepages (United States and Canada), 49 supporting
-sub-pages, and a tiny Python build system that keeps shared chrome
-(nav, util-bar, footer) in single-source partials.
+The redesigned MedMe Health marketing site, built with Astro 5. Two
+regional homepages (United States and Canada) and ~60 supporting
+sub-pages, with shared nav / footer / util-bar as Astro components
+and long-form copy authored as Markdown Content Collections.
 
 ## Live preview
 
-Hosted on Netlify — open **[medmehealth.netlify.app](https://medmehealth.netlify.app)**
-to land on the region picker, or jump directly:
+Currently hosted on GitHub Pages at
+**[andrewbaek-design.github.io](https://andrewbaek-design.github.io/)**
+during the iteration phase. The eventual destination is the company
+GitHub org; the migration ships in one batched move after the
+redesign stabilizes.
 
-- [US Homepage](https://medmehealth.netlify.app/us)
-- [Canada Homepage](https://medmehealth.netlify.app/ca)
-
-Or run locally — `open index.html` lands on the region picker. For the
-no-`.html` clean URLs to work locally you'll want a tiny HTTP server:
-`python3 -m http.server 8000`.
-
-## Deploying changes
+## Quickstart
 
 ```sh
-python3 build.py              # regenerate output HTML from src/ + partials/
-netlify deploy --prod --dir=. # push to https://medmehealth.netlify.app
+cd astro
+npm install       # first time only
+npm run dev       # http://localhost:4321
 ```
 
-Auto-deploy on `git push` is intentionally *not* wired up — manual
-CLI deploys keep us in control of when build minutes are consumed.
-
-## URL hierarchy
-
-The site uses clean, extensionless URLs throughout. Files live under
-the same path as the URL serves them at; Netlify resolves `/us/pricing`
-to the file `us/pricing.html` automatically.
-
-| URL                              | File                            |
-|----------------------------------|---------------------------------|
-| `/`                              | `index.html` (region picker)    |
-| `/us`                            | `us/index.html`                 |
-| `/us/pricing`                    | `us/pricing.html`               |
-| `/us/platform/ai-scribe`         | `us/platform/ai-scribe.html`    |
-| `/ca`                            | `ca/index.html`                 |
-| `/ca/platform/ai-concierge`      | `ca/platform/ai-concierge.html` |
-| `/login`                         | `login.html`                    |
-| `/legal/privacy`                 | `legal/privacy.html`            |
-| `/company/careers`               | `company/careers.html`          |
-| `/assets/brand.css`              | `assets/brand.css`              |
-| `/assets/site.js`                | `assets/site.js`                |
+Visit `/us/`, `/ca/`, `/legal/privacy/`, `/us/about/`, etc. The root
+`/` is a geo-aware redirect splash.
 
 ## Repository layout
 
 ```
 .
-├── index.html              Region-picker landing page (/)
-├── us/                     United States site (/us, /us/pricing, …)
-│   ├── index.html          US homepage
-│   ├── pricing.html
-│   ├── about.html
-│   ├── contact.html
-│   ├── customers/
-│   ├── pharmacy/
-│   ├── platform/
-│   └── resources/
-├── ca/                     Canada site (/ca, /ca/pricing, …)
-│   └── …                   Same shape as us/
-├── legal/                  /legal/privacy, /legal/terms, etc.
-├── company/                /company/careers, /company/press, /company/status
-├── login.html              /login
-├── assets/                 Shared CSS + JS
-│   ├── brand.css
-│   └── site.js
-├── partials/               Shared HTML fragments — edit these
-│   ├── nav-us.html, nav-ca.html
-│   ├── util-bar-us.html, util-bar-ca.html
-│   ├── footer-us.html, footer-ca.html
-│   └── logo-medme.html
-├── src/                    Source templates — edit these, mirror the
-│   ├── us/                 published path of each page
-│   ├── ca/
-│   ├── legal/
-│   ├── company/
-│   └── login.html
-├── build.py                Template engine (stdlib Python)
-├── BUILD.md                Build system documentation
-└── netlify.toml            Deploy config
+├── CLAUDE.md                Project conventions, hard rules, design system
+├── README.md                You are here
+├── .gitignore               astro/dist, astro/node_modules, local artifacts
+├── .github/workflows/       GitHub Actions deploy pipeline
+└── astro/                   All source + Astro project
+    ├── src/
+    │   ├── pages/           File-based routes (us/, ca/, legal/, company/)
+    │   ├── layouts/         BaseLayout.astro (US), BaseLayoutCa.astro (CA)
+    │   ├── components/      NavUs, NavCa, FooterUs, FooterCa, UtilBarUs, …
+    │   ├── content/         Markdown content collections (legal/, us/)
+    │   └── content.config.ts   Zod schemas
+    ├── public/assets/       brand.css, homepage-us.css, site.js, SVGs
+    ├── astro.config.mjs
+    └── package.json
 ```
 
-## Workflow
+## Deploy
 
-```sh
-# Preview locally (need an HTTP server for clean URLs)
-python3 -m http.server 8000
-open http://localhost:8000/
+`.github/workflows/pages.yml` runs on every push to `main`:
 
-# After editing a partial or source template
-python3 build.py
+1. Install Node 20 + npm cache
+2. `npm ci` in `astro/`
+3. `npm run build` → `astro/dist/`
+4. Upload artifact, deploy to GitHub Pages
 
-# Verify nothing has drifted before publishing
-python3 build.py --check       # exits 1 if a rebuild would change output
-```
-
-Full build-system docs in [BUILD.md](BUILD.md).
+Manual re-deploys are available from the Actions tab via
+`workflow_dispatch`.
 
 ## Design
 
-Brand identity follows the **MedMe Brandguide v1.0** (Feb 2022):
+Brand identity follows the MedMe Brandguide v1.0:
 
-| Token         | Hex       | Role                                       |
-|---------------|-----------|--------------------------------------------|
-| `--indigo`    | `#063E54` | Primary — most-used colour                 |
-| `--seashell`  | `#FFF7F2` | Primary — warm off-white (not pure white)  |
-| `--matcha`    | `#C3C430` | Secondary accent — use sparingly           |
+| Token        | Hex       | Role                                       |
+|--------------|-----------|--------------------------------------------|
+| `--indigo`   | `#063E54` | Primary, most-used colour                  |
+| `--seashell` | `#FAF9F5` | Warm off-white background (not pure white) |
+| `--matcha`   | `#C3C430` | Secondary accent, use sparingly            |
 
-Typography: **Urbanist Semibold** for headlines, **Montserrat Bold All-Caps**
-for subheads, **Montserrat Medium** for body. Both from Google Fonts.
+Typography: Montserrat across the site. Variable weights 400-800.
+Urbanist is loaded as a backup display face on legacy legal pages.
+
+See [CLAUDE.md](CLAUDE.md) for the full conventions, hard rules, and
+component / collection patterns.
 
 ## License
 
-Internal mockup. All rights reserved.
+Internal. All rights reserved.

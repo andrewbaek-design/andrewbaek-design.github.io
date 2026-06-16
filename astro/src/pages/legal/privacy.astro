@@ -1,0 +1,50 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const entry = await getEntry('legal', 'privacy');
+if (!entry) throw new Error('legal/privacy content not found');
+const { Content } = await render(entry);
+const { title, description, kicker, headline, lede } = entry.data;
+---
+<BaseLayout title={title} description={description}>
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="page-hero__content">
+        <div class="page-hero__breadcrumb">
+          <a href="/us">Home</a><span class="sep">›</span> Legal <span class="sep">›</span> Privacy
+        </div>
+        <span class="eyebrow eyebrow--matcha">{kicker}</span>
+        <h1>{headline}</h1>
+        <p class="page-hero__lede" set:html={lede}></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="wrap">
+      <div style="display: grid; grid-template-columns: 240px 1fr; gap: 3rem; align-items: start;">
+        <aside class="toc" style="position: sticky; top: 6rem;">
+          <h4>On this page</h4>
+          <ul>
+            <li><a href="#scope">Scope &amp; controllers</a></li>
+            <li><a href="#collect">Information we collect</a></li>
+            <li><a href="#use">How we use information</a></li>
+            <li><a href="#sharing">How we share</a></li>
+            <li><a href="#rights">Your rights</a></li>
+            <li><a href="#children">Children's privacy</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="#transfers">International transfers</a></li>
+            <li><a href="#cookies">Cookies</a></li>
+            <li><a href="#retention">Retention</a></li>
+            <li><a href="#changes">Changes</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </aside>
+        <article class="prose">
+          <Content />
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,2105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LogoMedme from '../../components/LogoMedme.astro';
+---
+<BaseLayout
+  title="MedMe Health, The pharmacy EHR built for clinical services and medical billing"
+  description="MedMe is the pharmacy-specific EHR that documents every encounter and turns it into a clean Medicare Part B claim. Built with US pharmacy operators."
+  lang="en-US"
+>
+  <Fragment slot="head">
+  <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/" />
+  <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
+  <link rel="alternate" hreflang="x-default" href="https://medmehealth.com/" />
+  <link rel="stylesheet" href="/assets/homepage-us.css" />
+  <script type="application/ld+json" is:inline set:html={`{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "MedMe Health",
+  "url": "https://medmehealth.com",
+  "logo": "https://medmehealth.com/logo.svg",
+  "sameAs": ["https://www.linkedin.com/company/medme-health/"]
+}`}></script>
+  <script type="application/ld+json" is:inline set:html={`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MedMe Pharmacy EHR + Medical Billing",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "offers": {"@type":"Offer","price":"0","priceCurrency":"USD","description":"Contact sales for pricing"},
+  "audience": {"@type":"Audience","audienceType":"Pharmacy operators in the United States"}
+}`}></script>
+  </Fragment>
+
+<!-- ============= 1. HERO (2-column: text left, product mockup carousel right, per Fawad #203) ============= -->
+<section class="hero-2col" aria-label="Hero">
+  <div class="hero-2col__inner">
+    <div class="hero-2col__text hero-end">
+      <span class="hero-pill">
+        <span class="hero-pill__dot" aria-hidden="true"></span>
+        North America's Pharmacy Clinical Services Platform
+      </span>
+      <h1>
+        <span>The end-to-end platform for <span style="color: var(--matcha); display: inline;">pharmacy clinical services</span>.</span>
+        <span>From launch to reimbursement.</span>
+      </h1>
+      <p class="sub">
+        <span>MedMe gives pharmacies the infrastructure to launch, scale, and get paid for clinical services.</span>
+        <span>AI-native, modular, API-driven, built for how pharmacy actually works.</span>
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary btn--lg" href="/us/contact">Book a 20-Min Demo <span class="arrow">&rarr;</span></a>
+        <a class="btn btn-ghost btn--lg" href="/us/resources/roi-calculator">Run the ROI calculator</a>
+      </div>
+    </div>
+    <div class="hero-2col__media">
+
+<!-- ============= LEGACY MOCKUPS (now ACTIVE, auto-rotate, tab bar hidden via .tab-bar-wrap { display: none }) ============= -->
+<div class="legacy-mockups">
+<div class="tab-bar-wrap">
+  <div class="tab-bar" role="tablist" aria-label="Product mockup tabs">
+    <button class="tab tab--active"   type="button" data-tab="scheduling"    role="tab" aria-selected="true">Scheduling &amp; Queueing</button>
+    <button class="tab"               type="button" data-tab="intake"        role="tab" aria-selected="false">Patient Intake Forms</button>
+    <button class="tab"               type="button" data-tab="documentation" role="tab" aria-selected="false">Assisted Documentation</button>
+    <button class="tab"               type="button" data-tab="billing"       role="tab" aria-selected="false">Medical Billing</button>
+    <button class="tab"               type="button" data-tab="messaging"     role="tab" aria-selected="false">Messaging &amp; Follow-Ups</button>
+  </div>
+</div>
+
+<div class="visual-wrap" aria-hidden="true">
+  <!-- Global workflow indicator, visualizes the 4-stage process as the
+       mockup rotation cycles. Active stage updates from the rotation
+       activate() hook below. -->
+  <div class="hero-workflow" aria-hidden="true">
+    <div class="hw-stages">
+      <div class="hw-stage is-active" data-pane-key="scheduling">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Scheduling</span>
+      </div>
+      <div class="hw-arrow"></div>
+      <div class="hw-stage" data-pane-key="intake">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Patient Intake</span>
+      </div>
+      <div class="hw-arrow"></div>
+      <div class="hw-stage" data-pane-key="documentation">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Consult Complete</span>
+      </div>
+      <div class="hw-arrow"></div>
+      <div class="hw-stage" data-pane-key="billing">
+        <span class="hw-dot"></span>
+        <span class="hw-label">Medical Billing</span>
+      </div>
+      <div class="hw-arrow" data-arrow="paid"></div>
+      <div class="hw-stage" data-pane-key="paid">
+        <span class="hw-dot"></span>
+        <span class="hw-dot-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </span>
+        <span class="hw-label">Get Paid</span>
+      </div>
+    </div>
+  </div>
+  <div class="visual-halo"></div>
+  <div class="visual-frame"></div>
+
+  <!-- .mockup-stack wraps the 5 mockup panes so .is-leaving (which is
+       position: absolute; top: 0) anchors to the panes' own slot, not
+       to the top of .visual-wrap. Without this wrapper, the outgoing
+       pane teleports over the .hero-workflow chip strip during the
+       0.6s cross-fade and reads as a "ghost bar" floating above the
+       carousel. -->
+  <div class="mockup-stack">
+
+    <!-- ===== PANE: Scheduling & Queueing ===== -->
+    <div class="mockup-pane mockup-pane--active" data-pane="scheduling" role="tabpanel">
+      <div class="mockup-host" id="schedHost">
+        <div class="frame-inner" id="schedFrame">
+
+          <!-- LEFT CARD, MedMe Pharmacy booking widget -->
+          <section class="sched-book" aria-label="Booking widget">
+
+            <div class="sched-grid-card">
+              <div class="sched-grid-nav">
+                <button class="sched-nav-arrow" type="button" aria-label="Previous week">&#x2039;</button>
+                <span class="sched-nav-label">This week</span>
+                <button class="sched-nav-arrow" type="button" aria-label="Next week">&#x203A;</button>
+              </div>
+
+              <div class="sched-grid">
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 11</div><div class="sched-col-day">Mon</div></div>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 12</div><div class="sched-col-day">Tue</div></div>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 13</div><div class="sched-col-day">Wed</div></div>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button" id="schTargetSlot">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 14</div><div class="sched-col-day">Thu</div></div>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
+                </div>
+                <div class="sched-col">
+                  <div class="sched-col-head"><div class="sched-col-date">Aug 15</div><div class="sched-col-day">Fri</div></div>
+                  <button class="sched-slot" type="button">9:00 AM</button>
+                  <button class="sched-slot" type="button">9:15 AM</button>
+                  <button class="sched-slot" type="button">9:30 AM</button>
+                  <button class="sched-slot" type="button">9:45 AM</button>
+                  <button class="sched-slot" type="button">10:00 AM</button>
+                  <button class="sched-slot" type="button">10:15 AM</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Store Locator removed per direction 2026-05-26, calendar view is the sole focus of the Scheduling mockup. -->
+
+          <div class="cursor" id="schCursor">
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
+              <path d="M2 1.5l14.5 9.4-6.4 1.6-2.6 6.5L2 1.5z" fill="#0c1217" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            <span class="ripple" id="schRipple"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANE: Patient Intake Forms ===== -->
+    <div class="mockup-pane" data-pane="intake" role="tabpanel">
+      <div class="mockup-host" id="intakeHost">
+        <div class="frame-inner" id="intakeFrame">
+
+          <div class="intake-body intake-body--minimal">
+            <div class="intake-card-left intake-card-left--minimal">
+
+              <div class="intake-form intake-form--minimal">
+                <div class="intake-fields-row row-1">
+                  <div class="intake-field intake-field--big" id="fldFirstName">
+                    <span class="intake-field-label">Full Name</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+                <div class="intake-fields-row row-1">
+                  <div class="intake-field intake-field--big" id="fldDOB">
+                    <span class="intake-field-label">Date of Birth</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+                <div class="intake-fields-row row-1">
+                  <div class="intake-field intake-field--big" id="fldPhone">
+                    <span class="intake-field-label">Phone</span>
+                    <div class="intake-field-value"></div>
+                  </div>
+                </div>
+
+                <button class="intake-cta intake-cta--big" type="button" id="intakeCta">Continue</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Confirmation popup, appears when Continue is "clicked." -->
+          <div class="intake-popup" id="intakePopup" aria-hidden="true">
+            <div class="intake-popup__inner">
+              <div class="intake-popup__check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div class="intake-popup__title">Appointment booked!</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANE: Medical Billing ===== -->
+    <div class="mockup-pane" data-pane="billing" role="tabpanel">
+      <div class="mockup-host" id="billHost">
+        <div class="frame-inner" id="billFrame">
+
+          <div class="bill-minimal">
+            <!-- Claim header, patient + service + coverage -->
+            <div class="bill-card bill-claim-header">
+              <div class="bill-claim-tag">Auto-coded from encounter note</div>
+              <h2 class="bill-claim-patient">Sophia Ramirez</h2>
+              <div class="bill-claim-sub">Annual MTM Review &middot; Medicare Part&nbsp;B</div>
+            </div>
+
+            <!-- Auto-coded CPT rows, type in sequentially -->
+            <div class="bill-card bill-codes-card">
+              <div class="bill-code-row" id="bcRow1">
+                <span class="bill-code-tag" id="bcTag1"></span>
+                <span class="bill-code-desc" id="bcDesc1"></span>
+                <span class="bill-code-amt" id="bcAmt1"></span>
+              </div>
+              <div class="bill-code-row" id="bcRow2">
+                <span class="bill-code-tag" id="bcTag2"></span>
+                <span class="bill-code-desc" id="bcDesc2"></span>
+                <span class="bill-code-amt" id="bcAmt2"></span>
+              </div>
+            </div>
+
+            <!-- Total, counts up live -->
+            <div class="bill-total">
+              <span class="bill-total-label">Claim total</span>
+              <span class="bill-total-amt" id="bcTotal">$0.00</span>
+            </div>
+
+            <!-- Submit button + meta -->
+            <div class="bill-cta-wrap">
+              <button class="bill-submit" type="button" id="bcSubmit">
+                Submit to Payer
+              </button>
+            </div>
+
+            <!-- Paid confirmation popup -->
+            <div class="bill-popup" id="bcPopup" aria-hidden="true">
+              <div class="bill-popup__inner">
+                <div class="bill-popup__check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+                <div class="bill-popup__title">Claim Submitted</div>
+                <div class="bill-popup__amount" id="bcPopupAmt">Paid &middot; $107.00</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cursor" id="bcCursor">
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
+              <path d="M2 1.5l14.5 9.4-6.4 1.6-2.6 6.5L2 1.5z" fill="#0c1217" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            <span class="ripple" id="bcRipple"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANE: Messaging & Follow-Ups ===== -->
+    <div class="mockup-pane" data-pane="messaging" role="tabpanel">
+      <div class="mockup-host" id="msgHost">
+        <div class="frame-inner" id="msgFrame">
+          <div class="msg-stage">
+
+            <!-- PHONE 1, booking confirmation email -->
+            <div class="msg-phone msg-phone--email">
+              <div class="msg-status">
+                <span>9:41</span>
+                <span class="msg-status-icons">
+                  <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+                  <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+                  <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+                </span>
+              </div>
+              <div class="msg-logo"><LogoMedme /></div>
+              <div class="msg-email-body">
+                <p>Hi John,</p>
+                <p>Thank you for booking with us!</p>
+                <p class="muted">Your appointment details:</p>
+                <div class="msg-card">
+                  <div class="msg-card-row"><span class="lbl">What:</span><span>Flu Shot (Regular)</span></div>
+                  <div class="msg-card-row"><span class="lbl">When:</span><span>Wednesday, November 26<br>10:00 AM EST.</span></div>
+                  <div class="msg-card-row"><span class="lbl">Where:</span><span>MedMe Pharmacy<br>5900 6th Street<br>Los Angeles, CA 90036-1234</span></div>
+                  <div class="msg-card-foot">Need to manage your appointment?</div>
+                  <div class="msg-card-links"><a href="#">Reschedule</a> or <a href="#">Cancel</a></div>
+                </div>
+                <p class="muted">Next steps for your appointment:</p>
+                <p class="bold">Flu Shot (Regular)</p>
+                <ul>
+                  <li>A day before your appointment, you&rsquo;ll receive a text/email reminder.</li>
+                  <li>Please arrive 5-10 minutes before your appointment time, and let the pharmacist know when you arrive.</li>
+                  <li>Please bring your insurance information, prescription (if you have one), and wear clothing that makes it easy to access the injection site (most often the upper arm)</li>
+                  <li>You may be asked to wait up to 15 minutes after your</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- PHONE 2, SMS conversation -->
+            <div class="msg-phone msg-phone--sms">
+              <div class="msg-status">
+                <span>9:41</span>
+                <span class="msg-status-icons">
+                  <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+                  <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+                  <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+                </span>
+              </div>
+              <div class="msg-sms-header">
+                <span class="msg-sms-back">&#x2039;</span>
+                <span class="msg-sms-back-badge">5</span>
+                <div class="msg-sms-name-block">
+                  <div class="msg-sms-name">MedMe Pharmacy</div>
+                  <div class="msg-sms-status">last seen today at 3:12pm</div>
+                </div>
+                <span class="msg-sms-avatar"></span>
+              </div>
+              <div class="msg-sms-body" id="msgSmsBody">
+                <div class="msg-date-pill">March 3</div>
+                <div class="msg-bubble" id="msgBubble1">
+                  Hi John! Your Flu Shot Regular appointment for 1 person(s) with MedMe Pharmacy is <b>tomorrow</b> at Nov-26 10:00 AM EST.
+                  <span class="t">12:31pm</span>
+                </div>
+                <div class="msg-bubble" id="msgBubble2">
+                  Hi John! Just a reminder that your Flu Shot Regular appointment for 1 person(s) with MedMe Pharmacy is <b>starting in an hour</b>.<br>It is scheduled for Wednesday, November 26 at 10:00 AM EST.
+                  <span class="t">12:31pm</span>
+                </div>
+                <div class="msg-typing" id="msgTyping">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="msg-sms-input">
+                <span class="msg-sms-input-clip">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </span>
+                <div class="msg-sms-input-pill">
+                  <span>Message</span>
+                  <span class="icons-r">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+                  </span>
+                </div>
+              </div>
+              <div class="msg-sms-home"></div>
+            </div>
+
+            <!-- PHONE 3, reminder email -->
+            <div class="msg-phone msg-phone--email">
+              <div class="msg-status">
+                <span>9:41</span>
+                <span class="msg-status-icons">
+                  <svg width="16" height="11" viewBox="0 0 18 11" fill="currentColor"><rect x="1" y="7" width="3" height="4" rx="0.6"/><rect x="5" y="5" width="3" height="6" rx="0.6"/><rect x="9" y="3" width="3" height="8" rx="0.6"/><rect x="13" y="0" width="3" height="11" rx="0.6"/></svg>
+                  <svg width="14" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4 Q8 -1 15 4"/><path d="M3 6 Q8 3 13 6"/><path d="M5.5 8 Q8 7 10.5 8"/></svg>
+                  <svg width="22" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="currentColor" opacity="0.45"/><rect x="22" y="3.5" width="1.4" height="4" rx="0.6" fill="currentColor" opacity="0.45"/><rect x="2" y="2" width="14" height="7" rx="1.2" fill="currentColor"/></svg>
+                </span>
+              </div>
+              <div class="msg-logo"><LogoMedme /></div>
+              <div class="msg-email-body">
+                <p>Hi John,</p>
+                <p>This is a reminder for your upcoming appointment.</p>
+                <p class="muted">Your appointment details:</p>
+                <div class="msg-card">
+                  <div class="msg-card-row"><span class="lbl">What:</span><span>Flu Shot (Regular)</span></div>
+                  <div class="msg-card-row"><span class="lbl">When:</span><span>Wednesday, November 26<br>10:00 AM EST.</span></div>
+                  <div class="msg-card-row"><span class="lbl">Where:</span><span>MedMe Pharmacy<br>5900 6th Street<br>Los Angeles, CA 90036-1234</span></div>
+                  <div class="msg-card-foot">Need to manage your appointment?</div>
+                  <div class="msg-card-links"><a href="#">Reschedule</a> or <a href="#">Cancel</a></div>
+                </div>
+                <p class="muted">Next steps for your appointment:</p>
+                <p class="bold">Flu Shot (Regular)</p>
+                <ul>
+                  <li>A day before your appointment, you&rsquo;ll receive a text/email reminder.</li>
+                  <li>Please arrive 5-10 minutes before your appointment time, and let the pharmacist know when you arrive.</li>
+                  <li>Please bring your insurance information, prescription (if you have one), and wear clothing that makes it easy to access the injection site (most often the upper arm)</li>
+                  <li>You may be asked to wait up to 15 minutes after your</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANE: Assisted Documentation (Clinical Assistant motion graphic) ===== -->
+    <div class="mockup-pane" data-pane="documentation" role="tabpanel">
+      <div class="mockup-host" id="mockupHost">
+        <div class="frame-inner" id="frame">
+
+          <div class="doc-minimal">
+            <!-- Top row: Scribe card (left) + chat transcript (right) -->
+            <div class="doc-top-row">
+              <div class="doc-scribe-wrap">
+                <div class="scribe-card">
+                  <div class="scribe-title">Clinical Assistant (AI Scribe)</div>
+                  <div class="scribe-wave-big">
+                    <span class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                  </div>
+                  <div class="scribe-meta-row">
+                    <span class="timer" id="timer">00:00</span>
+                  </div>
+                  <button class="scribe-btn" id="scribeBtn" type="button">
+                    <span class="tri" id="tri"></span><span id="scribeLabel">Start Scribe</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="doc-trans-card">
+                <div class="doc-trans-label">Live transcription</div>
+                <div class="doc-chat" id="docChat">
+                  <div class="doc-chat-placeholder" id="transPh">Transcription will appear here&hellip;</div>
+                  <div class="doc-bubble doc-bubble--left" data-bubble="1">
+                    <span class="doc-bubble-speaker">Patient</span>
+                    <span class="doc-bubble-text">I'm on metformin and lisinopril. I forget the evening doses sometimes.</span>
+                  </div>
+                  <div class="doc-bubble doc-bubble--right" data-bubble="2">
+                    <span class="doc-bubble-speaker">Pharmacist</span>
+                    <span class="doc-bubble-text">How often? Any side effects with the lisinopril?</span>
+                  </div>
+                  <div class="doc-bubble doc-bubble--left" data-bubble="3">
+                    <span class="doc-bubble-speaker">Patient</span>
+                    <span class="doc-bubble-text">Twice a week or so. I get an occasional dry cough.</span>
+                  </div>
+                  <div class="doc-bubble doc-bubble--right" data-bubble="4">
+                    <span class="doc-bubble-speaker">Pharmacist</span>
+                    <span class="doc-bubble-text">Let's switch you to morning doses and set up a pillbox. I'll note the cough.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Consult fields (Intake-style: floating label + big value) -->
+            <div class="doc-fields" id="docFields">
+              <div class="doc-field" id="f-reason">
+                <span class="doc-field-label">Reason for Visit</span>
+                <div class="doc-field-value"></div>
+              </div>
+              <div class="doc-field" id="f-assessment">
+                <span class="doc-field-label">Assessment</span>
+                <div class="doc-field-value"></div>
+              </div>
+              <div class="doc-field" id="f-plan">
+                <span class="doc-field-label">Plan</span>
+                <div class="doc-field-value"></div>
+              </div>
+              <div class="doc-field" id="f-followup">
+                <span class="doc-field-label">Follow-up</span>
+                <div class="doc-field-value"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Consult completed confirmation popup -->
+          <div class="doc-popup" id="docPopup" aria-hidden="true">
+            <div class="doc-popup__inner">
+              <div class="doc-popup__check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+              <div class="doc-popup__title">Consult completed</div>
+            </div>
+          </div>
+
+          <div class="cursor" id="cursor">
+            <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
+              <path d="M2 1.5l14.5 9.4-6.4 1.6-2.6 6.5L2 1.5z" fill="#0c1217" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            <span class="ripple" id="ripple"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end pane: scribe -->
+
+  </div><!-- end .mockup-stack -->
+
+  </div>
+</div>
+<!-- end .legacy-mockups -->
+    </div><!-- end .hero-2col__media -->
+  </div><!-- end .hero-2col__inner -->
+</section><!-- end .hero-2col -->
+
+<!-- ============= 1b. TRUSTED BY US PHARMACY LEADERS (indigo, dark mode per review tweak) ============= -->
+<section class="trust trust--dark" aria-label="Customer trust">
+  <div class="wrap">
+    <div class="trust__top">
+      <div class="trust__label">
+        <h2 class="h-display">Trusted by US pharmacy leaders</h2>
+      </div>
+    </div>
+    <div class="trust__logos" role="list" aria-label="Customer segments">
+      <div class="trust__logos-track" data-marquee>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Top-100 retail chain</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Multi-state regional</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">9-store specialty group</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Independent network</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Rural pharmacy cooperative</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Hospital outpatient pharmacy</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">Long-term care partner</span></div>
+        <div class="trust__logo" role="listitem"><span class="trust__name trust__wordmark">State pharmacy association</span></div>
+      </div>
+    </div>
+    <div class="trust__stats">
+      <div class="trust__stat"><div class="num">4,500+</div><div class="label">pharmacies powered</div></div>
+      <div class="trust__stat"><div class="num">30M+</div><div class="label">patient interactions</div></div>
+      <div class="trust__stat"><div class="num">16 + 10</div><div class="label">us states &middot; ca provinces</div></div>
+      <div class="trust__stat"><div class="num">99.9%</div><div class="label">platform uptime</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. PROBLEM STATEMENT (MedMe-specific, 2x2 grid) ============= -->
+<section class="tile tile--light" aria-label="Why pharmacies choose MedMe">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Why MedMe</span>
+      <h2 class="h-display">Pharmacy tech ends where<br>clinical work begins.</h2>
+      <p class="lead">Your dispensing stack is solid. The clinical side is where everything falls apart, and that's exactly where the growth is.</p>
+    </div>
+    <div class="tile-grid tile-grid--2 problem-grid">
+      <article class="h-card problem-card">
+        <h3>Clinical services live outside your tech stack</h3>
+        <p>Vaccines, MTM, point-of-care testing, your team is already delivering the work. But the documentation, scheduling, and follow-up live in spreadsheets, paper, and disconnected portals.</p>
+      </article>
+      <article class="h-card problem-card">
+        <h3>Your PMS dispenses; nothing else fits</h3>
+        <p>Your pharmacy management system runs the fill. It was never built for booking visits, drafting SOAP notes, tracking encounters, or submitting medical claims.</p>
+      </article>
+      <article class="h-card problem-card">
+        <h3>AI is everywhere, integrated nowhere</h3>
+        <p>Every vendor demos an AI tool. Most can't see your patients, your dispensing history, or your scheduled visits, so the agents can't act on what's actually happening in your pharmacy.</p>
+      </article>
+      <article class="h-card problem-card">
+        <h3>Scaling clinical services means restarting</h3>
+        <p>Every new store, every new program, every new payer launches like it's the first time. No standardized playbook. No infrastructure that travels with you.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. SEGMENTS (moved here from #5, Built for Every Pharmacy) ============= -->
+<section class="tile tile--light" id="audience" aria-label="Built for every pharmacy">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Built for Every Pharmacy</span>
+      <h2 class="h-display">One platform. Built for how<br>each pharmacy operates.</h2>
+      <p class="lead">MedMe adapts to where you are, from a single store launching clinical services for the first time, to a national enterprise running standardized programs across hundreds of locations.</p>
+    </div>
+    <div class="tile-grid tile-grid--4 segments-grid">
+      <a href="/us/pharmacy/independents" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
+        </span>
+        <h3>For independents</h3>
+        <p>Launch clinical services and start getting paid for them. Built for owner-operated pharmacies.</p>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+      <a href="/us/pharmacy/enterprises" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="7" height="14" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/><path d="M6 11h1M6 14h1M6 17h1M17 7h1M17 10h1M17 13h1M17 16h1"/></svg>
+        </span>
+        <h3>For enterprise chains</h3>
+        <p>The strategic platform partner for corporate-owned pharmacy networks. Modular, API-driven, enterprise-grade.</p>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+      <a href="/us/pharmacy/networks" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><circle cx="4" cy="5" r="2"/><circle cx="20" cy="5" r="2"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="19" r="2"/><path d="M6 6l4.5 4.5M18 6l-4.5 4.5M6 18l4.5-4.5M18 18l-4.5-4.5"/></svg>
+        </span>
+        <h3>For banners &amp; co-ops</h3>
+        <p>A platform your members will actually adopt, with network-level reporting that strengthens your value proposition.</p>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+      <a href="/us/pharmacy/specialty" class="h-card segment-card">
+        <span class="segment-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6.5L5.5 18A2 2 0 0 0 7.2 21h9.6a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 14h9"/></svg>
+        </span>
+        <h3>For specialty pharmacy</h3>
+        <p>Infrastructure that matches the operational complexity of specialty care. AI agents purpose-built for coordination.</p>
+        <span class="segment-card__cta">Learn more <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. PLATFORM (modules, moved down from #3) ============= -->
+<section class="tile tile--light" id="billing" aria-label="What's in the platform">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">The platform</span>
+      <h2 class="h-display">Built to document and bill,<br>nothing they don't.</h2>
+      <p class="lead">Pick the modules that fit your service mix. Medical Billing converts every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that turns clinical scope into reliable revenue.</p>
+    </div>
+    <div class="tile-grid tile-grid--bento">
+      <article class="h-card h-card--feature">
+        <div class="feat-anim feat-anim--billing-rich" aria-hidden="true">
+          <div class="fa-bill-flow">
+            <div class="fa-bill-step fa-bill-step--elig">
+              <span class="fa-bill-label">Eligibility</span>
+              <span class="fa-bill-pill"><span class="fa-bill-dot"></span>Part B verified</span>
+            </div>
+            <div class="fa-bill-step fa-bill-step--codes">
+              <span class="fa-bill-label">Auto-coded</span>
+              <div class="fa-bill-codes">
+                <span class="fa-bill-chip"><b>99490</b>CCM</span>
+                <span class="fa-bill-chip"><b>G0511</b>RHC</span>
+                <span class="fa-bill-chip"><b>99607</b>MTM</span>
+              </div>
+            </div>
+            <div class="fa-bill-step fa-bill-step--claim">
+              <span class="fa-bill-label">Claim ready</span>
+              <div class="fa-bill-claim">
+                <div class="fa-bill-claim-row"><span>99490 &middot; CCM</span><span>$67.21</span></div>
+                <div class="fa-bill-claim-row"><span>G0511 &middot; RHC</span><span>$77.94</span></div>
+                <div class="fa-bill-claim-row"><span>99607 &middot; MTM</span><span>$15.84</span></div>
+                <div class="fa-bill-claim-total"><span>Submit to payer</span><span>$160.99</span></div>
+              </div>
+            </div>
+            <div class="fa-bill-step fa-bill-step--paid">
+              <span class="fa-bill-label">Paid</span>
+              <div class="fa-bill-paid">
+                <span class="fa-bill-check">&#10003;</span>
+                <span class="fa-bill-paid-amt">+ $160.99 deposited</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>Medical Billing</h3>
+        <p>Convert every documented encounter into a clean Medicare Part&nbsp;B claim, the wedge that captures the 60&ndash;80% of clinical services that never get invoiced today.</p>
+        <div class="audience-card__cta">
+          <a class="pill pill--solid" href="/us/platform/medical-billing">Learn more</a>
+        </div>
+      </article>
+      <article class="h-card">
+        <div class="feat-anim feat-anim--sched" aria-hidden="true">
+          <div class="fa-grid">
+            <i class="booked"></i><i></i><i class="booked"></i><i></i><i class="new new--1"></i>
+            <i></i><i class="new new--2"></i><i class="booked"></i><i class="booked"></i><i></i>
+            <i class="booked"></i><i></i><i class="new new--3"></i><i></i><i class="booked"></i>
+            <i></i><i class="booked"></i><i></i><i class="new new--4"></i><i></i>
+          </div>
+        </div>
+        <h3>Scheduling &amp; Queueing</h3>
+        <p>Multi-calendar booking, walk-in queueing, and real-time visibility into the patient flow across every store and every service line.</p>
+        <div class="audience-card__cta">
+          <a class="pill pill--solid" href="/us/platform/scheduling-queuing">Learn more</a>
+        </div>
+      </article>
+      <article class="h-card">
+        <div class="feat-anim feat-anim--scribe" aria-hidden="true">
+          <div class="fa-wave">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+        <h3>Clinical Assistant <span class="h-card__alias">(AI Scribe)</span></h3>
+        <p>Captures the conversation, drafts the note in whichever template fits the visit (SOAP, MTM, screening, minor ailments), and suggests codes. Pharmacist reviews and signs in seconds.</p>
+        <div class="audience-card__cta">
+          <a class="pill pill--solid" href="/us/platform/ai-clinical-assistant">Learn more</a>
+        </div>
+      </article>
+      <article class="h-card">
+        <div class="feat-anim feat-anim--intake" aria-hidden="true">
+          <div class="fa-intake">
+            <div class="fa-intake-row">
+              <span class="fa-intake-box"></span>
+              <span class="fa-intake-line"></span>
+            </div>
+            <div class="fa-intake-row">
+              <span class="fa-intake-box"></span>
+              <span class="fa-intake-line"></span>
+            </div>
+            <div class="fa-intake-row">
+              <span class="fa-intake-box"></span>
+              <span class="fa-intake-line"></span>
+            </div>
+            <span class="fa-intake-submit">Submit &#10003;</span>
+          </div>
+        </div>
+        <h3>Patient Intake Form</h3>
+        <p>Demographics, consent, allergies, and eligibility captured digitally before the visit. The pharmacist walks in with the picture already complete.</p>
+        <div class="audience-card__cta">
+          <a class="pill pill--solid" href="/us/platform/patient-intake">Learn more</a>
+        </div>
+      </article>
+      <article class="h-card">
+        <div class="feat-anim feat-anim--ehr" aria-hidden="true">
+          <div class="fa-ehr-stack">
+            <div class="fa-ehr-row"><span class="fa-ehr-letter">S</span><span class="fa-ehr-bar"></span><span class="fa-ehr-check">&#10003;</span></div>
+            <div class="fa-ehr-row"><span class="fa-ehr-letter">O</span><span class="fa-ehr-bar"></span><span class="fa-ehr-check">&#10003;</span></div>
+            <div class="fa-ehr-row"><span class="fa-ehr-letter">A</span><span class="fa-ehr-bar"></span><span class="fa-ehr-check">&#10003;</span></div>
+            <div class="fa-ehr-row"><span class="fa-ehr-letter">P</span><span class="fa-ehr-bar"></span><span class="fa-ehr-check">&#10003;</span></div>
+          </div>
+        </div>
+        <h3>Assisted Documentation</h3>
+        <p>Notes drafted as the encounter happens, in whichever template fits the visit. Templates and codes surface automatically so pharmacists finish the chart during the visit.</p>
+        <div class="audience-card__cta">
+          <a class="pill pill--solid" href="/us/platform/assisted-documentation">Learn more</a>
+        </div>
+      </article>
+      <article class="h-card">
+        <div class="feat-anim feat-anim--integrations" aria-hidden="true">
+          <div class="fa-hub">
+            <span class="fa-int-node fa-int-node--center"></span>
+            <span class="fa-int-node fa-int-node--n"></span>
+            <span class="fa-int-node fa-int-node--e"></span>
+            <span class="fa-int-node fa-int-node--s"></span>
+            <span class="fa-int-node fa-int-node--w"></span>
+            <span class="fa-int-pulse fa-int-pulse--n"></span>
+            <span class="fa-int-pulse fa-int-pulse--e"></span>
+            <span class="fa-int-pulse fa-int-pulse--s"></span>
+            <span class="fa-int-pulse fa-int-pulse--w"></span>
+          </div>
+        </div>
+        <h3>PMS Integration</h3>
+        <p>Two-way sync with PioneerRx, BestRx, McKesson, Liberty, and the major dispensing systems. Patient data and medication lists stay current both ways.</p>
+        <div class="audience-card__cta">
+          <a class="pill pill--solid" href="/us/platform/pms-integrations">Learn more</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 6. CLINICAL JOURNEY (flow graphic, 6 lifecycle stages, animated like Patient Journey) ============= -->
+<section class="tile tile--light" aria-label="The clinical journey">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">The Clinical Journey</span>
+      <h2 class="h-display">From launch to reimbursement.<br>One platform.</h2>
+      <p class="lead">MedMe covers the full clinical services lifecycle, every stage of the patient interaction, every stage of the pharmacy's program maturity.</p>
+    </div>
+    <div class="journey journey--6">
+      <div class="journey__line" aria-hidden="true"></div>
+      <ol class="journey__steps">
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+          </span>
+          <h3>Schedule</h3>
+          <p>Booking, queueing, walk-ins</p>
+        </li>
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10"/></svg>
+          </span>
+          <h3>Intake</h3>
+          <p>Digital forms, eligibility</p>
+        </li>
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <h3>Consult</h3>
+          <p>AI Clinical Assistant</p>
+        </li>
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+          </span>
+          <h3>Document</h3>
+          <p>AI Scribe drafts notes</p>
+        </li>
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+          </span>
+          <h3>Follow-up</h3>
+          <p>Patient outreach, care plans</p>
+        </li>
+        <li class="journey__step">
+          <span class="journey__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M16 9.5C16 8.12 14.21 7 12 7s-4 1.12-4 2.5S9.79 12 12 12s4 1.12 4 2.5-1.79 2.5-4 2.5-4-1.12-4-2.5"/></svg>
+          </span>
+          <h3>Bill</h3>
+          <p>Full RCM, paid claims</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 7. AI AGENTS (full dark section, AI-Native by Design) ============= -->
+<section class="tile tile--ai-dark" aria-label="AI agents">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">AI-Native by Design</span>
+      <h2 class="h-display">The AI agents are built into the platform.<br>Not bolted on.</h2>
+      <p class="lead">Three AI agents live inside the clinical workflow, supporting consultations, automating patient outreach, and reducing manual data entry across systems.</p>
+    </div>
+    <div class="tile-grid tile-grid--3 ai-grid">
+      <article class="h-card h-card--navy ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M9 21h6"/></svg>
+        </span>
+        <span class="ai-tag">AI &middot; In-Consult</span>
+        <h3>AI Clinical Assistant <span class="ai-card__alias">(AI Scribe)</span></h3>
+        <p>Ambient documentation during the consult. Drafts the note from the conversation, suggests the codes, and lets the pharmacist sign off in seconds.</p>
+        <a class="pill pill--solid ai-card__cta" href="/us/platform/ai-clinical-assistant">Learn more <span class="arrow">→</span></a>
+      </article>
+      <article class="h-card h-card--navy ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a2 2 0 0 1 2-2h2v6H6a2 2 0 0 1-2-2v-2z"/><path d="M16 9h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2V9z"/><path d="M5 11V9a7 7 0 0 1 14 0v2"/><path d="M19 15v1a3 3 0 0 1-3 3h-3"/><circle cx="12" cy="19" r="1.5"/></svg>
+        </span>
+        <span class="ai-tag">AI &middot; Patient-Facing</span>
+        <h3>AI Patient Concierge</h3>
+        <p>Voice and messaging agent handling inbound and outbound patient interactions, appointment booking, refill reminders, adherence check-ins, FAQs.</p>
+        <a class="pill pill--solid ai-card__cta" href="/us/platform/ai-assistants/patient-concierge">Learn more <span class="arrow">→</span></a>
+      </article>
+      <article class="h-card h-card--navy ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/><circle cx="7" cy="7" r="0.7" fill="currentColor"/><circle cx="9.5" cy="7" r="0.7" fill="currentColor"/><circle cx="12" cy="7" r="0.7" fill="currentColor"/><path d="M7 13h6M7 16h10"/></svg>
+        </span>
+        <span class="ai-tag">AI &middot; Operational</span>
+        <h3>Admin Clerk</h3>
+        <p>RPA-based automation that reads and writes the pharmacy management system without a formal integration project.</p>
+        <a class="pill pill--solid ai-card__cta" href="/us/platform/ai-assistants/admin-clerk">Learn more <span class="arrow">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 8. PARTNER CTA (light, endorsement statement) ============= -->
+<!-- ============= 8. ROI CALCULATOR (moved up, visually prominent) ============= -->
+<section class="tile tile--light tile--prominent" id="calc" aria-label="Reimbursement calculator">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Reimbursement Calculator</span>
+      <h2 class="h-display">Run the numbers on<br>your own pharmacy.</h2>
+      <p class="lead">Two inputs, store count and weekly clinical encounters. We'll show the realistic Medicare Part&nbsp;B revenue you're leaving on the table, based on real CPT mix and payer rates.</p>
+    </div>
+    <div class="calc-card calc-card--split" data-calc-widget="us">
+      <div class="calc-card__inputs">
+        <div class="calc-card__field">
+          <label for="us-stores">Number of stores</label>
+          <div class="calc-card__input-wrap">
+            <input id="us-stores" type="number" min="1" max="9999" value="3" data-calc-stores aria-describedby="us-stores-unit" />
+            <span id="us-stores-unit">stores</span>
+          </div>
+        </div>
+        <div class="calc-card__field">
+          <label for="us-enc">Weekly clinical encounters per store</label>
+          <div class="calc-card__input-wrap">
+            <input id="us-enc" type="number" min="0" max="999" value="42" data-calc-encounters aria-describedby="us-enc-unit" />
+            <span id="us-enc-unit">enc/wk</span>
+          </div>
+        </div>
+      </div>
+      <div class="calc-card__output">
+        <div class="calc-card__result">
+          <div class="label">Estimated annual unlock</div>
+          <div class="value" data-calc-result>$487,200</div>
+          <div class="delta">vs. $0 captured today on 87% of these visits</div>
+        </div>
+        <div class="calc-card__cta">
+          <a class="pill pill--solid" href="/us/resources/roi-calculator">Run my full report</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 9. PARTNER WITH MEDME (navy + stacked + centered, now the final CTA section) ============= -->
+<section class="tile tile--navy tile--prominent" id="partner" aria-label="Partner with MedMe">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Partner with MedMe</span>
+      <h2 class="h-display">The most-endorsed clinical services<br>platform in pharmacy.</h2>
+      <p class="lead">Trusted by pharmacy associations, banner groups, cooperatives, and pharmacy schools to power the next generation of clinical services.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/partners">Explore partnerships <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+  <script is:inline slot="end-of-body" set:html={`/* ============================================================
+   Hero AI-Scribe motion graphic, 16-second loop:
+   cursor → Start Scribe → record/wave/transcription stream →
+   Populate fields → per-field auto-type → note typing →
+   Continue pulse. Mockup scales to fit its responsive container.
+   ============================================================ */
+(function(){
+  'use strict';
+  var host = document.getElementById('mockupHost');
+  var inner = document.getElementById('frame');
+  if (!host || !inner) return;
+
+  function fitMockup(){
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fitMockup);
+  requestAnimationFrame(function(){ requestAnimationFrame(fitMockup); });
+  window.addEventListener('load', fitMockup);
+
+  function $(id){ return document.getElementById(id); }
+
+  /* Conceptual AI Clinical Assistant animation (rewrote 2026-05-26).
+     Flow: cursor → Start Scribe → wave + transcription → 4 consult
+     fields reveal one-by-one → brief hold → loop. */
+  /* Documentation timing tightened so popup fires before the 10s rotation
+     timer can cut the pane off, and so heroAdvance() can fire at ~9.7s
+     to hand off cleanly to Billing with full hold time on the popup. */
+  var TOTAL = 11000;
+  var SEQ = {
+    cursorToScribe:  { at: 300,   dur: 900 },
+    clickScribe:     { at: 1200 },
+    recordWindow:    { from: 1300, to: 6500 },
+    bubbleRevealAt:  [1500, 2700, 3900, 5000],   /* 4 chat bubbles stagger */
+    fieldsRevealAt:  [6700, 7200, 7700, 8200],   /* 500ms staggered per field */
+    popupAt:         8800,                        /* "Consult completed" popup */
+    advanceAt:       9700                         /* heroAdvance → Billing */
+  };
+  var FIELDS = [
+    { id: 'f-reason',     text: 'Annual MTM review' },
+    { id: 'f-assessment', text: 'Adherence gap; ACE-I cough' },
+    { id: 'f-plan',       text: 'Switch to AM dosing; pillbox' },
+    { id: 'f-followup',   text: '30 days' }
+  ];
+
+  function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
+
+  function moveCursor(target, dur){
+    dur = dur || 800;
+    var cur = $('cursor');
+    var fr = inner.getBoundingClientRect();
+    var r = target.getBoundingClientRect();
+    var m = new DOMMatrixReadOnly(getComputedStyle(inner).transform);
+    var sx = m.a, sy = m.d;
+    var fx = (r.left - fr.left) / sx + r.width / sx / 2 - 6;
+    var fy = (r.top  - fr.top)  / sy + r.height / sy / 2 - 4;
+    cur.style.transition = 'transform ' + dur + 'ms cubic-bezier(.5,.05,.2,1)';
+    cur.style.transform  = 'translate(' + fx + 'px,' + fy + 'px)';
+  }
+  function moveInstant(x, y){
+    var c = $('cursor');
+    c.style.transition = 'none';
+    c.style.transform  = 'translate(' + x + 'px,' + y + 'px)';
+  }
+  function ripple(){
+    var r = $('ripple');
+    r.classList.remove('go');
+    void r.offsetWidth;
+    r.classList.add('go');
+  }
+
+  var step = -1;
+  var clicked = {};
+  var wasHidden = true;
+  var startTime = 0;
+  function reset(now){
+    step = -1;
+    docAdvanced = false;
+    startTime = now || performance.now();
+    clicked = {};
+    $('scribeBtn').classList.remove('recording','pressed');
+    $('scribeLabel').textContent = 'Start Scribe';
+    $('wave').classList.remove('live');
+    $('timer').textContent = '00:00';
+    var ph = $('transPh');
+    if (ph) ph.classList.remove('is-hidden');
+    document.querySelectorAll('.doc-bubble').forEach(function(b){ b.classList.remove('is-on'); });
+    FIELDS.forEach(function(f){
+      var fld = $(f.id); if (!fld) return;
+      fld.classList.remove('is-filling', 'is-filled', 'is-typing');
+      var v = fld.querySelector('.doc-field-value');
+      if (v) v.textContent = '';
+    });
+    var dp = $('docPopup');
+    if (dp) dp.classList.remove('is-visible');
+  }
+
+  /* Per-field typing duration; same window for every field so the rhythm
+     is consistent regardless of text length. */
+  var FIELD_TYPE_MS = 500;
+  var docAdvanced = false;
+
+  function tick(now){
+    /* Skip while the pane is display:none (zero dimensions). When it
+       becomes visible, reset so the animation starts fresh, not mid-loop. */
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+
+    if (t < 200 && step !== 0) { reset(now); step = 0; moveInstant(60, 540); }
+
+    if (t >= SEQ.cursorToScribe.at && step === 0) {
+      moveCursor($('scribeBtn'), SEQ.cursorToScribe.dur); step = 1;
+    }
+    if (t >= SEQ.clickScribe.at && !clicked.scribe) {
+      clicked.scribe = true;
+      ripple();
+      var b = $('scribeBtn');
+      b.classList.add('pressed');
+      setTimeout(function(){ b.classList.remove('pressed'); }, 150);
+      setTimeout(function(){
+        b.classList.add('recording');
+        $('scribeLabel').textContent = 'Stop Scribe';
+        $('wave').classList.add('live');
+      }, 180);
+    }
+
+    var rw = SEQ.recordWindow;
+    if (t >= rw.from) {
+      var e = Math.min(rw.to, t) - rw.from;
+      $('timer').textContent = fmt(Math.min(22, Math.floor(e / 1000 * 4)));
+      /* Hide placeholder once recording starts. */
+      var ph = $('transPh');
+      if (ph && !ph.classList.contains('is-hidden')) ph.classList.add('is-hidden');
+      /* Stagger-reveal chat bubbles at scheduled times. */
+      for (var bi = 0; bi < SEQ.bubbleRevealAt.length; bi++) {
+        if (t >= SEQ.bubbleRevealAt[bi]) {
+          var bub = document.querySelector('[data-bubble="' + (bi + 1) + '"]');
+          if (bub) bub.classList.add('is-on');
+        }
+      }
+    }
+    /* Stop the wave + label once the record window ends. */
+    if (t >= rw.to && clicked.scribe && step === 1) {
+      $('scribeBtn').classList.remove('recording');
+      $('scribeLabel').textContent = 'Start Scribe';
+      $('wave').classList.remove('live');
+      step = 2;
+    }
+
+    /* Type each consult field character-by-character. Per-field window
+     is FIELD_TYPE_MS; before/after the window the field is empty/full. */
+    for (var fi = 0; fi < SEQ.fieldsRevealAt.length; fi++) {
+      var fStart = SEQ.fieldsRevealAt[fi];
+      var f      = FIELDS[fi];
+      if (!f) continue;
+      var fld    = $(f.id); if (!fld) continue;
+      var v      = fld.querySelector('.doc-field-value');
+      if (t < fStart) continue;
+      var elapsed = t - fStart;
+      var p       = Math.min(1, elapsed / FIELD_TYPE_MS);
+      var n       = Math.floor(p * f.text.length);
+      if (v) v.textContent = f.text.substring(0, n);
+      if (p < 1) {
+        fld.classList.add('is-typing');
+        fld.classList.remove('is-filled');
+      } else {
+        fld.classList.remove('is-typing');
+        fld.classList.add('is-filled');
+      }
+    }
+
+    /* "Consult completed" popup, pops after the 4th field finishes typing. */
+    if (t >= SEQ.popupAt) {
+      var dp2 = $('docPopup');
+      if (dp2 && !dp2.classList.contains('is-visible')) dp2.classList.add('is-visible');
+    }
+
+    /* heroAdvance → Billing once popup has held briefly. Prevents the
+       10s rotation timer from cutting off mid-popup. */
+    if (t >= SEQ.advanceAt && !docAdvanced) {
+      docAdvanced = true;
+      if (typeof window.heroAdvance === 'function') window.heroAdvance();
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Marquee carousel, duplicate each track's children once so a
+   translateX(-50%) loop wraps seamlessly (the second set takes
+   the first set's place at the wrap point).
+   ============================================================ */
+(function(){
+  'use strict';
+  document.querySelectorAll('[data-marquee]').forEach(function(track){
+    var originals = Array.prototype.slice.call(track.children);
+    originals.forEach(function(node){
+      var clone = node.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+  });
+})();
+
+/* ============================================================
+   Counter animation, ticks numeric values from 0 to their target
+   when first scrolled into view. Uses easeOutCubic for a smooth
+   settle. Honors prefers-reduced-motion (sets the final value
+   directly without animating).
+   ============================================================ */
+(function(){
+  'use strict';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function format(value, decimals, prefix, suffix){
+    if (decimals > 0) {
+      return prefix + value.toFixed(decimals) + suffix;
+    }
+    return prefix + Math.floor(value).toLocaleString('en-US') + suffix;
+  }
+  function animateCount(el){
+    var target   = parseFloat(el.dataset.count);
+    var decimals = parseInt(el.dataset.decimals || '0', 10);
+    var prefix   = el.dataset.prefix || '';
+    var suffix   = el.dataset.suffix || '';
+    if (isNaN(target)) return;
+    if (reduce) { el.textContent = format(target, decimals, prefix, suffix); return; }
+
+    var duration = 1500;
+    var start = performance.now();
+    function tick(now){
+      var p = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - p, 3); /* easeOutCubic */
+      el.textContent = format(target * eased, decimals, prefix, suffix);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('[data-count]').forEach(animateCount);
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){
+        animateCount(e.target);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(function(el){ observer.observe(el); });
+})();
+
+/* ============================================================
+   Scroll reveal, fades + rises elements as they enter the
+   viewport. Auto-staggers siblings within grid containers.
+   ============================================================ */
+(function(){
+  'use strict';
+  if (!('IntersectionObserver' in window)) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* Targets: every card/stat that should reveal on scroll. */
+  var selectors = [
+    '.h-card',
+    '.trust__stat',
+    '.calc-card',
+    '.tile__head'
+  ];
+  var nodes = document.querySelectorAll(selectors.join(','));
+
+  nodes.forEach(function(node){
+    node.classList.add('reveal');
+    /* Stagger siblings that share a parent grid/row */
+    var parent = node.parentElement;
+    if (!parent) return;
+    var siblings = Array.prototype.filter.call(parent.children, function(c){
+      return c.matches && c.matches(selectors.join(','));
+    });
+    var idx = siblings.indexOf(node);
+    if (idx >= 0 && idx < 6) node.classList.add('is-stagger-' + (idx + 1));
+  });
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting){
+        e.target.classList.add('is-visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+})();
+
+/* ============================================================
+   Testimonial slider, auto-rotates every 6s, dot click jumps,
+   hover pauses, respects prefers-reduced-motion (no auto-rotate).
+   ============================================================ */
+(function(){
+  'use strict';
+  var stage = document.querySelector('[data-testimonials]');
+  if (!stage) return;
+  var slides = stage.querySelectorAll('.testimonial');
+  var dots = stage.querySelectorAll('.testimonials__dots button');
+  if (!slides.length) return;
+  var idx = 0;
+  var timer;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function go(i){
+    idx = (i + slides.length) % slides.length;
+    slides.forEach(function(s, j){ s.classList.toggle('testimonial--active', j === idx); });
+    dots.forEach(function(d, j){ d.classList.toggle('active', j === idx); });
+  }
+  function advance(){ go(idx + 1); }
+  function play(){ if (!reduce) timer = setInterval(advance, 6000); }
+  function pause(){ clearInterval(timer); }
+
+  dots.forEach(function(d, i){
+    d.addEventListener('click', function(){ go(i); pause(); play(); });
+  });
+  stage.addEventListener('mouseenter', pause);
+  stage.addEventListener('mouseleave', play);
+  play();
+})();
+
+/* ============================================================
+   Scheduling & Queueing mockup, cursor moves to an empty slot,
+   tooltip appears with patient details, slot fills matcha, and a
+   new queue entry slides in from the top. ~12-second loop.
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('schedHost');
+  var inner = document.getElementById('schedFrame');
+  if (!host || !inner) return;
+
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+  var TOTAL = 9000;
+  var SEQ = {
+    cursorToSlot: { at: 400,  dur: 1600 },
+    slotHover:    { at: 2000 },
+    clickSlot:    { at: 3300 },
+    slotBooked:   { at: 3400 },
+    zoomIn:       { at: 3700 },     /* grid zooms in on the booked slot */
+    advanceToIntake: { at: 5200 },  /* click → intake transition trigger */
+    reset:        { at: 7500 }
+  };
+
+  function moveCursor(target, dur) {
+    dur = dur || 800;
+    var cur = $('schCursor');
+    var fr = inner.getBoundingClientRect();
+    var r = target.getBoundingClientRect();
+    var m = new DOMMatrixReadOnly(getComputedStyle(inner).transform);
+    var sx = m.a, sy = m.d;
+    var fx = (r.left - fr.left) / sx + r.width / sx / 2 - 6;
+    var fy = (r.top - fr.top) / sy + r.height / sy / 2 - 4;
+    cur.style.transition = 'transform ' + dur + 'ms cubic-bezier(.5,.05,.2,1)';
+    cur.style.transform = 'translate(' + fx + 'px,' + fy + 'px)';
+  }
+  function moveInstant(x, y) {
+    var c = $('schCursor');
+    c.style.transition = 'none';
+    c.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+  function ripple() {
+    var r = $('schRipple');
+    r.classList.remove('go');
+    void r.offsetWidth;
+    r.classList.add('go');
+  }
+
+  var step = -1;
+  var clicked = {};
+  var wasHidden = true;
+  var startTime = 0;
+
+  var advanced = false;
+
+  function reset(now) {
+    step = 0;
+    clicked = {};
+    advanced = false;
+    window.__schedZoomed = false;
+    startTime = now || performance.now();
+    var slot = $('schTargetSlot');
+    if (slot) slot.classList.remove('is-hover', 'is-booked');
+    var card = host.querySelector('.sched-grid-card');
+    if (card) card.classList.remove('is-zooming');
+    host.classList.remove('is-zooming');
+    var cur = $('schCursor');
+    if (cur) { cur.style.transition = ''; cur.style.opacity = '1'; }
+    moveInstant(80, 580);
+  }
+
+  function tick(now) {
+    /* Pane is display:none on inactive tabs, host has zero dimensions
+       and DOMMatrixReadOnly would throw parsing 'none'. Skip until the
+       host is visible (Scheduling tab is active). */
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+
+    if (t < 200 && step !== 0) reset(now);
+
+    if (t >= SEQ.cursorToSlot.at && step === 0) {
+      moveCursor($('schTargetSlot'), SEQ.cursorToSlot.dur);
+      step = 1;
+    }
+    if (t >= SEQ.slotHover.at && step === 1) {
+      $('schTargetSlot').classList.add('is-hover');
+      step = 2;
+    }
+    if (t >= SEQ.clickSlot.at && !clicked.slot) {
+      clicked.slot = true;
+      ripple();
+    }
+    if (t >= SEQ.slotBooked.at && step === 2) {
+      var slot = $('schTargetSlot');
+      slot.classList.remove('is-hover');
+      slot.classList.add('is-booked');
+      step = 3;
+    }
+    /* Zoom-in: pin transform-origin to the booked slot's center, then
+       add the .is-zooming class so the CSS transition kicks in. Cursor
+       fades as part of the same beat. */
+    if (t >= SEQ.zoomIn.at && step === 3 && !window.__schedZoomed) {
+      window.__schedZoomed = true;
+      var card = host.querySelector('.sched-grid-card');
+      var s = $('schTargetSlot');
+      if (card && s) {
+        var cRect = card.getBoundingClientRect();
+        var sRect = s.getBoundingClientRect();
+        if (cRect.width > 0) {
+          var ox = ((sRect.left + sRect.width / 2) - cRect.left) / cRect.width * 100;
+          var oy = ((sRect.top + sRect.height / 2) - cRect.top) / cRect.height * 100;
+          card.style.setProperty('--zoom-x', ox + '%');
+          card.style.setProperty('--zoom-y', oy + '%');
+          card.classList.add('is-zooming');
+          host.classList.add('is-zooming');
+        }
+      }
+    }
+    /* Click → intake transition: ~1.5s after the zoom begins, ask the
+       rotation system to advance. The pane fades to Intake. */
+    if (t >= SEQ.advanceToIntake.at && step === 3 && !advanced) {
+      advanced = true;
+      if (typeof window.heroAdvance === 'function') {
+        window.heroAdvance();
+      }
+    }
+    if (t >= SEQ.reset.at && step === 3) {
+      var s2 = $('schTargetSlot');
+      if (s2) s2.classList.remove('is-booked');
+      var card2 = host.querySelector('.sched-grid-card');
+      if (card2) card2.classList.remove('is-zooming');
+      host.classList.remove('is-zooming');
+      window.__schedZoomed = false;
+      step = 4;
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Patient Intake motion graphic
+   - Types into 7 form fields one at a time
+   - Progress bar segment between step 2 (current) and step 3
+     fills proportional to typed characters
+   - Cursor clicks Continue → step 2 fills, step 3 activates
+   - Right-side vertical step list updates too
+   - 14-second loop
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('intakeHost');
+  var inner = document.getElementById('intakeFrame');
+  if (!host || !inner) return;
+
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+
+  /* Abstract placeholder data, conceptual intake, not a real patient.
+     "Sophia Ramirez" matches the patient name used in the AI Clinical
+     Assistant mockup for narrative continuity across the workflow. */
+  var FIELDS = [
+    { id: 'fldFirstName', text: 'Sophia Ramirez' },
+    { id: 'fldDOB',       text: '1985-04-12' },
+    { id: 'fldPhone',     text: '555-555-0100' }
+  ];
+  /* Field-by-field reveal, replaced the slow char-by-char typing with a
+     punchier sequential animation where each field auto-fills + gets a
+     brief matcha highlight pulse, then transitions to the CTA pulse,
+     then heroAdvance() back to Scheduling. */
+  var TOTAL       = 7500;
+  var FIELD_REVEAL_AT = [500, 1100, 1700];   /* when each field auto-fills */
+  var CTA_PULSE_AT    = 2900;                /* CTA button pulses */
+  var ADVANCE_AT      = 4200;                /* heroAdvance back to Scheduling */
+  var RESET_AT        = 6800;                /* fade out before loop restart */
+
+  var revealed = [];
+  var ctaPulsed = false;
+  var advanced = false;
+  var wasHidden = true;
+  var startTime = 0;
+
+  function reset(now) {
+    revealed = [false, false, false];
+    ctaPulsed = false;
+    advanced = false;
+    startTime = now || performance.now();
+    FIELDS.forEach(function (f) {
+      var fld = $(f.id);
+      if (!fld) return;
+      fld.classList.remove('is-typing', 'is-filling', 'is-filled');
+      var v = fld.querySelector('.intake-field-value');
+      if (v) v.textContent = '';
+    });
+    var cta = $('intakeCta');
+    if (cta) cta.classList.remove('is-pulsing');
+    var popup = $('intakePopup');
+    if (popup) popup.classList.remove('is-visible');
+  }
+
+  function fillField(idx) {
+    var f = FIELDS[idx];
+    if (!f) return;
+    var fld = $(f.id);
+    if (!fld) return;
+    var v = fld.querySelector('.intake-field-value');
+    if (v) v.textContent = f.text;
+    fld.classList.add('is-filling');
+    /* Filling glow lasts 600ms, then settles to filled state. */
+    setTimeout(function () {
+      fld.classList.remove('is-filling');
+      fld.classList.add('is-filled');
+    }, 600);
+  }
+
+  function pulseCta() {
+    var cta = $('intakeCta');
+    if (!cta) return;
+    cta.classList.add('is-pulsing');
+    /* Pop the confirmation popup ~250ms after the CTA pulse begins so
+       the eye registers the click first, then the result. */
+    setTimeout(function () {
+      var popup = $('intakePopup');
+      if (popup) popup.classList.add('is-visible');
+    }, 250);
+  }
+
+  function tick(now) {
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+    if (t < 100 && (revealed[0] || revealed[1] || revealed[2])) reset(now);
+
+    /* Reveal each field once when its scheduled time passes. */
+    for (var i = 0; i < FIELD_REVEAL_AT.length; i++) {
+      if (t >= FIELD_REVEAL_AT[i] && !revealed[i]) {
+        revealed[i] = true;
+        fillField(i);
+      }
+    }
+
+    if (t >= CTA_PULSE_AT && !ctaPulsed) {
+      ctaPulsed = true;
+      pulseCta();
+    }
+
+    if (t >= ADVANCE_AT && !advanced) {
+      advanced = true;
+      if (typeof window.heroAdvance === 'function') {
+        window.heroAdvance();
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Medical Billing, conceptual motion graphic. Sequence:
+   1. Code rows fade/slide in
+   2. Each code row types its CPT tag + description + amount
+   3. Total counts up from $0 to claim total
+   4. Cursor moves to Submit button, clicks (ripple + pulse)
+   5. "Paid" popup appears with the deposited amount
+   6. Hold, then loop
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('billHost');
+  var inner = document.getElementById('billFrame');
+  if (!host || !inner) return;
+
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+
+  var TOTAL = 11000;
+  var SEQ = {
+    row1At:          800,    /* row 1 reveal + matcha glow + value-pop */
+    row2At:          1600,   /* row 2 reveal */
+    totalCountStart: 2500,
+    totalCountEnd:   3300,
+    cursorToSubmit:  { at: 3700, dur: 900 },
+    clickSubmit:     { at: 4700 },
+    popupAt:         5000,
+    advanceAt:       9500,   /* heroAdvance → Scheduling (next loop) */
+    holdUntilLoop:   10500
+  };
+  var REVEAL_GLOW_MS = 600;
+  var billAdvanced = false;
+
+  var ROW_DATA = [
+    { row: 'bcRow1', tag: '99605', desc: 'MTM Initial · 15 min', amt: '$63.00' },
+    { row: 'bcRow2', tag: '99606', desc: 'MTM Additional · 15 min', amt: '$44.00' }
+  ];
+  var CLAIM_TOTAL = 107;
+  var rowsRevealed = [false, false];
+
+  function moveCursor(target, dur) {
+    dur = dur || 800;
+    var cur = $('bcCursor');
+    var fr = inner.getBoundingClientRect();
+    var r = target.getBoundingClientRect();
+    var m = new DOMMatrixReadOnly(getComputedStyle(inner).transform);
+    var sx = m.a, sy = m.d;
+    var fx = (r.left - fr.left) / sx + r.width / sx / 2 - 6;
+    var fy = (r.top - fr.top) / sy + r.height / sy / 2 - 4;
+    cur.style.transition = 'transform ' + dur + 'ms cubic-bezier(.5,.05,.2,1)';
+    cur.style.transform = 'translate(' + fx + 'px,' + fy + 'px)';
+  }
+  function moveInstant(x, y) {
+    var c = $('bcCursor');
+    c.style.transition = 'none';
+    c.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  }
+  function ripple() {
+    var r = $('bcRipple');
+    r.classList.remove('go');
+    void r.offsetWidth;
+    r.classList.add('go');
+  }
+
+  var step = -1;
+  var clicked = {};
+  var wasHidden = true;
+  var startTime = 0;
+
+  function reset(now) {
+    step = 0;
+    clicked = {};
+    rowsRevealed = [false, false];
+    billAdvanced = false;
+    startTime = now || performance.now();
+    ROW_DATA.forEach(function (r, idx) {
+      var row = $(r.row);
+      if (row) row.classList.remove('is-visible', 'is-filling');
+      var n = idx + 1;
+      var tag = $('bcTag' + n);  if (tag)  tag.textContent  = '';
+      var desc = $('bcDesc' + n); if (desc) desc.textContent = '';
+      var amt = $('bcAmt' + n);  if (amt)  amt.textContent  = '';
+    });
+    var total = $('bcTotal'); if (total) total.textContent = '$0.00';
+    var sub = $('bcSubmit');  if (sub)  sub.classList.remove('is-pulsing');
+    var pop = $('bcPopup');   if (pop)  pop.classList.remove('is-visible');
+    /* Reset Get Paid workflow stage + progress arrow when billing loops. */
+    var paidStage = document.querySelector('.hw-stage[data-pane-key="paid"]');
+    if (paidStage) paidStage.classList.remove('is-active', 'is-done');
+    var paidArrow = document.querySelector('.hw-arrow[data-arrow="paid"]');
+    if (paidArrow) paidArrow.style.setProperty('--bill-progress', '0%');
+    moveInstant(40, 100);
+  }
+
+  /* Intake-style reveal, set text instantly, add .is-filling glow, then
+     remove it after the value-pop animation completes. */
+  function revealRow(idx) {
+    var data = ROW_DATA[idx];
+    var n = idx + 1;
+    var row = $(data.row);
+    if (!row) return;
+    $('bcTag'  + n).textContent = data.tag;
+    $('bcDesc' + n).textContent = data.desc;
+    $('bcAmt'  + n).textContent = data.amt;
+    row.classList.add('is-visible', 'is-filling');
+    setTimeout(function () {
+      row.classList.remove('is-filling');
+    }, REVEAL_GLOW_MS);
+  }
+
+  function tick(now) {
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+    if (t < 100 && step !== 0) reset(now);
+
+    /* Reveal each row once at its scheduled time (Intake-style: instant
+       text fill + matcha glow + value-pop animation). */
+    if (t >= SEQ.row1At && !rowsRevealed[0]) {
+      rowsRevealed[0] = true;
+      revealRow(0);
+    }
+    if (t >= SEQ.row2At && !rowsRevealed[1]) {
+      rowsRevealed[1] = true;
+      revealRow(1);
+    }
+
+    /* Total counts up */
+    var totalEl = $('bcTotal');
+    if (totalEl) {
+      if (t < SEQ.totalCountStart) {
+        totalEl.textContent = '$0.00';
+      } else if (t >= SEQ.totalCountEnd) {
+        totalEl.textContent = '$' + CLAIM_TOTAL.toFixed(2);
+      } else {
+        var tp = (t - SEQ.totalCountStart) / (SEQ.totalCountEnd - SEQ.totalCountStart);
+        var v = CLAIM_TOTAL * tp;
+        totalEl.textContent = '$' + v.toFixed(2);
+      }
+    }
+
+    /* Cursor → Submit button */
+    if (t >= SEQ.cursorToSubmit.at && step === 0) {
+      var sub = $('bcSubmit');
+      if (sub) moveCursor(sub, SEQ.cursorToSubmit.dur);
+      step = 1;
+    }
+    /* Click + pulse */
+    if (t >= SEQ.clickSubmit.at && !clicked.submit) {
+      clicked.submit = true;
+      ripple();
+      var sub2 = $('bcSubmit');
+      if (sub2) sub2.classList.add('is-pulsing');
+    }
+    /* Workflow indicator, progress bar between Medical Billing and
+       Get Paid fills continuously from 0 → 100% during the billing
+       animation. Reaches 100% at popupAt. */
+    var paidArrow = document.querySelector('.hw-arrow[data-arrow="paid"]');
+    if (paidArrow) {
+      var progress = Math.min(100, (t / SEQ.popupAt) * 100);
+      paidArrow.style.setProperty('--bill-progress', progress + '%');
+    }
+
+    /* Paid popup + Get Paid stage activation */
+    if (t >= SEQ.popupAt && !clicked.popup) {
+      clicked.popup = true;
+      var pop = $('bcPopup');
+      if (pop) pop.classList.add('is-visible');
+      /* Light up the Get Paid stage with check-pop animation. */
+      var paidStage = document.querySelector('.hw-stage[data-pane-key="paid"]');
+      if (paidStage) paidStage.classList.add('is-active');
+      /* Mark Medical Billing as done too (since we've moved past it). */
+      var billingStage = document.querySelector('.hw-stage[data-pane-key="billing"]');
+      if (billingStage) {
+        billingStage.classList.remove('is-active');
+        billingStage.classList.add('is-done');
+      }
+    }
+
+    /* heroAdvance → Scheduling so the next cycle gets a fresh 10s window
+       and the rotation timer doesn't fire mid-popup. */
+    if (t >= SEQ.advanceAt && !billAdvanced) {
+      billAdvanced = true;
+      if (typeof window.heroAdvance === 'function') window.heroAdvance();
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Messaging & Follow-Ups motion graphic
+   - 3 phone screens visible side-by-side
+   - Phone 2 (SMS) animates: typing indicator → bubble 1 → typing → bubble 2 → reset
+   - ~10s loop
+   ============================================================ */
+(function () {
+  'use strict';
+  var host = document.getElementById('msgHost');
+  var inner = document.getElementById('msgFrame');
+  if (!host || !inner) return;
+
+  function fit() {
+    var r = host.getBoundingClientRect();
+    var s = Math.min(r.width / 1192, r.height / 656);
+    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  requestAnimationFrame(function () { requestAnimationFrame(fit); });
+  window.addEventListener('load', fit);
+
+  function $(id) { return document.getElementById(id); }
+
+  var TOTAL = 10000;
+  var SEQ = {
+    typing1On:  500,
+    typing1Off: 1700,
+    bubble1On:  1800,
+    typing2On:  3700,
+    typing2Off: 4900,
+    bubble2On:  5000,
+    reset:      9000
+  };
+
+  var step = -1;
+  var wasHidden = true;
+  var startTime = 0;
+
+  function reset(now) {
+    step = 0;
+    startTime = now || performance.now();
+    var b1 = $('msgBubble1'); if (b1) b1.classList.remove('is-on');
+    var b2 = $('msgBubble2'); if (b2) b2.classList.remove('is-on');
+    var ty = $('msgTyping');  if (ty) ty.classList.remove('is-on');
+  }
+
+  function tick(now) {
+    var rect = host.getBoundingClientRect();
+    if (rect.width === 0) {
+      wasHidden = true;
+      requestAnimationFrame(tick);
+      return;
+    }
+    if (wasHidden) {
+      wasHidden = false;
+      reset(now);
+    }
+    var t = (now - startTime) % TOTAL;
+    if (t < 0) t = 0;
+    if (t < 200 && step !== 0) reset(now);
+
+    if (t >= SEQ.typing1On  && step === 0) { $('msgTyping').classList.add('is-on');    step = 1; }
+    if (t >= SEQ.typing1Off && step === 1) { $('msgTyping').classList.remove('is-on'); step = 2; }
+    if (t >= SEQ.bubble1On  && step === 2) { $('msgBubble1').classList.add('is-on');   step = 3; }
+    if (t >= SEQ.typing2On  && step === 3) { $('msgTyping').classList.add('is-on');    step = 4; }
+    if (t >= SEQ.typing2Off && step === 4) { $('msgTyping').classList.remove('is-on'); step = 5; }
+    if (t >= SEQ.bubble2On  && step === 5) { $('msgBubble2').classList.add('is-on');   step = 6; }
+    if (t >= SEQ.reset      && step === 6) {
+      $('msgBubble1').classList.remove('is-on');
+      $('msgBubble2').classList.remove('is-on');
+      step = 7;
+    }
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   Product mockup tabs, swap which mockup-pane is visible.
+   Scribe pane re-runs fitMockup() on activation so the inner
+   1192×656 frame scales correctly after being display:none.
+   ============================================================ */
+(function(){
+  'use strict';
+  // Full 4-pane rotation (Messaging excluded entirely, not part of the
+  // schedule → intake → consult → billing → paid workflow narrative).
+  var tabs = document.querySelectorAll(
+    '.tab[data-tab="scheduling"], .tab[data-tab="intake"], ' +
+    '.tab[data-tab="documentation"], .tab[data-tab="billing"]'
+  );
+  var panes = document.querySelectorAll('.mockup-pane[data-pane]');
+
+  function doSwap(key){
+    tabs.forEach(function(t){
+      var on = t.getAttribute('data-tab') === key;
+      t.classList.toggle('tab--active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+
+    panes.forEach(function(p){
+      p.classList.toggle('mockup-pane--active', p.getAttribute('data-pane') === key);
+    });
+
+    /* Re-fit motion-graphic mockups when their pane becomes active.
+       While display:none the host had zero dimensions and the inner
+       1192×656 frame's scale collapsed. We run the resize SYNCHRONOUSLY
+       on the same frame as the class toggle so the new pane lands
+       pre-scaled and the user never sees a mid-animation pop. The
+       second rAF is a safety net for layout that hasn't settled. */
+    function refit(hostId, innerId) {
+      var hostEl = document.getElementById(hostId);
+      var inner = document.getElementById(innerId);
+      if (!hostEl || !inner) return;
+      function apply() {
+        var r = hostEl.getBoundingClientRect();
+        var s = Math.min(r.width / 1192, r.height / 656);
+        if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+      }
+      apply();
+      requestAnimationFrame(apply);
+    }
+    if (key === 'documentation') refit('mockupHost', 'frame');
+    if (key === 'scheduling')    refit('schedHost', 'schedFrame');
+    if (key === 'intake')        refit('intakeHost', 'intakeFrame');
+    if (key === 'messaging')     refit('msgHost', 'msgFrame');
+    if (key === 'billing')       refit('billHost', 'billFrame');
+
+    /* Global workflow indicator, mark stages as done/active/pending
+       based on the active pane's position in the workflow. The 5th
+       stage "Get Paid" doesn't have a pane; its active state is set
+       by the Billing animation when the popup fires. activate() here
+       resets it whenever any pane (other than billing) takes focus. */
+    var WF_ORDER = ['scheduling', 'intake', 'documentation', 'billing'];
+    var activeIdx = WF_ORDER.indexOf(key);
+    if (activeIdx === -1) return;
+    var stages = document.querySelectorAll('.hw-stage');
+    var arrows = document.querySelectorAll('.hw-arrow');
+    stages.forEach(function(stage, i){
+      /* Skip the Get Paid stage, its state is managed by the billing
+         animation, not by which pane is active. */
+      if (stage.getAttribute('data-pane-key') === 'paid') {
+        /* When leaving billing for any earlier pane, clear paid state. */
+        if (key !== 'billing') stage.classList.remove('is-active', 'is-done');
+        return;
+      }
+      stage.classList.toggle('is-active', i === activeIdx);
+      stage.classList.toggle('is-done',   i <  activeIdx);
+    });
+    arrows.forEach(function(arrow, i){
+      /* The last arrow (data-arrow="paid") gets its fill from billing's
+         tick(). activate() just resets it when leaving billing. */
+      if (arrow.getAttribute('data-arrow') === 'paid') {
+        if (key !== 'billing') arrow.style.setProperty('--bill-progress', '0%');
+        return;
+      }
+      arrow.classList.toggle('is-traveled', i < activeIdx);
+    });
+  }
+
+  /* Directional push transition. Determine workflow direction from the
+     pane order, set [data-push-direction] on .visual-wrap so CSS picks
+     the right keyframes, mark the outgoing pane as .is-leaving (becomes
+     an absolute overlay that slides off + scales down), then doSwap()
+     activates the new pane which slides in from the opposite side. */
+  /* Must match the longer of the two pane animations (.6s in / .6s out).
+     +50ms safety margin guarantees the .is-leaving overlay is removed
+     after its fade-out keyframe has fully painted. */
+  var PUSH_MS = 650;
+  var WF_ORDER = ['scheduling', 'intake', 'documentation', 'billing'];
+  function activate(key) {
+    var visualWrap = document.querySelector('.visual-wrap');
+    var prevActive = document.querySelector('.mockup-pane--active');
+    var prevKey = prevActive ? prevActive.getAttribute('data-pane') : null;
+
+    if (!prevActive || prevKey === key) {
+      doSwap(key);
+      return;
+    }
+
+    /* Set direction so CSS uses the right in/out keyframes. */
+    var fromIdx = WF_ORDER.indexOf(prevKey);
+    var toIdx   = WF_ORDER.indexOf(key);
+    var direction = (toIdx > fromIdx || toIdx === -1) ? 'forward' : 'backward';
+    if (visualWrap) visualWrap.setAttribute('data-push-direction', direction);
+
+    /* Clear any stale .is-leaving (rapid back-to-back transitions). */
+    panes.forEach(function(p){ p.classList.remove('is-leaving'); });
+
+    /* Mark outgoing pane as leaving BEFORE doSwap so it keeps display:block
+       via the .is-leaving rule even after losing .mockup-pane--active. */
+    prevActive.classList.add('is-leaving');
+
+    doSwap(key);
+
+    setTimeout(function(){
+      prevActive.classList.remove('is-leaving');
+    }, PUSH_MS);
+  }
+
+  /* ----------------------------------------------------------
+     Auto-rotate tabs every 10 seconds, with a matcha progress
+     bar that fills under the active tab.
+     - Only runs while the tab bar is in the viewport.
+     - Pauses when the browser tab is hidden.
+     - Stops permanently once the user clicks a tab.
+     ---------------------------------------------------------- */
+  /* Rotation unlocked 2026-05-26, full 4-pane cycle:
+     Scheduling → Patient Intake → Consult Complete (Documentation) →
+     Medical Billing → back to Scheduling. Get Paid is shown as the
+     5th workflow stage but doesn't have its own pane (it's the final
+     state inside the Billing animation). */
+  var ROTATE_ENABLED = true;
+
+  var ROTATE_MS    = 10000;
+  var rotateTimer  = null;
+  var userTouched  = false;
+  var inView       = false;
+  var tabBar       = document.querySelector('.tab-bar');
+
+  function activeIdx() {
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].classList.contains('tab--active')) return i;
+    }
+    return 0;
+  }
+  function advance() {
+    if (userTouched || !inView || document.hidden) return;
+    var next = (activeIdx() + 1) % tabs.length;
+    activate(tabs[next].getAttribute('data-tab'));
+    /* Restart the CSS progress animation on the new active tab.
+       The animation runs on .tab--active::after and is keyed to the
+       same 10s as ROTATE_MS, so the bar reaches 100% just as the
+       next interval fires. Forcing reflow guarantees a clean restart
+       even when the same tab key is somehow re-activated. */
+    if (tabBar) {
+      tabBar.classList.remove('is-rotating');
+      void tabBar.offsetWidth;
+      tabBar.classList.add('is-rotating');
+    }
+  }
+  function startRotation() {
+    if (!ROTATE_ENABLED) return;
+    if (rotateTimer || userTouched) return;
+    if (tabBar) tabBar.classList.add('is-rotating');
+    rotateTimer = setInterval(advance, ROTATE_MS);
+  }
+  function stopRotation() {
+    if (rotateTimer) { clearInterval(rotateTimer); rotateTimer = null; }
+    if (tabBar) tabBar.classList.remove('is-rotating');
+  }
+
+  /* Public hook: per-pane animations can call this to advance to the next
+     pane "early" (e.g. Scheduling fires this when the user-cursor clicks
+     a slot, transitioning to Intake immediately rather than waiting for
+     the 10s rotation tick). Resets the rotation timer so the new pane
+     gets its full 10s window. */
+  window.heroAdvance = function () {
+    if (!ROTATE_ENABLED) return;
+    if (userTouched || !inView) return;
+    if (rotateTimer) { clearInterval(rotateTimer); rotateTimer = null; }
+    advance();
+    if (inView && !userTouched) {
+      rotateTimer = setInterval(advance, ROTATE_MS);
+    }
+  };
+
+  /* Observe the visible mockup frame (tab bar is now display:none, so
+     observing it would never report intersecting). Falls back to the
+     tab bar if visual-wrap isn't present. */
+  var observerTarget = document.querySelector('.visual-wrap') || tabBar;
+  if (observerTarget && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        inView = e.isIntersecting;
+        if (inView && !userTouched) startRotation();
+        else stopRotation();
+      });
+    }, { threshold: 0.3 }).observe(observerTarget);
+  } else {
+    inView = true;
+    startRotation();
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stopRotation();
+    else if (inView && !userTouched) startRotation();
+  });
+
+  /* Manual click: stop rotation, activate the chosen tab. The active
+     tab keeps its full-width matcha underline (no animation), so the
+     bar remains a clean static indicator after user interaction. */
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      userTouched = true;
+      stopRotation();
+      activate(t.getAttribute('data-tab'));
+    });
+  });
+})();
+
+/* ============================================================
+   Reimbursement calculator, live update on input change
+   ============================================================ */
+(function(){
+  'use strict';
+  document.querySelectorAll('[data-calc-widget]').forEach(function(widget){
+    var stores = widget.querySelector('[data-calc-stores]');
+    var enc    = widget.querySelector('[data-calc-encounters]');
+    var out    = widget.querySelector('[data-calc-result]');
+    if (!stores || !enc || !out) return;
+
+    var AVG_PER_ENC = 74;
+    var WEEKS = 50;
+    var CAPTURE = 0.78;
+
+    function recalc(){
+      var s = Math.max(0, parseInt(stores.value, 10) || 0);
+      var e = Math.max(0, parseInt(enc.value, 10) || 0);
+      var unlock = Math.round(s * e * WEEKS * AVG_PER_ENC * CAPTURE);
+      out.textContent = '$' + unlock.toLocaleString('en-US');
+    }
+    stores.addEventListener('input', recalc);
+    enc.addEventListener('input', recalc);
+    recalc();
+  });
+})();`}></script>
+</BaseLayout>

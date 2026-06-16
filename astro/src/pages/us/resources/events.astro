@@ -1,0 +1,475 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Events, MedMe Health"
+  description="Conference booths, partner dinners, regional roundtables. Where you'll see MedMe in person this year."
+>
+  <Fragment slot="head">
+    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/resources/events" />
+  </Fragment>
+
+<style>
+
+  /* ============================================================
+     EVENTS page. Same .sub-hero / .bl-card grid pattern as the
+     blog page. Each card represents a single event; visual slot
+     uses a gradient placeholder with a date badge overlaid so
+     the date reads at a glance without an event photo.
+     ============================================================ */
+
+  /* ====== HERO ================================================ */
+  .sub-hero {
+    background: var(--seashell);
+    padding: 3.5rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sub-hero__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+  }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: 0 auto; }
+  .sub-hero h1.h-display {
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto;
+    max-width: 660px;
+    text-wrap: pretty;
+  }
+  .sub-hero__breadcrumb {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.55);
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+  .sub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
+  .sub-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sub-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
+
+  /* ====== FILTER ============================================== */
+  .bl-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 0 2rem;
+  }
+  .bl-filter__pill {
+    background: var(--white);
+    border: 1.5px solid rgba(6, 62, 84, 0.12);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    line-height: 1.2;
+  }
+  .bl-filter__pill:hover {
+    border-color: var(--matcha);
+    background: rgba(195, 196, 48, 0.08);
+  }
+  .bl-filter__pill.is-active {
+    background: var(--matcha);
+    border-color: var(--matcha);
+    color: var(--indigo);
+  }
+  .bl-filter__pill:focus-visible {
+    outline: 2px solid var(--matcha);
+    outline-offset: 3px;
+  }
+  .bl-card.is-hidden { display: none; }
+
+  /* ====== EVENT CARDS ========================================= */
+  .bl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+  @media (max-width: 1000px) { .bl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .bl-grid { grid-template-columns: 1fr; } }
+
+  .bl-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .bl-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+    box-shadow: 0 16px 40px rgba(6, 62, 84, 0.08);
+  }
+
+  /* Gradient placeholder with a date badge overlaid bottom-left. */
+  .bl-card__media {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: linear-gradient(135deg, var(--indigo) 0%, rgba(6, 62, 84, 0.75) 100%);
+    overflow: hidden;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: var(--matcha);
+  }
+  .bl-card__media--matcha {
+    background: linear-gradient(135deg, rgba(195, 196, 48, 0.95) 0%, rgba(195, 196, 48, 0.55) 100%);
+    color: var(--indigo);
+  }
+  .bl-card__media--seashell {
+    background: linear-gradient(135deg, rgba(195, 196, 48, 0.22) 0%, rgba(6, 62, 84, 0.08) 100%);
+    color: var(--indigo);
+  }
+  .bl-card__media-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.55;
+    transition: opacity 0.25s ease;
+  }
+  .bl-card:hover .bl-card__media-icon { opacity: 0.75; }
+  .bl-card__media-icon svg {
+    width: 48px;
+    height: 48px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .bl-card__date {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    background: var(--white);
+    color: var(--indigo);
+    border-radius: 10px;
+    padding: 0.5rem 0.85rem;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(6, 62, 84, 0.18);
+    font-family: var(--font-display);
+    line-height: 1.05;
+  }
+  .bl-card__date-month {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(6, 62, 84, 0.6);
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .bl-card__date-day {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.02em;
+  }
+
+  .bl-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75rem;
+  }
+  .bl-card__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    align-self: flex-start;
+    letter-spacing: 0.02em;
+  }
+  .bl-card__tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--matcha);
+  }
+  .bl-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.014em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .bl-card__meta {
+    font-size: 0.82rem;
+    color: rgba(6, 62, 84, 0.6);
+    line-height: 1.4;
+  }
+  .bl-card__lede {
+    margin: 0;
+    font-size: 0.92rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .bl-card__cta { margin-top: auto; padding-top: 0.75rem; }
+  .bl-card__cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--matcha);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1.5px solid var(--matcha);
+    transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  }
+  .bl-card__cta a:hover {
+    background: transparent;
+    color: var(--indigo);
+    transform: translateX(2px);
+  }
+  .bl-card__cta a .arrow { transition: transform 0.18s ease; }
+  .bl-card__cta a:hover .arrow { transform: translateX(2px); }
+</style>
+
+<!-- ============= 1. SUB-HERO ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__text">
+      <div class="sub-hero__breadcrumb">
+        <a href="/us">Home</a><span class="sep">/</span><a href="/us/resources">Resources</a><span class="sep">/</span><span>Events</span>
+      </div>
+      <span class="kicker kicker--matcha">Events</span>
+      <h1 class="h-display">Where you'll see MedMe<br>in person this year.</h1>
+      <p class="sub-hero__lede">Conference booths, partner dinners, regional roundtables. Pharmacy operators come up to us; we don't run booth bingo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 2. EVENT GRID ============= -->
+<section class="tile tile--light" aria-label="Events">
+  <div class="tile__inner">
+    <div class="bl-filter" role="group" aria-label="Filter events by category">
+      <button type="button" class="bl-filter__pill is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="bl-filter__pill" data-filter="conference" aria-pressed="false">Conference</button>
+      <button type="button" class="bl-filter__pill" data-filter="dinner" aria-pressed="false">Dinner</button>
+      <button type="button" class="bl-filter__pill" data-filter="roundtable" aria-pressed="false">Roundtable</button>
+    </div>
+
+    <div class="bl-grid">
+
+      <article class="bl-card" data-tag="conference">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Apr</span><span class="bl-card__date-day">17</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Conference</span>
+          <h3>NCAP Annual Convention 2026</h3>
+          <p class="bl-card__meta">Greensboro, NC &middot; Apr 17 to 19, 2026 &middot; Platinum sponsor</p>
+          <p class="bl-card__lede">Catch the MedMe team at our booth in the Reverse Expo. Live walkthroughs of the NCAP Member Pilot, medical billing workflows, and the AI Clinical Assistant.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Plan a meeting <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="conference">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Mar</span><span class="bl-card__date-day">20</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Conference</span>
+          <h3>APhA Annual Meeting and Exposition</h3>
+          <p class="bl-card__meta">Nashville, TN &middot; Mar 20 to 23, 2026 &middot; Exhibitor</p>
+          <p class="bl-card__lede">Two days of live billing reviews at the MedMe booth: bring a recent claim and we will walk through it with you, code by code, denial by denial.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Plan a meeting <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="conference">
+        <a class="bl-card__media bl-card__media--seashell" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Oct</span><span class="bl-card__date-day">18</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Conference</span>
+          <h3>NCPA Annual Convention 2026</h3>
+          <p class="bl-card__meta">Columbus, OH &middot; Oct 18 to 21, 2026 &middot; Exhibitor</p>
+          <p class="bl-card__lede">A working booth for independent operators. Demo the full clinical-services stack and walk away with a state-specific ROI snapshot we run on the spot.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Plan a meeting <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="dinner">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">May</span><span class="bl-card__date-day">06</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Dinner</span>
+          <h3>AI Agents in Specialty Pharmacy, Asembia Dinner</h3>
+          <p class="bl-card__meta">Las Vegas, NV &middot; May 6, 2026 &middot; Invite-only</p>
+          <p class="bl-card__lede">A small dinner alongside Asembia for specialty pharmacy leaders looking at how AI agents are changing intake, adherence, and prior authorization workflows.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Request an invite <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="dinner">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Jun</span><span class="bl-card__date-day">12</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Dinner</span>
+          <h3>Northeast Independent Operators Dinner</h3>
+          <p class="bl-card__meta">Philadelphia, PA &middot; Jun 12, 2026 &middot; Invite-only</p>
+          <p class="bl-card__lede">An evening with independent operators across PA, NJ, and NY working medical billing into their service lines. Talk shop with peers who have done it.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Request an invite <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="roundtable">
+        <a class="bl-card__media bl-card__media--seashell" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14.45 14.45 0 0 1 0 18M12 3a14.45 14.45 0 0 0 0 18"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Jul</span><span class="bl-card__date-day">15</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Roundtable</span>
+          <h3>Rural Health Transformation Operators Roundtable</h3>
+          <p class="bl-card__meta">Virtual &middot; Jul 15, 2026 &middot; 2:00 PM ET</p>
+          <p class="bl-card__lede">A working session with pharmacies positioning for state RHTP funding. Where applications stand, what advocates are pushing for, and what to do this quarter.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Save your seat <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="roundtable">
+        <a class="bl-card__media" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14.45 14.45 0 0 1 0 18M12 3a14.45 14.45 0 0 0 0 18"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Aug</span><span class="bl-card__date-day">20</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Roundtable</span>
+          <h3>Pharmacy Associations Strategy Roundtable</h3>
+          <p class="bl-card__meta">Virtual &middot; Aug 20, 2026 &middot; 1:00 PM ET</p>
+          <p class="bl-card__lede">Association leaders comparing notes on member pilots, advocacy outcomes, and the operating models that move pharmacy scope forward in their state.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Save your seat <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="conference">
+        <a class="bl-card__media bl-card__media--matcha" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Sep</span><span class="bl-card__date-day">10</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Conference</span>
+          <h3>HLTH 2026</h3>
+          <p class="bl-card__meta">Las Vegas, NV &middot; Sep 10 to 13, 2026 &middot; Exhibitor</p>
+          <p class="bl-card__lede">For health-system pharmacy leaders and digital-health operators. Live demos of the modular pharmacy EHR and our RHTP-ready deployment posture.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Plan a meeting <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="bl-card" data-tag="dinner">
+        <a class="bl-card__media bl-card__media--seashell" href="/us/contact" aria-hidden="true" tabindex="-1">
+          <span class="bl-card__media-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
+          <span class="bl-card__date"><span class="bl-card__date-month">Oct</span><span class="bl-card__date-day">21</span></span>
+        </a>
+        <div class="bl-card__body">
+          <span class="bl-card__tag">Dinner</span>
+          <h3>Enterprise Pharmacy Leaders Dinner</h3>
+          <p class="bl-card__meta">Columbus, OH &middot; Oct 21, 2026 &middot; Invite-only</p>
+          <p class="bl-card__lede">Hosted on the closing night of NCPA. A room full of enterprise pharmacy leaders, no slides, just conversations about scaling clinical services across networks.</p>
+          <div class="bl-card__cta">
+            <a href="/us/contact">Request an invite <span class="arrow">&rarr;</span></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. CLOSING CTA (navy) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Get the calendar">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Stay In The Loop</span>
+      <h2 class="h-display">Want a heads-up before the next event drops?</h2>
+      <p class="lead">One short email a month with the upcoming booths, dinners, and roundtables. No spam, no sales sequences dressed up as content.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/us/contact">Subscribe <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<script is:inline slot="end-of-body" set:html={`/* Event category filter, identical pattern to the blog page. */
+  (function eventsFilter() {
+    var pills = document.querySelectorAll('.bl-filter__pill');
+    var cards = document.querySelectorAll('.bl-card');
+    if (!pills.length || !cards.length) return;
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = pill.getAttribute('data-filter');
+        pills.forEach(function (p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-tag') === filter;
+          card.classList.toggle('is-hidden', !match);
+        });
+      });
+    });
+  })();`}></script>
+</BaseLayout>

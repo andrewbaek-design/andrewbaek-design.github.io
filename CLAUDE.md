@@ -6,47 +6,74 @@ Guardrails and conventions for the MedMe marketing website. Read this **before**
 
 ## 1. Architecture in 90 seconds
 
-This is a **static HTML site** with a 165-line Python preprocessor ([build.py](build.py)).
+This is an **Astro 5 static site**. All source and build config lives under `astro/`. The repo root holds only docs, the GitHub Actions workflow, and `.gitignore`.
 
 ```
-src/                  ← SOURCE templates. Edit these.
-  us/, ca/, legal/, company/, etc. (paths mirror live URLs)
-partials/             ← Shared fragments included via {{> partials/x }}.
-  nav-us.html, nav-ca.html, footer-us.html, footer-ca.html,
-  util-bar-us.html, util-bar-ca.html, trust-band-us.html,
-  logo-medme.html, cookie-banner.html
-assets/               ← Shared CSS, JS, SVG. Globally cached.
-  brand.css           Design system. Tokens, components, nav, buttons.
-  homepage-us.css     US homepage page-scoped styles (large).
-  homepage-ca.css     CA homepage page-scoped styles.
-  site.js             Nav dropdown, mobile drawer, reveal-on-scroll, region switch.
-us/, ca/, legal/, …   ← BUILT OUTPUT. Currently committed.
-                        Do not hand-edit. Re-run python3 build.py.
+astro/
+  src/
+    pages/             File-based routes. astro/src/pages/legal/privacy.astro → /legal/privacy/
+    layouts/           Shared HTML shells: BaseLayout.astro (US), BaseLayoutCa.astro (CA).
+    components/        Shared partials: NavUs, NavCa, FooterUs, FooterCa, UtilBarUs, UtilBarCa,
+                       LogoMedme, CookieBanner, TrustBandUs.
+    content/           Content collections (Markdown sidecars with typed frontmatter).
+      legal/           privacy, hipaa, pipeda, terms (.md files)
+      us/              about (.md file)
+    content.config.ts  Zod schemas for collections.
+  public/
+    assets/            brand.css, homepage-us.css, homepage-ca.css, site.js, SVGs.
+                       Served from /assets/* unchanged. No Astro processing.
+  astro.config.mjs     Site config (directory format, trailing-slash, remark plugins).
+  package.json         Astro dep + scripts.
+  CLAUDE.md            Astro-specific notes (kept; cross-linked from here for now).
+
+.github/workflows/pages.yml   CI build + deploy to GitHub Pages.
 ```
 
-**Workflow.** Edit `src/` or `partials/`, then:
+**Workflow.** Edit `astro/src/**`, then:
 
 ```sh
-python3 build.py            # builds src/ → root *.html files
-python3 -m http.server 8000 # serve locally; visit /us/ or /ca/
+cd astro
+npm install                    # first time only
+npm run dev                    # dev server on http://localhost:4321
+npm run build                  # production build → astro/dist/
 ```
 
-**Template syntax.** Only three forms are supported:
+**Template syntax.** Astro `.astro` files are HTML + a frontmatter block. JSX-style expressions in the body.
 
-| Syntax | Behavior |
-|---|---|
-| `{{> partials/nav-us }}` | Inline the contents of `partials/nav-us.html`. |
-| `{{ page.title }}` | Substitute a key from the page's front-matter. |
-| `{{# any comment }}` | Removed at build time. |
-
-Front-matter is optional YAML-ish at the top of `src/*.html`:
-
-```
+```astro
 ---
-region: us
-page.title: MedMe, United States
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry, render } from 'astro:content';
+
+const entry = await getEntry('legal', 'privacy');
+const { Content } = await render(entry);
+const { title, description, kicker, headline, lede } = entry.data;
 ---
+<BaseLayout title={title} description={description}>
+  <h1 set:html={headline}></h1>
+  <Content />
+</BaseLayout>
 ```
+
+Key Astro features in use here:
+- `<Component />` — child component invocation. Imports go in the `---` block.
+- `{expression}` — interpolate a JS expression.
+- `set:html={value}` — render trusted HTML from a frontmatter string (used for headlines/ledes that contain inline `<span>` / `<strong>`).
+- `is:inline` on `<script>` / `<style>` — pass-through without Astro/Vite processing. Used for JSON-LD blocks and page-specific JS.
+- `<slot name="head" />` / `<slot name="end-of-body" />` — BaseLayout exposes named slots for pages to inject head extras or trailing scripts.
+
+### Content Collections (sidecar Markdown for page copy)
+
+Pages that are mostly long-form prose use Astro Content Collections. The `.md` file holds the copy, the `.astro` file holds the layout shell.
+
+Two collections exist today:
+
+- **`legal`** — privacy, hipaa, pipeda, terms. Schema: required `title`, `description`, `kicker`, `headline`, `lede` + optional CTA fields. See [astro/src/content/legal/privacy.md](astro/src/content/legal/privacy.md).
+- **`usPages`** — about. Looser schema with per-section kickers/headlines/leads. See [astro/src/content/us/about.md](astro/src/content/us/about.md).
+
+**When to use a sidecar `.md`.** Pages that are mostly prose (legal, about, careers, blog posts). Pages with heavy custom motion, mockups, or multi-section structured layouts should stay as plain `.astro` files with content embedded.
+
+**Markdown rendering.** Astro's default Markdown is CommonMark + GFM. Custom heading IDs (`## 1. Scope {#scope}` syntax used by the legal pages) are enabled via the `remark-custom-heading-id` plugin in [astro/astro.config.mjs](astro/astro.config.mjs). Without that plugin, Astro auto-slugs heading text and existing TOC anchors break.
 
 ---
 
@@ -78,7 +105,7 @@ These are tested constraints from prior feedback rounds. Treat as build-blocking
 
 ## 3. Design system
 
-### Tokens (single source of truth: [`assets/brand.css`](assets/brand.css))
+### Tokens (single source of truth: [`astro/public/assets/brand.css`](astro/public/assets/brand.css))
 
 ```
 --indigo: #063E54           Primary brand color. Use for h1/h2, dark sections.
@@ -95,7 +122,7 @@ These are tested constraints from prior feedback rounds. Treat as build-blocking
 
 **Never hardcode a brand color.** If you write `#063E54` instead of `var(--indigo)`, you're creating a future find-and-replace burden. Same for `#C3C430` (matcha) and `#FAF9F5` (seashell).
 
-**Inverse trap: never replace the literal hex in the token definitions themselves.** The `:root { --indigo: #063E54; ... }` block in `brand.css` is the source of truth. Replacing those literals with `var(--indigo)` etc. creates a circular self-reference, CSS resolves the variable to empty, and every page silently falls back to browser defaults (white background instead of seashell, etc.). The first round of this audit hit this trap during a global hex→token substitution and had to be reverted. The token definitions in `brand.css` carry a comment that says "Do not replace these with var() references." Respect it.
+**Inverse trap: never replace the literal hex in the token definitions themselves.** The `:root { --indigo: #063E54; ... }` block in `brand.css` is the source of truth. Replacing those literals with `var(--indigo)` etc. creates a circular self-reference, CSS resolves the variable to empty, and every page silently falls back to browser defaults (white background instead of seashell, etc.). The token definitions in `brand.css` carry a comment that says "Do not replace these with var() references." Respect it.
 
 ### Buttons (3-tier global system)
 
@@ -118,45 +145,45 @@ These are tested constraints from prior feedback rounds. Treat as build-blocking
 | `.lead` | Section lede paragraph. |
 | `.pulse-rings`, `.pill-cta-row`, `.pill-cta-row--center` | Pulsing-ring decoration around primary CTA in dark closing sections. |
 
-### Page-scoped patterns to avoid duplicating
+### CSS scoping strategy
 
-These appear inline on multiple pages. If you're adding a 22nd one, **promote to brand.css instead**:
+Page-inline `<style>` blocks in `.astro` files are **scoped by default** (Astro adds a `data-astro-cid-*` attribute selector). This was validated against the 24 source pages with inline CSS: only one (the geo-redirect root index) needed `is:global` because it targets `body`/`html` directly.
 
-- `.sub-hero` + `__inner` / `__text` / `__bg` / `__lede` / `__cta` / `__breadcrumb` — appears inline in **21 pages**. Use the same definition each time.
-- `.bl-card` (blog/resources cards) — appears in 5 Resources pages.
-- "Card" patterns: prefer `.h-card`-based variants over inventing yet another `.foo-card` prefix. The site already has 16 different card-prefix names; we don't need a 17th.
+**Use `<style is:global>` only when:**
 
-### Cache busting
+1. The rules target a partial/layout element (`.nav__*`, `.site-footer__*`, `.util-bar__*`). Scoped styles don't reach into child components.
+2. The rules target `body` or `html` directly.
+3. The rules redeclare a brand-token-level `@font-face`, `:root` custom properties, or any global side-effect.
 
-Every CSS link uses a `?v=N` query string for cache busting. Examples:
-- `<link href="/assets/brand.css?v=65">` — bump when brand.css changes.
-- `<link href="/assets/homepage-us.css?v=4">` — bump when homepage-us.css changes.
+**`brand.css` stays a global stylesheet** loaded via `<link>` in `BaseLayout.astro`. Page-inline styles for layout/scope-specific cosmetics live in each `.astro` file under a default `<style>` block.
 
-When you change `brand.css`, run a global find-replace for the current `?v=N` and bump everywhere. There is no automation for this yet (a known weakness).
+Astro renames `@keyframes` identifiers in scoped blocks (e.g. `hero-video-pulse` → `hero-video-pulse-XXXXX`) and rewrites the matching `animation:` references in the same scope, so 58 page-local keyframes survive without modification.
 
 ---
 
 ## 4. Project structure rules
 
-### When to use partials vs inline
+### When to use a component vs. inline markup
 
-- **Use a partial** if the markup is shared across **3+ pages** (nav, footer, trust band).
-- **Inline** if it's truly one-of-a-kind (a specific page's hero motion graphic).
-- **Don't** include partials inside other partials more than 2 levels deep.
+- **Component** (in `astro/src/components/`) if the markup is shared across **3+ pages**. Current shared components: NavUs/NavCa, FooterUs/FooterCa, UtilBarUs/UtilBarCa, LogoMedme, CookieBanner, TrustBandUs.
+- **Inline in the `.astro` page** if it's truly one-of-a-kind (a specific page's hero motion graphic).
 
-### When to add CSS to brand.css vs page-inline
+### When to add CSS to brand.css vs. a page-inline `<style>` block
 
 - **brand.css** if the rule is used or could be used on 3+ pages.
-- **homepage-{us,ca}.css** if it's homepage-only.
-- **Inline `<style>` in src/*.html** if it's genuinely page-scoped.
-
-If you find yourself copy-pasting CSS between two pages, stop and consider whether the third page would want it too.
+- **homepage-{us,ca}.css** if it's homepage-only (loaded via head slot from `astro/src/pages/{us,ca}/index.astro`).
+- **Page-inline `<style>` in the `.astro` file** if it's genuinely page-scoped. Scoping is automatic.
 
 ### File naming
 
-- Source paths mirror live URLs. `src/us/pharmacy/independents.html` → `/us/pharmacy/independents/`.
+- Source paths mirror live URLs. `astro/src/pages/us/pharmacy/independents.astro` → `/us/pharmacy/independents/`.
 - Lowercase, hyphen-separated. No spaces. No camelCase.
-- Image / SVG mockups go in `assets/<page-slug>-mockup.svg` if shared, or `assets/<topic>-<descriptor>.svg`.
+- Image / SVG mockups go in `astro/public/assets/<page-slug>-mockup.svg` if shared, or `astro/public/assets/<topic>-<descriptor>.svg`.
+
+### When to use a sidecar `.md` (Content Collection) vs. embed content in `.astro`
+
+- **Sidecar `.md`** when the page is mostly long-form prose with little structural variation per section (legal, about, blog posts, case studies). The author edits `.md`, not `.astro`.
+- **Embed in `.astro`** for marketing pages with multi-section custom layouts, motion, mockups, or interactive widgets.
 
 ---
 
@@ -164,52 +191,50 @@ If you find yourself copy-pasting CSS between two pages, stop and consider wheth
 
 This project has been built largely with Claude Code. Every AI edit must:
 
-1. **Read the project conventions in section 2** before making any change.
-2. **Search for an existing pattern** before inventing a new one. The site already has `.tile`, `.h-card`, `.bl-card`, `.feature`, `.partner-card` (and more). Reuse, don't recreate.
-3. **Bump the relevant `?v=N`** when changing `brand.css` or page CSS files.
-4. **Run `python3 build.py`** after every edit; commit both source and built output (current convention, will change in a future round).
-5. **For copy edits**, change source only — don't manually edit built output files.
-6. **For multi-page changes** (e.g., trust band uptime stat), check whether the value is also inlined on the homepage at [src/us/index.html](src/us/index.html). The homepage carries its own inline trust band that doesn't pull from `partials/trust-band-us.html`.
+1. **Read the hard rules in section 2** before making any change.
+2. **Search for an existing component or pattern** before inventing a new one. Check `astro/src/components/` and `brand.css` first.
+3. **Run `npm run build` from `astro/`** after non-trivial edits to verify the build still passes. Output goes to `astro/dist/` (gitignored).
+4. **For copy edits on pages with a sidecar `.md`**, edit the `.md`, not the `.astro` page shell.
+5. **For multi-page changes** (e.g. trust band uptime stat, nav structure), edit the shared component, not each page.
+6. **`brand.css` is the global stylesheet.** Page-inline `<style>` blocks are scoped. Don't move scoped CSS into brand.css unless 3+ pages need it.
 
 ---
 
-## 6. Currently deferred work
+## 6. Deploy
 
-Known weaknesses, not yet addressed. Do not introduce new instances of these patterns:
+`.github/workflows/pages.yml` runs on every push to `main`:
 
-- **Inline CSS duplication.** `.sub-hero` and several card patterns are duplicated across 12-21 pages each. A future round will promote these to `brand.css`. Until then, add to brand.css instead of inlining if you're touching a third page.
-- **No content layer.** Page copy lives inside HTML. A future round will consider Markdown front-matter or a small JSON data layer for high-churn copy.
-- **No framework.** A future round will consider migrating to Astro or Eleventy.
-- **Built output is committed.** A future round will move to an Actions-based deploy that builds artifacts off-tree.
+1. Checkout the repo
+2. Set up Node 20 + cached npm
+3. `npm ci` in `astro/`
+4. `npm run build` in `astro/` → `astro/dist/`
+5. Upload `astro/dist/` as the Pages artifact
+6. Deploy to GitHub Pages
 
-If the team agrees to act on any of these, this file gets updated alongside.
+Manual re-deploy from the Actions tab is also wired up (`workflow_dispatch`).
+
+The repo serves at https://andrewbaek-design.github.io/ during the current iteration, with the company-org migration planned later.
 
 ---
 
 ## 7. Useful commands
 
 ```sh
-# Build everything in src/
-python3 build.py
+# All commands run from astro/ unless noted.
 
-# Build with check mode (exits 1 if any output would change)
-python3 build.py --check
+cd astro
 
-# Serve locally
-python3 -m http.server 8000
+npm install               # install Astro + deps (first time, or after package.json changes)
+npm run dev               # dev server on http://localhost:4321
+npm run build             # production build → astro/dist/
+npm run preview           # serve astro/dist/ on http://localhost:4321
 
-# Optimize SVGs (after npm i -g svgo, or via npx)
-npx svgo assets/*.svg
+# From repo root, find hardcoded brand colors (token violations):
+grep -rnE "#063E54|#C3C430|#FAF9F5" astro/src astro/public/assets
 
-# Count inline CSS duplication
-grep -rln "\.sub-hero {" src/ | wc -l
-
-# Find hardcoded brand colors (token violations)
-grep -rnE "#063E54|#C3C430|#FAF9F5" src/ assets/
-
-# Verify constraint compliance before commit
-grep -rnP "[\x{2014}]" src/ partials/      # em-dashes (must be empty)
-grep -rnP "text-transform:\s*uppercase" src/ partials/    # uppercase (must be empty)
+# Verify constraint compliance:
+grep -rnP "[\x{2014}]" astro/src                          # em-dashes (must be empty)
+grep -rnP "text-transform:\s*uppercase" astro/src         # uppercase (must be empty)
 ```
 
 ---
@@ -220,6 +245,7 @@ For context on why some patterns exist and others were rejected:
 
 - **2026-05-22 strategy session (Christine).** Light theme (not dark), stacked hero, simplified UI mockups, "Pharmacy EHR" terminology debated (use on enterprise pages, off the homepage hero), associations page reframed around member growth + advocacy + outcomes data.
 - **2026-06-15 review (Audrey, Sayna, Andrew, Fawad, Mika).** 54 open comments compiled in Notion. Most flagged product overclaims that have since been corrected on the AI Clinical Assistant, Patient Concierge, and Specialty pages.
-- **2026-06-17 round 2 polish.** Hero converted to 2-column, trust band dark, Why MedMe lit cards (port of the Independents "Clear Path" lighting effect), Built-for-Every-Pharmacy section background tinted, Platform CTAs removed, AI-Native section fully dark mode, nav menu items now carry leading icons.
+- **2026-06-17 round 2 polish.** Hero converted to 2-column, trust band dark, Why MedMe lit cards, Built-for-Every-Pharmacy section background tinted, Platform CTAs removed, AI-Native section fully dark mode, nav menu items now carry leading icons.
+- **2026-06-16 framework migration.** Site moved from a hand-rolled 360-line Python preprocessor (`build.py` + `{{> partials/X }}` template syntax) to Astro 5 with file-based routing, typed Content Collections, scoped page styles, and a 5-step GitHub Actions deploy. All 62 pages migrated with tag-count parity verified. Two intentional improvements over legacy: every page now carries a `<a href="#main">` skip-link, and duplicate `site.js` loads on pages that referenced both the util-bar partial and an inline script tag are now deduplicated. Legacy `build.py`, `src/`, `partials/`, and root-level `assets/` were removed in the same change; recoverable from git history pre-migration commit.
 
 The git log is the canonical record. This file just summarizes the conventions that emerged.

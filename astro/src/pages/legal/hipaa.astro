@@ -1,0 +1,39 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const entry = await getEntry('legal', 'hipaa');
+if (!entry) throw new Error('legal/hipaa content not found');
+const { Content } = await render(entry);
+const {
+  title, description, kicker, headline, lede,
+  cta_primary_label, cta_primary_href,
+  cta_secondary_label, cta_secondary_href,
+} = entry.data;
+---
+<BaseLayout title={title} description={description}>
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="page-hero__content">
+        <div class="page-hero__breadcrumb">
+          <a href="/us">Home</a><span class="sep">›</span> Trust <span class="sep">›</span> HIPAA
+        </div>
+        <span class="eyebrow eyebrow--matcha">{kicker}</span>
+        <h1 set:html={headline}></h1>
+        <p class="page-hero__lede" set:html={lede}></p>
+        <div class="page-hero__cta">
+          <a class="btn btn-primary" href={cta_primary_href}>{cta_primary_label}</a>
+          <a class="btn btn-ghost" href={cta_secondary_href}>{cta_secondary_label}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="wrap">
+      <div class="prose" style="max-width: 880px;">
+        <Content />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
