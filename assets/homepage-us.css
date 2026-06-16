@@ -3926,3 +3926,103 @@
     border-color: var(--matcha);
   }
 
+  /* =====================================================================
+     2026-06-17 hero + section polish round 2
+     Workflow labels too big at narrow widths (#1.1), bigger mockup
+     (#1.2), more hero bottom margin (#1.3), Why MedMe lighting + no
+     hover (#2.1, #2.2), Built-for-Every-Pharmacy light-grey bg (#3),
+     Platform box hover removed but motion still triggers (#4).
+     ===================================================================== */
+
+  /* ----- HERO 2-COL: shrink workflow indicator labels, more breathing room */
+  .hero-2col {
+    padding: 3rem 0 5rem;
+  }
+  .hero-2col__media .legacy-mockups {
+    max-width: 720px;
+  }
+  .hero-2col__media .hw-stages {
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    justify-content: flex-start;
+  }
+  .hero-2col__media .hw-stage {
+    gap: 8px;
+  }
+  .hero-2col__media .hw-stage .hw-label {
+    font-size: 12px;
+  }
+  .hero-2col__media .hw-stage .hw-dot {
+    width: 10px;
+    height: 10px;
+  }
+  /* Tighten the arrow connectors so they don't push wrapping. */
+  .hero-2col__media .hw-arrow {
+    margin: 0 4px;
+  }
+  @media (max-width: 1200px) {
+    .hero-2col__media .hw-stage .hw-label { font-size: 11.5px; }
+    .hero-2col__media .hw-stages { gap: 6px 12px; }
+  }
+  @media (max-width: 1000px) {
+    /* Single-column mobile: the carousel sits below the text, full width.
+       Restore slightly bigger labels since horizontal room is available. */
+    .hero-2col { padding: 2.5rem 0 3.5rem; }
+    .hero-2col__media .hw-stage .hw-label { font-size: 13px; }
+    .hero-2col__media .hw-stages { justify-content: center; gap: 8px 14px; }
+  }
+  @media (max-width: 640px) {
+    .hero-2col__media .hw-stage .hw-label { font-size: 11.5px; }
+    .hero-2col__media .hw-stages { gap: 4px 10px; }
+  }
+
+  /* ----- WHY MEDME: cyclic matcha lighting + no hover ------------- */
+  .problem-grid .h-card {
+    animation: problem-card-light 6s ease-in-out infinite;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+  .problem-grid .h-card:nth-child(1) { animation-delay: 0s;   }
+  .problem-grid .h-card:nth-child(2) { animation-delay: 1.5s; }
+  .problem-grid .h-card:nth-child(3) { animation-delay: 3s;   }
+  .problem-grid .h-card:nth-child(4) { animation-delay: 4.5s; }
+  @keyframes problem-card-light {
+    0%, 18%, 100% {
+      border-color: rgba(6, 62, 84, 0.08);
+      box-shadow: none;
+    }
+    4%, 14% {
+      border-color: var(--matcha);
+      box-shadow:
+        0 0 0 1px var(--matcha),
+        0 8px 28px rgba(195, 196, 48, 0.18);
+    }
+  }
+  /* Cards are not clickable — kill the .h-card:hover lift entirely. */
+  .problem-grid .h-card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(6, 62, 84, 0.08);
+    cursor: default;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .problem-grid .h-card { animation: none; }
+  }
+
+  /* ----- BUILT FOR EVERY PHARMACY: light-grey-tinted section bg --- */
+  /* Subtle indigo-tinted neutral so the section reads as a distinct
+     band between the seashell sections around it. */
+  section.tile.tile--light#audience {
+    background: #f1eee5;
+  }
+
+  /* ----- PLATFORM (#billing) cards: kill box hover, keep motion --- */
+  /* The .tile-grid--bento .h-card:hover rules elsewhere in this file
+     handle the per-card motion-graphic animation triggers. Those stay
+     untouched. This rule only removes the box-level visual hover. */
+  #billing .h-card:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(6, 62, 84, 0.08);
+    cursor: default;
+  }
+
