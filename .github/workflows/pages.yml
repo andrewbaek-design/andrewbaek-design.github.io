@@ -1,0 +1,71 @@
+name: Build and deploy to GitHub Pages
+
+# Runs on every push to main. Also exposed as a manual trigger so it
+# can be re-run from the Actions tab without pushing a new commit.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Pages deploy needs id-token + pages write. Read-only for everything else.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Serialize so a fast-follow push doesn't race the previous deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build site
+        run: python3 build.py
+
+      # Stage only the files that should be served. Built routes live at
+      # the repo root after build.py runs (us/, ca/, legal/, company/,
+      # plus the root geo-redirect index.html). assets/ stays as-is.
+      # Source folders (src/, partials/) and dev tools (_dev/) are
+      # deliberately excluded from the deployed artifact.
+      - name: Stage Pages artifact
+        run: |
+          mkdir -p _site
+          cp -r assets _site/
+          cp -r us _site/
+          cp -r ca _site/
+          cp -r legal _site/
+          cp -r company _site/
+          cp index.html _site/
+          # Pages already disables Jekyll on artifact-mode deploys, but
+          # an explicit .nojekyll keeps it predictable.
+          touch _site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

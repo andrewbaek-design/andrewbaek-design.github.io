@@ -95,6 +95,8 @@ These are tested constraints from prior feedback rounds. Treat as build-blocking
 
 **Never hardcode a brand color.** If you write `#063E54` instead of `var(--indigo)`, you're creating a future find-and-replace burden. Same for `#C3C430` (matcha) and `#FAF9F5` (seashell).
 
+**Inverse trap: never replace the literal hex in the token definitions themselves.** The `:root { --indigo: #063E54; ... }` block in `brand.css` is the source of truth. Replacing those literals with `var(--indigo)` etc. creates a circular self-reference, CSS resolves the variable to empty, and every page silently falls back to browser defaults (white background instead of seashell, etc.). The first round of this audit hit this trap during a global hex→token substitution and had to be reverted. The token definitions in `brand.css` carry a comment that says "Do not replace these with var() references." Respect it.
+
 ### Buttons (3-tier global system)
 
 | Class | Use when |
