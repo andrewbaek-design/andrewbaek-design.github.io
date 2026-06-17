@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import TrustBandUs from '../../components/TrustBandUs.astro';
 
 const entry = await getEntry('usPages', 'about');
 if (!entry) throw new Error('us/about content not found');
@@ -270,7 +269,6 @@ const {
   </div>
 </section>
 
-<TrustBandUs />
 
 <!-- ============= 2. OUR MISSION (manifesto) ============= -->
 <section class="tile tile--light" aria-label="Our mission">

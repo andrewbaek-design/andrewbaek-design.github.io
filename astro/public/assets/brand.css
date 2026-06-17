@@ -2508,6 +2508,47 @@ a.nav__dropdown-group-label:hover {
 .tile--dark h4  { color: var(--indigo); }
 
 /* ============================================================
+   GLOBAL WARM-TONE ALTERNATION TEMPLATE
+   ------------------------------------------------------------
+   Every light tile picks one of two warm tones (seashell or
+   warm-beige #F6F2E9) and sets the card-fill tone to the
+   opposite tone via the `--tile-card-bg` variable. Any card
+   inside the tile reads the variable, so swapping a section's
+   bg later requires no per-card edit.
+
+   Default `.tile--light`: seashell tile → warm-beige cards.
+   `.tile--light.tile--alt`: warm-beige tile → seashell cards.
+   `.tile--navy` / `.tile--ai-dark` are unaffected.
+
+   Cards on light tiles also lose their border (per feedback —
+   "remove all borders on the boxes for now"). Background, padding,
+   and the soft hover-lift do the visual work.
+   ============================================================ */
+.tile--light {
+  --tile-card-bg: #F6F2E9;
+}
+.tile--light.tile--alt {
+  background: #F6F2E9;
+  --tile-card-bg: var(--seashell);
+}
+.tile--light .h-card:not(.h-card--navy),
+.tile--light .feature,
+.tile--light .segment-card,
+.tile--light .problem-card,
+.tile--light .case-step,
+.tile--light .calc-card,
+.tile--light .audience-card {
+  background: var(--tile-card-bg);
+  border: 0;
+}
+/* Catch any other card-shaped element on a light tile and strip
+   its border too, without forcing a background (so existing
+   bg colors don't get overwritten). */
+.tile--light .h-card--navy {
+  border: 0;
+}
+
+/* ============================================================
    NAVY SECTION VARIANT, opt-in indigo treatment for sections
    that need to "punch" against the all-light page rhythm
    (typically the final CTA above the footer). Inverts bg/text,

@@ -41,7 +41,6 @@ import LogoMedme from '../../components/LogoMedme.astro';
       </span>
       <h1>
         <span>The end-to-end platform for <span style="color: var(--matcha); display: inline;">pharmacy clinical services</span>.</span>
-        <span>From launch to reimbursement.</span>
       </h1>
       <p class="sub">
         <span>MedMe gives pharmacies the infrastructure to launch, scale, and get paid for clinical services.</span>
@@ -478,10 +477,12 @@ import LogoMedme from '../../components/LogoMedme.astro';
               </div>
             </div>
 
-            <!-- Consult fields (Intake-style: floating label + big value) -->
+            <!-- Consult fields (Intake-style: floating label + big value).
+                 Labels and values are all derived strictly from the chat
+                 transcript above, so the AI never appears to invent details. -->
             <div class="doc-fields" id="docFields">
               <div class="doc-field" id="f-reason">
-                <span class="doc-field-label">Reason for Visit</span>
+                <span class="doc-field-label">Medications</span>
                 <div class="doc-field-value"></div>
               </div>
               <div class="doc-field" id="f-assessment">
@@ -493,7 +494,7 @@ import LogoMedme from '../../components/LogoMedme.astro';
                 <div class="doc-field-value"></div>
               </div>
               <div class="doc-field" id="f-followup">
-                <span class="doc-field-label">Follow-up</span>
+                <span class="doc-field-label">Notes</span>
                 <div class="doc-field-value"></div>
               </div>
             </div>
@@ -570,18 +571,30 @@ import LogoMedme from '../../components/LogoMedme.astro';
     </div>
     <div class="tile-grid tile-grid--2 problem-grid">
       <article class="h-card problem-card">
+        <span class="problem-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M21 3l-9 9"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+        </span>
         <h3>Clinical services live outside your tech stack</h3>
         <p>Vaccines, MTM, point-of-care testing, your team is already delivering the work. But the documentation, scheduling, and follow-up live in spreadsheets, paper, and disconnected portals.</p>
       </article>
       <article class="h-card problem-card">
+        <span class="problem-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="9" width="12" height="11" rx="2"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/><path d="M9 13.5h6M9 16.5h6"/></svg>
+        </span>
         <h3>Your PMS dispenses; nothing else fits</h3>
         <p>Your pharmacy management system runs the fill. It was never built for booking visits, drafting SOAP notes, tracking encounters, or submitting medical claims.</p>
       </article>
       <article class="h-card problem-card">
+        <span class="problem-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v3"/><path d="M5 8h2"/><path d="M17 8h2"/><rect x="6" y="9" width="12" height="10" rx="2"/><circle cx="9.5" cy="13.5" r=".9" fill="currentColor"/><circle cx="14.5" cy="13.5" r=".9" fill="currentColor"/><path d="M9 17h6" stroke-dasharray="1.5 1.5"/></svg>
+        </span>
         <h3>AI is everywhere, integrated nowhere</h3>
         <p>Every vendor demos an AI tool. Most can't see your patients, your dispensing history, or your scheduled visits, so the agents can't act on what's actually happening in your pharmacy.</p>
       </article>
       <article class="h-card problem-card">
+        <span class="problem-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.7-6L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.7 6L3 16"/><path d="M3 21v-5h5"/></svg>
+        </span>
         <h3>Scaling clinical services means restarting</h3>
         <p>Every new store, every new program, every new payer launches like it's the first time. No standardized playbook. No infrastructure that travels with you.</p>
       </article>
@@ -590,7 +603,7 @@ import LogoMedme from '../../components/LogoMedme.astro';
 </section>
 
 <!-- ============= 4. SEGMENTS (moved here from #5, Built for Every Pharmacy) ============= -->
-<section class="tile tile--light" id="audience" aria-label="Built for every pharmacy">
+<section class="tile tile--light tile--alt" id="audience" aria-label="Built for every pharmacy">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Built for Every Pharmacy</span>
@@ -773,7 +786,7 @@ import LogoMedme from '../../components/LogoMedme.astro';
 </section>
 
 <!-- ============= 6. CLINICAL JOURNEY (flow graphic, 6 lifecycle stages, animated like Patient Journey) ============= -->
-<section class="tile tile--light" aria-label="The clinical journey">
+<section class="tile tile--light tile--alt" aria-label="The clinical journey">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">The Clinical Journey</span>
@@ -969,11 +982,15 @@ import LogoMedme from '../../components/LogoMedme.astro';
     popupAt:         8800,                        /* "Consult completed" popup */
     advanceAt:       9700                         /* heroAdvance → Billing */
   };
+  /* Every value here is something the patient or pharmacist literally said
+     in the chat transcript above, paraphrased only as a clinical note would
+     paraphrase it. No diagnoses, codes, or follow-up windows that the speakers
+     didn't surface — that was prior feedback ("don't show hallucinations"). */
   var FIELDS = [
-    { id: 'f-reason',     text: 'Annual MTM review' },
-    { id: 'f-assessment', text: 'Adherence gap; ACE-I cough' },
-    { id: 'f-plan',       text: 'Switch to AM dosing; pillbox' },
-    { id: 'f-followup',   text: '30 days' }
+    { id: 'f-reason',     text: 'Metformin, lisinopril' },
+    { id: 'f-assessment', text: 'Misses evening doses; dry cough' },
+    { id: 'f-plan',       text: 'Switch to AM dosing; set up pillbox' },
+    { id: 'f-followup',   text: 'Note cough on lisinopril' }
   ];
 
   function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); }
@@ -1024,14 +1041,17 @@ import LogoMedme from '../../components/LogoMedme.astro';
       var v = fld.querySelector('.doc-field-value');
       if (v) v.textContent = '';
     });
+    filledFlags = [false, false, false, false];
     var dp = $('docPopup');
     if (dp) dp.classList.remove('is-visible');
   }
 
-  /* Per-field typing duration; same window for every field so the rhythm
-     is consistent regardless of text length. */
-  var FIELD_TYPE_MS = 500;
+  /* Per-field "filling" glow window (matches Patient Intake's 600ms). */
+  var FILL_GLOW_MS = 600;
   var docAdvanced = false;
+  /* Tracks which fields have already been filled this loop, so the instant
+     fill only fires once per field per cycle (reset on each restart). */
+  var filledFlags = [false, false, false, false];
 
   function tick(now){
     /* Skip while the pane is display:none (zero dimensions). When it
@@ -1090,26 +1110,26 @@ import LogoMedme from '../../components/LogoMedme.astro';
       step = 2;
     }
 
-    /* Type each consult field character-by-character. Per-field window
-     is FIELD_TYPE_MS; before/after the window the field is empty/full. */
+    /* Fill each consult field in one beat (mirrors the Patient Intake
+       animation), not character-by-character. Prior feedback flagged the
+       typing read as "still filling it out manually" — the AI should
+       surface the extracted facts at once, not retype the chat. */
     for (var fi = 0; fi < SEQ.fieldsRevealAt.length; fi++) {
       var fStart = SEQ.fieldsRevealAt[fi];
-      var f      = FIELDS[fi];
-      if (!f) continue;
-      var fld    = $(f.id); if (!fld) continue;
-      var v      = fld.querySelector('.doc-field-value');
       if (t < fStart) continue;
-      var elapsed = t - fStart;
-      var p       = Math.min(1, elapsed / FIELD_TYPE_MS);
-      var n       = Math.floor(p * f.text.length);
-      if (v) v.textContent = f.text.substring(0, n);
-      if (p < 1) {
-        fld.classList.add('is-typing');
-        fld.classList.remove('is-filled');
-      } else {
-        fld.classList.remove('is-typing');
-        fld.classList.add('is-filled');
-      }
+      if (filledFlags[fi]) continue;
+      var f   = FIELDS[fi]; if (!f) continue;
+      var fld = $(f.id);    if (!fld) continue;
+      var v   = fld.querySelector('.doc-field-value');
+      if (v) v.textContent = f.text;
+      filledFlags[fi] = true;
+      fld.classList.add('is-filling');
+      (function(el){
+        setTimeout(function(){
+          el.classList.remove('is-filling');
+          el.classList.add('is-filled');
+        }, FILL_GLOW_MS);
+      })(fld);
     }
 
     /* "Consult completed" popup, pops after the 4th field finishes typing. */
@@ -2072,6 +2092,32 @@ import LogoMedme from '../../components/LogoMedme.astro';
       userTouched = true;
       stopRotation();
       activate(t.getAttribute('data-tab'));
+    });
+  });
+
+  /* Workflow-indicator labels are ALSO clickable, giving the section
+     slideshow-style navigation. The "paid" stage is a visual finale
+     with no corresponding pane, so we skip it. Default behavior is
+     unchanged (rotation starts on Scheduling); clicking pauses the
+     rotation just like the hidden tab bar does. */
+  var clickableStages = document.querySelectorAll('.hw-stage[data-pane-key]');
+  clickableStages.forEach(function (s) {
+    var key = s.getAttribute('data-pane-key');
+    if (key === 'paid') return;
+    s.classList.add('is-clickable');
+    s.setAttribute('role', 'button');
+    s.setAttribute('tabindex', '0');
+    s.setAttribute('aria-label', 'Show ' + (s.querySelector('.hw-label') ? s.querySelector('.hw-label').textContent : key) + ' animation');
+    s.addEventListener('click', function () {
+      userTouched = true;
+      stopRotation();
+      activate(key);
+    });
+    s.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        s.click();
+      }
     });
   });
 })();

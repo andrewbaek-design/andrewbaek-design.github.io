@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import TrustBandUs from '../../../components/TrustBandUs.astro';
 ---
 <BaseLayout
   title="For Pharmacy Networks, MedMe Health"
@@ -168,16 +167,16 @@ import TrustBandUs from '../../../components/TrustBandUs.astro';
   @media (max-width: 1000px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px)  { .feature-grid { grid-template-columns: 1fr; } }
   .feature {
-    background: var(--white);
-    border: 1px solid rgba(6, 62, 84, 0.08);
+    /* Background + border now come from the global .tile--light rules in
+       brand.css (warm-tone alternation, no borders). Only the radius,
+       padding, and hover transform stay page-local. */
     border-radius: var(--radius-lg);
     padding: 1.75rem;
     box-shadow: none;
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    transition: transform 0.25s ease;
   }
   .feature:hover {
     transform: translateY(-3px);
-    border-color: rgba(6, 62, 84, 0.18);
   }
   .feat-graphic {
     width: 100%;
@@ -188,6 +187,199 @@ import TrustBandUs from '../../../components/TrustBandUs.astro';
     overflow: hidden;
     position: relative;
   }
+  /* Variant used by the Member Recruitment and Advocacy sections (no live
+     motion graphic in those cards, just a centered icon). Inherits the
+     same matcha-tinted tile so the row reads visually consistent with
+     the animated Value-to-Network cards below it. */
+  .feat-graphic--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--indigo);
+  }
+  .feat-graphic--icon svg {
+    width: 64px;
+    height: 64px;
+    display: block;
+  }
+  /* Scene variant: fills the tile width with a small illustration.
+     Each scene is uniquely identified by `data-scene="..."` so the
+     animation rules below can target the right inner SVG elements
+     without touching the markup. */
+  .feat-graphic--scene {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.75rem;
+  }
+  .feat-graphic--scene svg {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    overflow: visible;
+  }
+  .feat-graphic--scene svg * {
+    transform-box: fill-box;
+  }
+
+  /* ============================================================
+     MOTION GRAPHICS (Member Recruitment + Advocacy scenes)
+     Six infinite, subtle loops. Each one picks the most expressive
+     element in its illustration and animates it.
+     ============================================================ */
+
+  /* 1 — Platform consolidation: scattered tool tiles blink in a wave,
+        suggesting many tools collapsing into the central MedMe tile. */
+  [data-scene="platform"] svg > g:first-of-type rect {
+    transform-origin: center;
+    animation: pc-tile-blink 3.6s ease-in-out infinite;
+  }
+  [data-scene="platform"] svg > g:first-of-type rect:nth-child(1) { animation-delay: 0s;   }
+  [data-scene="platform"] svg > g:first-of-type rect:nth-child(2) { animation-delay: 0.3s; }
+  [data-scene="platform"] svg > g:first-of-type rect:nth-child(3) { animation-delay: 0.6s; }
+  [data-scene="platform"] svg > g:first-of-type rect:nth-child(4) { animation-delay: 0.9s; }
+  [data-scene="platform"] svg > g:first-of-type rect:nth-child(5) { animation-delay: 1.2s; }
+  @keyframes pc-tile-blink {
+    0%, 100% { opacity: 0.35; transform: scale(0.92); }
+    50%      { opacity: 1;    transform: scale(1); }
+  }
+
+  /* 2 — Get paid: claim rows highlight in sequence, then the PAID
+        stamp scales up to suggest the payment landing. */
+  [data-scene="paid"] svg > g:first-of-type rect {
+    animation: pc-claim-flash 2.6s ease-in-out infinite;
+    transform-origin: center;
+  }
+  [data-scene="paid"] svg > g:first-of-type rect:nth-child(1) { animation-delay: 0s;   }
+  [data-scene="paid"] svg > g:first-of-type rect:nth-child(2) { animation-delay: 0.3s; }
+  [data-scene="paid"] svg > g:first-of-type rect:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes pc-claim-flash {
+    0%, 80%, 100% { opacity: 1; }
+    20%, 40%      { opacity: 0.55; }
+  }
+  [data-scene="paid"] svg > circle {
+    transform-origin: center;
+    animation: pc-paid-pulse 2.6s ease-out infinite;
+  }
+  @keyframes pc-paid-pulse {
+    0%, 60% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(195,196,48,0)); }
+    70%     { transform: scale(1.12); filter: drop-shadow(0 0 10px rgba(195,196,48,0.5)); }
+    100%    { transform: scale(1); filter: drop-shadow(0 0 0 rgba(195,196,48,0)); }
+  }
+
+  /* 3 — Scale without hiring: AI agent dots pulse outward with a glow,
+        dashed lines flow toward the pharmacist (offset drift). */
+  [data-scene="scale"] svg > g:nth-of-type(2) circle {
+    transform-origin: center;
+    animation: pc-ai-pulse 1.8s ease-in-out infinite;
+  }
+  [data-scene="scale"] svg > g:nth-of-type(2) circle:nth-child(1) { animation-delay: 0s;   }
+  [data-scene="scale"] svg > g:nth-of-type(2) circle:nth-child(2) { animation-delay: 0.3s; }
+  [data-scene="scale"] svg > g:nth-of-type(2) circle:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes pc-ai-pulse {
+    0%, 100% { transform: scale(1);    filter: drop-shadow(0 0 0  rgba(195,196,48,0));   }
+    50%      { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(195,196,48,0.6)); }
+  }
+  [data-scene="scale"] svg > g:first-of-type path {
+    stroke-dasharray: 3 3;
+    animation: pc-dash-flow 2s linear infinite;
+  }
+  @keyframes pc-dash-flow {
+    to { stroke-dashoffset: -12; }
+  }
+
+  /* 4 — Clinical service evidence: bars grow from baseline in a wave,
+        trendline dots breathe. */
+  [data-scene="evidence"] svg > g:first-of-type rect {
+    transform-origin: bottom;
+    animation: pc-bar-grow 3s ease-in-out infinite;
+  }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(1) { animation-delay: 0s;   }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(2) { animation-delay: 0.15s;}
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(3) { animation-delay: 0.3s; }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(4) { animation-delay: 0.45s;}
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(5) { animation-delay: 0.6s; }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(6) { animation-delay: 0.75s;}
+  @keyframes pc-bar-grow {
+    0%, 100% { transform: scaleY(0.5); opacity: 0.6; }
+    50%      { transform: scaleY(1);   opacity: 1;   }
+  }
+  [data-scene="evidence"] svg > g:nth-of-type(2) circle {
+    transform-origin: center;
+    animation: pc-dot-pulse 2s ease-in-out infinite;
+  }
+  @keyframes pc-dot-pulse {
+    0%, 100% { transform: scale(1);   }
+    50%      { transform: scale(1.5); }
+  }
+
+  /* 5 — Payer-ready billing data: mini bars pulse, side badges flash. */
+  [data-scene="billing"] svg > g:first-of-type rect {
+    transform-origin: bottom;
+    animation: pc-mini-bar 2.4s ease-in-out infinite;
+  }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(1) { animation-delay: 0s;    }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(2) { animation-delay: 0.15s; }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(3) { animation-delay: 0.3s;  }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(4) { animation-delay: 0.45s; }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(5) { animation-delay: 0.6s;  }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(6) { animation-delay: 0.75s; }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(7) { animation-delay: 0.9s;  }
+  [data-scene="billing"] svg > g:first-of-type rect:nth-child(8) { animation-delay: 1.05s; }
+  @keyframes pc-mini-bar {
+    0%, 100% { transform: scaleY(0.65); }
+    50%      { transform: scaleY(1);    }
+  }
+  [data-scene="billing"] svg > g:nth-of-type(2) rect {
+    animation: pc-badge-flash 3.6s ease-in-out infinite;
+  }
+  [data-scene="billing"] svg > g:nth-of-type(2) rect:nth-child(1) { animation-delay: 0s; }
+  [data-scene="billing"] svg > g:nth-of-type(2) rect:nth-child(2) { animation-delay: 0.4s; }
+  [data-scene="billing"] svg > g:nth-of-type(2) rect:nth-child(3) { animation-delay: 0.8s; }
+  @keyframes pc-badge-flash {
+    0%, 100% { fill: rgba(195,196,48,0.16); }
+    50%      { fill: rgba(195,196,48,0.45); }
+  }
+
+  /* 6 — De-identified: shield checkmark pulses, mask dots shimmer in
+        a left-to-right wave, aggregate badges fade. */
+  [data-scene="shield"] svg > path:nth-of-type(2) {
+    transform-origin: center;
+    animation: pc-check-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pc-check-pulse {
+    0%, 100% { transform: scale(1);    opacity: 0.85; }
+    50%      { transform: scale(1.12); opacity: 1;    }
+  }
+  [data-scene="shield"] svg > g:nth-of-type(2) circle {
+    animation: pc-mask-shimmer 2.8s ease-in-out infinite;
+  }
+  [data-scene="shield"] svg > g:nth-of-type(2) circle:nth-child(4n+1) { animation-delay: 0s; }
+  [data-scene="shield"] svg > g:nth-of-type(2) circle:nth-child(4n+2) { animation-delay: 0.2s; }
+  [data-scene="shield"] svg > g:nth-of-type(2) circle:nth-child(4n+3) { animation-delay: 0.4s; }
+  [data-scene="shield"] svg > g:nth-of-type(2) circle:nth-child(4n)   { animation-delay: 0.6s; }
+  @keyframes pc-mask-shimmer {
+    0%, 100% { opacity: 0.25; }
+    50%      { opacity: 0.7;  }
+  }
+  [data-scene="shield"] svg > g:nth-of-type(3) rect {
+    animation: pc-badge-flash 3s ease-in-out infinite;
+  }
+  [data-scene="shield"] svg > g:nth-of-type(3) rect:nth-child(1) { animation-delay: 0s;   }
+  [data-scene="shield"] svg > g:nth-of-type(3) rect:nth-child(2) { animation-delay: 0.3s; }
+  [data-scene="shield"] svg > g:nth-of-type(3) rect:nth-child(3) { animation-delay: 0.6s; }
+
+  /* Reduced-motion: kill all scene animations. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-scene] svg * {
+      animation: none !important;
+    }
+  }
+
+  /* Warm-tone alternation now lives in brand.css and applies site-wide
+     to every `.tile--light` card (no border, var(--tile-card-bg) fill).
+     This page just opts specific sections in via the `tile--alt` class. */
   .feature h3 {
     margin: 0 0 0.5rem;
     font-size: 1.2rem;
@@ -775,8 +967,8 @@ import TrustBandUs from '../../../components/TrustBandUs.astro';
       </svg>
     </div>
     <div class="sub-hero__text">
-      <h1 class="h-display">The clinical services<br>platform your members<br>will actually use.</h1>
-      <p class="sub-hero__lede">MedMe gives pharmacy networks a platform members adopt, and gives the central organization the cross-network reporting that strengthens its value to membership.</p>
+      <h1 class="h-display">Grow your membership.<br>Advance your advocacy.</h1>
+      <p class="sub-hero__lede">MedMe gives your network the clinical services platform members will actually adopt, and the aggregated billing and outcomes data that strengthens both your recruitment story and the case you make to legislators and payers.</p>
       <div class="sub-hero__cta">
         <a class="pill pill--solid" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
       </div>
@@ -784,9 +976,231 @@ import TrustBandUs from '../../../components/TrustBandUs.astro';
   </div>
 </section>
 
-<TrustBandUs />
 
-<!-- ============= 2. VALUE TO NETWORK (3 cards w/ motion) ============= -->
+<!-- ============= 2a. MEMBER RECRUITMENT (seashell tile, beige cards) ============= -->
+<section class="tile tile--light" aria-label="For member recruitment">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">For Member Recruitment</span>
+      <h2 class="h-display">An offering your members<br>can&apos;t get anywhere else.</h2>
+      <p class="lead">The strongest member-acquisition pitch your association can make is unmatched access to an all-in-one, AI-enabled platform that helps pharmacies deliver clinical services, capture the revenue, and run a more profitable business with minimal additional headcount.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--scene" data-scene="platform" aria-hidden="true">
+          <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Scattered tool tiles on the left (5 lighter tiles) -->
+            <g stroke="rgba(6,62,84,0.28)" fill="rgba(6,62,84,0.05)" stroke-width="1.5">
+              <rect x="8"  y="10" width="22" height="22" rx="4"/>
+              <rect x="36" y="32" width="22" height="22" rx="4"/>
+              <rect x="8"  y="54" width="22" height="22" rx="4"/>
+              <rect x="60" y="10" width="22" height="22" rx="4"/>
+              <rect x="60" y="54" width="22" height="22" rx="4"/>
+            </g>
+            <!-- Arrow merging into the central platform tile -->
+            <path d="M92 45 L120 45" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M114 39 L120 45 L114 51" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- MedMe consolidated tile -->
+            <rect x="130" y="18" width="82" height="54" rx="6" fill="rgba(195,196,48,0.16)" stroke="var(--matcha)" stroke-width="2"/>
+            <path d="M148 36h46M148 46h46M148 56h34" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="142" cy="36" r="2.5" fill="var(--indigo)"/>
+            <circle cx="142" cy="46" r="2.5" fill="var(--indigo)"/>
+            <circle cx="142" cy="56" r="2.5" fill="var(--indigo)"/>
+          </svg>
+        </div>
+        <h3>An all-in-one clinical platform</h3>
+        <p>Scheduling, intake, AI scribe, documentation, billing, and patient follow-up live in one system. Members replace several disconnected vendors with one login.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--scene" data-scene="paid" aria-hidden="true">
+          <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Stacked claim rows -->
+            <g stroke="var(--indigo)" stroke-width="1.5" fill="#fff">
+              <rect x="14" y="14" width="120" height="22" rx="4"/>
+              <rect x="14" y="40" width="120" height="22" rx="4"/>
+              <rect x="14" y="66" width="120" height="14" rx="3" fill="rgba(195,196,48,0.18)" stroke="var(--matcha)"/>
+            </g>
+            <!-- Code labels inside rows -->
+            <g fill="var(--indigo)" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">
+              <text x="22" y="29">99490 CCM</text>
+              <text x="22" y="55">G0511 RHC</text>
+            </g>
+            <text x="22" y="76" fill="var(--indigo)" font-family="Montserrat" font-size="8" font-weight="700">Submit to payer</text>
+            <!-- Paid stamp on right -->
+            <circle cx="180" cy="46" r="22" fill="var(--matcha)" stroke="var(--indigo)" stroke-width="2"/>
+            <text x="180" y="44" text-anchor="middle" fill="var(--indigo)" font-family="Montserrat" font-size="9" font-weight="800">PAID</text>
+            <path d="M167 56l9 9" stroke="var(--indigo)" stroke-width="2" opacity="0.4"/>
+            <!-- Arrow connector -->
+            <path d="M138 46 L156 46" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Get paid for clinical services</h3>
+        <p>Built-in medical billing converts documented encounters into clean Medicare Part B claims. Members capture revenue from clinical work that goes uninvoiced today.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--scene" data-scene="scale" aria-hidden="true">
+          <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Central pharmacist node -->
+            <circle cx="60" cy="45" r="20" fill="rgba(195,196,48,0.16)" stroke="var(--matcha)" stroke-width="2"/>
+            <circle cx="60" cy="39" r="5" fill="var(--indigo)"/>
+            <path d="M48 56c0-6 5-10 12-10s12 4 12 10" stroke="var(--indigo)" stroke-width="2" fill="none"/>
+            <!-- Dashed connections to AI agent nodes -->
+            <g stroke="var(--indigo)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5">
+              <path d="M80 30 L130 16"/>
+              <path d="M80 45 L130 45"/>
+              <path d="M80 60 L130 74"/>
+            </g>
+            <!-- AI agent dots -->
+            <g fill="var(--indigo)" stroke="var(--matcha)" stroke-width="2">
+              <circle cx="146" cy="16" r="10"/>
+              <circle cx="146" cy="45" r="10"/>
+              <circle cx="146" cy="74" r="10"/>
+            </g>
+            <!-- AI labels inside dots -->
+            <g fill="var(--matcha)" font-family="Montserrat" font-size="8" font-weight="800" text-anchor="middle">
+              <text x="146" y="19">AI</text>
+              <text x="146" y="48">AI</text>
+              <text x="146" y="77">AI</text>
+            </g>
+            <!-- Outbound growth arrows -->
+            <g stroke="var(--matcha)" stroke-width="2" stroke-linecap="round" fill="none">
+              <path d="M170 16 L188 16"/>
+              <path d="M183 12 L188 16 L183 20"/>
+              <path d="M170 45 L188 45"/>
+              <path d="M183 41 L188 45 L183 49"/>
+              <path d="M170 74 L188 74"/>
+              <path d="M183 70 L188 74 L183 78"/>
+            </g>
+          </svg>
+        </div>
+        <h3>Scale without hiring</h3>
+        <p>AI agents handle patient outreach, intake, and documentation. Members grow clinical service volume with the staff they already have.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 2b. ADVOCACY (warm-beige tile, seashell cards) ============= -->
+<section class="tile tile--light tile--alt" aria-label="For advocacy">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">For Advocacy</span>
+      <h2 class="h-display">Turn member outcomes into<br>legislative and payer leverage.</h2>
+      <p class="lead">Your members deliver vaccines, MTM, screenings, and clinical interventions every day. MedMe aggregates the encounter, billing, and outcomes data across your network so you can show legislators, regulators, and payers the real impact of pharmacist-delivered care.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--scene" data-scene="evidence" aria-hidden="true">
+          <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Bar chart, varied heights, service categories implied -->
+            <g fill="rgba(195,196,48,0.55)">
+              <rect x="14"  y="48" width="22" height="32" rx="2"/>
+              <rect x="44"  y="34" width="22" height="46" rx="2"/>
+              <rect x="74"  y="22" width="22" height="58" rx="2"/>
+              <rect x="104" y="38" width="22" height="42" rx="2"/>
+              <rect x="134" y="14" width="22" height="66" rx="2"/>
+              <rect x="164" y="28" width="22" height="52" rx="2"/>
+            </g>
+            <!-- Top trendline overlay -->
+            <polyline points="25,52 55,38 85,26 115,42 145,18 175,32" stroke="var(--indigo)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <g fill="var(--indigo)">
+              <circle cx="25"  cy="52" r="2.5"/>
+              <circle cx="55"  cy="38" r="2.5"/>
+              <circle cx="85"  cy="26" r="2.5"/>
+              <circle cx="115" cy="42" r="2.5"/>
+              <circle cx="145" cy="18" r="2.5"/>
+              <circle cx="175" cy="32" r="2.5"/>
+            </g>
+            <!-- Baseline -->
+            <line x1="10" y1="82" x2="200" y2="82" stroke="var(--indigo)" stroke-width="1.5" opacity="0.3"/>
+          </svg>
+        </div>
+        <h3>Clinical service evidence</h3>
+        <p>Encounter volume by service type, by state, by population. The structural data legislators ask for when evaluating scope-of-practice expansion and pharmacist-delivered care.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--scene" data-scene="billing" aria-hidden="true">
+          <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Document card -->
+            <rect x="14" y="10" width="130" height="74" rx="4" fill="#fff" stroke="var(--indigo)" stroke-width="1.5"/>
+            <!-- Title bar -->
+            <rect x="22" y="18" width="60" height="6" rx="2" fill="var(--indigo)"/>
+            <rect x="22" y="28" width="40" height="3" rx="1.5" fill="rgba(6,62,84,0.3)"/>
+            <!-- Mini bar chart -->
+            <g fill="var(--matcha)">
+              <rect x="22" y="58" width="10" height="18" rx="1.5"/>
+              <rect x="36" y="48" width="10" height="28" rx="1.5"/>
+              <rect x="50" y="52" width="10" height="24" rx="1.5"/>
+              <rect x="64" y="40" width="10" height="36" rx="1.5"/>
+              <rect x="78" y="46" width="10" height="30" rx="1.5"/>
+              <rect x="92" y="36" width="10" height="40" rx="1.5"/>
+              <rect x="106" y="44" width="10" height="32" rx="1.5"/>
+              <rect x="120" y="38" width="10" height="38" rx="1.5"/>
+            </g>
+            <!-- Side stack labels -->
+            <g stroke="var(--indigo)" stroke-width="1.5" fill="rgba(195,196,48,0.16)">
+              <rect x="158" y="14" width="50" height="20" rx="3"/>
+              <rect x="158" y="38" width="50" height="20" rx="3"/>
+              <rect x="158" y="62" width="50" height="20" rx="3"/>
+            </g>
+            <g fill="var(--indigo)" font-family="Montserrat" font-size="7" font-weight="700" text-anchor="middle">
+              <text x="183" y="27">CPT mix</text>
+              <text x="183" y="51">Rates</text>
+              <text x="183" y="75">Volume</text>
+            </g>
+          </svg>
+        </div>
+        <h3>Payer-ready billing data</h3>
+        <p>CPT mix, claim approval rates, and per-encounter economics across your member network. The evidence base for payer negotiations and new reimbursement models.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--scene" data-scene="shield" aria-hidden="true">
+          <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Shield outline on the left -->
+            <path d="M50 8 L78 18 V40 c0 16 -11 28 -28 36 -17 -8 -28 -20 -28 -36 V18 Z"
+                  fill="rgba(195,196,48,0.16)" stroke="var(--matcha)" stroke-width="2"/>
+            <!-- Checkmark inside shield -->
+            <path d="M36 44 l10 10 l18 -18" stroke="var(--indigo)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- Arrow to right side data rows -->
+            <path d="M88 45 L110 45" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M104 39 L110 45 L104 51" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <!-- Anonymized data rows on the right (no PII, no real numbers) -->
+            <g stroke="var(--indigo)" stroke-width="1.5" fill="rgba(6,62,84,0.05)">
+              <rect x="120" y="12" width="92" height="16" rx="3"/>
+              <rect x="120" y="34" width="92" height="16" rx="3"/>
+              <rect x="120" y="56" width="92" height="16" rx="3"/>
+            </g>
+            <!-- Mask dots showing anonymization -->
+            <g fill="var(--indigo)" opacity="0.5">
+              <circle cx="130" cy="20" r="2"/>
+              <circle cx="138" cy="20" r="2"/>
+              <circle cx="146" cy="20" r="2"/>
+              <circle cx="154" cy="20" r="2"/>
+              <circle cx="130" cy="42" r="2"/>
+              <circle cx="138" cy="42" r="2"/>
+              <circle cx="146" cy="42" r="2"/>
+              <circle cx="154" cy="42" r="2"/>
+              <circle cx="130" cy="64" r="2"/>
+              <circle cx="138" cy="64" r="2"/>
+              <circle cx="146" cy="64" r="2"/>
+              <circle cx="154" cy="64" r="2"/>
+            </g>
+            <!-- Aggregate badge on each row -->
+            <g fill="var(--matcha)">
+              <rect x="180" y="16" width="24" height="8" rx="2"/>
+              <rect x="180" y="38" width="24" height="8" rx="2"/>
+              <rect x="180" y="60" width="24" height="8" rx="2"/>
+            </g>
+          </svg>
+        </div>
+        <h3>De-identified by default</h3>
+        <p>Aggregate dashboards protect member pharmacies while building the public case for pharmacist-delivered care. Individual pharmacy data stays with the pharmacy.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. VALUE TO NETWORK (3 cards w/ motion) ============= -->
 <section class="tile tile--light" aria-label="Value to the network">
   <div class="tile__inner">
     <div class="tile__head">
@@ -826,7 +1240,7 @@ import TrustBandUs from '../../../components/TrustBandUs.astro';
 </section>
 
 <!-- ============= 3. CASE STUDY (North Carolina Association of Pharmacists, partner playbook + pilot process) ============= -->
-<section class="tile tile--light" aria-label="Partner case study: North Carolina Association of Pharmacists medical billing pilot">
+<section class="tile tile--light tile--alt" aria-label="Partner case study: North Carolina Association of Pharmacists medical billing pilot">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Partner Case Study</span>

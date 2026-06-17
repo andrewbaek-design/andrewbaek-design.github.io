@@ -296,7 +296,7 @@
     display: none;
     position: relative;
     width: 100%;
-    aspect-ratio: 1192 / 656;
+    aspect-ratio: 1192 / 820;
   }
   .mockup-pane--active { display: block; }
 
@@ -622,7 +622,7 @@
   .mockup-host {
     position: relative;
     width: 100%;
-    aspect-ratio: 1192 / 656;
+    aspect-ratio: 1192 / 820;
     background: #fff;
     /* Aligned to the site radius scale (was 10px, off-token).
        --radius-lg matches .h-card, the bento cards, the calc card,
@@ -880,11 +880,14 @@
     position: relative;
     z-index: 2;
   }
+  /* Matcha ring removed per feedback ("remove the green circle on the cursor")
+     — the scale-pop motion is kept so the booked slot still bounces in;
+     only the radiating ring around it is gone. */
   @keyframes sched-slot-pop {
-    0%   { transform: scale(0.65); box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); }
-    32%  { transform: scale(1.28); box-shadow: 0 0 0 14px rgba(195, 196, 48, 0.35), 0 10px 28px rgba(4, 43, 59, 0.35); }
-    60%  { transform: scale(0.96); box-shadow: 0 0 0 6px rgba(195, 196, 48, 0.18), 0 4px 14px rgba(4, 43, 59, 0.18); }
-    100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); }
+    0%   { transform: scale(0.65); }
+    32%  { transform: scale(1.28); }
+    60%  { transform: scale(0.96); }
+    100% { transform: scale(1);    }
   }
 
   /* Zoom-in on the grid card after the click, focal moment before the
@@ -1260,10 +1263,12 @@
   .mockup-host .intake-cta--big.is-pulsing {
     animation: intake-cta-pulse 0.9s ease-out;
   }
+  /* Matcha glow ring removed per cursor-ring feedback. Scale pop kept so
+     the button still has tactile click feedback. */
   @keyframes intake-cta-pulse {
-    0%   { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
-    30%  { box-shadow: 0 0 0 14px rgba(195, 196, 48, 0.35), 0 8px 28px rgba(4, 43, 59, 0.35); transform: scale(1.04); }
-    100% { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
   }
 
   /* "Appointment booked!" confirmation popup, pops in centered over the
@@ -1535,23 +1540,23 @@
     min-height: 28px;
     transition: opacity 0.35s ease-out, transform 0.35s ease-out;
   }
-  /* Typing state, matcha border glow + blinking caret cursor. */
-  .mockup-host .doc-field.is-typing {
+  /* Auto-fill animation, mirrors the Patient Intake "lighting up" effect:
+     matcha border + glow ring + slight scale pop while filling, value drops
+     in with a fade + slide, then settles. Lasts 600ms then snaps to the
+     filled state. (The old typing-with-caret states were removed when the
+     character-by-character typing was replaced with an instant fill.) */
+  .mockup-host .doc-field.is-filling {
     border-color: var(--matcha);
-    box-shadow: 0 0 0 3px rgba(195, 196, 48, 0.22), 0 4px 14px rgba(195, 196, 48, 0.14);
+    box-shadow: 0 0 0 4px rgba(195, 196, 48, 0.30), 0 6px 18px rgba(195, 196, 48, 0.18);
+    transform: scale(1.02);
   }
-  .mockup-host .doc-field.is-typing .doc-field-value::after {
-    content: '';
-    display: inline-block;
-    width: 2px;
-    height: 22px;
-    background: var(--indigo);
-    margin-left: 3px;
-    vertical-align: -3px;
-    animation: doc-caret 0.65s steps(2) infinite;
+  .mockup-host .doc-field.is-filling .doc-field-value {
+    animation: doc-value-pop 0.5s ease-out;
   }
-  @keyframes doc-caret {
-    50% { opacity: 0; }
+  @keyframes doc-value-pop {
+    0%   { opacity: 0; transform: translateY(6px); }
+    60%  { opacity: 1; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(0); }
   }
   .mockup-host .doc-field.is-filled {
     border-color: rgba(4, 43, 59, 0.20);
@@ -1782,10 +1787,11 @@
   .mockup-host .bill-submit.is-pulsing {
     animation: bc-cta-pulse 0.9s ease-out;
   }
+  /* Matcha glow ring removed per cursor-ring feedback. Scale pop kept. */
   @keyframes bc-cta-pulse {
-    0%   { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
-    30%  { box-shadow: 0 0 0 14px rgba(195, 196, 48, 0.35), 0 8px 28px rgba(4, 43, 59, 0.35); transform: scale(1.04); }
-    100% { box-shadow: 0 0 0 0 rgba(195, 196, 48, 0); transform: scale(1); }
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
   }
 
   /* "Paid" confirmation popup */
@@ -2253,9 +2259,16 @@
   }
 
 
-  .mockup-host .cursor { position: absolute; width: 16px; height: 20px; left: 0; top: 0; z-index: 50; pointer-events: none; transition: transform 1s cubic-bezier(.5,.05,.2,1); will-change: transform; filter: drop-shadow(0 2px 4px rgba(0,0,0,.25)); }
-  .mockup-host .ripple { position: absolute; width: 36px; height: 36px; border-radius: 50%; border: 3px solid var(--matcha); transform: translate(-50%,-50%) scale(.4); opacity: 0; left: 8px; top: 10px; }
-  .mockup-host .ripple.go { animation: m-ripple 0.95s ease-out; }
+  /* Hero mockup cursor (the arrow that moves to a button and clicks) was
+     removed per feedback. The element + the moveCursor() JS still exist
+     so the animation timing keeps working — only the visible arrow and
+     its drop-shadow are hidden. */
+  .mockup-host .cursor { display: none; }
+  /* Cursor tap-ripple (the matcha circle that radiated outward on each
+     click) was removed per feedback. The .ripple element still exists in
+     the DOM and the ripple() JS still toggles its .go class — hiding it
+     here keeps the JS untouched while making the ripple invisible. */
+  .mockup-host .ripple { display: none; }
   @keyframes m-ripple { 0% { transform: translate(-50%,-50%) scale(.2); opacity: .95; border-width: 4px; } 60% { opacity: .55; } 100% { transform: translate(-50%,-50%) scale(4); opacity: 0; border-width: 1px; } }
 
   @media (max-width: 760px) {
@@ -2709,9 +2722,9 @@
      indigo-dark navy). Now a clean white card with a matcha accent
      border so it still reads "featured" without the dark background. */
   .h-card--feature {
-    background: var(--white) !important;
-    border-color: rgba(195, 196, 48, 0.55) !important;
-    border-width: 1.5px !important;
+    /* Background + border now inherit from the global tile/card
+       alternation template in brand.css. Old !important overrides
+       removed so the warm-tone palette can win. */
     color: var(--indigo);
     gap: 0.5rem;
     /* Vertically center the rich anim + h3 + p + Learn-more pill
@@ -3491,6 +3504,21 @@
   }
 
   /* Problem-statement section, navy boxes with matcha headings. */
+  /* 44×44 matcha-tinted rounded square holding the indigo stroke icon,
+     mirrors the segment-card icon pattern in the Built-for-Every-Pharmacy
+     section so the two grids feel like the same visual family. */
+  .problem-card__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(195, 196, 48, 0.18);
+    color: var(--indigo);
+    margin-bottom: 0.85rem;
+    flex-shrink: 0;
+  }
+  .problem-card__icon svg { width: 24px; height: 24px; display: block; }
   .problem-card h3 {
     font-family: var(--font-display);
     font-weight: 700;
@@ -3684,6 +3712,26 @@
   .hw-stage.is-active .hw-label {
     font-weight: 700;
   }
+  /* Stages with a matching mockup pane are clickable (added by JS):
+     pointer cursor, subtle hover lift, and a visible focus ring for
+     keyboard users. The active stage keeps its current matcha dot
+     treatment, no double-emphasis. */
+  .hw-stage.is-clickable {
+    cursor: pointer;
+    transition: color 0.45s ease-out, transform 0.18s ease-out;
+  }
+  .hw-stage.is-clickable:hover {
+    color: var(--indigo);
+    transform: translateY(-1px);
+  }
+  .hw-stage.is-clickable:hover .hw-dot {
+    background: rgba(195, 196, 48, 0.55);
+  }
+  .hw-stage.is-clickable:focus-visible {
+    outline: 2px solid var(--matcha);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
   .hw-arrow {
     flex: 1 1 auto;
     height: 2px;
@@ -3750,9 +3798,14 @@
   .hero-2col__inner {
     max-width: var(--container);
     margin: 0 auto;
-    padding-inline: var(--tile-pad-x);
+    /* Hero-only padding override: left keeps breathing room for text, right is
+       flush so the mockup extends to the viewport edge. Other tiles on the
+       page still use the standard var(--tile-pad-x). */
+    padding-left: 2rem;
+    padding-right: 0;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    /* Media column gets a bigger share so the mockup reads larger than the text. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     gap: 3rem;
     align-items: center;
   }
@@ -3760,6 +3813,12 @@
     .hero-2col__inner {
       grid-template-columns: 1fr;
       gap: 2rem;
+      /* On mobile / tablet the layout stacks, so the asymmetric desktop padding
+         (left 2rem, right 0) would look off-balance. Restore equal sides using
+         the site-wide tile padding token, which already steps down with the
+         viewport (3rem under 1100px, 1.5rem under 700px). */
+      padding-left: var(--tile-pad-x);
+      padding-right: var(--tile-pad-x);
     }
   }
   .hero-2col__text {
@@ -3909,30 +3968,35 @@
     padding: 3rem 0 5rem;
   }
   .hero-2col__media .legacy-mockups {
-    max-width: 720px;
+    max-width: 800px;
   }
   .hero-2col__media .hw-stages {
-    flex-wrap: wrap;
-    gap: 6px 16px;
-    justify-content: flex-start;
+    /* Single-line workflow: force nowrap and let arrows flex to absorb
+       any remaining horizontal slack. */
+    flex-wrap: nowrap;
+    gap: 0 8px;
+    justify-content: space-between;
   }
   .hero-2col__media .hw-stage {
-    gap: 8px;
+    gap: 6px;
+    flex: 0 0 auto;
+    min-width: 0;
   }
   .hero-2col__media .hw-stage .hw-label {
-    font-size: 12px;
+    font-size: 10.5px;
   }
   .hero-2col__media .hw-stage .hw-dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   /* Tighten the arrow connectors so they don't push wrapping. */
   .hero-2col__media .hw-arrow {
-    margin: 0 4px;
+    margin: 0 2px;
   }
   @media (max-width: 1200px) {
-    .hero-2col__media .hw-stage .hw-label { font-size: 11.5px; }
-    .hero-2col__media .hw-stages { gap: 6px 12px; }
+    .hero-2col__media .hw-stage .hw-label { font-size: 10px; }
+    .hero-2col__media .hw-stages { gap: 0 6px; }
+    .hero-2col__media .hw-arrow { margin: 0 1px; }
   }
   @media (max-width: 1000px) {
     /* Single-column mobile: the carousel sits below the text, full width.
@@ -3978,12 +4042,10 @@
     .problem-grid .h-card { animation: none; }
   }
 
-  /* ----- BUILT FOR EVERY PHARMACY: light-grey-tinted section bg --- */
-  /* Subtle indigo-tinted neutral so the section reads as a distinct
-     band between the seashell sections around it. */
-  section.tile.tile--light#audience {
-    background: #f1eee5;
-  }
+  /* BUILT FOR EVERY PHARMACY + CLINICAL JOURNEY section bg + card
+     alternation now live in brand.css (`.tile--light` + `.tile--alt`
+     CSS variable pattern), applied site-wide. Pages opt in by adding
+     the `tile--alt` class to a section's `<section class="tile ...">`. */
 
   /* ----- PLATFORM (#billing) cards: kill box hover, keep motion --- */
   /* The .tile-grid--bento .h-card:hover rules elsewhere in this file
