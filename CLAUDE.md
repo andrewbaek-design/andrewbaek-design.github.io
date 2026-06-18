@@ -213,7 +213,7 @@ This project has been built largely with Claude Code. Every AI edit must:
 
 Manual re-deploy from the Actions tab is also wired up (`workflow_dispatch`).
 
-The repo serves at https://andrewbaek-design.github.io/ during the current iteration, with the company-org migration planned later.
+The repo lives at https://github.com/medmehealth/MedMe-Website. Production hosting (the eventual `medmehealth.com` move off Webflow) is set up separately from this repo.
 
 ---
 

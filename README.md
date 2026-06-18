@@ -5,13 +5,12 @@ regional homepages (United States and Canada) and ~60 supporting
 sub-pages, with shared nav / footer / util-bar as Astro components
 and long-form copy authored as Markdown Content Collections.
 
-## Live preview
+## Repo
 
-Currently hosted on GitHub Pages at
-**[andrewbaek-design.github.io](https://andrewbaek-design.github.io/)**
-during the iteration phase. The eventual destination is the company
-GitHub org; the migration ships in one batched move after the
-redesign stabilizes.
+Codebase lives at
+**[github.com/medmehealth/MedMe-Website](https://github.com/medmehealth/MedMe-Website)**.
+Public hosting (production at `medmehealth.com`) is handled separately;
+this repo is the source of truth for the redesign rebuild.
 
 ## Quickstart
 
