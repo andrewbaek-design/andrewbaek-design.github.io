@@ -2776,21 +2776,22 @@ a.nav__dropdown-group-label:hover {
   background: rgba(195, 196, 48, 0.30) !important;
   color: var(--indigo) !important;
 }
-/* Detail box: same matcha-20%-bg + matcha-border treatment for
-   BOTH the default "pick a tile" prompt AND the per-partner detail
-   pane. The user wants the active state to feel identical to the
-   resting state, so the entire pane uses the call-to-action surface
-   regardless of which inner pane is shown. */
+/* Detail box: same matcha-20% bg + matcha 2px border in both states
+   (default "pick a tile" prompt AND per-partner detail). Plain
+   block layout so the inner panes flow naturally — the default
+   pane centers its prompt, the partner panes render as a normal
+   left-aligned info card. */
 .tile--navy .pl-detail {
   background: rgba(195, 196, 48, 0.20) !important;
   box-shadow: inset 0 0 0 2px var(--matcha) !important;
-  min-height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 1.75rem 2rem !important;
+  display: block;
+  min-height: 0;
 }
-.tile--navy .pl-detail__inner--default.is-shown,
-.tile--navy .pl-detail__inner.is-shown {
+
+/* Default "pick a tile" pane — centered prompt, full available
+   width so the line doesn't wrap into a narrow column. */
+.tile--navy .pl-detail__inner--default.is-shown {
   text-align: center;
 }
 .tile--navy .pl-detail p.pl-detail__hint {
@@ -2798,24 +2799,39 @@ a.nav__dropdown-group-label:hover {
   font-weight: 700 !important;
   font-size: 1.15rem !important;
   font-style: normal !important;
-  line-height: 1.45;
-  max-width: 720px;
-  margin: 0 auto;
+  line-height: 1.5;
+  margin: 0 auto !important;
+  max-width: 820px;
 }
-/* Detail-pane content on the matcha surface: white headings + body
-   so partner detail reads with the same clarity as the default
-   prompt copy. */
+
+/* Partner detail pane — left-aligned info card with the matcha
+   eyebrow pill above the heading. Heading + body stay full-width
+   so the layout reads as a normal piece of card content, not a
+   centered banner. */
+.tile--navy .pl-detail__inner.is-shown:not(.pl-detail__inner--default) {
+  text-align: left;
+  width: 100%;
+}
 .tile--navy .pl-detail h3 {
   color: var(--white) !important;
+  text-align: left !important;
+  margin: 0 0 0.5rem !important;
+  font-size: 1.35rem;
 }
 .tile--navy .pl-detail p:not(.pl-detail__hint) {
   color: rgba(255, 255, 255, 0.92) !important;
+  text-align: left;
+  margin: 0;
 }
 .tile--navy .pl-detail__eyebrow {
+  display: inline-block;
   color: var(--indigo) !important;
   background: var(--matcha);
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 999px;
+  margin-bottom: 0.85rem;
+  font-size: 11px;
+  font-weight: 700;
 }
 .tile--navy h3,
 .tile--navy h4 {
