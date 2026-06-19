@@ -2672,8 +2672,47 @@ a.nav__dropdown-group-label:hover {
 .tile--navy .template-card,
 .tile--navy .sec-card,
 .tile--navy .cap-checks li,
-.tile--navy .tier {
+.tile--navy .tier,
+.tile--navy .pl-card,
+.tile--navy .pl-detail {
   background: rgba(250, 249, 245, 0.06) !important;
+}
+/* Partnership-landscape filter pills + card internals also need
+   the dark-mode flip when the section is navy. Badges stay matcha-
+   accented; the muted badge variant goes seashell-tinted; the
+   hint text becomes a faded seashell instead of indigo. */
+.tile--navy .pl-filter__pill {
+  background: rgba(250, 249, 245, 0.06) !important;
+  color: var(--seashell) !important;
+}
+.tile--navy .pl-filter__pill:hover {
+  background: rgba(195, 196, 48, 0.18) !important;
+  border-color: var(--matcha);
+}
+.tile--navy .pl-filter__pill.is-active {
+  background: var(--matcha) !important;
+  color: var(--indigo) !important;
+}
+.tile--navy .pl-card__name,
+.tile--navy .pl-detail h3 {
+  color: var(--seashell) !important;
+}
+.tile--navy .pl-card__sub,
+.tile--navy .pl-detail p {
+  color: rgba(250, 249, 245, 0.72) !important;
+}
+.tile--navy .pl-card__badge {
+  color: var(--indigo) !important;
+}
+.tile--navy .pl-card__badge--ghost {
+  background: rgba(250, 249, 245, 0.12);
+  color: var(--seashell) !important;
+}
+.tile--navy .pl-detail__hint {
+  color: rgba(250, 249, 245, 0.60) !important;
+}
+.tile--navy .pl-detail {
+  box-shadow: inset 0 0 0 1px rgba(195, 196, 48, 0.28) !important;
 }
 .tile--navy h3,
 .tile--navy h4 {
@@ -3401,16 +3440,19 @@ a.nav__dropdown-group-label:hover {
     padding-left: var(--tile-pad-x) !important;
     padding-right: var(--tile-pad-x) !important;
   }
-  .sub-hero__inner:has(.sub-hero__bg) .sub-hero__bg,
-  .sub-hero__inner:has(.sub-hero__visual) .sub-hero__visual {
-    grid-column: 1;
-    grid-row: 1;
-  }
+  /* Mobile stack: title/text on TOP, visual below — both fully
+     visible without the 2-col squeeze. Standing rule across every
+     hero on every page. */
   .sub-hero__inner:has(.sub-hero__bg) .sub-hero__text,
   .sub-hero__inner:has(.sub-hero__visual) .sub-hero__text {
-    grid-column: 1;
-    grid-row: 2;
-    text-align: center;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    text-align: center !important;
+  }
+  .sub-hero__inner:has(.sub-hero__bg) .sub-hero__bg,
+  .sub-hero__inner:has(.sub-hero__visual) .sub-hero__visual {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
   }
   .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__cta,
   .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__breadcrumb,
