@@ -2772,9 +2772,16 @@ a.nav__dropdown-group-label:hover {
   color: var(--seashell) !important;
   font-weight: 700 !important;
 }
+/* "Active Pilots" (muted variant) matches the solid "Active Pilot"
+   treatment per direction — both pilot statuses read at the same
+   visual weight on the dark cards. */
 .tile--navy .pl-card__badge--muted {
-  background: rgba(195, 196, 48, 0.30) !important;
+  background: var(--matcha) !important;
   color: var(--indigo) !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  padding: 6px 12px !important;
+  letter-spacing: 0.06em !important;
 }
 /* Detail box: same matcha-20% bg + matcha 2px border in both states
    (default "pick a tile" prompt AND per-partner detail). Plain
