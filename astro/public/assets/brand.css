@@ -2584,7 +2584,14 @@ a.nav__dropdown-group-label:hover {
 .tile--light .winner-card,
 .tile--light .cap-checks li,
 .tile--light .ch-card,
-.tile--light .tier {
+.tile--light .tier,
+.tile--light .tl-card,
+.tile--light .benefit,
+.tile--light .mkt-card,
+.tile--light .impact-card,
+.tile--light .reminder-card,
+.tile--light .stage-card,
+.tile--light .role-card {
   background: var(--tile-card-bg) !important;
   border: 0;
 }
