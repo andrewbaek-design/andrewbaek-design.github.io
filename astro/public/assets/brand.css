@@ -3346,7 +3346,7 @@ a.nav__dropdown-group-label:hover {
   margin: 0 !important;
   max-width: none !important;
 }
-.sub-hero__inner:has(.sub-hero__bg) .sub-hero__bg,
+.sub-hero__inner:has(.sub-hero__bg) .sub-hero__bg:not(.sub-hero__bg--narrow),
 .sub-hero__inner:has(.sub-hero__visual) .sub-hero__visual {
   grid-column: 2 !important;
   grid-row: 1 !important;
@@ -3355,7 +3355,9 @@ a.nav__dropdown-group-label:hover {
      hero. In the 2-col layout that cap leaves the visual floating in
      a sea of empty grid-column space. Forcing the container to fill
      its grid column (and clearing the auto margin) makes the visual
-     occupy the right column edge-to-edge. */
+     occupy the right column edge-to-edge. Pages that need to keep a
+     single-column mockup-above-text layout opt out with the
+     `.sub-hero__bg--narrow` modifier. */
   width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
