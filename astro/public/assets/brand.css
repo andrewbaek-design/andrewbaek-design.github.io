@@ -81,7 +81,7 @@
    border declarations added earlier in the codebase. To opt an
    element back in, write `border: 1px solid X !important` after
    this rule. */
-*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
+*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.hero-2col):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
   border: 0 !important;
 }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -2588,7 +2588,24 @@ a.nav__dropdown-group-label:hover {
   border-top-color: rgba(250, 249, 245, 0.10);
 }
 .tile--navy::before,
-.tile--navy::after { background: rgba(250, 249, 245, 0.10); }
+.tile--navy::after,
+.trust.trust--dark::before,
+.trust.trust--dark::after,
+.cta-band.cta-band--dark::before,
+.cta-band.cta-band--dark::after { background: rgba(250, 249, 245, 0.10) !important; }
+
+/* ============================================================
+   HERO BOTTOM HAIRLINE
+   ------------------------------------------------------------
+   Per design direction (2026-06-19): every hero section (landing
+   + sub-heroes) carries a subtle bottom divider so the hero is
+   visually separated from the first content section. Light heroes
+   use the global indigo hairline token; if the page ever introduces
+   a dark hero variant, override with a seashell-tinted equivalent. */
+.hero-2col,
+.sub-hero {
+  border-bottom: 1px solid var(--indigo-08) !important;
+}
 .tile--navy h1,
 .tile--navy h2,
 .tile--navy h3,
