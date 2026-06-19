@@ -89,7 +89,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     border: 0;
     border-radius: 22px;
     margin: 0 auto;
-    background: var(--seashell);
+    background: transparent;
   }
   @media (max-width: 1100px) { .pc-frame { height: 540px; } }
   @media (max-width: 820px)  { .pc-frame { height: 460px; border-radius: 18px; } }
@@ -210,7 +210,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 
 
 <!-- ============= 2. WHAT IT DOES (3 punchier cap-checks, #228) ============= -->
-<section class="tile tile--light" aria-label="What Patient Concierge does">
+<section class="tile tile--navy" aria-label="What Patient Concierge does">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">What It Does</span>
@@ -226,7 +226,7 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 </section>
 
 <!-- ============= 3. THREE CHANNELS (dark cards, toned down per #227) ============= -->
-<section class="tile tile--light" aria-label="Three patient communication channels">
+<section class="tile tile--light tile--alt" aria-label="Three patient communication channels">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Three Channels, One Coordinator</span>

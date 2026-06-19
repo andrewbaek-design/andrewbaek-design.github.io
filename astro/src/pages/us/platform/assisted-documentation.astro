@@ -65,8 +65,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      left and a dark "Add-on Product" card on the right, followed
      by a 3-card capabilities breakdown. */
   .featured-story-card {
-    background: rgba(195, 196, 48, 0.06);
-    border: 1px solid rgba(195, 196, 48, 0.18);
+    background: rgba(195, 196, 48, 0.20);
     border-radius: 24px;
     padding: 2.5rem;
     margin: 0 0 2.5rem;
@@ -106,7 +105,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     font-size: clamp(1.15rem, 1.6vw, 1.35rem);
     line-height: 1.45;
     font-weight: 500;
-    color: var(--indigo);
+    color: var(--seashell);
     letter-spacing: -0.012em;
     margin: 0;
     text-wrap: pretty;
@@ -114,7 +113,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .featured-quote__attrib {
     margin: 1rem 0 0;
     font-size: 0.875rem;
-    color: rgba(6, 62, 84, 0.55);
+    color: rgba(250, 249, 245, 0.72);
   }
   .ai-card {
     background: var(--indigo);
@@ -171,17 +170,16 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
   @media (max-width: 900px) { .featured-grid { grid-template-columns: 1fr; } }
   .featured-cap {
-    background: var(--white);
-    border: 1px solid rgba(6, 62, 84, 0.08);
+    background: var(--indigo);
     border-radius: var(--radius-lg);
     padding: 1.75rem;
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    transition: transform 0.25s ease;
   }
-  .featured-cap:hover { transform: translateY(-3px); border-color: rgba(6, 62, 84, 0.18); }
+  .featured-cap:hover { transform: translateY(-3px); }
   .featured-cap__num {
     display: inline-block;
     font-size: 11px;
-    color: rgba(6, 62, 84, 0.5);
+    color: var(--matcha);
     font-weight: 600;
     letter-spacing: 0.06em;
     margin-bottom: 0.75rem;
@@ -190,12 +188,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     margin: 0 0 0.5rem;
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--indigo);
+    color: var(--matcha);
     letter-spacing: -0.012em;
   }
   .featured-cap p {
     margin: 0;
-    color: rgba(6, 62, 84, 0.72);
+    color: rgba(250, 249, 245, 0.82);
     line-height: 1.55;
     font-size: 0.95rem;
   }
@@ -277,7 +275,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 </section>
 
 <!-- ============= 3. BUILT AROUND THE PHARMACIST (kept as-is) ============= -->
-<section class="tile tile--light" aria-label="Built around the pharmacist">
+<section class="tile tile--light tile--alt" aria-label="Built around the pharmacist">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Built Around the Pharmacist</span>

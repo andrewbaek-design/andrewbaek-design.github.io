@@ -81,7 +81,7 @@
    border declarations added earlier in the codebase. To opt an
    element back in, write `border: 1px solid X !important` after
    this rule. */
-*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.hero-2col):not(.pulse-ring):not(.hero-2col__media):not(.mockup-host):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
+*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.sub-hero__visual):not(.hero-2col):not(.pulse-ring):not(.hero-2col__media):not(.mockup-host):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
   border: 0 !important;
 }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -2583,21 +2583,38 @@ a.nav__dropdown-group-label:hover {
 .tile--navy .problem-card,
 .tile--navy .calc-card,
 .tile--navy .audience-card,
-.tile--navy .partner-card {
+.tile--navy .partner-card,
+.tile--navy .light-card,
+.tile--navy .feat-card,
+.tile--navy .interop-card,
+.tile--navy .ch-card,
+.tile--navy .use-card,
+.tile--navy .svc-chip {
   background: rgba(250, 249, 245, 0.06) !important;
 }
 .tile--navy .feature h3,
 .tile--navy .h-card h3,
 .tile--navy .segment-card h3,
 .tile--navy .problem-card h3,
-.tile--navy .partner-card h3 {
+.tile--navy .partner-card h3,
+.tile--navy .light-card h3,
+.tile--navy .feat-card h3,
+.tile--navy .interop-card h3,
+.tile--navy .ch-card h3,
+.tile--navy .use-card h3,
+.tile--navy h4 {
   color: var(--seashell);
 }
 .tile--navy .feature p,
 .tile--navy .h-card p,
 .tile--navy .segment-card p,
 .tile--navy .problem-card p,
-.tile--navy .partner-card p {
+.tile--navy .partner-card p,
+.tile--navy .light-card p,
+.tile--navy .feat-card p,
+.tile--navy .interop-card p,
+.tile--navy .ch-card p,
+.tile--navy .use-card p {
   color: rgba(250, 249, 245, 0.78);
 }
 .tile--navy .kicker {
@@ -2605,6 +2622,23 @@ a.nav__dropdown-group-label:hover {
 }
 .tile--navy .feat-graphic {
   background: rgba(250, 249, 245, 0.05);
+}
+/* Numbered/step labels inside cards on dark sections flip to matcha
+   so the eyebrow stays legible. */
+.tile--navy .feat-card__num,
+.tile--navy .featured-cap__num,
+.tile--navy .light-card__num,
+.tile--navy .interop-card__badge {
+  color: var(--matcha) !important;
+}
+/* Icon containers (matcha-tinted square/circle behind an SVG) get a
+   richer matcha background on dark so they read against the navy bg. */
+.tile--navy .light-card__icon,
+.tile--navy .problem-card__icon,
+.tile--navy .feat-card__icon,
+.tile--navy .segment-card__icon {
+  background: rgba(195, 196, 48, 0.18) !important;
+  color: var(--matcha);
 }
 /* Catch any other card-shaped element on a light tile and strip
    its border too, without forcing a background (so existing
