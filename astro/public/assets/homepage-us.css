@@ -663,8 +663,9 @@
        and every other major surface. */
     border-radius: var(--radius-lg);
     overflow: hidden;
-    border: 1px solid rgba(6, 62, 84, 0.06);
-    border-bottom-color: transparent;
+    /* Subtle grey hairline around the mockup so it reads as a
+       distinct surface against the white hero background. */
+    border: 1px solid rgba(6, 62, 84, 0.12);
     --ink: #0c1217;
     --muted: #6a7480;
     --line: rgba(0,0,0,0.12);

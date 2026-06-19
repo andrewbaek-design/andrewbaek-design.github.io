@@ -81,7 +81,7 @@
    border declarations added earlier in the codebase. To opt an
    element back in, write `border: 1px solid X !important` after
    this rule. */
-*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.hero-2col):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
+*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.hero-2col):not(.pulse-ring):not(.hero-2col__media):not(.mockup-host):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
   border: 0 !important;
 }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -2017,7 +2017,7 @@ a.nav__dropdown-group-label:hover {
 /* Sticky nav, solid seashell surface (no blur). Transitions handle the
    pill-shape morph on scroll. */
 .nav {
-  background: rgba(250, 249, 245, 0.96) !important;  /* seashell @ 96% opacity */
+  background: var(--white) !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   transition: top 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -2062,10 +2062,10 @@ a.nav__dropdown-group-label:hover {
   border-radius: 999px;
   border: 1px solid rgba(6, 62, 84, 0.08);
   border-bottom: 1px solid rgba(6, 62, 84, 0.08);
-  background: rgba(250, 249, 245, 0.92) !important;  /* seashell @ 92% opacity */
+  background: var(--white) !important;
   box-shadow:
     0 10px 36px rgba(6, 62, 84, 0.16),
-    0 2px 8px rgba(6, 62, 84, 0.08);
+    0 2px 8px rgba(6, 62, 84, 0.08) !important;
 }
 .nav.is-scrolled .wrap {
   padding-block: 0.65rem;
@@ -2561,9 +2561,50 @@ a.nav__dropdown-group-label:hover {
 .tile--light .problem-card,
 .tile--light .case-step,
 .tile--light .calc-card,
-.tile--light .audience-card {
-  background: var(--tile-card-bg);
+.tile--light .audience-card,
+.tile--light .partner-card {
+  background: var(--tile-card-bg) !important;
   border: 0;
+}
+
+/* ============================================================
+   DARK-MODE OVERRIDES FOR CARDS IN .tile--navy SECTIONS
+   ------------------------------------------------------------
+   Any section converted to dark-mode via `.tile--navy` should
+   automatically re-tint its inner cards, headlines, body copy,
+   kicker, and motion-graphic background tiles for the dark
+   surface. Mirrors the manual treatment used on the Networks
+   advocacy section so future dark-themed sections "just work."
+   Card-level SVG fills baked into markup may still need
+   per-page tuning. */
+.tile--navy .feature,
+.tile--navy .h-card:not(.h-card--navy),
+.tile--navy .segment-card,
+.tile--navy .problem-card,
+.tile--navy .calc-card,
+.tile--navy .audience-card,
+.tile--navy .partner-card {
+  background: rgba(250, 249, 245, 0.06) !important;
+}
+.tile--navy .feature h3,
+.tile--navy .h-card h3,
+.tile--navy .segment-card h3,
+.tile--navy .problem-card h3,
+.tile--navy .partner-card h3 {
+  color: var(--seashell);
+}
+.tile--navy .feature p,
+.tile--navy .h-card p,
+.tile--navy .segment-card p,
+.tile--navy .problem-card p,
+.tile--navy .partner-card p {
+  color: rgba(250, 249, 245, 0.78);
+}
+.tile--navy .kicker {
+  color: var(--matcha);
+}
+.tile--navy .feat-graphic {
+  background: rgba(250, 249, 245, 0.05);
 }
 /* Catch any other card-shaped element on a light tile and strip
    its border too, without forcing a background (so existing
