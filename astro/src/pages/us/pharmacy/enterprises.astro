@@ -252,6 +252,114 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     display: inline-block;
     flex-shrink: 0;
   }
+  /* Service-by-region performance matrix. Replaces the old pie-chart
+     pair, surfaces a multi-store insight (which services perform best
+     where) that an enterprise leader could act on in a single glance.
+     The cell with the matcha "headroom" tag is the implied next move
+     called out in the insight band below. */
+  .dash__matrix {
+    background: rgba(6, 62, 84, 0.04);
+    border-radius: 12px;
+    padding: 16px 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .dash__matrix-title {
+    font-size: 11px;
+    color: rgba(6, 62, 84, 0.55);
+    font-weight: 500;
+  }
+  .dash__matrix-grid {
+    display: grid;
+    grid-template-columns: 64px repeat(5, 1fr);
+    gap: 4px;
+  }
+  .dash__matrix-cell {
+    aspect-ratio: 2.4 / 1;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(195, 196, 48, 0.10);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--indigo);
+  }
+  .dash__matrix-cell--head {
+    background: transparent;
+    color: rgba(6, 62, 84, 0.55);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    aspect-ratio: auto;
+  }
+  .dash__matrix-cell--label {
+    background: transparent;
+    color: var(--indigo);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: -0.005em;
+    text-align: left;
+    justify-content: flex-start;
+    padding-left: 2px;
+    aspect-ratio: auto;
+  }
+  .dash__matrix-cell--opportunity {
+    background: var(--matcha) !important;
+    position: relative;
+    box-shadow: 0 0 0 2px rgba(195, 196, 48, 0.35);
+    animation: matrix-pulse 2.4s ease-in-out infinite;
+  }
+  .dash__matrix-tag {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--indigo);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+  @keyframes matrix-pulse {
+    0%, 100% { box-shadow: 0 0 0 2px rgba(195, 196, 48, 0.35); }
+    50%      { box-shadow: 0 0 0 5px rgba(195, 196, 48, 0.45); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dash__matrix-cell--opportunity { animation: none; }
+  }
+
+  /* Insight callout band — the "what should I do next" takeaway
+     that bridges the matrix and the broader network trend chart. */
+  .dash__insight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(195, 196, 48, 0.10);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 12px;
+    color: var(--indigo);
+    line-height: 1.45;
+  }
+  .dash__insight-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--matcha);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(195, 196, 48, 0.22);
+  }
+  .dash__insight-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--indigo);
+    text-transform: none;
+    flex-shrink: 0;
+  }
+  .dash__insight-body { color: rgba(6, 62, 84, 0.82); }
+  .dash__insight-body strong { color: var(--indigo); font-weight: 700; }
+
   /* Monthly bar chart at the bottom */
   .dash__chart {
     background: rgba(6, 62, 84, 0.04);
@@ -832,10 +940,27 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     letter-spacing: 0.02em;
   }
   .maturity-card p {
-    margin: 0;
+    margin: 0 0 0.6rem;
     font-size: 0.92rem;
     color: rgba(6, 62, 84, 0.72);
     line-height: 1.55;
+  }
+  .maturity-card p:last-child { margin-bottom: 0; }
+  /* "How we support you" line: matcha-tinted bar on the left + indigo
+     text so the platform-support framing reads distinct from the
+     descriptive "where you are" copy above. */
+  .maturity-card__enables {
+    margin-top: 0.85rem !important;
+    padding: 0.7rem 0.9rem !important;
+    background: rgba(195, 196, 48, 0.10);
+    border-radius: 8px;
+    font-size: 0.88rem !important;
+    color: var(--indigo) !important;
+  }
+  .maturity-card__enables strong {
+    color: var(--indigo);
+    font-weight: 700;
+    letter-spacing: -0.005em;
   }
 </style>
 
@@ -845,74 +970,88 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     <div class="sub-hero__bg" aria-hidden="true">
       <div class="dash">
         <div class="dash__head">
-          <span class="dash__title">Pharmacy Network Usage Data</span>
+          <span class="dash__title">Network Performance &middot; <strong>1,234 pharmacies</strong></span>
           <span class="dash__brand"><LogoMedme /></span>
         </div>
         <div class="dash__filters">
-          <span class="dash__pill">Region</span>
-          <span class="dash__pill">Jan 2026, May 2026</span>
-          <span class="dash__pill">Created By</span>
-          <span class="dash__pill">Service Type</span>
-          <span class="dash__pill-save">Save Filters</span>
+          <span class="dash__pill">All regions</span>
+          <span class="dash__pill">All services</span>
+          <span class="dash__pill">YTD 2026</span>
+          <span class="dash__pill-save">Run campaign</span>
         </div>
         <div class="dash__grid">
           <div class="dash__stats">
             <div class="dash__stat">
-              <span class="dash__stat-label"># of Appointments</span>
-              <span class="dash__stat-value">2,981</span>
+              <span class="dash__stat-label">Pharmacies</span>
+              <span class="dash__stat-value">1,234</span>
             </div>
             <div class="dash__stat">
-              <span class="dash__stat-label"># of Patients</span>
-              <span class="dash__stat-value">3,207</span>
+              <span class="dash__stat-label">States</span>
+              <span class="dash__stat-value">47</span>
+            </div>
+            <div class="dash__stat">
+              <span class="dash__stat-label">Encounters YTD</span>
+              <span class="dash__stat-value">184K</span>
             </div>
           </div>
-          <div class="dash__pies">
-            <div class="dash__pie-block">
-              <span class="dash__pie-title">Appointments by Region</span>
-              <div class="dash__pie-row">
-                <svg viewBox="0 0 100 100" class="dash__pie">
-                  <circle cx="50" cy="50" r="16" stroke="var(--matcha)" stroke-dasharray="35 100"          stroke-dashoffset="0"   />
-                  <circle cx="50" cy="50" r="16" stroke="var(--indigo)" stroke-dasharray="20 100"          stroke-dashoffset="-35" />
-                  <circle cx="50" cy="50" r="16" stroke="#8a8b1c" stroke-dasharray="18 100"          stroke-dashoffset="-55" />
-                  <circle cx="50" cy="50" r="16" stroke="#1c5f7a" stroke-dasharray="15 100"          stroke-dashoffset="-73" />
-                  <circle cx="50" cy="50" r="16" stroke="#92a4ad" stroke-dasharray="12 100"          stroke-dashoffset="-88" />
-                </svg>
-                <div class="dash__pie-legend">
-                  <span><i style="background:var(--matcha)"></i>Northeast</span>
-                  <span><i style="background:var(--indigo)"></i>Mid-Atlantic</span>
-                  <span><i style="background:#8a8b1c"></i>Southeast</span>
-                  <span><i style="background:#1c5f7a"></i>Midwest</span>
-                  <span><i style="background:#92a4ad"></i>West</span>
-                </div>
-              </div>
-            </div>
-            <div class="dash__pie-block">
-              <span class="dash__pie-title">Patients by Region</span>
-              <div class="dash__pie-row">
-                <svg viewBox="0 0 100 100" class="dash__pie">
-                  <circle cx="50" cy="50" r="16" stroke="var(--matcha)" stroke-dasharray="30 100"          stroke-dashoffset="0"   />
-                  <circle cx="50" cy="50" r="16" stroke="var(--indigo)" stroke-dasharray="24 100"          stroke-dashoffset="-30" />
-                  <circle cx="50" cy="50" r="16" stroke="#8a8b1c" stroke-dasharray="20 100"          stroke-dashoffset="-54" />
-                  <circle cx="50" cy="50" r="16" stroke="#1c5f7a" stroke-dasharray="14 100"          stroke-dashoffset="-74" />
-                  <circle cx="50" cy="50" r="16" stroke="#92a4ad" stroke-dasharray="12 100"          stroke-dashoffset="-88" />
-                </svg>
-                <div class="dash__pie-legend">
-                  <span><i style="background:var(--matcha)"></i>Northeast</span>
-                  <span><i style="background:var(--indigo)"></i>Mid-Atlantic</span>
-                  <span><i style="background:#8a8b1c"></i>Southeast</span>
-                  <span><i style="background:#1c5f7a"></i>Midwest</span>
-                  <span><i style="background:#92a4ad"></i>West</span>
-                </div>
-              </div>
+          <!-- Service-by-region performance matrix.
+               Cells use varying matcha alpha to suggest a heatmap;
+               the brightest cell shows the regional opportunity
+               highlighted in the insight band below. -->
+          <div class="dash__matrix">
+            <span class="dash__matrix-title">Top services by region</span>
+            <div class="dash__matrix-grid">
+              <span class="dash__matrix-cell dash__matrix-cell--head"></span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">NE</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">M-Atl</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">SE</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">MW</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">West</span>
+
+              <span class="dash__matrix-cell dash__matrix-cell--label">Vaccines</span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.85)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.70)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.55)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.45)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.35)"></span>
+
+              <span class="dash__matrix-cell dash__matrix-cell--label">MTM</span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.55)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.60)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.30)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.75)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.40)"></span>
+
+              <span class="dash__matrix-cell dash__matrix-cell--label">CCM</span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.30)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.40)"></span>
+              <span class="dash__matrix-cell dash__matrix-cell--opportunity">
+                <span class="dash__matrix-tag">+47%<br>headroom</span>
+              </span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.50)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.35)"></span>
+
+              <span class="dash__matrix-cell dash__matrix-cell--label">POCT</span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.50)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.65)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.40)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.55)"></span>
+              <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.45)"></span>
             </div>
           </div>
         </div>
+        <!-- Insight callout — the implied next action for the network. -->
+        <div class="dash__insight">
+          <span class="dash__insight-dot" aria-hidden="true"></span>
+          <span class="dash__insight-label">Top opportunity</span>
+          <span class="dash__insight-body">CCM in the Southeast: 47% growth headroom across 312 pharmacies. <strong>Run a targeted campaign &rarr;</strong></span>
+        </div>
         <div class="dash__chart">
           <div class="dash__chart-head">
-            <span class="dash__chart-title">Total Appointments</span>
+            <span class="dash__chart-title">Monthly encounters across the network</span>
             <div class="dash__chart-legend">
-              <span><i style="background:var(--indigo)"></i># of Patients</span>
-              <span><i style="background:var(--matcha)"></i># of Appointments</span>
+              <span><i style="background:var(--indigo)"></i>Distinct patients</span>
+              <span><i style="background:var(--matcha)"></i>Total encounters</span>
             </div>
           </div>
           <div class="dash__bars">
@@ -940,7 +1079,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
       <h1 class="h-display">Your strategic partner<br>for <span class="accent">clinical services at scale.</span></h1>
       <p class="sub-hero__lede">MedMe is the modular, AI-native pharmacy platform built to integrate with your existing technology stack and operate as a strategic partner, not just a software vendor, driving the clinical strategy across your network.</p>
       <div class="sub-hero__cta">
-        <a class="pill pill--solid" href="/us/contact">Talk to our enterprise team <span class="arrow">→</span></a>
+        <a class="pill pill--solid" href="/us/contact?source=enterprise">Talk to our enterprise team <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
@@ -1004,8 +1143,8 @@ import LogoMedme from '../../../components/LogoMedme.astro';
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Where You Are On The Curve</span>
-      <h2 class="h-display">Four stages of enterprise<br>clinical-services maturity.</h2>
-      <p class="lead">Every enterprise pharmacy we work with sits somewhere on a clinical-services maturity curve, from a still-mostly-dispensing operation to a multi-state, payer-contracted clinical operation. The modules you adopt, the rollout pattern, and the commercial structure all hinge on where you are today and where you want to be next.</p>
+      <h2 class="h-display">From your first vaccine clinic<br>to a full pharmacy EHR.</h2>
+      <p class="lead">Enterprises grow into clinical services in stages. We are a strategic partner at each one, so the platform you start with at Stage 01 is the same platform that runs full clinics and direct payer contracts at Stage 04.</p>
     </div>
     <div class="maturity-grid">
       <article class="maturity-card">
@@ -1013,36 +1152,40 @@ import LogoMedme from '../../../components/LogoMedme.astro';
         <span class="maturity-card__dots" aria-hidden="true">
           <span class="is-on"></span><span></span><span></span><span></span>
         </span>
-        <h3>Foundation</h3>
-        <p class="maturity-card__sub">Vaccines, dispensing-led</p>
-        <p>Clinical services are limited to immunizations and the occasional MTM. Scheduling is on the dispensing system. Billing is largely cash and PBM-routed. The opportunity is to start running clinical services as a distinct revenue line.</p>
+        <h3>Starting out</h3>
+        <p class="maturity-card__sub">Vaccines, first MTM pilots</p>
+        <p>Most stores run immunizations. MTM is starting in a handful of locations. Clinical revenue is a small line next to dispensing.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Scheduling, intake, and SOAP documentation that work the way pharmacy actually moves, so your first clinical services run with paid claims, not paperwork.</p>
       </article>
       <article class="maturity-card">
         <span class="maturity-card__stage">Stage 02</span>
         <span class="maturity-card__dots" aria-hidden="true">
           <span class="is-on"></span><span class="is-on"></span><span></span><span></span>
         </span>
-        <h3>Emerging</h3>
-        <p class="maturity-card__sub">First clinical services, ad hoc</p>
-        <p>Some stores have started MTM and POCT. Documentation lives in spreadsheets or the dispensing add-on. Billing runs through one MAC region. The opportunity is to standardize the workflow and turn what is working into a program.</p>
+        <h3>Expanding services</h3>
+        <p class="maturity-card__sub">Multi-service, store-by-store</p>
+        <p>POCT, MTM, screenings, and seasonal campaigns are running in pilot stores. Workflow varies by location. The playbook is not yet network-wide.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Standardize across stores. One scheduler, one note format, one billing path, so what works in your top pharmacies turns into a repeatable program.</p>
       </article>
       <article class="maturity-card">
         <span class="maturity-card__stage">Stage 03</span>
         <span class="maturity-card__dots" aria-hidden="true">
           <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span></span>
         </span>
-        <h3>Established</h3>
-        <p class="maturity-card__sub">Full clinical program live</p>
-        <p>CCM, MTM, POCT, vaccines, and incident-to billing are running. There is a dedicated clinical-services lead. Documentation discipline is consistent across stores. The opportunity is to scale across states and contract directly with payers.</p>
+        <h3>Network-wide program</h3>
+        <p class="maturity-card__sub">CCM, MTM, POCT live across stores</p>
+        <p>Clinical services are run as a coordinated line of business. There is a dedicated clinical-services lead. Documentation discipline is consistent.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Operate the program. Per-store scorecards, multi-payer billing, and structured outcomes data you can take to legislators, payers, and your board.</p>
       </article>
       <article class="maturity-card">
         <span class="maturity-card__stage">Stage 04</span>
         <span class="maturity-card__dots" aria-hidden="true">
           <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span class="is-on"></span>
         </span>
-        <h3>Advanced</h3>
-        <p class="maturity-card__sub">Multi-state, payer-contracted</p>
-        <p>Clinical services run as a network-wide line of business. Multi-MAC billing, direct payer contracts, and structured outcomes reporting are in place. The opportunity is interoperability, RHTP participation, and provider-status pathways.</p>
+        <h3>Full clinics, consult rooms</h3>
+        <p class="maturity-card__sub">Innovative care, payer-contracted</p>
+        <p>Stores host full clinical visits in dedicated consult rooms. Pharmacists operate at top-of-license. Direct payer contracts and value-based agreements are live.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Full pharmacy EHR with QHIN interoperability, multi-state billing, RHTP participation, and provider-status pathways. We grow with you, we don't get replaced.</p>
       </article>
     </div>
   </div>
@@ -1148,7 +1291,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     </div>
     <div class="interop-footer">
       <p class="interop-footer__text">Thinking about interoperability, QHIN, or how to take part in a Rural Health Transformation Program implementation? Talk to us.</p>
-      <a class="pill pill--solid" href="/us/contact">Talk to our enterprise team <span class="arrow">→</span></a>
+      <a class="pill pill--solid" href="/us/contact?source=enterprise">Talk to our enterprise team <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -1229,7 +1372,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
         <span class="pulse-ring"></span>
         <span class="pulse-ring"></span>
       </span>
-      <a class="pill pill--solid" href="/us/contact">Talk to our enterprise team <span class="arrow">→</span></a>
+      <a class="pill pill--solid" href="/us/contact?source=enterprise">Talk to our enterprise team <span class="arrow">→</span></a>
     </div>
   </div>
 </section>

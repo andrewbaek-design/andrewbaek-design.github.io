@@ -219,6 +219,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <section class="tile tile--light" aria-label="Contact form" style="padding-top: 1.5rem;">
   <div class="tile__inner" style="padding: 0;">
     <div class="contact-grid">
+      {/* TODO(form-backend): wire up form submission so inbound inquiries
+          land in the team's inbox (HubSpot inbox, Slack channel, or a
+          custom serverless handler — TBD). The action="#" placeholder
+          and method="post" should be replaced with the actual endpoint.
+          When the source is the Enterprise page, route the message to
+          the enterprise team mailbox; otherwise it lands with the
+          generic sales/intake inbox. Optionally add a hidden
+          `inquiry_source` field populated from a `?source=enterprise`
+          query parameter to make the routing deterministic. */}
       <form class="contact-form" action="#" method="post" novalidate>
         <h2>Tell us a little about your pharmacy</h2>
         <p class="contact-form__sub">A pharmacy-side teammate replies within one business day. No sales-flood, ever.</p>
