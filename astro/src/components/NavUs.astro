@@ -219,14 +219,60 @@ import LogoMedme from './LogoMedme.astro';
     </div>
   </div>
 
-  <!-- Mobile drawer -->
+  <!-- Mobile drawer (collapsible groups; tap a section header to
+       expand its sub-pages). Uses native <details>/<summary> so the
+       behavior is keyboard-accessible without extra JS. -->
   <nav class="nav-drawer" id="mobile-drawer" aria-hidden="true">
     <ul class="nav-drawer__links">
-      <li><a href="/us/pharmacy/independents">Pharmacy</a></li>
-      <li><a href="/us/platform/scheduling-queuing">Platform</a></li>
-      <li><a href="/us/partners">Partners</a></li>
-      <li><a href="/us/resources">Resources</a></li>
-      <li><a href="/us/about">About</a></li>
+      <li>
+        <details class="nav-drawer__group">
+          <summary class="nav-drawer__group-trigger">Pharmacy</summary>
+          <ul class="nav-drawer__sublinks">
+            <li><a href="/us/pharmacy/independents">Independents</a></li>
+            <li><a href="/us/pharmacy/enterprises">Enterprises</a></li>
+            <li><a href="/us/pharmacy/networks">Networks</a></li>
+            <li><a href="/us/pharmacy/specialty">Specialty</a></li>
+          </ul>
+        </details>
+      </li>
+      <li>
+        <details class="nav-drawer__group">
+          <summary class="nav-drawer__group-trigger">Platform</summary>
+          <ul class="nav-drawer__sublinks">
+            <li><a href="/us/platform/scheduling-queuing">Scheduling &amp; Queueing</a></li>
+            <li><a href="/us/platform/patient-intake">Patient Intake Forms</a></li>
+            <li><a href="/us/platform/assisted-documentation">Assisted Documentation</a></li>
+            <li><a href="/us/platform/messaging-follow-ups">Messaging &amp; Follow-Ups</a></li>
+            <li><a href="/us/platform/ai-clinical-assistant">AI Clinical Assistant</a></li>
+            <li><a href="/us/platform/medical-billing">Medical Billing Suite</a></li>
+            <li><a href="/us/platform/ai-assistants/patient-concierge">Patient Concierge</a></li>
+            <li><a href="/us/platform/ai-assistants/admin-clerk">Admin Clerk</a></li>
+            <li><a href="/us/platform/pms-integrations">PMS Integrations</a></li>
+          </ul>
+        </details>
+      </li>
+      <li>
+        <details class="nav-drawer__group">
+          <summary class="nav-drawer__group-trigger">Partners</summary>
+          <ul class="nav-drawer__sublinks">
+            <li><a href="/us/partners/pharmacy-associations">Pharmacy Associations</a></li>
+            <li><a href="/us/pharmacy/networks">Networks</a></li>
+          </ul>
+        </details>
+      </li>
+      <li>
+        <details class="nav-drawer__group">
+          <summary class="nav-drawer__group-trigger">Resources</summary>
+          <ul class="nav-drawer__sublinks">
+            <li><a href="/us/resources/blog">Blog</a></li>
+            <li><a href="/us/resources/events">Events</a></li>
+            <li><a href="/us/resources/white-papers">White Papers</a></li>
+            <li><a href="/us/resources/webinars">Webinars</a></li>
+            <li><a href="/us/resources/roi-calculator">ROI Calculator</a></li>
+          </ul>
+        </details>
+      </li>
+      <li><a href="/us/about" class="nav-drawer__top-link">About</a></li>
     </ul>
     <a class="btn btn-primary nav-drawer__cta" href="/us/contact">Book a demo <span class="arrow">→</span></a>
   </nav>
