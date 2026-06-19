@@ -2562,9 +2562,69 @@ a.nav__dropdown-group-label:hover {
 .tile--light .case-step,
 .tile--light .calc-card,
 .tile--light .audience-card,
-.tile--light .partner-card {
+.tile--light .partner-card,
+.tile--light .light-card,
+.tile--light .dark-card,
+.tile--light .feat-card,
+.tile--light .interop-card,
+.tile--light .ch-card,
+.tile--light .use-card,
+.tile--light .featured-cap,
+.tile--light .maturity-card,
+.tile--light .rollout-card,
+.tile--light .rcm-card,
+.tile--light .step-card,
+.tile--light .apart-card,
+.tile--light .svc-chip,
+.tile--light .flow-step,
+.tile--light .sec-card,
+.tile--light .wf-card,
+.tile--light .template-card,
+.tile--light .winner-card,
+.tile--light .cap-checks li,
+.tile--light .ch-card,
+.tile--light .tier {
   background: var(--tile-card-bg) !important;
   border: 0;
+}
+/* For cards that came from a dark-themed source (.dark-card, .ch-card,
+   .use-card, .featured-cap, .winner-card, .flow-step, .tier), flip
+   inner text back to the light-mode palette when they sit on a
+   `.tile--light` surface. */
+.tile--light .dark-card h3,
+.tile--light .ch-card h3,
+.tile--light .use-card h3,
+.tile--light .featured-cap h3,
+.tile--light .winner-card h3,
+.tile--light .flow-step h3,
+.tile--light .tier h3,
+.tile--light .dark-card h4,
+.tile--light .ch-card h4,
+.tile--light .use-card h4,
+.tile--light .featured-cap h4,
+.tile--light .winner-card h4,
+.tile--light .flow-step h4,
+.tile--light .tier h4 {
+  color: var(--indigo) !important;
+}
+.tile--light .dark-card p,
+.tile--light .ch-card p,
+.tile--light .use-card p,
+.tile--light .featured-cap p,
+.tile--light .winner-card p,
+.tile--light .flow-step p,
+.tile--light .tier p {
+  color: rgba(6, 62, 84, 0.72) !important;
+}
+/* Tag/eyebrow labels inside dark-source cards on a light tile: mute
+   them so they don't fight the seashell card surface. */
+.tile--light .dark-card__tag,
+.tile--light .ch-card__tag,
+.tile--light .featured-cap__num,
+.tile--light .winner-card__tag,
+.tile--light .flow-step__num,
+.tile--light .tier__num {
+  color: rgba(6, 62, 84, 0.55) !important;
 }
 
 /* ============================================================
@@ -2589,33 +2649,28 @@ a.nav__dropdown-group-label:hover {
 .tile--navy .interop-card,
 .tile--navy .ch-card,
 .tile--navy .use-card,
-.tile--navy .svc-chip {
+.tile--navy .svc-chip,
+.tile--navy .dark-card,
+.tile--navy .rcm-card,
+.tile--navy .winner-card,
+.tile--navy .step-card,
+.tile--navy .apart-card,
+.tile--navy .maturity-card,
+.tile--navy .rollout-card,
+.tile--navy .wf-card,
+.tile--navy .template-card,
+.tile--navy .sec-card,
+.tile--navy .cap-checks li,
+.tile--navy .tier {
   background: rgba(250, 249, 245, 0.06) !important;
 }
-.tile--navy .feature h3,
-.tile--navy .h-card h3,
-.tile--navy .segment-card h3,
-.tile--navy .problem-card h3,
-.tile--navy .partner-card h3,
-.tile--navy .light-card h3,
-.tile--navy .feat-card h3,
-.tile--navy .interop-card h3,
-.tile--navy .ch-card h3,
-.tile--navy .use-card h3,
+.tile--navy h3,
 .tile--navy h4 {
-  color: var(--seashell);
+  color: var(--seashell) !important;
 }
-.tile--navy .feature p,
-.tile--navy .h-card p,
-.tile--navy .segment-card p,
-.tile--navy .problem-card p,
-.tile--navy .partner-card p,
-.tile--navy .light-card p,
-.tile--navy .feat-card p,
-.tile--navy .interop-card p,
-.tile--navy .ch-card p,
-.tile--navy .use-card p {
-  color: rgba(250, 249, 245, 0.78);
+.tile--navy p,
+.tile--navy li {
+  color: rgba(250, 249, 245, 0.78) !important;
 }
 .tile--navy .kicker {
   color: var(--matcha);
