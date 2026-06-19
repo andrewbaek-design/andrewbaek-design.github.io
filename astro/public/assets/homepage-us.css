@@ -90,6 +90,40 @@
     color: var(--indigo) !important;
     transform: translateY(-1px);
   }
+  /* Real partner logos (SVG) rendered into the marquee. brightness(0)
+     invert(1) forces every logo to pure white regardless of its source
+     fill colors, then opacity dims it to a soft "logo strip" look that
+     reads consistently against the navy trust band. Hover lifts each
+     logo to full opacity. */
+  .trust__logo-img {
+    height: 36px;
+    width: auto;
+    max-width: 180px;
+    display: block;
+    filter: brightness(0) invert(1) opacity(0.6);
+    transition: filter 0.25s ease;
+  }
+  /* Per-logo height adjustments so each brand reads at roughly the same
+     visual weight despite very different aspect ratios. Giant Eagle has
+     a stacked mark + wordmark (nearly square 257×246) so its wordmark
+     would otherwise render tiny; Publix is a very wide single-line
+     wordmark (4.4:1) that visually dominates at the default height. */
+  .trust__logo-img[src*="giant-eagle"] { height: 60px; max-width: 70px; }
+  /* NCAP's source viewBox has lots of internal padding around the
+     Caduceus mark, so even at 60px the rendered glyph looks smaller
+     than Giant Eagle. Bumping its height higher to compensate so the
+     two square stacked-mark logos read at the same visual weight. */
+  .trust__logo-img[src*="ncap"]        { height: 80px; max-width: 80px; }
+  .trust__logo-img[src*="publix"]      { height: 28px; max-width: 130px; }
+  .trust__logo:hover .trust__logo-img {
+    filter: brightness(0) invert(1) opacity(1);
+  }
+  @media (max-width: 700px) {
+    .trust__logo-img { height: 28px; max-width: 140px; }
+    .trust__logo-img[src*="giant-eagle"] { height: 46px; max-width: 56px; }
+    .trust__logo-img[src*="ncap"]        { height: 62px; max-width: 62px; }
+    .trust__logo-img[src*="publix"]      { height: 22px; max-width: 110px; }
+  }
   .trust__mark { width: 26px; height: 26px; flex-shrink: 0; }
   .trust__name { line-height: 1; }
   .trust__name--wide {
@@ -3892,6 +3926,12 @@
   .trust.trust--dark .trust__stat .label { color: rgba(250, 249, 245, 0.62) !important; }
   .trust.trust--dark .trust__logos { border-color: rgba(250, 249, 245, 0.1) !important; }
   .trust.trust--dark .trust__logo { color: var(--seashell) !important; }
+  /* Hairline divider between the logo marquee and the stats row,
+     subtle seashell tint so it reads on the navy bg without
+     competing with the matcha stat numbers. */
+  .trust.trust--dark .trust__stats {
+    border-top-color: rgba(250, 249, 245, 0.12) !important;
+  }
 
   /* ----- "WHY MEDME" — light variant cards ------------------------ */
   .problem-grid .h-card {
@@ -3902,12 +3942,18 @@
   .problem-grid .h-card h3 { color: var(--indigo); }
   .problem-grid .h-card p { color: rgba(6, 62, 84, 0.72); }
 
-  /* ----- BUILT FOR EVERY PHARMACY — underline CTA ----------------- */
+  /* ----- BUILT FOR EVERY PHARMACY — underline CTA -----------------
+     margin-top:auto pushes the CTA to the bottom of the segment card's
+     flex column so all 4 CTAs baseline-align across the row, regardless
+     of how long each card's description paragraph runs.
+     padding-top sets a minimum breathing-room gap between the
+     description copy and the CTA, even on the densest card where
+     margin-top:auto would otherwise collapse the spacing to nothing. */
   .segments-grid .segment-card__cta {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 0 0 2px;
+    padding: 1.5rem 0 2px;
     background: transparent;
     color: var(--indigo);
     font-family: var(--font-display);
@@ -3918,7 +3964,7 @@
     border-radius: 0;
     box-shadow: none;
     transition: border-color 0.18s ease, color 0.18s ease;
-    margin-top: 0.75rem;
+    margin-top: auto;
     align-self: flex-start;
   }
   .segments-grid .segment-card__cta:hover {
@@ -3946,10 +3992,13 @@
   .tile.tile--ai-dark h2.h-display { color: var(--seashell); }
   .tile.tile--ai-dark .lead { color: rgba(250, 249, 245, 0.72); }
   /* The dark section already had .h-card--navy cards; tint them
-     so they read as lighter cards on the now-dark background. */
+     so they read as lighter cards on the now-dark background.
+     Default border is transparent (the matcha tint was distracting per
+     feedback) — the hover rule below still lights the border matcha
+     so the lift cue is preserved. */
   .tile.tile--ai-dark .ai-card.h-card--navy {
     background: rgba(250, 249, 245, 0.04);
-    border-color: rgba(195, 196, 48, 0.22);
+    border-color: transparent;
   }
   .tile.tile--ai-dark .ai-card.h-card--navy:hover {
     border-color: var(--matcha);

@@ -8,9 +8,10 @@ and long-form copy authored as Markdown Content Collections.
 ## Repo
 
 Codebase lives at
-**[github.com/medmehealth/MedMe-Website](https://github.com/medmehealth/MedMe-Website)**.
-Public hosting (production at `medmehealth.com`) is handled separately;
-this repo is the source of truth for the redesign rebuild.
+**[github.com/andrewbaek-design/andrewbaek-design.github.io](https://github.com/andrewbaek-design/andrewbaek-design.github.io)**.
+Public hosting at `medmehealth.com` continues to run on Webflow; this
+repo is a design-direction reference handed to the marketing team to
+port into Webflow via the Webflow MCP server.
 
 ## Quickstart
 

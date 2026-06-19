@@ -2,7 +2,7 @@
 title: "About MedMe Health, Pharmacy EHR + Medical Billing"
 description: "MedMe is the pharmacy-specific EHR and medical billing platform. We help US community pharmacies turn clinical encounters into reimbursed care."
 hero_kicker: "About MedMe Health"
-hero_headline: "Pharmacy is the most under-used<br>care setting in the US."
+hero_headline: "Pharmacy is the <span class=\"accent\">most under-used</span><br>care setting in the US."
 hero_lede: "We are building the platform that fixes it. Pharmacy-specific EHR, AI-drafted SOAP notes, and Medicare Part B billing, so the work pharmacists already do finally gets reimbursed."
 hero_cta_label: "Talk to our team"
 hero_cta_href: "/us/contact"

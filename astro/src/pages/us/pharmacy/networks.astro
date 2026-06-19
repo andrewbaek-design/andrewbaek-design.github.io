@@ -178,6 +178,28 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .feature:hover {
     transform: translateY(-3px);
   }
+
+  /* ====== ADVOCACY DARK-MODE OVERRIDES =========================
+     The Advocacy section (.advocacy-dark) sits on a navy bg via
+     .tile--navy. The default .feature card styling assumes a
+     light tile, so we re-tint cards, headings, body copy, and
+     the motion-graphic tile so every element inside the box reads
+     against the dark surface. */
+  .advocacy-dark .feature {
+    background: rgba(250, 249, 245, 0.06);
+  }
+  .advocacy-dark .feature h3 {
+    color: var(--seashell);
+  }
+  .advocacy-dark .feature p {
+    color: rgba(250, 249, 245, 0.78);
+  }
+  .advocacy-dark .feat-graphic {
+    background: rgba(250, 249, 245, 0.05);
+  }
+  .advocacy-dark .kicker {
+    color: var(--matcha);
+  }
   .feat-graphic {
     width: 100%;
     height: 130px;
@@ -289,29 +311,38 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     to { stroke-dashoffset: -12; }
   }
 
-  /* 4 — Clinical service evidence: bars grow from baseline in a wave,
-        trendline dots breathe. */
+  /* 4 — Clinical service evidence: rows of logged encounters with
+        verified checkmarks fading in in sequence. Each row's bar also
+        does a subtle opacity pulse so the log feels live. Reads as
+        "encounters logged, encounters verified" — the source-of-truth
+        data behind the advocacy story. */
   [data-scene="evidence"] svg > g:first-of-type rect {
-    transform-origin: bottom;
-    animation: pc-bar-grow 3s ease-in-out infinite;
+    transform-origin: left center;
+    animation: pc-row-pulse 3.2s ease-in-out infinite;
   }
-  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(1) { animation-delay: 0s;   }
-  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(2) { animation-delay: 0.15s;}
-  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(3) { animation-delay: 0.3s; }
-  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(4) { animation-delay: 0.45s;}
-  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(5) { animation-delay: 0.6s; }
-  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(6) { animation-delay: 0.75s;}
-  @keyframes pc-bar-grow {
-    0%, 100% { transform: scaleY(0.5); opacity: 0.6; }
-    50%      { transform: scaleY(1);   opacity: 1;   }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(1) { animation-delay: 0s;    }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(2) { animation-delay: 0.25s; }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(3) { animation-delay: 0.5s;  }
+  [data-scene="evidence"] svg > g:first-of-type rect:nth-child(4) { animation-delay: 0.75s; }
+  @keyframes pc-row-pulse {
+    0%, 100% { opacity: 0.5; transform: scaleX(0.92); }
+    50%      { opacity: 1;   transform: scaleX(1); }
   }
-  [data-scene="evidence"] svg > g:nth-of-type(2) circle {
+  [data-scene="evidence"] svg > g:nth-of-type(3) path {
     transform-origin: center;
-    animation: pc-dot-pulse 2s ease-in-out infinite;
+    animation: pc-check-fade 3.2s ease-in-out infinite;
+    opacity: 0;
   }
-  @keyframes pc-dot-pulse {
-    0%, 100% { transform: scale(1);   }
-    50%      { transform: scale(1.5); }
+  [data-scene="evidence"] svg > g:nth-of-type(3) path:nth-child(1) { animation-delay: 0.1s;  }
+  [data-scene="evidence"] svg > g:nth-of-type(3) path:nth-child(2) { animation-delay: 0.35s; }
+  [data-scene="evidence"] svg > g:nth-of-type(3) path:nth-child(3) { animation-delay: 0.6s;  }
+  [data-scene="evidence"] svg > g:nth-of-type(3) path:nth-child(4) { animation-delay: 0.85s; }
+  @keyframes pc-check-fade {
+    0%   { opacity: 0; transform: scale(0.6); }
+    20%  { opacity: 1; transform: scale(1.1); }
+    35%  { opacity: 1; transform: scale(1);   }
+    85%  { opacity: 1; transform: scale(1);   }
+    100% { opacity: 0; transform: scale(0.6); }
   }
 
   /* 5 — Payer-ready billing data: mini bars pulse, side badges flash. */
@@ -497,7 +528,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   /* ====== NCAP PARTNER CASE STUDY =============================== */
   .case-banner {
     background: var(--white);
-    border: 1px solid rgba(6, 62, 84, 0.08);
+    border: 0;
     border-radius: var(--radius-lg);
     padding: 1.5rem 1.75rem;
     margin: 2rem 0 1.5rem;
@@ -538,10 +569,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     padding-left: 1.5rem;
-    border-left: 1px solid rgba(6, 62, 84, 0.08);
+    border-left: 0;
   }
   @media (max-width: 800px) {
-    .case-banner__stats { padding-left: 0; border-left: 0; border-top: 1px solid rgba(6, 62, 84, 0.08); padding-top: 1.25rem; }
+    .case-banner__stats { padding-left: 0; border-left: 0; border-top: 0; padding-top: 1.25rem; }
   }
   .case-banner__stat { display: flex; flex-direction: column; gap: 2px; }
   .case-banner__stat-val {
@@ -578,7 +609,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     align-items: center;
     gap: 8px;
     background: rgba(195, 196, 48, 0.12);
-    border: 1px solid rgba(195, 196, 48, 0.28);
+    border: 0;
     color: var(--indigo);
     font-size: 0.875rem;
     font-weight: 500;
@@ -655,16 +686,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
   .case-step {
     background: var(--white);
-    border: 1px solid rgba(6, 62, 84, 0.08);
+    border: 0;
     border-radius: var(--radius-lg);
     padding: 1.5rem;
     position: relative;
     z-index: 1;
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    transition: transform 0.25s ease;
   }
   .case-step:hover {
     transform: translateY(-3px);
-    border-color: rgba(6, 62, 84, 0.18);
   }
   .case-step__num {
     display: inline-flex;
@@ -712,7 +742,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
      standalone closing line. */
   .case-close-card {
     background: var(--indigo);
-    border: 1px solid rgba(195, 196, 48, 0.35);
+    border: 0;
     border-radius: var(--radius-lg);
     padding: 2rem 2.25rem;
     margin: 2rem 0 0;
@@ -967,7 +997,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       </svg>
     </div>
     <div class="sub-hero__text">
-      <h1 class="h-display">Grow your membership.<br>Advance your advocacy.</h1>
+      <h1 class="h-display">Grow your membership.<br><span class="accent">Advance your advocacy.</span></h1>
       <p class="sub-hero__lede">MedMe gives your network the clinical services platform members will actually adopt, and the aggregated billing and outcomes data that strengthens both your recruitment story and the case you make to legislators and payers.</p>
       <div class="sub-hero__cta">
         <a class="pill pill--solid" href="/us/contact">Talk to our partnerships team <span class="arrow">→</span></a>
@@ -989,19 +1019,22 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <article class="feature">
         <div class="feat-graphic feat-graphic--scene" data-scene="platform" aria-hidden="true">
           <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Scattered tool tiles on the left (5 lighter tiles) -->
-            <g stroke="rgba(6,62,84,0.28)" fill="rgba(6,62,84,0.05)" stroke-width="1.5">
-              <rect x="8"  y="10" width="22" height="22" rx="4"/>
-              <rect x="36" y="32" width="22" height="22" rx="4"/>
-              <rect x="8"  y="54" width="22" height="22" rx="4"/>
-              <rect x="60" y="10" width="22" height="22" rx="4"/>
-              <rect x="60" y="54" width="22" height="22" rx="4"/>
+            <!-- 5 tool tiles on the left, laid out as a clean 3-col × 2-row
+                 grid with the center cell empty. All gaps (horizontal and
+                 vertical) are exactly 6px so the squares read as a tidy
+                 cluster, not a scatter. -->
+            <g fill="rgba(6,62,84,0.18)">
+              <rect x="8"  y="20" width="22" height="22" rx="4"/>
+              <rect x="36" y="20" width="22" height="22" rx="4"/>
+              <rect x="64" y="20" width="22" height="22" rx="4"/>
+              <rect x="8"  y="48" width="22" height="22" rx="4"/>
+              <rect x="64" y="48" width="22" height="22" rx="4"/>
             </g>
             <!-- Arrow merging into the central platform tile -->
             <path d="M92 45 L120 45" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
             <path d="M114 39 L120 45 L114 51" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             <!-- MedMe consolidated tile -->
-            <rect x="130" y="18" width="82" height="54" rx="6" fill="rgba(195,196,48,0.16)" stroke="var(--matcha)" stroke-width="2"/>
+            <rect x="130" y="18" width="82" height="54" rx="6" fill="rgba(195,196,48,0.55)"/>
             <path d="M148 36h46M148 46h46M148 56h34" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
             <circle cx="142" cy="36" r="2.5" fill="var(--indigo)"/>
             <circle cx="142" cy="46" r="2.5" fill="var(--indigo)"/>
@@ -1014,24 +1047,26 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <article class="feature">
         <div class="feat-graphic feat-graphic--scene" data-scene="paid" aria-hidden="true">
           <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Stacked claim rows -->
-            <g stroke="var(--indigo)" stroke-width="1.5" fill="#fff">
-              <rect x="14" y="14" width="120" height="22" rx="4"/>
-              <rect x="14" y="40" width="120" height="22" rx="4"/>
-              <rect x="14" y="66" width="120" height="14" rx="3" fill="rgba(195,196,48,0.18)" stroke="var(--matcha)"/>
+            <!-- Stacked claim rows, all equal height for visual rhythm -->
+            <g fill="rgba(6,62,84,0.08)">
+              <rect x="14" y="6"  width="120" height="22" rx="4"/>
+              <rect x="14" y="34" width="120" height="22" rx="4"/>
+              <rect x="14" y="62" width="120" height="22" rx="4" fill="rgba(195,196,48,0.45)"/>
             </g>
             <!-- Code labels inside rows -->
             <g fill="var(--indigo)" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">
-              <text x="22" y="29">99490 CCM</text>
-              <text x="22" y="55">G0511 RHC</text>
+              <text x="22" y="21">99490 CCM</text>
+              <text x="22" y="49">G0511 RHC</text>
             </g>
-            <text x="22" y="76" fill="var(--indigo)" font-family="Montserrat" font-size="8" font-weight="700">Submit to payer</text>
-            <!-- Paid stamp on right -->
-            <circle cx="180" cy="46" r="22" fill="var(--matcha)" stroke="var(--indigo)" stroke-width="2"/>
-            <text x="180" y="44" text-anchor="middle" fill="var(--indigo)" font-family="Montserrat" font-size="9" font-weight="800">PAID</text>
-            <path d="M167 56l9 9" stroke="var(--indigo)" stroke-width="2" opacity="0.4"/>
+            <text x="22" y="77" fill="var(--indigo)" font-family="Montserrat" font-size="8" font-weight="700">Submit to payer</text>
+            <!-- PAID stamp on right. Text centered on the circle via
+                 dominant-baseline="central" so it sits true to the shape,
+                 not the glyph baseline. The decorative ink-mark slash
+                 from earlier was removed at Andrew's request. -->
+            <circle cx="180" cy="45" r="22" fill="var(--matcha)"/>
+            <text x="180" y="45" text-anchor="middle" dominant-baseline="central" fill="var(--indigo)" font-family="Montserrat" font-size="10" font-weight="800">PAID</text>
             <!-- Arrow connector -->
-            <path d="M138 46 L156 46" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M138 45 L156 45" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
         <h3>Get paid for clinical services</h3>
@@ -1041,7 +1076,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="feat-graphic feat-graphic--scene" data-scene="scale" aria-hidden="true">
           <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Central pharmacist node -->
-            <circle cx="60" cy="45" r="20" fill="rgba(195,196,48,0.16)" stroke="var(--matcha)" stroke-width="2"/>
+            <circle cx="60" cy="45" r="20" fill="rgba(195,196,48,0.45)"/>
             <circle cx="60" cy="39" r="5" fill="var(--indigo)"/>
             <path d="M48 56c0-6 5-10 12-10s12 4 12 10" stroke="var(--indigo)" stroke-width="2" fill="none"/>
             <!-- Dashed connections to AI agent nodes -->
@@ -1051,7 +1086,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               <path d="M80 60 L130 74"/>
             </g>
             <!-- AI agent dots -->
-            <g fill="var(--indigo)" stroke="var(--matcha)" stroke-width="2">
+            <g fill="var(--indigo)">
               <circle cx="146" cy="16" r="10"/>
               <circle cx="146" cy="45" r="10"/>
               <circle cx="146" cy="74" r="10"/>
@@ -1080,8 +1115,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 </section>
 
-<!-- ============= 2b. ADVOCACY (warm-beige tile, seashell cards) ============= -->
-<section class="tile tile--light tile--alt" aria-label="For advocacy">
+<!-- ============= 2b. ADVOCACY (dark navy tile, navy-tinted cards) ============= -->
+<section class="tile tile--navy advocacy-dark" aria-label="For advocacy">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">For Advocacy</span>
@@ -1092,27 +1127,32 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <article class="feature">
         <div class="feat-graphic feat-graphic--scene" data-scene="evidence" aria-hidden="true">
           <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Bar chart, varied heights, service categories implied -->
-            <g fill="rgba(195,196,48,0.55)">
-              <rect x="14"  y="48" width="22" height="32" rx="2"/>
-              <rect x="44"  y="34" width="22" height="46" rx="2"/>
-              <rect x="74"  y="22" width="22" height="58" rx="2"/>
-              <rect x="104" y="38" width="22" height="42" rx="2"/>
-              <rect x="134" y="14" width="22" height="66" rx="2"/>
-              <rect x="164" y="28" width="22" height="52" rx="2"/>
+            <!-- Clinical service log: 4 service rows, each with a service
+                 icon, an encounter detail bar, and a verified checkmark.
+                 Visually distinct from the cross-network reporting bars
+                 (Value to the Network) — this one reads as a clinical
+                 encounter ledger, the structural source of the evidence. -->
+            <!-- Service rows: bars (animated) -->
+            <g fill="rgba(250,249,245,0.18)">
+              <rect x="32" y="14" width="120" height="6" rx="3"/>
+              <rect x="32" y="34" width="120" height="6" rx="3"/>
+              <rect x="32" y="54" width="120" height="6" rx="3"/>
+              <rect x="32" y="74" width="120" height="6" rx="3"/>
             </g>
-            <!-- Top trendline overlay -->
-            <polyline points="25,52 55,38 85,26 115,42 145,18 175,32" stroke="var(--indigo)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <g fill="var(--indigo)">
-              <circle cx="25"  cy="52" r="2.5"/>
-              <circle cx="55"  cy="38" r="2.5"/>
-              <circle cx="85"  cy="26" r="2.5"/>
-              <circle cx="115" cy="42" r="2.5"/>
-              <circle cx="145" cy="18" r="2.5"/>
-              <circle cx="175" cy="32" r="2.5"/>
+            <!-- Service category icons (matcha-filled circles, static) -->
+            <g fill="var(--matcha)">
+              <circle cx="18" cy="17" r="6"/>
+              <circle cx="18" cy="37" r="6"/>
+              <circle cx="18" cy="57" r="6"/>
+              <circle cx="18" cy="77" r="6"/>
             </g>
-            <!-- Baseline -->
-            <line x1="10" y1="82" x2="200" y2="82" stroke="var(--indigo)" stroke-width="1.5" opacity="0.3"/>
+            <!-- Verified checkmarks on the right (animated, fade-in wave) -->
+            <g stroke="var(--seashell)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+              <path d="M180 17 l4 4 l8 -8"/>
+              <path d="M180 37 l4 4 l8 -8"/>
+              <path d="M180 57 l4 4 l8 -8"/>
+              <path d="M180 77 l4 4 l8 -8"/>
+            </g>
           </svg>
         </div>
         <h3>Clinical service evidence</h3>
@@ -1122,10 +1162,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <div class="feat-graphic feat-graphic--scene" data-scene="billing" aria-hidden="true">
           <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Document card -->
-            <rect x="14" y="10" width="130" height="74" rx="4" fill="#fff" stroke="var(--indigo)" stroke-width="1.5"/>
+            <rect x="14" y="10" width="130" height="74" rx="4" fill="rgba(250,249,245,0.08)"/>
             <!-- Title bar -->
-            <rect x="22" y="18" width="60" height="6" rx="2" fill="var(--indigo)"/>
-            <rect x="22" y="28" width="40" height="3" rx="1.5" fill="rgba(6,62,84,0.3)"/>
+            <rect x="22" y="18" width="60" height="6" rx="2" fill="var(--matcha)"/>
+            <rect x="22" y="28" width="40" height="3" rx="1.5" fill="rgba(250,249,245,0.35)"/>
             <!-- Mini bar chart -->
             <g fill="var(--matcha)">
               <rect x="22" y="58" width="10" height="18" rx="1.5"/>
@@ -1138,7 +1178,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
               <rect x="120" y="38" width="10" height="38" rx="1.5"/>
             </g>
             <!-- Side stack labels -->
-            <g stroke="var(--indigo)" stroke-width="1.5" fill="rgba(195,196,48,0.16)">
+            <g fill="rgba(195,196,48,0.55)">
               <rect x="158" y="14" width="50" height="20" rx="3"/>
               <rect x="158" y="38" width="50" height="20" rx="3"/>
               <rect x="158" y="62" width="50" height="20" rx="3"/>
@@ -1158,20 +1198,20 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <svg viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Shield outline on the left -->
             <path d="M50 8 L78 18 V40 c0 16 -11 28 -28 36 -17 -8 -28 -20 -28 -36 V18 Z"
-                  fill="rgba(195,196,48,0.16)" stroke="var(--matcha)" stroke-width="2"/>
+                  fill="rgba(195,196,48,0.55)"/>
             <!-- Checkmark inside shield -->
             <path d="M36 44 l10 10 l18 -18" stroke="var(--indigo)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             <!-- Arrow to right side data rows -->
-            <path d="M88 45 L110 45" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M104 39 L110 45 L104 51" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M88 45 L110 45" stroke="var(--seashell)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M104 39 L110 45 L104 51" stroke="var(--seashell)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             <!-- Anonymized data rows on the right (no PII, no real numbers) -->
-            <g stroke="var(--indigo)" stroke-width="1.5" fill="rgba(6,62,84,0.05)">
+            <g fill="rgba(250,249,245,0.10)">
               <rect x="120" y="12" width="92" height="16" rx="3"/>
               <rect x="120" y="34" width="92" height="16" rx="3"/>
               <rect x="120" y="56" width="92" height="16" rx="3"/>
             </g>
             <!-- Mask dots showing anonymization -->
-            <g fill="var(--indigo)" opacity="0.5">
+            <g fill="var(--seashell)" opacity="0.5">
               <circle cx="130" cy="20" r="2"/>
               <circle cx="138" cy="20" r="2"/>
               <circle cx="146" cy="20" r="2"/>

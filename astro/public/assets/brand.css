@@ -70,6 +70,20 @@
 
 /* ============== RESET / BASE ============== */
 *, *::before, *::after { box-sizing: border-box; }
+/* GLOBAL NO-BORDER BASELINE
+   ------------------------------------------------------------
+   Per design direction (2026-06-19): all elements default to
+   borderless. Cards, banners, tiles, dividers — everything is
+   borderless unless an element explicitly opts into a border.
+   Buttons, pills, and form controls preserve their borders
+   because their visual identity depends on the outline.
+   Use `!important` because this overrides accumulated per-element
+   border declarations added earlier in the codebase. To opt an
+   element back in, write `border: 1px solid X !important` after
+   this rule. */
+*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
+  border: 0 !important;
+}
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -190,8 +204,9 @@ section { padding-block: var(--space-section); }
 }
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(6, 62, 84, 0.22),
-              0 2px 6px rgba(6, 62, 84, 0.10);
+  /* Hover drop-shadow removed per feedback. The slight upward lift
+     remains as the tactile cue. Applies to every .btn variant
+     (.btn-primary, .btn-ghost, .btn--lg, etc.). */
 }
 .btn:active { transform: translateY(0) scale(0.97); box-shadow: none; }
 .btn:focus-visible { outline: 2px solid var(--matcha); outline-offset: 3px; }
@@ -210,8 +225,9 @@ section { padding-block: var(--space-section); }
 .btn-primary--accent:hover {
   background: #9C9D26;
   border-color: #9C9D26;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset,
-              0 6px 20px rgba(195, 196, 48, 0.45);
+  /* Hover drop-shadow removed per feedback. The button keeps its
+     resting inset highlight + matcha glow as its identity; the lift
+     transform is the only hover-state change. */
 }
 
 /* Secondary action, solid indigo */
@@ -398,6 +414,14 @@ a.nav__dropdown-group-label[aria-current="page"] {
   height: 0.32em;
   background: var(--matcha);
   z-index: -1; border-radius: 4px;
+}
+/* Sub-hero accent (matches the landing page hero pattern — matcha color
+   on a key phrase of the headline). Defined globally so every primary
+   page can use <span class="accent">…</span> without redefining the
+   color rule locally. */
+.sub-hero h1 .accent,
+.sub-hero h1.h-display .accent {
+  color: var(--matcha);
 }
 .page-hero__lede {
   font-size: var(--fs-body-lg);
@@ -2816,8 +2840,10 @@ a.nav__dropdown-group-label:hover {
 }
 .pill:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(6, 62, 84, 0.22),
-              0 2px 6px rgba(6, 62, 84, 0.10);
+  /* Drop-shadow removed per feedback — every pill (.pill--solid, .pill--ghost,
+     .tile--dark .pill, etc.) inherits this hover, so removing it here
+     cleans up the look site-wide in one rule. The slight upward lift
+     remains as the tactile cue. */
 }
 .pill:active { transform: translateY(0) scale(0.97); box-shadow: none; }
 .pill:focus-visible { outline: 2px solid var(--matcha); outline-offset: 3px; }
@@ -3080,11 +3106,158 @@ a.nav__dropdown-group-label:hover {
   position: relative;
   overflow: hidden;
 }
+/* GLOBAL HERO HEIGHT UNIFICATION
+   ------------------------------------------------------------
+   Every hero on every page matches the landing-page hero's
+   visual height so the cross-page rhythm stays consistent.
+   `--hero-min-h` is the single tuning knob. Sub-hero and the
+   landing .hero-2col both inherit it. Heroes whose content
+   would naturally overflow this minimum can still grow taller
+   (min-height, not fixed height). */
+:root { --hero-min-h: 720px; }
+.hero-2col,
+.sub-hero {
+  min-height: var(--hero-min-h);
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 1000px) {
+  :root { --hero-min-h: 560px; }
+}
+@media (max-width: 640px) {
+  :root { --hero-min-h: 460px; }
+}
+/* The inner content wrapper of a sub-hero needs to claim the full
+   width so the flex parent above doesn't squash it to the natural
+   content width. */
+.sub-hero > .sub-hero__inner { width: 100%; }
+
+/* When the sub-hero hosts a 2-col layout, strip BOTH horizontal
+   paddings on the outer section so the right column pushes flush
+   to the viewport edge AND the text column's own padding handles
+   the left gutter on its own. Matches landing page .hero-2col behavior. */
+.sub-hero:has(.sub-hero__bg),
+.sub-hero:has(.sub-hero__visual) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+@media (max-width: 1000px) {
+  .sub-hero:has(.sub-hero__bg),
+  .sub-hero:has(.sub-hero__visual) {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
 .sub-hero__inner {
   max-width: var(--container);
   margin: 0 auto;
   padding-inline: var(--tile-pad-x);
   position: relative;
+}
+/* ============================================================
+   2-COL HERO LAYOUT (matches the landing page .hero-2col)
+   Applies automatically when the sub-hero has both a visual
+   child (.sub-hero__bg or .sub-hero__visual) and a text child.
+   Pages with only text (legal hubs, resource indexes) keep the
+   centered single-column layout — :has() simply doesn't match.
+   Below 1000px the layout stacks single-column.
+   ============================================================ */
+.sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) {
+  display: grid;
+  /* Right column gets a heavier share so the motion graphic / mockup
+     reads at a much bigger visual weight than the text. Previous ratio
+     was 1 / 1.2 — Indie + Network visuals felt too small at that
+     split. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 3rem;
+  align-items: center;
+  padding-left: 2rem !important;
+  padding-right: 0 !important;
+}
+/* !important on the 2-col overrides is intentional: many primary pages
+   (medical-billing, scheduling-queuing, all the platform/* pages, etc.)
+   carry inline Astro-scoped `.sub-hero h1.h-display { text-align:
+   center }`-style rules from the previous centered single-column hero
+   pattern. Those inline rules outrank a normal global rule because
+   Astro's `[data-astro-cid-*]` attribute selector adds specificity.
+   Forcing the 2-col alignment overrides them in one sweep without
+   editing every page's inline <style> block. The inline rules become
+   dead code that can be cleaned up later. */
+.sub-hero__inner:has(.sub-hero__bg) .sub-hero__text,
+.sub-hero__inner:has(.sub-hero__visual) .sub-hero__text {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  text-align: left !important;
+  margin: 0 !important;
+  max-width: none !important;
+}
+.sub-hero__inner:has(.sub-hero__bg) .sub-hero__bg,
+.sub-hero__inner:has(.sub-hero__visual) .sub-hero__visual {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  /* Each page's visual container originally used `max-width: 800–1080px`
+     + `margin: 0 auto` to center itself in the previous single-column
+     hero. In the 2-col layout that cap leaves the visual floating in
+     a sea of empty grid-column space. Forcing the container to fill
+     its grid column (and clearing the auto margin) makes the visual
+     occupy the right column edge-to-edge. */
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+.sub-hero__inner:has(.sub-hero__bg) .sub-hero__bg > svg,
+.sub-hero__inner:has(.sub-hero__visual) .sub-hero__visual > svg {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  display: block;
+}
+.sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__breadcrumb {
+  text-align: left !important;
+}
+.sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__cta {
+  justify-content: flex-start !important;
+}
+.sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__lede {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: 540px !important;
+}
+.sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) h1.h-display {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  text-align: left !important;
+}
+@media (max-width: 1000px) {
+  .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    /* Restore symmetric padding when the layout stacks — the visual
+       no longer sits flush to the right edge once it's above the text. */
+    padding-left: var(--tile-pad-x) !important;
+    padding-right: var(--tile-pad-x) !important;
+  }
+  .sub-hero__inner:has(.sub-hero__bg) .sub-hero__bg,
+  .sub-hero__inner:has(.sub-hero__visual) .sub-hero__visual {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .sub-hero__inner:has(.sub-hero__bg) .sub-hero__text,
+  .sub-hero__inner:has(.sub-hero__visual) .sub-hero__text {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: center;
+  }
+  .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__cta,
+  .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__breadcrumb,
+  .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) h1.h-display {
+    text-align: center;
+    justify-content: center;
+  }
+  .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) .sub-hero__lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 .sub-hero__cta {
   display: inline-flex;
