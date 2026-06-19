@@ -721,6 +721,202 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     padding: 4px 9px;
     letter-spacing: 0.02em;
   }
+
+  /* ====== PARTNERSHIP LANDSCAPE, filterable credibility browse =====
+     Filter pills → grid of relationship tiles → reveal-on-click
+     detail pane. Each tile carries a `data-tag` for the filter
+     and a `data-key` matched to a detail pane below. No relationship
+     details are dumped on the public page; the user opts in by
+     clicking. */
+  .pl-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 1.5rem;
+  }
+  .pl-filter__pill {
+    background: var(--tile-card-bg);
+    border: 1.5px solid rgba(6, 62, 84, 0.10);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    line-height: 1.2;
+  }
+  .pl-filter__pill:hover {
+    border-color: var(--matcha);
+    background: rgba(195, 196, 48, 0.10);
+  }
+  .pl-filter__pill.is-active {
+    background: var(--matcha);
+    border-color: var(--matcha);
+    color: var(--indigo);
+  }
+
+  .pl-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 1000px) { .pl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .pl-grid { grid-template-columns: 1fr; } }
+
+  .pl-card {
+    appearance: none;
+    background: var(--tile-card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+  }
+  .pl-card:hover {
+    transform: translateY(-2px);
+  }
+  .pl-card.is-active {
+    box-shadow: 0 0 0 2px var(--matcha) inset;
+  }
+  .pl-card.is-hidden { display: none; }
+  .pl-card__badge {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--indigo);
+    background: rgba(195, 196, 48, 0.30);
+    padding: 4px 8px;
+    border-radius: 999px;
+    align-self: flex-start;
+  }
+  .pl-card__badge--ghost {
+    background: rgba(6, 62, 84, 0.08);
+  }
+  .pl-card__badge--muted {
+    background: rgba(195, 196, 48, 0.18);
+    color: rgba(6, 62, 84, 0.72);
+  }
+  .pl-card__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+  }
+  .pl-card__sub {
+    font-size: 0.85rem;
+    color: rgba(6, 62, 84, 0.65);
+    line-height: 1.4;
+  }
+
+  .pl-detail {
+    background: var(--tile-card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    min-height: 132px;
+    display: block;
+    box-shadow: inset 0 0 0 1px rgba(195, 196, 48, 0.18);
+  }
+  .pl-detail__inner { display: none; }
+  .pl-detail__inner.is-shown { display: block; }
+  .pl-detail__hint {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.6);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .pl-detail__eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--matcha);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .pl-detail h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .pl-detail p {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.78);
+    line-height: 1.55;
+    font-size: 0.95rem;
+    text-wrap: pretty;
+  }
+
+  /* ====== EASY TO GET STARTED (reassurance section) ============= */
+  .onboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 900px) { .onboard-grid { grid-template-columns: 1fr; } }
+  .onboard-card {
+    background: var(--tile-card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    transition: transform 0.25s ease;
+  }
+  .onboard-card:hover { transform: translateY(-3px); }
+  .onboard-card__step {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--matcha);
+    letter-spacing: 0.08em;
+  }
+  .onboard-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+  }
+  .onboard-card p {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    font-size: 0.95rem;
+    text-wrap: pretty;
+  }
+  .onboard-reach {
+    margin: 2rem auto 0;
+    text-align: center;
+  }
+  .onboard-reach a {
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--matcha);
+    padding-bottom: 2px;
+    font-size: 0.95rem;
+    transition: opacity 0.18s;
+  }
+  .onboard-reach a:hover { opacity: 0.75; }
+  .onboard-reach a .arrow { display: inline-block; transition: transform 0.18s ease; }
+  .onboard-reach a:hover .arrow { transform: translateX(3px); }
 </style>
 
 <!-- ============= 1. SUB-HERO (stacked, mockup-as-fading-bg above text) ============= -->
@@ -895,75 +1091,208 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 </section>
 
-<!-- ============= 3. PARTNERSHIP LANDSCAPE (per Andrew #202) ============= -->
+<!-- ============= 3. PARTNERSHIP LANDSCAPE (filterable credibility view) =============
+     Per Christine 1:1: surface the relationships that build legitimacy
+     (active pilots, association memberships, integration partners) as a
+     filterable browse rather than a flat public list. Visitors can pick
+     a category, see who's in it, and pivot to a detail card for any
+     entry without us exposing every relationship at once. -->
 <section class="tile tile--light tile--alt" aria-label="Partnership landscape">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Embedded In The Pharmacy Ecosystem</span>
       <h2 class="h-display">Built alongside the partners<br>independent pharmacy already trusts.</h2>
-      <p class="lead">MedMe sits inside the independent pharmacy ecosystem, not next to it. State and national associations, dispensing-system partners, payer networks, and standards bodies are part of how the platform was built and how it keeps moving.</p>
+      <p class="lead">Filter the network MedMe operates inside, state associations, federal programs, integration partners, payer rails. Click any tile to see what the relationship actually looks like in practice.</p>
     </div>
-    <div class="partner-grid">
-      <article class="partner-card">
-        <span class="partner-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v2a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M5 22h14M9 22V9M15 22V9"/><path d="M5 9h14"/></svg>
-        </span>
-        <h3>Pharmacy Associations</h3>
-        <p>Partnerships with state and national pharmacy associations on member pilots, scope-of-practice advocacy, and protocol-aligned workflows.</p>
-        <ul class="partner-card__list">
-          <li>NCPA</li>
-          <li>APhA</li>
-          <li>NACDS</li>
-          <li>NCAP</li>
-          <li>State associations</li>
-        </ul>
-      </article>
-      <article class="partner-card">
-        <span class="partner-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
-        </span>
-        <h3>Dispensing System Partners</h3>
-        <p>Two-way integrations with the dispensing systems independents already run, so the clinical record stays in sync with the prescription record.</p>
-        <ul class="partner-card__list">
-          <li>PioneerRx</li>
-          <li>BestRx</li>
-          <li>McKesson</li>
-          <li>Liberty</li>
-          <li>Open API</li>
-        </ul>
-      </article>
-      <article class="partner-card">
-        <span class="partner-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="14" x2="10" y2="14"/></svg>
-        </span>
-        <h3>Clearinghouses and Payers</h3>
-        <p>Direct claim submission rails for Medicare Part B, state Medicaid, and commercial payers, with denial-management built into the claim workflow.</p>
-        <ul class="partner-card__list">
-          <li>Medicare Part B</li>
-          <li>State Medicaid</li>
-          <li>Commercial payers</li>
-          <li>Clearinghouse partners</li>
-        </ul>
-      </article>
-      <article class="partner-card">
-        <span class="partner-card__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-        </span>
-        <h3>Standards and Compliance Bodies</h3>
-        <p>FHIR-native data model and HIPAA-compliant infrastructure, aligned with the industry standards that govern pharmacy clinical-services exchange.</p>
-        <ul class="partner-card__list">
-          <li>FHIR</li>
-          <li>HIPAA</li>
-          <li>NCPDP</li>
-          <li>QHIN</li>
-          <li>SOC 2</li>
-        </ul>
-      </article>
+
+    <!-- Category filter pills, single-active semantics. -->
+    <div class="pl-filter" role="group" aria-label="Filter partnerships by category">
+      <button type="button" class="pl-filter__pill is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="pl-filter__pill" data-filter="state" aria-pressed="false">State Associations</button>
+      <button type="button" class="pl-filter__pill" data-filter="national" aria-pressed="false">National Associations</button>
+      <button type="button" class="pl-filter__pill" data-filter="federal" aria-pressed="false">Federal Programs</button>
+      <button type="button" class="pl-filter__pill" data-filter="integration" aria-pressed="false">Integration Partners</button>
+    </div>
+
+    <!-- Browse grid. Each card carries a `data-tag` for the filter and a
+         status badge. Detail pane below uses CSS `:has()` to surface the
+         selected card's full description without JavaScript. -->
+    <div class="pl-grid">
+      <button type="button" class="pl-card" data-tag="state" data-key="ncap" aria-label="NCAP, active billing pilot">
+        <span class="pl-card__badge">Active Pilot</span>
+        <span class="pl-card__name">NCAP</span>
+        <span class="pl-card__sub">North Carolina Association of Pharmacists</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="state" data-key="state-assoc" aria-label="State associations, additional active pilots">
+        <span class="pl-card__badge pl-card__badge--muted">Active Pilots</span>
+        <span class="pl-card__name">+ Additional state associations</span>
+        <span class="pl-card__sub">Active pilots underway, details shared on request.</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="national" data-key="ncpa" aria-label="NCPA, member benefits">
+        <span class="pl-card__badge pl-card__badge--ghost">Member Benefit</span>
+        <span class="pl-card__name">NCPA</span>
+        <span class="pl-card__sub">National Community Pharmacists Association</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="national" data-key="apha" aria-label="APhA, member benefits">
+        <span class="pl-card__badge pl-card__badge--ghost">Member Benefit</span>
+        <span class="pl-card__name">APhA</span>
+        <span class="pl-card__sub">American Pharmacists Association</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="federal" data-key="rhtp" aria-label="Rural Health Transformation Program">
+        <span class="pl-card__badge">Active Implementation</span>
+        <span class="pl-card__name">RHTP</span>
+        <span class="pl-card__sub">Federal Rural Health Transformation Program</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="federal" data-key="medicare" aria-label="Medicare Part B billing">
+        <span class="pl-card__badge pl-card__badge--ghost">Billing Rails Live</span>
+        <span class="pl-card__name">Medicare Part B</span>
+        <span class="pl-card__sub">Pharmacist-billable codes, denial-management in workflow.</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="integration" data-key="pioneerrx" aria-label="PioneerRx integration">
+        <span class="pl-card__badge pl-card__badge--ghost">Integration Partner</span>
+        <span class="pl-card__name">PioneerRx</span>
+        <span class="pl-card__sub">Bidirectional sync with the dispensing record.</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="integration" data-key="bestrx" aria-label="BestRx integration">
+        <span class="pl-card__badge pl-card__badge--ghost">Integration Partner</span>
+        <span class="pl-card__name">BestRx</span>
+        <span class="pl-card__sub">Bidirectional sync with the dispensing record.</span>
+      </button>
+    </div>
+
+    <!-- Detail pane. The card's full description is revealed when the
+         user clicks a tile (JS adds .is-active to the selected card and
+         updates the .pl-detail content). A neutral default reminds the
+         user this is opt-in detail, not a public roster. -->
+    <div class="pl-detail" role="region" aria-live="polite">
+      <div class="pl-detail__inner pl-detail__inner--default">
+        <p class="pl-detail__hint">Pick a tile to see the partnership in detail. We share specifics on individual pilots and contracts in conversation, not on a public list.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="ncap">
+        <span class="pl-detail__eyebrow">State Association &middot; Active Pilot</span>
+        <h3>North Carolina Association of Pharmacists</h3>
+        <p>Statewide medical-billing pilot in partnership with NCAP. Four-month structured rollout, protocol-aligned workflows, and member pricing for participating pharmacies. See the case study elsewhere on the site for the full structure.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="state-assoc">
+        <span class="pl-detail__eyebrow">State Associations &middot; Active Pilots</span>
+        <h3>Additional state association pilots</h3>
+        <p>Active pilots underway with state associations across the Southeast and Midwest. Each follows a similar partnership pattern, association-aligned protocols, member-priced billing, and a structured pilot path from go-live to scale. We can share specifics on request.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="ncpa">
+        <span class="pl-detail__eyebrow">National Association &middot; Member Benefit</span>
+        <h3>NCPA</h3>
+        <p>Working alongside the National Community Pharmacists Association on member education and adoption pathways for independent-pharmacy clinical services. NCPA-member pharmacies are eligible for partner programs at preferred pricing.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="apha">
+        <span class="pl-detail__eyebrow">National Association &middot; Member Benefit</span>
+        <h3>APhA</h3>
+        <p>Engaged with the American Pharmacists Association on pharmacist-delivered care, scope-of-practice, and continuing-education partnerships. APhA-member pharmacies have access to MedMe partner programs.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="rhtp">
+        <span class="pl-detail__eyebrow">Federal Program &middot; Active Implementation</span>
+        <h3>Rural Health Transformation Program</h3>
+        <p>Deployed as the interoperable pharmacy platform inside early-state RHTP implementations. Rural independents in approved states can access MedMe through the federally-funded program, including grant-aligned pricing.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="medicare">
+        <span class="pl-detail__eyebrow">Federal Program &middot; Billing Rails Live</span>
+        <h3>Medicare Part B</h3>
+        <p>Native Medicare Part B claim submission for pharmacist-billable services, with denial management built into the documentation workflow. Independents can start billing on day one of go-live.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="pioneerrx">
+        <span class="pl-detail__eyebrow">Integration Partner &middot; Dispensing System</span>
+        <h3>PioneerRx</h3>
+        <p>Bidirectional integration with PioneerRx pulls patient demographics, allergies, and dispensing history into MedMe in real time. The clinical record stays in sync with the prescription record, no double-entry.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="bestrx">
+        <span class="pl-detail__eyebrow">Integration Partner &middot; Dispensing System</span>
+        <h3>BestRx</h3>
+        <p>Bidirectional integration with BestRx connects the dispensing record to the MedMe clinical workflow. The pharmacist sees the full patient picture at the start of every clinical encounter.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============= 4. STORY (navy band, quote + 4 value blocks in 2-col split) ============= -->
+<script is:inline slot="end-of-body" set:html={`/* Partnership-landscape filter + detail-pane toggle. Single-active
+   pill semantics: clicking a category pill hides cards whose data-tag
+   doesn't match. Clicking a card highlights it and reveals the
+   matching detail pane below. */
+  (function plLandscape() {
+    var pills = document.querySelectorAll('.pl-filter__pill');
+    var cards = document.querySelectorAll('.pl-card');
+    var detailPanes = document.querySelectorAll('.pl-detail__inner');
+    if (!pills.length || !cards.length) return;
+
+    function setActiveCard(card) {
+      cards.forEach(function (c) { c.classList.toggle('is-active', c === card); });
+      var key = card ? card.getAttribute('data-key') : null;
+      detailPanes.forEach(function (p) {
+        var match = (!key && p.classList.contains('pl-detail__inner--default')) ||
+                    (key && p.getAttribute('data-detail-for') === key);
+        p.classList.toggle('is-shown', match);
+      });
+    }
+
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = pill.getAttribute('data-filter');
+        pills.forEach(function (p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-tag') === filter;
+          card.classList.toggle('is-hidden', !match);
+        });
+        setActiveCard(null);
+      });
+    });
+
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () { setActiveCard(card); });
+    });
+
+    // Default pane on load.
+    setActiveCard(null);
+  })();`}></script>
+
+<!-- ============= 4. EASY TO GET STARTED (reassurance band) =============
+     Per Christine 1:1: the low barrier to entry needs to be explicit
+     for indies. The pitch is "you don't have to figure this out alone,
+     we handle the parts that usually stall." Three reassurance cards
+     under a single headline, plus a quiet email-the-team option for
+     indies who aren't ready for a demo. -->
+<section class="tile tile--light" aria-label="Easy to get started">
+  <div class="tile__inner">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Easy To Get Started</span>
+      <h2 class="h-display">Not sure where to begin?<br>Our team handles everything.</h2>
+      <p class="lead">From contracting through the first paid clinical encounter, MedMe walks alongside you. You don't need a project manager, an IT lead, or a billing consultant on your end. We handle the parts that usually stall, and we move at the pace that fits your pharmacy.</p>
+    </div>
+    <div class="onboard-grid">
+      <article class="onboard-card">
+        <span class="onboard-card__step">01</span>
+        <h3>Contracting, handled</h3>
+        <p>We walk you through enrollment, payer credentialing, and billing setup. If something needs a signature, we draft it. If a payer wants paperwork, we file it.</p>
+      </article>
+      <article class="onboard-card">
+        <span class="onboard-card__step">02</span>
+        <h3>Onboarding, your pace</h3>
+        <p>Most indies are live in 2 to 4 weeks. We map the workflow, train your team in short sessions that fit between shifts, and stay close while the first patients move through.</p>
+      </article>
+      <article class="onboard-card">
+        <span class="onboard-card__step">03</span>
+        <h3>Reach out, no commitment</h3>
+        <p>Still figuring out whether this is the right time? Send us a short note and we'll point you to the easiest next step. No demo required.</p>
+      </article>
+    </div>
+    <div class="onboard-reach">
+      <a class="btn-underline" href="/us/contact?source=independents">Email the indie team <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. STORY (navy band, quote + 4 value blocks in 2-col split) ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="A clear path to reimbursement">
   <div class="story-bg-pattern" aria-hidden="true"></div>
   <div class="tile__inner">
