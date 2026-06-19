@@ -2762,21 +2762,26 @@ a.nav__dropdown-group-label:hover {
 .tile--navy .pl-card__badge {
   background: var(--matcha) !important;
   color: var(--indigo) !important;
-  font-weight: 800;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  padding: 6px 12px !important;
+  letter-spacing: 0.06em !important;
 }
 .tile--navy .pl-card__badge--ghost {
   background: rgba(250, 249, 245, 0.14) !important;
   color: var(--seashell) !important;
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 .tile--navy .pl-card__badge--muted {
   background: rgba(195, 196, 48, 0.30) !important;
   color: var(--indigo) !important;
 }
-/* Default detail-hint box: matcha 20% backdrop, solid matcha
-   border, big white bold centered copy. Reads as a clear prompt
-   to interact with the tiles above. */
-.tile--navy .pl-detail:has(.pl-detail__inner--default.is-shown) {
+/* Detail box: same matcha-20%-bg + matcha-border treatment for
+   BOTH the default "pick a tile" prompt AND the per-partner detail
+   pane. The user wants the active state to feel identical to the
+   resting state, so the entire pane uses the call-to-action surface
+   regardless of which inner pane is shown. */
+.tile--navy .pl-detail {
   background: rgba(195, 196, 48, 0.20) !important;
   box-shadow: inset 0 0 0 2px var(--matcha) !important;
   min-height: 120px;
@@ -2784,7 +2789,8 @@ a.nav__dropdown-group-label:hover {
   align-items: center;
   justify-content: center;
 }
-.tile--navy .pl-detail__inner--default.is-shown {
+.tile--navy .pl-detail__inner--default.is-shown,
+.tile--navy .pl-detail__inner.is-shown {
   text-align: center;
 }
 .tile--navy .pl-detail p.pl-detail__hint {
@@ -2796,10 +2802,20 @@ a.nav__dropdown-group-label:hover {
   max-width: 720px;
   margin: 0 auto;
 }
-/* When a real partner is selected the detail box reverts to a
-   subtle inset hairline + neutral dark-mode surface. */
-.tile--navy .pl-detail {
-  box-shadow: inset 0 0 0 1px rgba(195, 196, 48, 0.20);
+/* Detail-pane content on the matcha surface: white headings + body
+   so partner detail reads with the same clarity as the default
+   prompt copy. */
+.tile--navy .pl-detail h3 {
+  color: var(--white) !important;
+}
+.tile--navy .pl-detail p:not(.pl-detail__hint) {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+.tile--navy .pl-detail__eyebrow {
+  color: var(--indigo) !important;
+  background: var(--matcha);
+  padding: 2px 8px;
+  border-radius: 999px;
 }
 .tile--navy h3,
 .tile--navy h4 {
