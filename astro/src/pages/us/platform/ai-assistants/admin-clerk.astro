@@ -111,10 +111,10 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
     align-items: center;
     position: relative;
     z-index: 1;
-    transition: transform 0.25s ease, border-color 0.25s ease;
-    box-shadow: 0 8px 24px rgba(6, 62, 84, 0.10);
+    transition: transform 0.25s ease;
+    box-shadow: none;
   }
-  .flow-step:hover { transform: translateX(4px); border-color: var(--matcha); }
+  .flow-step:hover { transform: translateX(4px); }
   .flow-step__num {
     width: 40px; height: 40px;
     border-radius: 50%;

@@ -30,10 +30,6 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
   .sub-hero__bg {
     position: relative; max-width: 1120px; margin: 0 auto;
-    /* Lighter fade so the headline sits below the motion graphic
-       with only a small visual overlap (#222). */
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 78%, rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 78%, rgba(0,0,0,0) 100%);
     pointer-events: none;
   }
   .sub-hero__text { text-align: center; max-width: 820px; margin: -60px auto 0; position: relative; z-index: 2; }
@@ -101,14 +97,13 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
   .ch-card {
     background: var(--indigo);
     color: var(--seashell);
-    border: 1px solid rgba(195, 196, 48, 0.18);
     border-radius: var(--radius-lg);
     padding: 2rem 1.75rem;
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 12px 32px rgba(6, 62, 84, 0.08);
+    transition: transform 0.25s ease;
+    box-shadow: none;
     display: flex; flex-direction: column; gap: 0.65rem;
   }
-  .ch-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6, 62, 84, 0.16); }
+  .ch-card:hover { transform: translateY(-3px); }
   .ch-card__tag {
     font-size: 11px; color: var(--matcha); font-weight: 700;
     letter-spacing: 0.08em; margin-bottom: 0.4rem; display: inline-block;
@@ -209,24 +204,8 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 </section>
 
 
-<!-- ============= 2. WHAT IT DOES (3 punchier cap-checks, #228) ============= -->
-<section class="tile tile--navy" aria-label="What Patient Concierge does">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">What It Does</span>
-      <h2 class="h-display">Three jobs taken off<br>your team's plate.</h2>
-      <p class="lead">Patient Concierge takes the routine touchpoints off your team's plate so they can stay focused on dispensing and clinical care.</p>
-    </div>
-    <ul class="cap-checks">
-      <li>Answers inbound calls so your counter can stay focused on dispensing.</li>
-      <li>Runs outbound campaigns at scale without a phone-tag spiral.</li>
-      <li>Greets every website visitor with a real conversation, 24/7.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ============= 3. THREE CHANNELS (dark cards, toned down per #227) ============= -->
-<section class="tile tile--light tile--alt" aria-label="Three patient communication channels">
+<!-- ============= 2. THREE CHANNELS (dark cards, toned down per #227) ============= -->
+<section class="tile tile--navy" aria-label="Three patient communication channels">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Three Channels, One Coordinator</span>
@@ -250,6 +229,22 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
         <p>Our digital chat agent provides a conversational experience that greets patients the moment they arrive on your website, answering routine questions and guiding them to the right services.</p>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- ============= 3. WHAT IT DOES (3 punchier cap-checks, #228) ============= -->
+<section class="tile tile--light" aria-label="What Patient Concierge does">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">What It Does</span>
+      <h2 class="h-display">Three jobs taken off<br>your team's plate.</h2>
+      <p class="lead">Patient Concierge takes the routine touchpoints off your team's plate so they can stay focused on dispensing and clinical care.</p>
+    </div>
+    <ul class="cap-checks">
+      <li>Answers inbound calls so your counter can stay focused on dispensing.</li>
+      <li>Runs outbound campaigns at scale, including appointment booking campaigns, without a phone-tag spiral.</li>
+      <li>Greets every website visitor with a real conversation, 24/7.</li>
+    </ul>
   </div>
 </section>
 

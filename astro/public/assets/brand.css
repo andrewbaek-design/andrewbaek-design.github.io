@@ -81,7 +81,7 @@
    border declarations added earlier in the codebase. To opt an
    element back in, write `border: 1px solid X !important` after
    this rule. */
-*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.sub-hero__visual):not(.hero-2col):not(.pulse-ring):not(.hero-2col__media):not(.mockup-host):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
+*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.sub-hero__visual):not(.sub-hero__bg):not(.hero-2col):not(.pulse-ring):not(.hero-2col__media):not(.mockup-host):not(.bd-frame):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
   border: 0 !important;
 }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -2575,6 +2575,7 @@ a.nav__dropdown-group-label:hover {
 .tile--light .rcm-card,
 .tile--light .step-card,
 .tile--light .apart-card,
+.tile--light .apart-cell,
 .tile--light .svc-chip,
 .tile--light .flow-step,
 .tile--light .sec-card,
@@ -2598,13 +2599,15 @@ a.nav__dropdown-group-label:hover {
 .tile--light .winner-card h3,
 .tile--light .flow-step h3,
 .tile--light .tier h3,
+.tile--light .apart-cell h3,
 .tile--light .dark-card h4,
 .tile--light .ch-card h4,
 .tile--light .use-card h4,
 .tile--light .featured-cap h4,
 .tile--light .winner-card h4,
 .tile--light .flow-step h4,
-.tile--light .tier h4 {
+.tile--light .tier h4,
+.tile--light .apart-cell h4 {
   color: var(--indigo) !important;
 }
 .tile--light .dark-card p,
@@ -2613,7 +2616,8 @@ a.nav__dropdown-group-label:hover {
 .tile--light .featured-cap p,
 .tile--light .winner-card p,
 .tile--light .flow-step p,
-.tile--light .tier p {
+.tile--light .tier p,
+.tile--light .apart-cell p {
   color: rgba(6, 62, 84, 0.72) !important;
 }
 /* Tag/eyebrow labels inside dark-source cards on a light tile: mute
