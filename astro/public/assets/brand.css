@@ -2595,15 +2595,19 @@ a.nav__dropdown-group-label:hover {
 .cta-band.cta-band--dark::after { background: rgba(250, 249, 245, 0.10) !important; }
 
 /* ============================================================
-   HERO BOTTOM HAIRLINE
+   HERO BACKGROUND + BOTTOM HAIRLINE
    ------------------------------------------------------------
    Per design direction (2026-06-19): every hero section (landing
-   + sub-heroes) carries a subtle bottom divider so the hero is
-   visually separated from the first content section. Light heroes
-   use the global indigo hairline token; if the page ever introduces
-   a dark hero variant, override with a seashell-tinted equivalent. */
+   + sub-heroes) sits on a pure-white background so it reads as a
+   distinct band above the warm seashell page surface, plus a
+   subtle bottom divider so the hero is visually separated from
+   the first content section. Light heroes use the global indigo
+   hairline token; if the page ever introduces a dark hero
+   variant, override the background + hairline color in the same
+   block. */
 .hero-2col,
 .sub-hero {
+  background: var(--white) !important;
   border-bottom: 1px solid var(--indigo-08) !important;
 }
 .tile--navy h1,

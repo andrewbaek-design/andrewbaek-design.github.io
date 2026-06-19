@@ -38,5 +38,10 @@ const { title, description, lang = 'en-CA', showAnnouncement = true } = Astro.pr
 <FooterCa />
 
 <slot name="end-of-body" />
+<!-- Sticky-nav pill scroll handler + cookie banner + util-bar dismiss
+     logic all live here. Loaded site-wide so pages that hide the
+     announcement util-bar (showAnnouncement={false}) still get the
+     scroll-driven nav effects. -->
+<script src="/assets/site.js" is:inline defer></script>
 </body>
 </html>
