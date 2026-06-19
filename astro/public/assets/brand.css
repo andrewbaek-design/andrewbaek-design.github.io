@@ -3164,11 +3164,11 @@ a.nav__dropdown-group-label:hover {
    ============================================================ */
 .sub-hero__inner:has(.sub-hero__bg, .sub-hero__visual) {
   display: grid;
-  /* Right column gets a heavier share so the motion graphic / mockup
-     reads at a much bigger visual weight than the text. Previous ratio
-     was 1 / 1.2 — Indie + Network visuals felt too small at that
-     split. */
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  /* Column ratio matches the landing page's `.hero-2col__inner`
+     (1 / 1.2). Keeping this in sync site-wide so the text column
+     never gets squeezed into 5–6 lines on pages with long titles
+     (specialty, etc.) and visuals never overpower headlines. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 3rem;
   align-items: center;
   padding-left: 2rem !important;
