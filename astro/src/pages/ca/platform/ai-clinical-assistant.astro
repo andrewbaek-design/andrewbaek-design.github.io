@@ -1,181 +1,512 @@
 ---
-import BaseLayoutCa from '../../../layouts/BaseLayoutCa.astro';
+import BaseLayout from '../../../layouts/BaseLayoutCa.astro';
 ---
-<BaseLayoutCa
-  title="AI Scribe for Pharmacy, MedMe Health"
-  description="Pharmacy-tuned AI scribe that drafts your SOAP note as the encounter happens. Code suggestions, time stamps, and a defensible audit trail, built into the EHR."
+<BaseLayout
+  title="AI Clinical Assistant, MedMe Health"
+  description="Captures every consult and drafts the documentation, so the chart is done when the appointment is done. Up to 15 minutes back per consult for your pharmacists."
+  showAnnouncement={false}
 >
   <Fragment slot="head">
-    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/platform/ai-scribe" />
+    <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/platform/ai-clinical-assistant" />
+    <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
   </Fragment>
 
 <style>
 
-  .prod-hero { background: var(--seashell); padding: 3.5rem 0 2rem; }
-  .prod-hero__inner { max-width: 1080px; margin: 0 auto; padding: 0 2rem; text-align: center; }
-  .prod-hero__breadcrumb { font-size: 13px; color: rgba(6, 62, 84, 0.55); margin-bottom: 1.5rem; }
-  .prod-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .prod-hero__breadcrumb a:hover { color: var(--indigo); }
-  .prod-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .prod-hero h1.h-display { margin: 0.75rem auto 1rem; max-width: 920px; }
-  .prod-hero__lede { font-size: 1.15rem; line-height: 1.55; color: rgba(6, 62, 84, 0.78); max-width: 760px; margin: 0 auto 2rem; }
-  .prod-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  /* ============================================================
+     AI CLINICAL ASSISTANT product page. Hero shows the live
+     scribe panel (timer + microphone + animated soundwave +
+     Pause Scribe state). The Pause Scribe element is rendered
+     as a <div> not a <button> so reviewers don't expect it to
+     be interactive on the live page (Audrey #206).
 
-  .stat-band { background: #fff; padding: 3rem 0; margin-top: 2rem; }
-  .stat-band__grid { max-width: 1080px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-  .stat-band__cell { text-align: center; }
-  .stat-band__num { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; color: var(--indigo); letter-spacing: -0.022em; line-height: 1.05; margin-bottom: 0.5rem; }
-  .stat-band__label { font-size: 0.875rem; color: rgba(6, 62, 84, 0.72); line-height: 1.4; }
-  @media (max-width: 900px) { .stat-band__grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; } }
+     Section flow: hero, trust band, what it does (3 cards),
+     services covered (chips), use cases (6 cards), what sets
+     it apart (template library + pharmacist help), pharmacist
+     stays in control band, navy closing CTA.
 
-  .step-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .step-flow__step { background: var(--white); border-radius: 14px; padding: 1.5rem; border: 1px solid rgba(6, 62, 84, 0.08); }
-  .step-flow__num { width: 32px; height: 32px; border-radius: 50%; background: rgba(6, 62, 84, 0.08); display: grid; place-items: center; font-weight: 700; font-size: 14px; color: var(--indigo); margin-bottom: 1rem; }
-  .step-flow__step h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--indigo); margin: 0 0 0.5rem; }
-  .step-flow__step p { font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); line-height: 1.5; margin: 0; }
-  @media (max-width: 900px) { .step-flow { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .step-flow { grid-template-columns: 1fr; } }
+     Copy / accuracy edits applied from 2026-06-15 review:
+     #207, #208, #210 (uptime in partial), #211, #212, #213,
+     #214, #215, #216, #217, #218, #219, #220, #233, #234.
+     ============================================================ */
 
-  .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
-  .cap-grid .h-card { padding: 1.75rem; }
-  .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(195, 196, 48, 0.18); color: var(--matcha); display: grid; place-items: center; margin-bottom: 1rem; }
-  .cap-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  @media (max-width: 900px) { .cap-grid { grid-template-columns: 1fr; } }
+  /* ====== SUB-HERO ============================================= */
+  .sub-hero { background: var(--seashell); padding: 2rem 1.5rem 3.5rem; position: relative; overflow: hidden; }
+  .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
+  .sub-hero__bg { position: relative; max-width: 1120px; margin: 0 auto; }
+  .sub-hero__text { text-align: center; max-width: 820px; margin: 2.5rem auto 0; position: relative; z-index: 2; }
+  .sub-hero h1.h-display { font-size: clamp(28px, 4.4vw, 54px); line-height: 1.08; letter-spacing: -0.028em; margin: 0.75rem auto 1rem; text-align: center; text-wrap: balance; }
+  .sub-hero h1.h-display .accent { color: var(--matcha); }
+  .sub-hero__lede { font-size: 1.1rem; line-height: 1.55; color: rgba(6, 62, 84, 0.72); margin: 0 auto 1.75rem; max-width: 720px; }
+  .sub-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  @media (max-width: 980px) { .sub-hero__text { margin-top: 2rem; } }
+  @media (max-width: 640px) { .sub-hero__text { margin-top: 1.5rem; } }
 
-  .outcome { background: #fff; border-radius: 18px; border: 1px solid rgba(6, 62, 84, 0.08); padding: 2.5rem; margin-top: 2.5rem; max-width: 920px; margin-left: auto; margin-right: auto; text-align: center; }
-  .outcome__quote { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.4; color: var(--indigo); font-weight: 500; letter-spacing: -0.012em; margin: 0 0 1.5rem; }
-  .outcome__author { font-size: 0.875rem; color: rgba(6, 62, 84, 0.7); }
-  .outcome__author b { color: var(--indigo); font-weight: 600; }
+  /* ====== CLINICAL ASSISTANT MOCKUP (animated scribe panel) ====
+     Pause Scribe element is a <div> not a <button> so it does
+     not read as clickable when viewing the live page. */
+  .cwks-stage { display: flex; justify-content: center; padding: 24px 12px 40px; }
+  .cwks-scribe {
+    width: 460px;
+    max-width: 100%;
+    color: var(--seashell);
+    font-family: var(--font-display);
+  }
+  .cwks-scribe__title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--seashell);
+    margin-bottom: 18px;
+    letter-spacing: -0.012em;
+  }
+  .cwks-scribe__panel {
+    background: #1E465D;
+    border-radius: 18px;
+    padding: 18px 20px 14px;
+    margin-bottom: 16px;
+  }
+  .cwks-scribe__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .cwks-scribe__time {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--seashell);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .cwks-scribe__mic { width: 20px; height: 20px; color: var(--seashell); opacity: 0.85; }
+  .cwks-scribe__mic svg { width: 100%; height: 100%; display: block; }
+  .cwks-scribe__wave {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 2.4px;
+    height: 56px;
+    padding: 0;
+  }
+  .cwks-scribe__wave span {
+    width: 5px;
+    background: linear-gradient(180deg,
+                  var(--matcha) 0%,
+                  var(--matcha) 65%,
+                  rgba(195, 196, 48, 0.45) 100%);
+    border-radius: 2.4px;
+    transform-origin: bottom center;
+    animation: cwks-wave 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .cwks-scribe__wave span:nth-child(1)  { height: 34px; animation-delay: 0s;     }
+  .cwks-scribe__wave span:nth-child(2)  { height: 37px; animation-delay: 0.04s;  }
+  .cwks-scribe__wave span:nth-child(3)  { height: 53px; animation-delay: 0.08s;  }
+  .cwks-scribe__wave span:nth-child(4)  { height: 42px; animation-delay: 0.12s;  }
+  .cwks-scribe__wave span:nth-child(5)  { height: 31px; animation-delay: 0.16s;  }
+  .cwks-scribe__wave span:nth-child(6)  { height: 24px; animation-delay: 0.20s;  }
+  .cwks-scribe__wave span:nth-child(7)  { height: 20px; animation-delay: 0.24s;  }
+  .cwks-scribe__wave span:nth-child(8)  { height: 16px; animation-delay: 0.28s;  }
+  .cwks-scribe__wave span:nth-child(9)  { height: 14px; animation-delay: 0.32s;  }
+  .cwks-scribe__wave span:nth-child(10) { height: 9px;  animation-delay: 0.36s;  }
+  .cwks-scribe__wave span:nth-child(11) { height: 5px;  animation-delay: 0.40s;  }
+  .cwks-scribe__wave span:nth-child(12) { height: 3px;  animation-delay: 0.44s;  }
+  .cwks-scribe__wave span:nth-child(13) { height: 5px;  animation-delay: 0.48s;  }
+  .cwks-scribe__wave span:nth-child(14) { height: 2px;  animation-delay: 0.52s;  }
+  .cwks-scribe__wave span:nth-child(15) { height: 8px;  animation-delay: 0.56s;  }
+  .cwks-scribe__wave span:nth-child(16) { height: 6px;  animation-delay: 0.60s;  }
+  .cwks-scribe__wave span:nth-child(17) { height: 9px;  animation-delay: 0.64s;  }
+  .cwks-scribe__wave span:nth-child(18) { height: 15px; animation-delay: 0.68s;  }
+  .cwks-scribe__wave span:nth-child(19) { height: 6px;  animation-delay: 0.72s; margin-left: 36px; }
+  .cwks-scribe__wave span:nth-child(20) { height: 4px;  animation-delay: 0.76s;  }
+  .cwks-scribe__wave span:nth-child(21) { height: 8px;  animation-delay: 0.80s;  }
+  .cwks-scribe__wave span:nth-child(22) { height: 2px;  animation-delay: 0.84s;  }
+  @keyframes cwks-wave {
+    0%, 100% { transform: scaleY(0.35); opacity: 0.65; }
+    50%      { transform: scaleY(1);    opacity: 1;    }
+  }
+  /* Pause Scribe state, rendered non-interactive (#206). */
+  .cwks-scribe__state {
+    background: #92A054;
+    color: var(--seashell);
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    text-align: center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cwks-scribe__wave span { animation: none; }
+  }
+  @media (max-width: 560px) {
+    .cwks-scribe { width: 100%; padding: 20px; }
+    .cwks-scribe__title { font-size: 18px; }
+    .cwks-scribe__time { font-size: 24px; }
+    .cwks-scribe__wave { height: 48px; }
+    .cwks-scribe__wave span:nth-child(19) { margin-left: 24px; }
+  }
+
+  /* ====== LIGHT CARD GRID (3 core capabilities) ================ */
+  .light-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media (max-width: 1000px) { .light-grid { grid-template-columns: 1fr; } }
+  .light-card { background: var(--white); border: 1px solid rgba(6,62,84,0.08); border-radius: var(--radius-lg); padding: 1.75rem; transition: transform 0.25s ease, border-color 0.25s ease; }
+  .light-card:hover { transform: translateY(-3px); border-color: rgba(6,62,84,0.18); }
+  .light-card__icon { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; background: rgba(195, 196, 48, 0.14); border-radius: 10px; margin-bottom: 1rem; }
+  .light-card__icon svg { width: 22px; height: 22px; stroke: var(--matcha); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .light-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; }
+  .light-card p { margin: 0; color: rgba(6,62,84,0.72); line-height: 1.55; font-size: 0.95rem; }
+
+  /* ====== SERVICE CHIPS (where Clinical Assistant operates) ==== */
+  .svc-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1rem;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .svc-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.1);
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.005em;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .svc-chip:hover { border-color: var(--matcha); transform: translateY(-2px); }
+  .svc-chip::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--matcha);
+    flex-shrink: 0;
+  }
+
+  /* ====== USE-CASE DARK CARD GRID ============================== */
+  .use-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .use-card {
+    background: var(--indigo);
+    color: var(--seashell);
+    border: 1px solid rgba(195,196,48,0.18);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 12px 32px rgba(6,62,84,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+  .use-card:hover { transform: translateY(-3px); border-color: var(--matcha); box-shadow: 0 16px 38px rgba(6,62,84,0.16); }
+  .use-card__check {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--matcha);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+  }
+  .use-card__check svg { width: 14px; height: 14px; stroke: var(--indigo); fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .use-card h4 { margin: 0 0 0.35rem; font-size: 1.025rem; font-weight: 600; color: var(--seashell); letter-spacing: -0.012em; }
+  .use-card p { margin: 0; color: rgba(250,249,245,0.72); line-height: 1.5; font-size: 0.875rem; }
+
+  /* ====== SETS-IT-APART (Template library + pharmacist help) === */
+  .apart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 760px) { .apart-grid { grid-template-columns: 1fr; } }
+  .apart-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .apart-card:hover { transform: translateY(-3px); border-color: rgba(6, 62, 84, 0.18); }
+  .apart-card__stat {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--matcha);
+    letter-spacing: -0.022em;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .apart-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.014em;
+  }
+  .apart-card p {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    font-size: 0.95rem;
+  }
+
+  /* ====== MATCHA CALLOUT BAND (Pharmacist stays in control) ==== */
+  .ctrl-band { background: rgba(195, 196, 48, 0.06); border: 1px solid rgba(195, 196, 48, 0.22); border-radius: 24px; padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; position: relative; overflow: hidden; }
+  .ctrl-band::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: var(--matcha);
+    opacity: 0.1;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  @media (max-width: 800px) {
+    .ctrl-band { grid-template-columns: 1fr; padding: 1.75rem; text-align: left; }
+  }
+  .ctrl-band__text { max-width: 720px; position: relative; z-index: 1; }
+  .ctrl-band__kicker { font-size: 11px; color: var(--matcha); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: inline-block; }
+  .ctrl-band h3 { margin: 0 0 0.5rem; font-size: 1.4rem; font-weight: 700; color: var(--indigo); letter-spacing: -0.018em; }
+  .ctrl-band p { margin: 0; font-size: 1rem; line-height: 1.55; color: rgba(6,62,84,0.78); text-wrap: pretty; }
+  .ctrl-band__cta { position: relative; z-index: 1; }
 </style>
 
-<section class="prod-hero">
-  <div class="prod-hero__inner">
-    <div class="prod-hero__breadcrumb">
-      <a href="/ca">Home</a><span class="sep">/</span>
-      <a href="/ca/platform/ai-scribe">Platform</a><span class="sep">/</span>
-      <span>AI Scribe</span>
+<!-- ============= 1. SUB-HERO (live Clinical Assistant scribe panel) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__bg" aria-hidden="true">
+      <div class="cwks-stage">
+        <div class="cwks-scribe" role="img" aria-label="Clinical Assistant is recording. 15 seconds elapsed. Soundwave active.">
+          <div class="cwks-scribe__panel">
+            <div class="cwks-scribe__top">
+              <span class="cwks-scribe__time">00:15</span>
+              <span class="cwks-scribe__mic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  <line x1="12" y1="19" x2="12" y2="23"/>
+                  <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+              </span>
+            </div>
+            <div class="cwks-scribe__wave" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <span class="kicker kicker--matcha">AI Scribe for Pharmacy</span>
-    <h1 class="h-display h-display--xl">A SOAP note in the time it takes<br>to walk the patient out.</h1>
-    <p class="prod-hero__lede">Pharmacy-tuned ambient AI captures the encounter as it happens. Drafts the note, suggests the code, stamps the time. The pharmacist reviews and signs, minutes, not the rest of the afternoon.</p>
-    <div class="prod-hero__cta">
-      <a class="btn btn-primary" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
-      <a class="btn btn-ghost" href="/ca/platform/ehr">See the EHR</a>
-    </div>
-  </div>
-  <div class="stat-band">
-    <div class="stat-band__grid">
-      <div class="stat-band__cell"><div class="stat-band__num">8 min</div><div class="stat-band__label">Average time saved per encounter</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">96%</div><div class="stat-band__label">Note accuracy on first draft</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">3.2x</div><div class="stat-band__label">More encounters documented per shift</div></div>
-      <div class="stat-band__cell"><div class="stat-band__num">$0</div><div class="stat-band__label">Per-minute or per-note fees, ever</div></div>
+    <div class="sub-hero__text">
+      <h1 class="h-display">The note finishes itself.<br><span class="accent">So your pharmacist doesn't have to.</span></h1>
+      <p class="sub-hero__lede">Captures every consult and drafts the documentation as it happens. Pharmacists get up to 15 minutes back per appointment, and the chart is done when the patient walks out, no after-hours catch-up.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/ca/contact">Book a demo <span class="arrow">&rarr;</span></a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="The documentation tax">
+
+<!-- ============= 2. WHAT IT DOES (3 cards) ============= -->
+<section class="tile tile--light" aria-label="What the Clinical Assistant does">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">The documentation tax</span>
-      <h2 class="h-display">Most pharmacists spend their<br>last hour writing notes.</h2>
-      <p class="lead">Notes that should have been written during the encounter get deferred to the end of the shift. By then, half the detail is gone, codes get downcoded, and MedsCheck time logs don't survive an audit.</p>
+      <span class="kicker">What It Does</span>
+      <h2 class="h-display">Captures the consult.<br>Drafts the note. Pharmacist signs.</h2>
+      <p class="lead">Clinical Assistant runs in the background of every appointment. It captures the conversation, structures it into a draft note, and populates the documentation form on demand. The pharmacist reviews, edits, and signs, without re-typing what they just said out loud.</p>
+    </div>
+    <div class="light-grid">
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </span>
+        <h3>Listens</h3>
+        <p>Captures the consult accurately, with vocabulary tuned to pharmacy practice and clinical workflows. Works for in-person consults and phone follow-ups.</p>
+      </article>
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </span>
+        <h3>Drafts</h3>
+        <p>Turns the conversation into a structured draft note as the appointment moves, ready to drop into whichever documentation form fits the service.</p>
+      </article>
+      <article class="light-card">
+        <span class="light-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        </span>
+        <h3>Auto-fills with one click</h3>
+        <p>One click populates the documentation form. The pharmacist reviews, edits, and signs in seconds, not after hours.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="How AI Scribe works">
+<!-- ============= 3. SERVICES COVERED (chip row) ============= -->
+<section class="tile tile--light tile--alt" aria-label="Supported pharmacy services">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">How it works</span>
-      <h2 class="h-display">Four steps from waveform<br>to signed encounter.</h2>
+      <span class="kicker">Built For Every Service Type</span>
+      <h2 class="h-display">From minor ailments to MTM,<br>one Clinical Assistant for every service.</h2>
+      <p class="lead">Tuned for pharmacy practice across the services your team already delivers. Works in-person and on phone follow-ups, with vocabulary, drugs, and clinical entities recognized out of the box. Pharmacists can also use it for hands-free dictation between appointments.</p>
     </div>
-    <div class="step-flow">
-      <div class="step-flow__step">
-        <div class="step-flow__num">1</div><h3>Listen</h3>
-        <p>Tap "Start Scribe" on your device. AI Scribe listens to the encounter, in-room or telephone, in HIPAA-compliant ambient mode.</p>
-      </div>
-      <div class="step-flow__step">
-        <div class="step-flow__num">2</div><h3>Draft</h3>
-        <p>A pharmacy-tuned LLM drafts the SOAP note in real time. Templates auto-select based on the visit type and patient history.</p>
-      </div>
-      <div class="step-flow__step">
-        <div class="step-flow__num">3</div><h3>Suggest</h3>
-        <p>Provincial PIN codes, modifiers, and diagnosis pointers are suggested based on what was said. Time tracking auto-stamps.</p>
-      </div>
-      <div class="step-flow__step">
-        <div class="step-flow__num">4</div><h3>Sign</h3>
-        <p>You review, edit if needed, and sign. The encounter is filed, the code is set, and the billing chain takes over.</p>
-      </div>
+    <div class="svc-row">
+      <span class="svc-chip">Minor ailments</span>
+      <span class="svc-chip">MTM sessions</span>
+      <span class="svc-chip">Pharmacist prescribing</span>
+      <span class="svc-chip">Health screenings</span>
+      <span class="svc-chip">Point-of-care testing</span>
+      <span class="svc-chip">Med Sync programs</span>
+      <span class="svc-chip">Test-and-treat programs</span>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="Capabilities">
+<!-- ============= 4. USE CASES (6 dark cards) ============= -->
+<section class="tile tile--navy" aria-label="Clinical Assistant use cases">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">What's included</span>
-      <h2 class="h-display">Built for pharmacy,<br>not generic clinical.</h2>
+      <span class="kicker">Clinical Assistant Use Cases</span>
+      <h2 class="h-display">Six places it lifts the load,<br>so your pharmacist stays with the patient.</h2>
+      <p class="lead">Clinical Assistant slots into the pharmacy workflow wherever a pharmacist would otherwise be re-typing what they just said out loud, beyond just billable documentation.</p>
     </div>
-    <div class="cap-grid">
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M19 11a7 7 0 0 1-14 0M12 19v3M8 22h8M12 15a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v7a3 3 0 0 0 3 3z"/></svg></span>
-        <h3>Ambient listening</h3>
-        <p>In-room or telephone capture. No headset required. Pharmacist's hands stay free for the patient.</p>
+    <div class="use-grid">
+      <article class="use-card">
+        <span class="use-card__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div>
+          <h4>Clinical assessment documentation</h4>
+          <p>SOAP-style notes drafted from the consult. Pharmacist edits the draft, not the blank page.</p>
+        </div>
       </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
-        <h3>SOAP templates</h3>
-        <p>MedsCheck, Med review, immunization, POCT, transitions-of-care templates baked in. Custom templates configurable.</p>
+      <article class="use-card">
+        <span class="use-card__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div>
+          <h4>Phone consultations and dictation</h4>
+          <p>Hands-free dictation for phone follow-ups and between-appointment notes, captured straight into the chart.</p>
+        </div>
       </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-        <h3>Pharmacy-tuned models</h3>
-        <p>Trained on de-identified pharmacy encounters. Knows the difference between Med review and a counseling visit.</p>
+      <article class="use-card">
+        <span class="use-card__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div>
+          <h4>Prescriber communication summaries</h4>
+          <p>Therapy updates, side-effect escalations, and other prescriber-facing summaries drafted from the visit transcript.</p>
+        </div>
       </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-        <h3>Time-coded sessions</h3>
-        <p>Defensible time logs for MedsCheck (MC-01) and Med review (SC-03), survives a Medicare audit.</p>
+      <article class="use-card">
+        <span class="use-card__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div>
+          <h4>Screenshot context to form</h4>
+          <p>Drop in a screenshot of an insurance card, fax, or referral, and Clinical Assistant pulls the data into the right fields.</p>
+        </div>
       </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/></svg></span>
-        <h3>HIPAA &amp; SOC 2</h3>
-        <p>BAA signed at contract. Audio is processed and discarded. Encrypted at rest and in transit.</p>
+      <article class="use-card">
+        <span class="use-card__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div>
+          <h4>Medication-error or incident reporting</h4>
+          <p>Capture the incident as it is discussed, structure it for the reporting form, ready for pharmacist review.</p>
+        </div>
       </article>
-      <article class="h-card">
-        <span class="cap-icon"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></span>
-        <h3>Edit-in-place</h3>
-        <p>Inline diff view shows exactly what the AI drafted vs your edits. Your final note is always your own.</p>
+      <article class="use-card">
+        <span class="use-card__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <div>
+          <h4>Follow-up plans and care-gap closure</h4>
+          <p>Next-step plans, patient-facing action items, and care-gap follow-ups drafted from the visit, ready for review and send.</p>
+        </div>
       </article>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light" aria-label="Customer outcome">
+<!-- ============= 5. WHAT SETS IT APART (template library + pharmacist help) ============= -->
+<section class="tile tile--light tile--alt" aria-label="What sets it apart">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Proof from the floor</span>
-      <h2 class="h-display">How a 2-pharmacist independent<br>got their evenings back.</h2>
+      <span class="kicker">What Sets It Apart</span>
+      <h2 class="h-display">A scribe that already knows<br>your service catalog.</h2>
+      <p class="lead">Other scribes start from a blank slate. Clinical Assistant ships with a pharmacy-specific template library and a real human team behind it, so the draft note matches your workflow on day one.</p>
     </div>
-    <div class="outcome">
-      <p class="outcome__quote">&ldquo;Before MedMe, I'd stay 90 minutes past close every night writing MedsCheck notes. Now I sign them in 20 seconds and go home. My A1c follow-up volume is up 40% just because the documentation isn't a wall anymore.&rdquo;</p>
-      <div class="outcome__author"><b>Sarah Lee, PharmD</b> &middot; Owner, Lee Family Pharmacy (1 store, TX)</div>
+    <div class="apart-grid">
+      <article class="apart-card">
+        <div class="apart-card__stat">100+</div>
+        <h3>Pharmacy-specific template library</h3>
+        <p>A library of clinical-service templates covering MTM, minor ailments, immunizations, POCT, and the protocols your state runs. Drop a template in once and Clinical Assistant fills it consistently every time.</p>
+      </article>
+      <article class="apart-card">
+        <div class="apart-card__stat">Pharmacists, on call</div>
+        <h3>Real pharmacists to help you build your own</h3>
+        <p>The Clinical Assistant team includes practicing pharmacists who help your team build custom templates for protocols and services that are specific to your network. Not a ticket queue, a working partnership.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="tile tile--light tile--prominent" aria-label="Get started">
+<!-- ============= 6. PHARMACIST STAYS IN CONTROL (matcha callout) ============= -->
+<section class="tile tile--light" aria-label="Pharmacist stays in control">
   <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Get started</span>
-      <h2 class="h-display">See AI Scribe run<br>on your visit type.</h2>
-      <p class="lead">15-minute demo on a real encounter. We'll show you the speed and accuracy on your service catalog.</p>
-      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a class="btn btn-primary" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/ca/pricing">See pricing</a>
+    <div class="ctrl-band">
+      <div class="ctrl-band__text">
+        <span class="ctrl-band__kicker">Pharmacist Stays In Control</span>
+        <h3>Review, edit, approve. Every record.</h3>
+        <p>Clinical Assistant drafts; the pharmacist signs. Every transcript, every field, every code routes through a pharmacist-review queue before a record is finalized. Clinical integrity stays with your team. The repetitive entry does not.</p>
+      </div>
+      <div class="ctrl-band__cta">
+        <a class="pill pill--solid" href="/ca/contact">Talk to us <span class="arrow">&rarr;</span></a>
       </div>
     </div>
   </div>
 </section>
 
-</BaseLayoutCa>
+<!-- ============= 7. CLOSING CTA ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="Want your pharmacists home for dinner">
+  <div class="tile__inner tile__inner--narrow">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Want Your Pharmacists Home For Dinner?</span>
+      <h2 class="h-display">End pajama-time charting.<br>Sign every note before the patient leaves.</h2>
+      <p class="lead">A 20-minute walkthrough on a real pharmacy encounter, with one of your pharmacists if they want to listen in. We will show you what going from consult to signed note actually looks like.</p>
+    </div>
+    <div class="pill-cta-row pill-cta-row--center">
+      <span class="pulse-rings" aria-hidden="true">
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+        <span class="pulse-ring"></span>
+      </span>
+      <a class="pill pill--solid" href="/ca/contact">Book a demo <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>

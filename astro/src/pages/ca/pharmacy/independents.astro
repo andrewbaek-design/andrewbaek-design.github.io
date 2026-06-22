@@ -1,517 +1,1365 @@
 ---
-import BaseLayoutCa from '../../../layouts/BaseLayoutCa.astro';
+import BaseLayout from '../../../layouts/BaseLayoutCa.astro';
 ---
-<BaseLayoutCa
-  title="For Independent US Pharmacies, MedMe Health"
-  description="The clinical platform built for community pharmacy owners. EHR, scheduler, AI Scribe, and optional Medical Billing, flat per-store pricing, 30-day go-live."
+<BaseLayout
+  title="For Independent Pharmacies, MedMe Health"
+  description="MedMe is how an independent pharmacy launches a real clinical services program, from credentialing through to paid claims, without hiring IT, building infrastructure, or assembling a billing operation."
 >
   <Fragment slot="head">
-    <link rel="alternate" hreflang="en-us" href="https://medmehealth.com/us/pharmacy/independent" />
+    <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/pharmacy/independents" />
     <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/ca/" />
   </Fragment>
 
 <style>
 
   /* ============================================================
-     SOLUTION PAGE, shared design pattern across /us/pharmacy/*
-     Different from Product pages: leads with audience persona,
-     then "what's included" + persona-specific stories + pricing
-     callouts.
+     INDEPENDENTS sub-page. Leans on the front-page design system
+     (.tile, .tile__head, .h-card, .h-display, .kicker, .hero-pill,
+     .pill, .tile--navy, .pulse-rings) for everything except this
+     page's two unique pieces: the 2-column hero layout and the
+     UI-panel mockup visual on the right side of the hero.
      ============================================================ */
-  .sol-hero {
+
+  /* ====== HERO: stacked (mockup as fading BG above, text below) ====
+     The UI panel sits at the top of the hero, large and slightly
+     bleeding past the container width. Its bottom edge fades to
+     transparent via mask-image, and the text content overlaps
+     UP into that fade zone via negative margin, so the headline
+     appears to rise out of the mockup. ============================ */
+  .sub-hero {
     background: var(--seashell);
-    padding: 3.5rem 0 2rem;
+    /* Side padding-inline matches .tile sections; vertical padding
+       reduced at top because the mockup brings its own breathing
+       room, and bottom is small so the next section starts close. */
+    padding: 2rem 1.5rem 3.5rem;
+    position: relative;
+    overflow: hidden;
   }
-  .sol-hero__inner {
+  .sub-hero__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-inline: var(--tile-pad-x);
+    position: relative;
+  }
+  /* VISUAL on top, fully visible, not a fading bg. Stacked
+     normally above the text content. */
+  .sub-hero__visual {
+    position: relative;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 0 2rem;
+  }
+  /* TEXT sits below the visual with normal spacing, no overlap,
+     no negative margin. */
+  .sub-hero__text {
+    text-align: center;
+    max-width: 760px;
+    margin: 2.5rem auto 0;
+    position: relative;
+  }
+  .sub-hero__breadcrumb {
+    font-size: 13px;
+    color: rgba(6, 62, 84, 0.55);
+    margin-bottom: 1.25rem;
+  }
+  .sub-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; transition: color 0.18s; }
+  .sub-hero__breadcrumb a:hover { color: var(--indigo); }
+  .sub-hero__breadcrumb .sep { margin: 0 0.45rem; opacity: 0.4; }
+  .sub-hero h1.h-display {
+    /* Match the homepage hero h1 sizing so the two heroes feel
+       the same weight. */
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.028em;
+    margin: 0.75rem auto 1rem;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .sub-hero__lede {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+    margin: 0 auto 1.75rem;
+    max-width: 600px;
+  }
+  .sub-hero__cta {
+    display: inline-flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  @media (max-width: 980px) {
+    .sub-hero__text { margin-top: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .sub-hero__text { margin-top: 1.5rem; }
+  }
+
+  /* ====== HERO HUB + SPOKES (conceptual motion graphic) =========
+     A central "Your Pharmacy" hub with 6 service nodes arranged
+     in a hexagon around it (Vaccines, MTM, POCT, Test & Treat,
+     Smoking Cessation, CCM). Thin spokes connect each service to
+     the hub. Animated matcha pulse dots travel from the hub
+     outward along each spoke on staggered loops, reinforcing the
+     "MedMe lets your pharmacy power all of these clinical
+     services" story. The center hub has a continuous soft pulse
+     so it feels alive. =============================================*/
+  .hero-hub {
+    position: relative;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    aspect-ratio: 800 / 440;
+    display: block;
+  }
+  .hero-hub .hub-spoke {
+    stroke: rgba(6, 62, 84, 0.16);
+    stroke-width: 1.25;
+    fill: none;
+  }
+  .hero-hub .hub-pulse {
+    fill: var(--matcha);
+  }
+  /* Service node: white circle with thin indigo border + label. */
+  .hero-hub .hub-node circle {
+    fill: var(--white);
+    stroke: rgba(6, 62, 84, 0.14);
+    stroke-width: 1.5;
+  }
+  .hero-hub .hub-node text {
+    fill: var(--indigo);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: central;
+    letter-spacing: -0.005em;
+  }
+  /* Center hub: indigo-filled, larger, matcha label, with the
+     existing pulse-ring radar treatment from brand.css repurposed
+     via a duplicate ring circle that scales out. */
+  .hero-hub .hub-center circle.hub-center__bg {
+    fill: var(--indigo);
+    stroke: var(--indigo);
+    stroke-width: 1;
+  }
+  .hero-hub .hub-center circle.hub-center__ring {
+    fill: none;
+    stroke: var(--matcha);
+    stroke-width: 1.5;
+    transform-origin: 400px 220px;
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: hub-center-ring 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+  .hero-hub .hub-center text {
+    fill: var(--seashell);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    text-anchor: middle;
+  }
+  @keyframes hub-center-ring {
+    0%   { opacity: 0.55; transform: scale(1); }
+    100% { opacity: 0;    transform: scale(2.3); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-hub .hub-center circle.hub-center__ring,
+    .hero-hub .hub-pulse { animation: none; opacity: 0; display: none; }
+  }
+  /* Mobile/narrow-viewport: bump up the SVG content scale so the
+     hub labels stay readable. Break out of the inner padding to
+     give the SVG more horizontal room AND increase the in-SVG
+     text/stroke sizes so labels don't shrink to 5px when the
+     SVG is rendered at ~350px wide. */
+  @media (max-width: 980px) {
+    .sub-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .sub-hero__visual {
+      margin-inline: calc(-1 * var(--tile-pad-x));
+    }
+    .hero-hub .hub-node text  { font-size: 17px; }
+    .hero-hub .hub-center text { font-size: 18px; }
+  }
+  @media (max-width: 700px) {
+    .sub-hero { padding-inline: 0.5rem; }
+    .sub-hero__visual { margin-inline: 0; }
+    .hero-hub .hub-node text  { font-size: 22px; }
+    .hero-hub .hub-center text { font-size: 22px; }
+    .hero-hub .hub-node circle { stroke-width: 2; }
+  }
+
+  /* ====== HOW IT WORKS: 6-feature card grid ===================== */
+  .feature-grid {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px)  { .feature-grid { grid-template-columns: 1fr; } }
+  .feature {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    /* Explicitly remove the global .feature box-shadow inherited
+       from brand.css (var(--shadow-soft)). Cards on this page are
+       flat, only the hairline border + hover lift signal the card
+       boundary. */
+    box-shadow: none;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .feature:hover {
+    /* Slight lift + border-tone darkening, no shadow. */
+    transform: translateY(-3px);
+    border-color: rgba(6, 62, 84, 0.18);
+  }
+  /* ====== FEATURE MOTION GRAPHICS: one tailored animation per
+     card, in the same visual language as the homepage Platform
+     bento (.feat-anim--ehr / --sched / --scribe / --billing-rich
+     etc.). Each is a ~120px-tall stage with a couple of animated
+     elements that loop infinitely. Reduced-motion respected. ===== */
+  .feat-graphic {
+    width: 100%;
+    height: 130px;
+    background: rgba(195, 196, 48, 0.06);
+    border-radius: 10px;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    padding: 18px 20px;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  /* 1. Schedule: calendar grid with booked slots + a "new" cell
+     that pulses every loop (a new booking landing). */
+  .fg-cal {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 200px;
+  }
+  .fg-cal i {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: rgba(6, 62, 84, 0.08);
+  }
+  .fg-cal i.booked { background: rgba(6, 62, 84, 0.22); }
+  .fg-cal i.new {
+    background: var(--matcha);
+    animation: fg-cal-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes fg-cal-pulse {
+    0%, 30%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(195, 196, 48, 0.55); }
+    55% { transform: scale(1.18); box-shadow: 0 0 0 7px rgba(195, 196, 48, 0); }
+  }
+
+  /* 2. Intake: three form rows filling in sequence (label + line
+     where the line fills left-to-right with matcha). */
+  .fg-form { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 220px; }
+  .fg-form-row { display: flex; align-items: center; gap: 10px; }
+  .fg-form-label {
+    font-family: var(--font-body);
+    font-size: 9.5px;
+    font-weight: 600;
+    color: rgba(6, 62, 84, 0.55);
+    flex-shrink: 0;
+    min-width: 42px;
+    text-align: right;
+  }
+  .fg-form-line {
+    flex: 1;
+    height: 3px;
+    background: rgba(6, 62, 84, 0.10);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .fg-form-line::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: var(--matcha);
+    animation: fg-form-fill 5.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  .feat-graphic--intake .fg-form-row:nth-child(1) .fg-form-line::after { animation-delay: 0s; }
+  .feat-graphic--intake .fg-form-row:nth-child(2) .fg-form-line::after { animation-delay: 0.9s; }
+  .feat-graphic--intake .fg-form-row:nth-child(3) .fg-form-line::after { animation-delay: 1.8s; }
+  @keyframes fg-form-fill {
+    0%, 5%   { width: 0; }
+    18%, 78% { width: 100%; }
+    90%, 100% { width: 0; }
+  }
+
+  /* 3. Consult: soundwave / audio bars, height bouncing in a
+     wave pattern (suggests AI Scribe listening to a consult). */
+  .fg-wave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 56px;
+  }
+  .fg-wave i {
+    display: block;
+    width: 4px;
+    height: 100%;
+    background: var(--matcha);
+    border-radius: 2px;
+    transform: scaleY(0.3);
+    transform-origin: center;
+    animation: fg-wave-bar 1.3s ease-in-out infinite;
+  }
+  .fg-wave i:nth-child(1)  { animation-delay: 0.00s; }
+  .fg-wave i:nth-child(2)  { animation-delay: 0.08s; }
+  .fg-wave i:nth-child(3)  { animation-delay: 0.16s; }
+  .fg-wave i:nth-child(4)  { animation-delay: 0.24s; }
+  .fg-wave i:nth-child(5)  { animation-delay: 0.32s; }
+  .fg-wave i:nth-child(6)  { animation-delay: 0.40s; }
+  .fg-wave i:nth-child(7)  { animation-delay: 0.32s; }
+  .fg-wave i:nth-child(8)  { animation-delay: 0.24s; }
+  .fg-wave i:nth-child(9)  { animation-delay: 0.16s; }
+  .fg-wave i:nth-child(10) { animation-delay: 0.08s; }
+  .fg-wave i:nth-child(11) { animation-delay: 0.00s; }
+  @keyframes fg-wave-bar {
+    0%, 100% { transform: scaleY(0.25); }
+    50%      { transform: scaleY(1); }
+  }
+
+  /* 4. Document: 4 SOAP rows. Each row has a small letter chip,
+     a bar that fills, and a matcha check that fades in. Cascade. */
+  .fg-soap { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 220px; }
+  .fg-soap-row { display: flex; align-items: center; gap: 8px; }
+  .fg-soap-letter {
+    display: grid;
+    place-items: center;
+    width: 16px; height: 16px;
+    background: rgba(6, 62, 84, 0.10);
+    border-radius: 50%;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--indigo);
+    flex-shrink: 0;
+  }
+  .fg-soap-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(6, 62, 84, 0.10);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .fg-soap-bar::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: var(--matcha);
+    animation: fg-soap-fill 5s ease-in-out infinite;
+  }
+  .fg-soap-check {
+    font-size: 11px;
+    color: var(--matcha);
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0;
+    animation: fg-soap-check 5s ease-in-out infinite;
+  }
+  .feat-graphic--doc .fg-soap-row:nth-child(1) .fg-soap-bar::after,
+  .feat-graphic--doc .fg-soap-row:nth-child(1) .fg-soap-check { animation-delay: 0s; }
+  .feat-graphic--doc .fg-soap-row:nth-child(2) .fg-soap-bar::after,
+  .feat-graphic--doc .fg-soap-row:nth-child(2) .fg-soap-check { animation-delay: 0.6s; }
+  .feat-graphic--doc .fg-soap-row:nth-child(3) .fg-soap-bar::after,
+  .feat-graphic--doc .fg-soap-row:nth-child(3) .fg-soap-check { animation-delay: 1.2s; }
+  .feat-graphic--doc .fg-soap-row:nth-child(4) .fg-soap-bar::after,
+  .feat-graphic--doc .fg-soap-row:nth-child(4) .fg-soap-check { animation-delay: 1.8s; }
+  @keyframes fg-soap-fill {
+    0%, 5%   { width: 0; }
+    25%, 85% { width: 100%; }
+    95%, 100% { width: 0; }
+  }
+  @keyframes fg-soap-check {
+    0%, 25% { opacity: 0; transform: scale(0.7); }
+    35%, 85% { opacity: 1; transform: scale(1); }
+    95%, 100% { opacity: 0; transform: scale(0.7); }
+  }
+
+  /* 5. Follow Up: three chat bubbles (out / in / out) sliding
+     up one at a time, like a back-and-forth conversation. */
+  .fg-msg { display: flex; flex-direction: column; gap: 7px; width: 100%; max-width: 220px; }
+  .fg-bubble {
+    height: 14px;
+    border-radius: 8px;
+    opacity: 0;
+    animation: fg-bubble-in 3.6s ease-out infinite;
+  }
+  .fg-bubble--out { background: rgba(6, 62, 84, 0.14); align-self: flex-start; }
+  .fg-bubble--in  { background: var(--matcha);       align-self: flex-end;   }
+  .feat-graphic--followup .fg-bubble:nth-child(1) { animation-delay: 0s;   width: 60%; }
+  .feat-graphic--followup .fg-bubble:nth-child(2) { animation-delay: 0.9s; width: 45%; }
+  .feat-graphic--followup .fg-bubble:nth-child(3) { animation-delay: 1.8s; width: 70%; }
+  @keyframes fg-bubble-in {
+    0%, 5%    { opacity: 0; transform: translateY(8px); }
+    20%, 75%  { opacity: 1; transform: translateY(0); }
+    90%, 100% { opacity: 0; transform: translateY(-4px); }
+  }
+
+  /* 6. Get Paid: 4 status badges appearing sequentially
+     (Eligible → Coded → Submitted → Paid), where the final
+     "Paid" badge lights matcha. */
+  .fg-flow { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; justify-content: center; }
+  .fg-step {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(6, 62, 84, 0.08);
+    color: var(--indigo);
+    font-family: var(--font-body);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    animation: fg-step-in 4.4s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+  .fg-arrow {
+    color: rgba(6, 62, 84, 0.30);
+    font-size: 10px;
+    opacity: 0;
+    animation: fg-step-in 4.4s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+  .feat-graphic--paid .fg-step:nth-of-type(1) { animation-delay: 0s;   }
+  .feat-graphic--paid .fg-arrow:nth-of-type(1) { animation-delay: 0.5s; }
+  .feat-graphic--paid .fg-step:nth-of-type(2) { animation-delay: 0.6s; }
+  .feat-graphic--paid .fg-arrow:nth-of-type(2) { animation-delay: 1.1s; }
+  .feat-graphic--paid .fg-step:nth-of-type(3) { animation-delay: 1.2s; }
+  .feat-graphic--paid .fg-arrow:nth-of-type(3) { animation-delay: 1.7s; }
+  .feat-graphic--paid .fg-step:nth-of-type(4) {
+    animation-delay: 1.8s;
+    background: var(--matcha);
+  }
+  @keyframes fg-step-in {
+    0%, 5%    { opacity: 0; transform: translateX(-6px); }
+    18%, 78%  { opacity: 1; transform: translateX(0); }
+    90%, 100% { opacity: 0; transform: translateX(4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fg-cal i.new,
+    .fg-form-line::after, .fg-wave i,
+    .fg-soap-bar::after, .fg-soap-check,
+    .fg-bubble, .fg-step, .fg-arrow {
+      animation: none !important;
+      opacity: 1;
+      width: auto;
+      transform: none;
+    }
+    .fg-form-line::after, .fg-soap-bar::after { width: 100%; }
+    .fg-wave i { transform: scaleY(0.6); }
+  }
+
+  .feature-num {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--matcha);
+    margin-bottom: 0.75rem;
+  }
+  .feature h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin: 0 0 0.6rem;
+    color: var(--indigo);
+    letter-spacing: -0.005em;
+  }
+  .feature p {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+  }
+
+  /* ====== STORY SECTION BG PATTERN: animated dot grid + scan wave.
+     Two layers:
+     1) base: faint regular matcha dot grid (always visible)
+     2) ::before: a brighter dot grid masked by a diagonal "wave"
+        whose mask-position animates across, lighting up dots
+        only where the wave currently sits.
+     mask-image on the container softens the section's left + right
+     edges so the grid doesn't end with a hard cutoff. ============== */
+  .story-bg-pattern {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    /* Faint always-visible dot grid */
+    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.08) 1.5px, transparent 1.6px);
+    background-size: 38px 38px;
+    background-position: center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+  .story-bg-pattern::before {
+    /* Brighter dot grid (same alignment as base), visible only
+       where the diagonal mask-wave currently sits. */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(195, 196, 48, 0.32) 1.8px, transparent 1.9px);
+    background-size: 38px 38px;
+    background-position: center;
+    /* The mask itself is a narrow diagonal band of opacity; sliding
+       its position across the element makes the visible band sweep. */
+    -webkit-mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
+            mask-image: linear-gradient(115deg, transparent 38%, #000 50%, transparent 62%);
+    -webkit-mask-size: 220% 220%;
+            mask-size: 220% 220%;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    animation: dot-scan 7s linear infinite;
+  }
+  @keyframes dot-scan {
+    from {
+      -webkit-mask-position: 160% 160%;
+              mask-position: 160% 160%;
+    }
+    to {
+      -webkit-mask-position: -60% -60%;
+              mask-position: -60% -60%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .story-bg-pattern::before { animation: none; opacity: 0; }
+  }
+
+  /* ====== STORY / VALUE-BLOCKS: 2-column (navy theme) =========== */
+  .story-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
     gap: 3rem;
     align-items: center;
   }
-  .sol-hero__breadcrumb {
-    font-size: 13px;
-    color: rgba(6, 62, 84, 0.55);
+  @media (max-width: 980px) { .story-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  .story-quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.4;
+    font-weight: 500;
+    /* Navy section, so quote reads in seashell. */
+    color: var(--seashell);
+    letter-spacing: -0.012em;
+    /* Reset browser blockquote margins, keep visual rhythm. */
+    margin: 1rem 0 1.25rem;
+  }
+  /* Inner <p> wraps the quote text so text-wrap: pretty applies.
+     Reset its margins so it doesn't push the attribution down. */
+  .story-quote p { margin: 0; }
+  .story-attribution {
+    font-size: 0.875rem;
+    color: rgba(250, 249, 245, 0.60);
+    margin: 0;
+  }
+  .value-blocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  @media (max-width: 600px) { .value-blocks { grid-template-columns: 1fr; } }
+  /* Value blocks sit on navy. Subtle translucent-seashell fill +
+     hairline border. Each block also runs a sequenced light-up
+     animation (matcha border + soft halo) that cycles through the
+     4 blocks in the order they appear in markup. */
+  .value-block {
+    background: rgba(250, 249, 245, 0.05);
+    border: 1px solid rgba(250, 249, 245, 0.12);
+    border-radius: var(--radius-md);
+    padding: 1.4rem 1.5rem;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease;
+    animation: value-block-light 6s ease-in-out infinite;
+  }
+  /* Stagger so the matcha light walks Credentialing → Claims →
+     Honest timelines → Denials worked (matches markup order). */
+  .value-block:nth-child(1) { animation-delay: 0s;   }
+  .value-block:nth-child(2) { animation-delay: 1.5s; }
+  .value-block:nth-child(3) { animation-delay: 3s;   }
+  .value-block:nth-child(4) { animation-delay: 4.5s; }
+  @keyframes value-block-light {
+    0%, 18%, 100% {
+      border-color: rgba(250, 249, 245, 0.12);
+      box-shadow: none;
+    }
+    4%, 14% {
+      border-color: var(--matcha);
+      box-shadow:
+        0 0 0 1px var(--matcha),
+        0 8px 28px rgba(195, 196, 48, 0.18);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .value-block { animation: none; }
+  }
+
+  /* Icon at the top of each value block, small matcha-tinted
+     square containing a stroke SVG. */
+  .value-block__icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: rgba(195, 196, 48, 0.18);
+    color: var(--matcha);
+    margin-bottom: 0.85rem;
+  }
+  .value-block__icon svg {
+    width: 20px; height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .value-block h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+    color: var(--seashell);
+    letter-spacing: -0.005em;
+  }
+  .value-block p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(250, 249, 245, 0.72);
+  }
+
+  /* Book-a-demo CTA tucked under the attribution in the left column. */
+  .story-cta { margin-top: 1.75rem; }
+
+  /* ====== CREDIBILITY / PARTNERSHIP LANDSCAPE (per Andrew #202) === */
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .partner-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .partner-grid { grid-template-columns: 1fr; } }
+  .partner-card {
+    background: var(--white);
+    border: 1px solid rgba(6, 62, 84, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .partner-card:hover { transform: translateY(-3px); border-color: rgba(195, 196, 48, 0.42); }
+  .partner-card__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+  }
+  .partner-card__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .partner-card h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+  }
+  .partner-card p {
+    margin: 0 0 0.5rem;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+  .partner-card__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(6, 62, 84, 0.08);
+  }
+  .partner-card__list li {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--indigo);
+    background: rgba(6, 62, 84, 0.05);
+    border-radius: 999px;
+    padding: 4px 9px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ====== PARTNERSHIP LANDSCAPE, filterable credibility browse =====
+     Filter pills → grid of relationship tiles → reveal-on-click
+     detail pane. Each tile carries a `data-tag` for the filter
+     and a `data-key` matched to a detail pane below. No relationship
+     details are dumped on the public page; the user opts in by
+     clicking. */
+  .pl-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 1.5rem;
+  }
+  .pl-filter__pill {
+    background: var(--tile-card-bg);
+    border: 1.5px solid rgba(6, 62, 84, 0.10);
+    color: var(--indigo);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    line-height: 1.2;
+  }
+  .pl-filter__pill:hover {
+    border-color: var(--matcha);
+    background: rgba(195, 196, 48, 0.10);
+  }
+  .pl-filter__pill.is-active {
+    background: var(--matcha);
+    border-color: var(--matcha);
+    color: var(--indigo);
+  }
+
+  .pl-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
     margin-bottom: 1.5rem;
   }
-  .sol-hero__breadcrumb a { color: rgba(6, 62, 84, 0.55); text-decoration: none; }
-  .sol-hero__breadcrumb a:hover { color: var(--indigo); }
-  .sol-hero__breadcrumb .sep { margin: 0 0.5rem; opacity: 0.4; }
-  .sol-hero h1.h-display { margin: 0.5rem 0 1rem; }
-  .sol-hero__lede {
-    font-size: 1.1rem;
-    line-height: 1.55;
-    color: rgba(6, 62, 84, 0.78);
-    margin: 0 0 1.75rem;
-  }
-  .sol-hero__cta { display: inline-flex; gap: 14px; flex-wrap: wrap; }
+  @media (max-width: 1000px) { .pl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px)  { .pl-grid { grid-template-columns: 1fr; } }
 
-  /* Visual side, persona profile card */
-  .persona-card {
-    background: #F5F7F8;
-    border-radius: 18px;
-    padding: 2rem;
-    border: 1px solid rgba(6, 62, 84, 0.06);
+  .pl-card {
+    appearance: none;
+    background: var(--tile-card-bg);
+    border: 0;
+    border-radius: var(--radius-lg);
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
   }
-  .persona-card__head {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 1.25rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid rgba(6, 62, 84, 0.08);
+  .pl-card:hover {
+    transform: translateY(-2px);
   }
-  .persona-card__avatar {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--indigo), var(--indigo-dark));
-    color: var(--matcha);
-    display: grid; place-items: center;
+  .pl-card.is-active {
+    box-shadow: 0 0 0 2px var(--matcha) inset;
+  }
+  .pl-card.is-hidden { display: none; }
+  .pl-card__badge {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--indigo);
+    background: rgba(195, 196, 48, 0.30);
+    padding: 4px 8px;
+    border-radius: 999px;
+    align-self: flex-start;
+  }
+  .pl-card__badge--ghost {
+    background: rgba(6, 62, 84, 0.08);
+  }
+  .pl-card__badge--muted {
+    background: rgba(195, 196, 48, 0.18);
+    color: rgba(6, 62, 84, 0.72);
+  }
+  .pl-card__name {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.1rem;
-  }
-  .persona-card__role { font-size: 0.8rem; color: rgba(6, 62, 84, 0.6); margin: 0 0 2px; }
-  .persona-card__name { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: var(--indigo); margin: 0; }
-  .persona-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.65rem; }
-  .persona-card li {
-    display: flex; align-items: flex-start; gap: 0.65rem;
-    font-size: 0.9rem;
     color: var(--indigo);
-    line-height: 1.5;
+    letter-spacing: -0.012em;
+    line-height: 1.2;
   }
-  .persona-card li::before {
-    content: '\2713';
-    color: var(--matcha);
-    font-weight: 700;
+  .pl-card__sub {
     font-size: 0.85rem;
-    margin-top: 1px;
-  }
-  @media (max-width: 880px) {
-    .sol-hero__inner { grid-template-columns: 1fr; gap: 2rem; }
+    color: rgba(6, 62, 84, 0.65);
+    line-height: 1.4;
   }
 
-  /* Tier comparison */
-  .tier-row {
+  .pl-detail {
+    background: var(--tile-card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    min-height: 132px;
+    display: block;
+    box-shadow: inset 0 0 0 1px rgba(195, 196, 48, 0.18);
+  }
+  .pl-detail__inner { display: none; }
+  .pl-detail__inner.is-shown { display: block; }
+  .pl-detail__hint {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.6);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .pl-detail__eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--matcha);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+  .pl-detail h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+  }
+  .pl-detail p {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.78);
+    line-height: 1.55;
+    font-size: 0.95rem;
+    text-wrap: pretty;
+  }
+
+  /* ====== EASY TO GET STARTED (reassurance section) ============= */
+  .onboard-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     margin-top: 2.5rem;
   }
-  .tier-card {
-    background: #fff;
-    border-radius: 18px;
-    border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 2rem;
-    display: flex; flex-direction: column;
+  @media (max-width: 900px) { .onboard-grid { grid-template-columns: 1fr; } }
+  .onboard-card {
+    background: var(--tile-card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    transition: transform 0.25s ease;
   }
-  .tier-card--current {
-    background: var(--indigo);
-    border-color: var(--indigo);
-    color: var(--seashell);
-    position: relative;
-  }
-  .tier-card--current h3 { color: var(--seashell); }
-  .tier-card--current p { color: rgba(250, 249, 245, 0.78); }
-  .tier-card--current ul li { color: var(--seashell); }
-  .tier-card--current ul li::before { background: var(--matcha); }
-  .tier-card--current .tier-badge {
-    position: absolute;
-    top: 1rem; right: 1rem;
-    background: var(--matcha);
-    color: var(--indigo);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 999px;
-  }
-  .tier-card__eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(6, 62, 84, 0.55);
-    margin-bottom: 0.5rem;
-  }
-  .tier-card--current .tier-card__eyebrow { color: rgba(250, 249, 245, 0.6); }
-  .tier-card h3 {
+  .onboard-card:hover { transform: translateY(-3px); }
+  .onboard-card__step {
     font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--indigo);
-    margin: 0 0 0.75rem;
-    letter-spacing: -0.012em;
-  }
-  .tier-card p {
-    font-size: 0.9rem;
-    color: rgba(6, 62, 84, 0.7);
-    line-height: 1.5;
-    margin: 0 0 1.25rem;
-  }
-  .tier-card ul {
-    list-style: none;
-    padding: 0; margin: 0 0 1.25rem;
-    flex: 1;
-    display: flex; flex-direction: column;
-    gap: 0.55rem;
-  }
-  .tier-card li {
-    font-size: 0.875rem;
-    color: var(--indigo);
-    line-height: 1.45;
-    display: flex; align-items: flex-start; gap: 0.6rem;
-  }
-  .tier-card li::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--indigo);
-    margin-top: 0.5rem;
-    flex-shrink: 0;
-  }
-  .tier-card__cta { margin-top: auto; }
-  @media (max-width: 900px) {
-    .tier-row { grid-template-columns: 1fr; }
-  }
-
-  /* Built-for-you cards */
-  .built-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-    margin-top: 2.5rem;
-  }
-  .built-grid .h-card { padding: 1.75rem; }
-  .built-grid h3 {
-    font-size: 1.15rem;
-    margin: 0 0 0.5rem;
-    color: var(--indigo);
-    font-weight: 700;
-    letter-spacing: -0.005em;
-  }
-  .built-grid p { font-size: 0.9rem; color: rgba(6, 62, 84, 0.72); line-height: 1.55; margin: 0; }
-  @media (max-width: 800px) { .built-grid { grid-template-columns: 1fr; } }
-
-  /* Timeline (go-live plan) */
-  .timeline {
-    margin-top: 2.5rem;
-    max-width: 880px;
-    margin-left: auto; margin-right: auto;
-    position: relative;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    left: 20px;
-    width: 2px;
-    background: rgba(6, 62, 84, 0.12);
-  }
-  .timeline__step {
-    position: relative;
-    padding-left: 60px;
-    padding-bottom: 1.75rem;
-  }
-  .timeline__step:last-child { padding-bottom: 0; }
-  .timeline__dot {
-    position: absolute;
-    left: 12px;
-    top: 4px;
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    background: var(--indigo);
-    border: 3px solid #fff;
-    box-shadow: 0 0 0 2px var(--indigo);
-  }
-  .timeline__date {
-    font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--matcha);
     letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(6, 62, 84, 0.55);
-    margin-bottom: 0.25rem;
   }
-  .timeline__title {
-    font-family: var(--font-display);
+  .onboard-card h3 {
+    margin: 0;
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--indigo);
-    margin: 0 0 0.5rem;
-    letter-spacing: -0.005em;
-  }
-  .timeline__desc {
-    font-size: 0.9rem;
-    color: rgba(6, 62, 84, 0.7);
-    line-height: 1.55;
-    margin: 0;
-  }
-
-  /* Customer band */
-  .customer-band {
-    background: #fff;
-    border-radius: 18px;
-    border: 1px solid rgba(6, 62, 84, 0.08);
-    padding: 2.5rem 3rem;
-    margin-top: 2.5rem;
-    max-width: 920px;
-    margin-left: auto; margin-right: auto;
-  }
-  .customer-band__quote {
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    line-height: 1.45;
-    color: var(--indigo);
-    font-weight: 500;
     letter-spacing: -0.012em;
-    margin: 0 0 1.25rem;
+    line-height: 1.3;
   }
-  .customer-band__author {
-    font-size: 0.875rem;
-    color: rgba(6, 62, 84, 0.7);
-    display: flex; align-items: center; gap: 0.75rem;
+  .onboard-card p {
+    margin: 0;
+    color: rgba(6, 62, 84, 0.72);
+    line-height: 1.55;
+    font-size: 0.95rem;
+    text-wrap: pretty;
   }
-  .customer-band__author b { color: var(--indigo); font-weight: 600; }
-
-  /* FAQ */
-  .faq-list { max-width: 820px; margin: 2.5rem auto 0; }
-  .faq-item { border-bottom: 1px solid rgba(6, 62, 84, 0.08); padding: 1.25rem 0; }
-  .faq-q {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 600;
+  .onboard-reach {
+    margin: 2rem auto 0;
+    text-align: center;
+  }
+  .onboard-reach a {
     color: var(--indigo);
-    margin: 0 0 0.5rem;
-    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--matcha);
+    padding-bottom: 2px;
+    font-size: 0.95rem;
+    transition: opacity 0.18s;
   }
-  .faq-a { font-size: 0.95rem; color: rgba(6, 62, 84, 0.75); line-height: 1.6; margin: 0; }
+  .onboard-reach a:hover { opacity: 0.75; }
+  .onboard-reach a .arrow { display: inline-block; transition: transform 0.18s ease; }
+  .onboard-reach a:hover .arrow { transform: translateX(3px); }
 </style>
 
-<!-- ============= HERO ============= -->
-<section class="sol-hero">
-  <div class="sol-hero__inner">
-    <div>
-      <div class="sol-hero__breadcrumb">
-        <a href="/ca">Home</a><span class="sep">/</span>
-        <a href="/ca/pharmacy/independent">Solutions</a><span class="sep">/</span>
-        <span>Independents</span>
-      </div>
-      <span class="kicker kicker--matcha">For independent pharmacy owners</span>
-      <h1 class="h-display">Built for the operator<br>who owns the floor.</h1>
-      <p class="sol-hero__lede">
-        You run the pharmacy. You hire the techs. You sign the lease. MedMe gives you one platform, EHR, scheduling, AI Scribe, optional Medical Billing, with flat per-store pricing and a 30-day go-live. No IT team required.
-      </p>
-      <div class="sol-hero__cta">
-        <a class="btn btn-primary" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/ca/pricing">See pricing</a>
+<!-- ============= 1. SUB-HERO (stacked, mockup-as-fading-bg above text) ============= -->
+<section class="sub-hero" aria-label="Hero">
+  <div class="sub-hero__inner">
+    <div class="sub-hero__visual">
+      <svg class="hero-hub" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Diagram: your pharmacy at the center, connected to six clinical services: POCT, Test and Treat, Smoking Cessation, CCM, Vaccines, and MTM.">
+        <!-- Spokes (hairlines from hub to each service node) -->
+        <line class="hub-spoke" x1="400" y1="220" x2="570" y2="220" />
+        <line class="hub-spoke" x1="400" y1="220" x2="485" y2="367" />
+        <line class="hub-spoke" x1="400" y1="220" x2="315" y2="367" />
+        <line class="hub-spoke" x1="400" y1="220" x2="230" y2="220" />
+        <line class="hub-spoke" x1="400" y1="220" x2="315" y2="73"  />
+        <line class="hub-spoke" x1="400" y1="220" x2="485" y2="73"  />
+
+        <!-- Matcha pulse dots travelling outward, staggered around the clock -->
+        <circle r="4.5" cx="400" cy="220" class="hub-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"   path="M 0,0 L 170,0"   />
+          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="0s"   />
+        </circle>
+        <circle r="4.5" cx="400" cy="220" class="hub-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.4s" path="M 0,0 L 85,147"  />
+          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="0.4s" />
+        </circle>
+        <circle r="4.5" cx="400" cy="220" class="hub-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.8s" path="M 0,0 L -85,147" />
+          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="0.8s" />
+        </circle>
+        <circle r="4.5" cx="400" cy="220" class="hub-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="1.2s" path="M 0,0 L -170,0"  />
+          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="1.2s" />
+        </circle>
+        <circle r="4.5" cx="400" cy="220" class="hub-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="1.6s" path="M 0,0 L -85,-147" />
+          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="1.6s" />
+        </circle>
+        <circle r="4.5" cx="400" cy="220" class="hub-pulse">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="2.0s" path="M 0,0 L 85,-147"  />
+          <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.15;0.85;1" dur="2.4s" repeatCount="indefinite" begin="2.0s" />
+        </circle>
+
+        <!-- Service nodes (small white circles + labels positioned outside) -->
+        <g class="hub-node">
+          <circle cx="570" cy="220" r="16" />
+          <text x="614" y="220" text-anchor="start">POCT</text>
+        </g>
+        <g class="hub-node">
+          <circle cx="485" cy="367" r="16" />
+          <text x="485" y="395" text-anchor="middle">Test &amp; Treat</text>
+        </g>
+        <g class="hub-node">
+          <circle cx="315" cy="367" r="16" />
+          <text x="315" y="395" text-anchor="middle">Smoking Cessation</text>
+        </g>
+        <g class="hub-node">
+          <circle cx="230" cy="220" r="16" />
+          <text x="186" y="220" text-anchor="end">CCM</text>
+        </g>
+        <g class="hub-node">
+          <circle cx="315" cy="73" r="16" />
+          <text x="315" y="45" text-anchor="middle">Vaccines</text>
+        </g>
+        <g class="hub-node">
+          <circle cx="485" cy="73" r="16" />
+          <text x="485" y="45" text-anchor="middle">MTM</text>
+        </g>
+
+        <!-- Center hub (drawn last so it sits on top of spokes/pulses) -->
+        <g class="hub-center">
+          <circle class="hub-center__ring" cx="400" cy="220" r="60" />
+          <circle class="hub-center__bg"   cx="400" cy="220" r="60" />
+          <text x="400" y="216" text-anchor="middle">Your</text>
+          <text x="400" y="234" text-anchor="middle">Pharmacy</text>
+        </g>
+      </svg>
+    </div>
+    <div class="sub-hero__text">
+      <h1 class="h-display">Launch clinical services.<br><span class="accent">Start getting paid for them.</span></h1>
+      <p class="sub-hero__lede">MedMe is how an independent pharmacy launches a real clinical services program, from credentialing through to paid claims, without hiring IT, building infrastructure, or assembling a billing operation.</p>
+      <div class="sub-hero__cta">
+        <a class="pill pill--solid" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
       </div>
     </div>
-    <aside class="persona-card">
-      <div class="persona-card__head">
-        <div class="persona-card__avatar">DW</div>
-        <div>
-          <p class="persona-card__role">Independent owner</p>
-          <p class="persona-card__name">Devin Wong, PharmD</p>
+  </div>
+</section>
+
+
+<!-- ============= 2. HOW IT WORKS (6 features in a 3-col grid) ============= -->
+<section class="tile tile--light" aria-label="How it works">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">How It Works</span>
+      <h2 class="h-display">One platform.<br>The whole clinical journey.</h2>
+      <p class="lead">From the first booked appointment through to reimbursement on a paid claim, MedMe handles the complete workflow.</p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--sched" aria-hidden="true">
+          <div class="fg-cal">
+            <i></i><i class="booked"></i><i></i><i class="booked"></i><i class="new"></i>
+            <i class="booked"></i><i></i><i></i><i></i><i></i>
+            <i></i><i class="booked"></i><i></i><i></i><i></i>
+            <i></i><i></i><i class="booked"></i><i></i><i></i>
+          </div>
+        </div>
+        <div class="feature-num">01 / Schedule</div>
+        <h3>Patient booking that drives demand</h3>
+        <p>Online scheduling, walk-in queueing, multi-service booking, reminders. Reserve with Google integration drives net-new patient volume.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--intake" aria-hidden="true">
+          <div class="fg-form">
+            <div class="fg-form-row"><span class="fg-form-label">Name</span><div class="fg-form-line"></div></div>
+            <div class="fg-form-row"><span class="fg-form-label">DOB</span><div class="fg-form-line"></div></div>
+            <div class="fg-form-row"><span class="fg-form-label">Reason</span><div class="fg-form-line"></div></div>
+          </div>
+        </div>
+        <div class="feature-num">02 / Intake</div>
+        <h3>Digital intake &amp; eligibility</h3>
+        <p>Patients complete intake forms before they arrive. Eligibility checked upfront. Less time at the counter, more time on care.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--consult" aria-hidden="true">
+          <div class="fg-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="feature-num">03 / Consult</div>
+        <h3>AI Scribe + Clinical Assistant</h3>
+        <p>SOAP notes drafted from consult audio. Drug information and clinical protocols surfaced in context.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--doc" aria-hidden="true">
+          <div class="fg-soap">
+            <div class="fg-soap-row"><span class="fg-soap-letter">S</span><div class="fg-soap-bar"></div><span class="fg-soap-check">&#10003;</span></div>
+            <div class="fg-soap-row"><span class="fg-soap-letter">O</span><div class="fg-soap-bar"></div><span class="fg-soap-check">&#10003;</span></div>
+            <div class="fg-soap-row"><span class="fg-soap-letter">A</span><div class="fg-soap-bar"></div><span class="fg-soap-check">&#10003;</span></div>
+            <div class="fg-soap-row"><span class="fg-soap-letter">P</span><div class="fg-soap-bar"></div><span class="fg-soap-check">&#10003;</span></div>
+          </div>
+        </div>
+        <div class="feature-num">04 / Document</div>
+        <h3>Pre-configured for every service</h3>
+        <p>30+ clinical services configured out of the box, vaccines, MTM, POCT, test-and-treat, smoking cessation, and more.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--followup" aria-hidden="true">
+          <div class="fg-msg">
+            <div class="fg-bubble fg-bubble--out"></div>
+            <div class="fg-bubble fg-bubble--in"></div>
+            <div class="fg-bubble fg-bubble--out"></div>
+          </div>
+        </div>
+        <div class="feature-num">05 / Follow Up</div>
+        <h3>Patient retention built in</h3>
+        <p>Automated follow-up messages, care plans, secure communications. Repeat visits become routine.</p>
+      </article>
+      <article class="feature">
+        <div class="feat-graphic feat-graphic--paid" aria-hidden="true">
+          <div class="fg-flow">
+            <span class="fg-step">Eligible</span>
+            <span class="fg-arrow">&rarr;</span>
+            <span class="fg-step">Coded</span>
+            <span class="fg-arrow">&rarr;</span>
+            <span class="fg-step">Submitted</span>
+            <span class="fg-arrow">&rarr;</span>
+            <span class="fg-step">Paid</span>
+          </div>
+        </div>
+        <div class="feature-num">06 / Get Paid</div>
+        <h3>Medical billing, end to end</h3>
+        <p>Credentialing, payer contracting, claim scrubbing, denial management. We handle the operational layer that historically kept independents out of medical billing.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3. PARTNERSHIP LANDSCAPE (filterable credibility view) =============
+     Per Christine 1:1: surface the relationships that build legitimacy
+     (active pilots, association memberships, integration partners) as a
+     filterable browse rather than a flat public list. Visitors can pick
+     a category, see who's in it, and pivot to a detail card for any
+     entry without us exposing every relationship at once. -->
+<section class="tile tile--navy" aria-label="Partnership landscape">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Embedded In The Pharmacy Ecosystem</span>
+      <h2 class="h-display">Built alongside the partners<br>independent pharmacy already trusts.</h2>
+      <p class="lead">Filter the network MedMe operates inside, state associations, federal programs, integration partners, payer rails. Click any tile to see what the relationship actually looks like in practice.</p>
+    </div>
+
+    <!-- Category filter pills, single-active semantics. -->
+    <div class="pl-filter" role="group" aria-label="Filter partnerships by category">
+      <button type="button" class="pl-filter__pill is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="pl-filter__pill" data-filter="state" aria-pressed="false">State Associations</button>
+      <button type="button" class="pl-filter__pill" data-filter="national" aria-pressed="false">National Associations</button>
+      <button type="button" class="pl-filter__pill" data-filter="federal" aria-pressed="false">Federal Programs</button>
+      <button type="button" class="pl-filter__pill" data-filter="integration" aria-pressed="false">Integration Partners</button>
+    </div>
+
+    <!-- Browse grid. Each card carries a `data-tag` for the filter and a
+         status badge. Detail pane below uses CSS `:has()` to surface the
+         selected card's full description without JavaScript. -->
+    <div class="pl-grid">
+      <button type="button" class="pl-card" data-tag="state" data-key="ncap" aria-label="PANS, active billing pilot">
+        <span class="pl-card__badge">Active Pilot</span>
+        <span class="pl-card__name">PANS</span>
+        <span class="pl-card__sub">Pharmacy Association of Nova Scotia</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="state" data-key="state-assoc" aria-label="State associations, additional active pilots">
+        <span class="pl-card__badge pl-card__badge--muted">Active Pilots</span>
+        <span class="pl-card__name">+ Additional state associations</span>
+        <span class="pl-card__sub">Active pilots underway, details shared on request.</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="national" data-key="ncpa" aria-label="NCPA, member benefits">
+        <span class="pl-card__badge pl-card__badge--ghost">Member Benefit</span>
+        <span class="pl-card__name">NCPA</span>
+        <span class="pl-card__sub">National Community Pharmacists Association</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="national" data-key="apha" aria-label="APhA, member benefits">
+        <span class="pl-card__badge pl-card__badge--ghost">Member Benefit</span>
+        <span class="pl-card__name">APhA</span>
+        <span class="pl-card__sub">Canadian Pharmacists Association</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="federal" data-key="rhtp" aria-label="Rural Health Transformation Program">
+        <span class="pl-card__badge">Active Implementation</span>
+        <span class="pl-card__name">RHTP</span>
+        <span class="pl-card__sub">Federal Rural Health Transformation Program</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="federal" data-key="medicare" aria-label="provincial billing billing">
+        <span class="pl-card__badge pl-card__badge--ghost">Billing Rails Live</span>
+        <span class="pl-card__name">provincial billing</span>
+        <span class="pl-card__sub">Pharmacist-billable codes, denial-management in workflow.</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="integration" data-key="pioneerrx" aria-label="PioneerRx integration">
+        <span class="pl-card__badge pl-card__badge--ghost">Integration Partner</span>
+        <span class="pl-card__name">PioneerRx</span>
+        <span class="pl-card__sub">Bidirectional sync with the dispensing record.</span>
+      </button>
+      <button type="button" class="pl-card" data-tag="integration" data-key="bestrx" aria-label="BestRx integration">
+        <span class="pl-card__badge pl-card__badge--ghost">Integration Partner</span>
+        <span class="pl-card__name">BestRx</span>
+        <span class="pl-card__sub">Bidirectional sync with the dispensing record.</span>
+      </button>
+    </div>
+
+    <!-- Detail pane. The card's full description is revealed when the
+         user clicks a tile (JS adds .is-active to the selected card and
+         updates the .pl-detail content). A neutral default reminds the
+         user this is opt-in detail, not a public roster. -->
+    <div class="pl-detail" role="region" aria-live="polite">
+      <div class="pl-detail__inner pl-detail__inner--default">
+        <p class="pl-detail__hint">Pick a tile to see the partnership in detail. We share specifics on individual pilots and contracts in conversation, not on a public list.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="ncap">
+        <span class="pl-detail__eyebrow">State Association &middot; Active Pilot</span>
+        <h3>Pharmacy Association of Nova Scotia</h3>
+        <p>Statewide medical-billing pilot in partnership with PANS. Four-month structured rollout, protocol-aligned workflows, and member pricing for participating pharmacies. See the case study elsewhere on the site for the full structure.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="state-assoc">
+        <span class="pl-detail__eyebrow">State Associations &middot; Active Pilots</span>
+        <h3>Additional state association pilots</h3>
+        <p>Active pilots underway with state associations across the Southeast and Midwest. Each follows a similar partnership pattern, association-aligned protocols, member-priced billing, and a structured pilot path from go-live to scale. We can share specifics on request.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="ncpa">
+        <span class="pl-detail__eyebrow">National Association &middot; Member Benefit</span>
+        <h3>NCPA</h3>
+        <p>Working alongside the National Community Pharmacists Association on member education and adoption pathways for independent-pharmacy clinical services. NCPA-member pharmacies are eligible for partner programs at preferred pricing.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="apha">
+        <span class="pl-detail__eyebrow">National Association &middot; Member Benefit</span>
+        <h3>APhA</h3>
+        <p>Engaged with the Canadian Pharmacists Association on pharmacist-delivered care, scope-of-practice, and continuing-education partnerships. APhA-member pharmacies have access to MedMe partner programs.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="rhtp">
+        <span class="pl-detail__eyebrow">Federal Program &middot; Active Implementation</span>
+        <h3>Rural Health Transformation Program</h3>
+        <p>Deployed as the interoperable pharmacy platform inside early-state RHTP implementations. Rural independents in approved states can access MedMe through the federally-funded program, including grant-aligned pricing.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="medicare">
+        <span class="pl-detail__eyebrow">Federal Program &middot; Billing Rails Live</span>
+        <h3>provincial billing</h3>
+        <p>Native provincial billing claim submission for pharmacist-billable services, with denial management built into the documentation workflow. Independents can start billing on day one of go-live.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="pioneerrx">
+        <span class="pl-detail__eyebrow">Integration Partner &middot; Dispensing System</span>
+        <h3>PioneerRx</h3>
+        <p>Bidirectional integration with PioneerRx pulls patient demographics, allergies, and dispensing history into MedMe in real time. The clinical record stays in sync with the prescription record, no double-entry.</p>
+      </div>
+      <div class="pl-detail__inner" data-detail-for="bestrx">
+        <span class="pl-detail__eyebrow">Integration Partner &middot; Dispensing System</span>
+        <h3>BestRx</h3>
+        <p>Bidirectional integration with BestRx connects the dispensing record to the MedMe clinical workflow. The pharmacist sees the full patient picture at the start of every clinical encounter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline slot="end-of-body" set:html={`/* Partnership-landscape filter + detail-pane toggle. Single-active
+   pill semantics: clicking a category pill hides cards whose data-tag
+   doesn't match. Clicking a card highlights it and reveals the
+   matching detail pane below. */
+  (function plLandscape() {
+    var pills = document.querySelectorAll('.pl-filter__pill');
+    var cards = document.querySelectorAll('.pl-card');
+    var detailPanes = document.querySelectorAll('.pl-detail__inner');
+    if (!pills.length || !cards.length) return;
+
+    function setActiveCard(card) {
+      cards.forEach(function (c) { c.classList.toggle('is-active', c === card); });
+      var key = card ? card.getAttribute('data-key') : null;
+      detailPanes.forEach(function (p) {
+        var match = (!key && p.classList.contains('pl-detail__inner--default')) ||
+                    (key && p.getAttribute('data-detail-for') === key);
+        p.classList.toggle('is-shown', match);
+      });
+    }
+
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = pill.getAttribute('data-filter');
+        pills.forEach(function (p) {
+          var active = p === pill;
+          p.classList.toggle('is-active', active);
+          p.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var match = filter === 'all' || card.getAttribute('data-tag') === filter;
+          card.classList.toggle('is-hidden', !match);
+        });
+        setActiveCard(null);
+      });
+    });
+
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () { setActiveCard(card); });
+    });
+
+    // Default pane on load.
+    setActiveCard(null);
+  })();`}></script>
+
+<!-- ============= 4. EASY TO GET STARTED (reassurance band) =============
+     Per Christine 1:1: the low barrier to entry needs to be explicit
+     for indies. The pitch is "you don't have to figure this out alone,
+     we handle the parts that usually stall." Three reassurance cards
+     under a single headline, plus a quiet email-the-team option for
+     indies who aren't ready for a demo. -->
+<section class="tile tile--light" aria-label="Easy to get started">
+  <div class="tile__inner">
+    <div class="tile__head tile__head--centered">
+      <span class="kicker">Easy To Get Started</span>
+      <h2 class="h-display">Not sure where to begin?<br>Our team handles everything.</h2>
+      <p class="lead">From contracting through the first paid clinical encounter, MedMe walks alongside you. You don't need a project manager, an IT lead, or a billing consultant on your end. We handle the parts that usually stall, and we move at the pace that fits your pharmacy.</p>
+    </div>
+    <div class="onboard-grid">
+      <article class="onboard-card">
+        <span class="onboard-card__step">01</span>
+        <h3>Contracting, handled</h3>
+        <p>We walk you through enrollment, payer credentialing, and billing setup. If something needs a signature, we draft it. If a payer wants paperwork, we file it.</p>
+      </article>
+      <article class="onboard-card">
+        <span class="onboard-card__step">02</span>
+        <h3>Onboarding, your pace</h3>
+        <p>Most indies are live in 2 to 4 weeks. We map the workflow, train your team in short sessions that fit between shifts, and stay close while the first patients move through.</p>
+      </article>
+      <article class="onboard-card">
+        <span class="onboard-card__step">03</span>
+        <h3>Reach out, no commitment</h3>
+        <p>Still figuring out whether this is the right time? Send us a short note and we'll point you to the easiest next step. No demo required.</p>
+      </article>
+    </div>
+    <div class="onboard-reach">
+      <a class="btn-underline" href="/ca/contact?source=independents">Email the indie team <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. STORY (navy band, quote + 4 value blocks in 2-col split) ============= -->
+<section class="tile tile--navy tile--prominent" aria-label="A clear path to reimbursement">
+  <div class="story-bg-pattern" aria-hidden="true"></div>
+  <div class="tile__inner">
+    <div class="story-grid">
+      <div>
+        <h2 class="kicker">A Clear Path to Reimbursement</h2>
+        <blockquote class="story-quote"><p>"We launched medical billing through MedMe. Six months in, clinical services revenue is a real line item on our P&amp;L."</p></blockquote>
+        <p class="story-attribution">Independent pharmacy owner, US Southeast</p>
+        <div class="story-cta">
+          <a class="pill pill--solid" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
         </div>
       </div>
-      <ul>
-        <li>1&ndash;3 retail locations, 2&ndash;6 pharmacists per shift</li>
-        <li>Already running Kroll / Fillware / NRx</li>
-        <li>Doing MedsCheck, Med review, immunizations, mostly unbilled</li>
-        <li>No clinical IT team, no dedicated biller</li>
-        <li>Needs to be live in under 45 days</li>
-      </ul>
-    </aside>
-  </div>
-</section>
-
-<!-- ============= TIER PICKER (light) ============= -->
-<section class="tile tile--light" aria-label="Pick your starting point">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Pick your starting point</span>
-      <h2 class="h-display">Three ways independents<br>start with MedMe.</h2>
-      <p class="lead">Pick the tier that matches your service mix today. Upgrade later when you're ready, no migration, no contract change.</p>
-    </div>
-    <div class="tier-row">
-      <div class="tier-card">
-        <div class="tier-card__eyebrow">Tier 1</div>
-        <h3>Clinical Starter</h3>
-        <p>For pharmacies running immunizations + simple consults today.</p>
-        <ul>
-          <li>EHR + SOAP templates</li>
-          <li>Online scheduling + intake forms</li>
-          <li>Immunization records + state registry submission</li>
-          <li>Patient portal + reminders</li>
-        </ul>
-        <div class="tier-card__cta">
-          <a href="/ca/pricing" class="pill pill--solid">See Starter pricing</a>
+      <div class="value-blocks">
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
+          <h4>Credentialing handled</h4>
+          <p>NPI, PECOS, state provincial drug plans, payer contracting, managed by our RCM team.</p>
         </div>
-      </div>
-      <div class="tier-card tier-card--current">
-        <span class="tier-badge">Most popular</span>
-        <div class="tier-card__eyebrow">Tier 2</div>
-        <h3>Clinical + Billing</h3>
-        <p>For pharmacies ready to capture provincial billing revenue.</p>
-        <ul>
-          <li>Everything in Clinical Starter</li>
-          <li>AI Scribe drafts every SOAP note</li>
-          <li>Provincial PIN auto-coding from the encounter</li>
-          <li>837P claim submission + denial queue</li>
-          <li>Clinical-to-revenue dashboards</li>
-        </ul>
-        <div class="tier-card__cta">
-          <a href="/ca/pricing" class="pill pill--solid">See Clinical+Billing pricing</a>
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M22 11.5V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          </span>
+          <h4>Claims scrubbed</h4>
+          <p>Every claim runs through our rule engine before submission.</p>
         </div>
-      </div>
-      <div class="tier-card">
-        <div class="tier-card__eyebrow">Tier 3</div>
-        <h3>Full Platform</h3>
-        <p>For independents expanding into specialty or rural-health.</p>
-        <ul>
-          <li>Everything in Clinical + Billing</li>
-          <li>Rural/FQHC billing module</li>
-          <li>Specialty therapy + prior-auth workflows</li>
-          <li>Payvider contracting + outcomes reporting</li>
-          <li>Dedicated implementation specialist</li>
-        </ul>
-        <div class="tier-card__cta">
-          <a href="/ca/pricing" class="pill pill--solid">Talk to sales</a>
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </span>
+          <h4>Honest timelines</h4>
+          <p>Platform onboards quickly. Medical billing takes months to credential properly. We set the expectation upfront.</p>
+        </div>
+        <div class="value-block">
+          <span class="value-block__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35M8 11h6"/></svg>
+          </span>
+          <h4>Denials worked</h4>
+          <p>Our team investigates denials, calls payers, and learns the rules so they don't repeat.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============= BUILT FOR YOU (dark) ============= -->
-<section class="tile tile--light" aria-label="Built for the way independents work">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Built for the way you work</span>
-      <h2 class="h-display">No clinical IT team?<br>No problem.</h2>
-      <p class="lead">Every assumption in MedMe is built around owner-operators. The platform installs itself. Your staff learns it in an afternoon.</p>
-    </div>
-    <div class="built-grid">
-      <article class="h-card">
-        <h3>30-day go-live, guaranteed</h3>
-        <p>From contract to first billable encounter in under 30 days. Faster customers were live in 11. We handle the clearinghouse credentialing and provincial program enrollment paperwork.</p>
-      </article>
-      <article class="h-card">
-        <h3>Flat per-store pricing</h3>
-        <p>One predictable monthly fee per location. No per-encounter charges, no per-claim fees, no surprise overages. You see the bill every month before you see your revenue.</p>
-      </article>
-      <article class="h-card">
-        <h3>Sits next to your PMS</h3>
-        <p>Kroll, Fillware, Liberty, BD Pharmacy Management, Telus PHS, all pre-integrated. Your dispensing workflow doesn't change. MedMe just adds the clinical and billing layer on top.</p>
-      </article>
-      <article class="h-card">
-        <h3>Live human support</h3>
-        <p>Pharmacy-trained support team based in the US. Phone, chat, or email, median response under 2 minutes. Owners can call us directly during enrollment.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============= GO-LIVE TIMELINE (light) ============= -->
-<section class="tile tile--light" aria-label="30-day go-live timeline">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Your first 30 days</span>
-      <h2 class="h-display">From signed contract<br>to first paid claim.</h2>
-    </div>
-    <div class="timeline">
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 1</div>
-        <h3 class="timeline__title">Kickoff + data setup</h3>
-        <p class="timeline__desc">30-minute kickoff with your implementation specialist. We sync patient records from your PMS, configure your service catalog, and set up your staff accounts.</p>
-      </div>
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 2</div>
-        <h3 class="timeline__title">Training + dry runs</h3>
-        <p class="timeline__desc">2-hour live training for the whole team. Each pharmacist runs three test encounters with realistic patient data. We watch, coach, and adjust templates.</p>
-      </div>
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 3</div>
-        <h3 class="timeline__title">First live encounters</h3>
-        <p class="timeline__desc">You start booking and documenting real patients. AI Scribe drafts SOAP notes. Eligibility and codes are confirmed but claims are held for review.</p>
-      </div>
-      <div class="timeline__step">
-        <span class="timeline__dot"></span>
-        <div class="timeline__date">Week 4</div>
-        <h3 class="timeline__title">First claims submitted</h3>
-        <p class="timeline__desc">After implementation review, MedMe starts pushing 837Ps to your clearinghouse. First ERAs typically arrive in 7&ndash;14 days. You're billing.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============= CUSTOMER PROOF (dark) ============= -->
-<section class="tile tile--light" aria-label="Customer proof">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">From the field</span>
-      <h2 class="h-display">What independents say<br>after 90 days.</h2>
-    </div>
-    <div class="customer-band" style="background: rgba(250, 249, 245, 0.04); border-color: rgba(250, 249, 245, 0.12);">
-      <p class="customer-band__quote" style="color: var(--seashell);">&ldquo;We're a 3-store independent. I'd been told MedMe was 'enterprise.' That's not what we found. Setup was four weeks. Our pharmacists love it. And we captured $186K in MedsCheck and Med review revenue in the first quarter that we'd been leaving on the table for two years.&rdquo;</p>
-      <div class="customer-band__author" style="color: rgba(250, 249, 245, 0.7);">
-        <b style="color: var(--seashell);">Maya Patel, PharmD</b> &middot; Owner, Family Care Pharmacy (3 stores, OH)
-      </div>
-    </div>
-    <div style="text-align:center; margin-top: 1.5rem;">
-      <a href="/ca/customers" class="alink alink--on-dark">Browse all customer stories &rarr;</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============= FAQ (light) ============= -->
-<section class="tile tile--light" aria-label="Independent FAQ">
-  <div class="tile__inner">
-    <div class="tile__head">
-      <span class="kicker">Frequently asked</span>
-      <h2 class="h-display">Common questions from<br>independent owners.</h2>
-    </div>
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary class="faq-q">Do I need to switch from Kroll?</summary>
-        <p class="faq-a">No. MedMe runs alongside your existing pharmacy management system. Your dispensing workflow stays exactly the same. MedMe handles the clinical encounter and medical billing side only.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Can I add billing later if I start with the Clinical Starter tier?</summary>
-        <p class="faq-a">Yes. Adding Medical Billing later is a single-toggle change. No data migration, no platform switch, no new contract. Your historical clinical data carries forward.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">How much does it cost per store?</summary>
-        <p class="faq-a">Flat monthly per location, billed quarterly or annually. The full breakdown is on our <a href="/ca/pricing">pricing page</a>. Most independents pay back the platform fee on their first month's MedsCheck billing alone.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">What if I have one tech who handles all my back-office work?</summary>
-        <p class="faq-a">That's most of our independent customers. MedMe is designed so a single non-clinical staff member can manage the queue, monitor claims, and handle denials. We train them directly.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Are there long-term contracts?</summary>
-        <p class="faq-a">12-month minimum term, renewing month-to-month afterward. We're confident enough in the platform that if you cancel in the first 90 days, we refund the implementation fee.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ============= FINAL CTA (dark prominent) ============= -->
-<section class="tile tile--light tile--prominent" aria-label="Get started">
-  <div class="tile__inner">
-    <div class="tile__head" style="text-align:center;">
-      <span class="kicker">Get started</span>
-      <h2 class="h-display">See it run<br>on your service mix.</h2>
-      <p class="lead">15-minute walkthrough customized to a 1&ndash;3 store independent. We'll run your numbers live and leave you with a written estimate.</p>
-      <div style="margin-top: 1.5rem; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-        <a class="btn btn-primary" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
-        <a class="btn btn-ghost" href="/ca/resources/calculator">Run the calculator</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-</BaseLayoutCa>
+<script is:inline slot="end-of-body" set:html={`/* Reduced-motion guard for SMIL animations in the hero hub graphic.
+     The scoped CSS hides .hub-pulse via display:none under
+     prefers-reduced-motion, but SMIL <animateMotion> / <animate>
+     keep running (CPU cost). pauseAnimations() halts the SMIL
+     timeline entirely. */
+  (function () {
+    if (!window.matchMedia) return;
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function apply() {
+      if (!mq.matches) return;
+      document.querySelectorAll('.hero-hub').forEach(function (svg) {
+        if (typeof svg.pauseAnimations === 'function') svg.pauseAnimations();
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', apply);
+    } else {
+      apply();
+    }
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else if (mq.addListener) mq.addListener(apply);
+  })();`}></script>
+</BaseLayout>
