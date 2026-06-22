@@ -409,7 +409,83 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     .pg-data .pg-bar { animation: none; opacity: 1; }
   }
 
-  /* ====== PANS CASE STUDY SPOTLIGHT =========================
+  /* ====== PANS PROVINCIAL SCHEDULER (Strategy Doc v3 §6) =====
+     Six-up impact stat grid on navy. "90,000+ patients" is the
+     centre-feature card. Source citation + blueprint line at
+     bottom. Used as the headline legitimacy story for the
+     associations audience. */
+  .pans-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0 2rem;
+  }
+  @media (max-width: 900px) {
+    .pans-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 480px) {
+    .pans-stats { grid-template-columns: 1fr; }
+  }
+  .pans-stat {
+    background: rgba(250, 249, 245, 0.04);
+    border: 1px solid rgba(250, 249, 245, 0.10);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.1rem 1.4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  .pans-stat:hover {
+    border-color: rgba(195, 196, 48, 0.35);
+  }
+  .pans-stat__value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 2.9vw, 2.4rem);
+    letter-spacing: -0.02em;
+    color: var(--matcha);
+    line-height: 1;
+  }
+  .pans-stat__label {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: rgba(250, 249, 245, 0.72);
+    text-wrap: pretty;
+  }
+  .pans-stat--featured {
+    background: rgba(195, 196, 48, 0.10);
+    border-color: rgba(195, 196, 48, 0.35);
+  }
+  .pans-footer {
+    text-align: center;
+  }
+  .pans-footer__source {
+    font-size: 0.8rem;
+    color: rgba(250, 249, 245, 0.55);
+    margin: 0 0 0.85rem;
+    line-height: 1.5;
+  }
+  .pans-footer__source a {
+    color: var(--matcha);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(195, 196, 48, 0.4);
+    transition: opacity 0.18s;
+  }
+  .pans-footer__source a:hover { opacity: 0.75; }
+  .pans-footer__blueprint {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--seashell);
+    margin: 0;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  /* ====== PANS Member Pilot detail panel =========================
      A featured navy panel that frames the PANS pilot as the
      working proof point. Includes a small "logo-mark" header,
      the pilot framing, four goal pills, and three service rows.
@@ -816,7 +892,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     <div class="tile__head">
       <span class="kicker">How We Partner With Associations</span>
       <h2 class="h-display">Built around the priorities<br>that matter most to your association.</h2>
-      <p class="lead">Associations are in two businesses at once: attracting and retaining the members who pay your dues, and advancing pharmacy advocacy with policymakers and payers. MedMe is built to support both, with an all-in-one platform members can rally around and outcomes data your team can take to the table.</p>
+      <p class="lead">Associations are in two businesses at once: attracting and retaining the members who pay your dues, and advancing pharmacy advocacy with provincial regulators and decision-makers. MedMe is built to support both, with an all-in-one platform members can rally around and outcomes data your team can take to the table.</p>
     </div>
     <div class="partner-grid">
       <article class="partner-card">
@@ -840,7 +916,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <span class="pg-bar"></span>
         </div>
         <h3>Advance your advocacy</h3>
-        <p>Surface billing and clinical-service data your team can share with legislators and policymakers to demonstrate the impact of pharmacist-delivered care, and with payers to advance pharmacist reimbursement models.</p>
+        <p>Surface clinical-service and outcomes data your team can share with legislators and provincial regulators to demonstrate the impact of pharmacist-delivered care, and with provincial drug plans to advance pharmacist funding models.</p>
       </article>
       <article class="partner-card">
         <div class="partner-card__graphic pg-cohort" aria-hidden="true">
@@ -852,72 +928,57 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <span class="pg-node"></span>
           <span class="pg-node"></span>
         </div>
-        <h3>Hand in hand on statewide protocols</h3>
-        <p>We work alongside your team to configure custom workflows aligned to statewide protocols, making clinical knowledge accessible to pharmacies at the point of care.</p>
+        <h3>Hand in hand on province-wide protocols</h3>
+        <p>We work alongside your team to configure custom workflows aligned to province-wide protocols, making clinical knowledge accessible to pharmacies at the point of care.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 3. CASE STUDY SPOTLIGHT (Pharmacy Association of Nova Scotia) ============= -->
-<section class="tile tile--navy" aria-label="Pharmacy Association of Nova Scotia Member Pilot case study">
+<!-- ============= 3. PANS PROVINCIAL SCHEDULER STORY (Strategy Doc v3 §6) =============
+     The lead legitimacy asset for the CA Associations audience.
+     Shows how a provincial association can use MedMe to drive
+     standardization across a province and produce measurable
+     patient-access outcomes. Stats sourced from CPhA April 2026
+     keynote. Live deployment at yourpharmacyns.ca. -->
+<section class="tile tile--navy" aria-label="PANS provincial scheduler case study">
   <div class="tile__inner">
     <div class="tile__head">
-      <span class="kicker">Featured Case Study</span>
-      <h2 class="h-display">The Nova Scotia Association<br>of Pharmacists Member Pilot.</h2>
-      <p class="lead">The Pharmacy Association of Nova Scotia is partnering with MedMe to support Nova Scotia community pharmacies as they expand pharmacist-provided clinical services under statewide protocols. A working blueprint for how association partnerships can move from policy to operations.</p>
+      <span class="kicker">Featured Customer Story</span>
+      <h2 class="h-display">PANS launched Canada's first<br>provincial pharmacy scheduler.</h2>
+      <p class="lead">Selected by the Pharmacy Association of Nova Scotia through a competitive RFP, MedMe is the mandated booking platform for every Community Pharmacy Primary Care Clinic in the province. Independents, Shoppers Drug Mart, and Sobeys, all on the same standardized infrastructure, and the first of its kind in Canada.</p>
     </div>
 
-    <div class="ncap">
-      <div class="ncap__left">
-        <span class="ncap__chip">Pharmacy Association of Nova Scotia &times; MedMe Health</span>
-        <h3>A limited pilot, designed to make it easier to deliver, document, and get paid for eligible clinical services.</h3>
-        <p class="ncap__lede">A focused cohort of Nova Scotia pharmacies, helping the Association and MedMe evaluate workflows, billing readiness, and operational impact as pharmacist scope of practice continues to expand across the state.</p>
-
-        <div class="ncap__stats">
-          <div class="ncap__stat">
-            <span class="ncap__stat-value">10 to 15</span>
-            <span class="ncap__stat-label">Pharmacies in the cohort</span>
-          </div>
-          <div class="ncap__stat">
-            <span class="ncap__stat-value">~4 mo.</span>
-            <span class="ncap__stat-label">Pilot duration</span>
-          </div>
-          <div class="ncap__stat">
-            <span class="ncap__stat-value">3</span>
-            <span class="ncap__stat-label">Pilot services</span>
-          </div>
-        </div>
-
-        <ul class="ncap__goals">
-          <li>Grow sustainable revenue beyond dispensing as margins remain compressed.</li>
-          <li>Increase prescription fills and front-of-house sales by bringing more patients into the pharmacy setting.</li>
-          <li>Practice at the top of your license, with less time on manual documentation and billing follow-up.</li>
-          <li>Improve access to affordable care in your community, outside higher-cost care settings.</li>
-        </ul>
+    <div class="pans-stats">
+      <div class="pans-stat">
+        <span class="pans-stat__value">10%</span>
+        <span class="pans-stat__label">of hospital ER visits diverted to pharmacy clinics</span>
       </div>
-
-      <div class="ncap__right">
-        <p class="ncap__col-label">Pilot Services</p>
-
-        <div class="ncap__svc">
-          <span class="ncap__svc-tag">Reimbursement active</span>
-          <h4>Hormonal Contraceptives</h4>
-          <p>NC provincial drug plans opened enrollment for pharmacists to bill medical claims under the Self-Administered Hormonal Contraceptive Protocol beginning January 2024.</p>
-        </div>
-
-        <div class="ncap__svc">
-          <span class="ncap__svc-tag">Reimbursement active</span>
-          <h4>Nicotine Replacement Therapy</h4>
-          <p>NC provincial drug plans added clinical-service reimbursement for pharmacies using the statewide NRT protocol effective August 1, 2024.</p>
-        </div>
-
-        <div class="ncap__svc">
-          <span class="ncap__svc-tag">Authority defined</span>
-          <h4>Influenza Test and Treat</h4>
-          <p>Legal authority is defined with an October 1, 2025 effective timeline and a required standing order. During the pilot, services can be supported as cash pay while reimbursement operationalizes.</p>
-        </div>
+      <div class="pans-stat">
+        <span class="pans-stat__value">25%</span>
+        <span class="pans-stat__label">of walk-in clinic visits diverted to pharmacy clinics</span>
       </div>
+      <div class="pans-stat pans-stat--featured">
+        <span class="pans-stat__value">90,000+</span>
+        <span class="pans-stat__label">unique patients served across the province</span>
+      </div>
+      <div class="pans-stat">
+        <span class="pans-stat__value">45%</span>
+        <span class="pans-stat__label">of patients with no other regular healthcare provider</span>
+      </div>
+      <div class="pans-stat">
+        <span class="pans-stat__value">98%</span>
+        <span class="pans-stat__label">patient satisfaction</span>
+      </div>
+      <div class="pans-stat">
+        <span class="pans-stat__value">$3.6M+</span>
+        <span class="pans-stat__label">in healthcare system cost savings</span>
+      </div>
+    </div>
+
+    <div class="pans-footer">
+      <p class="pans-footer__source">Source: Canadian Pharmacists Association keynote, April 2026. Live at <a href="https://yourpharmacyns.ca" target="_blank" rel="noopener">yourpharmacyns.ca</a>.</p>
+      <p class="pans-footer__blueprint">The blueprint for future provincial deployments.</p>
     </div>
   </div>
 </section>
@@ -996,7 +1057,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
         </span>
         <h3>Mass email and SMS</h3>
-        <p>Targeted patient-outreach campaigns from the same place pharmacies run booking and documentation. Send flu-season reminders, MTM follow-ups, and adherence nudges in a few clicks.</p>
+        <p>Targeted patient-outreach campaigns from the same place pharmacies run booking and documentation. Send flu-season reminders, medication-review follow-ups, and adherence nudges in a few clicks.</p>
       </article>
       <article class="mkt-card">
         <span class="mkt-card__icon" aria-hidden="true">
@@ -1021,7 +1082,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">A Four-Month Pilot Structure</span>
-      <h2 class="h-display">A clear path from go-live<br>to a statewide scaling plan.</h2>
+      <h2 class="h-display">A clear path from go-live<br>to a province-wide scaling plan.</h2>
       <p class="lead">Every association pilot follows the same three-phase structure: stand it up, optimize it, then bring outcomes back to the table. Designed so leadership has decision-ready insights before the pilot window closes.</p>
     </div>
     <div class="timeline-grid">

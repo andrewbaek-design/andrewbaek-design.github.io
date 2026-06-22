@@ -3,9 +3,9 @@ import BaseLayout from '../../layouts/BaseLayoutCa.astro';
 import LogoMedme from '../../components/LogoMedme.astro';
 ---
 <BaseLayout
-  title="MedMe Health, The MedMe Care Platform built for clinical services and medical billing"
-  description="MedMe is the pharmacy-specific EHR that documents every encounter and turns it into a clean provincial billing claim. Built with US pharmacy operators."
-  lang="en-US"
+  title="MedMe Health, The MedMe Care Platform for Canadian pharmacy"
+  description="MedMe is the pharmacy-specific clinical services platform that documents every encounter and turns it into a clean provincial billing claim. Built with Canadian pharmacy operators."
+  lang="en-CA"
 >
   <Fragment slot="head">
   <link rel="alternate" hreflang="en-ca" href="https://medmehealth.com/" />
@@ -23,11 +23,11 @@ import LogoMedme from '../../components/LogoMedme.astro';
   <script type="application/ld+json" is:inline set:html={`{
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "MedMe MedMe Care Platform + Medical Billing",
+  "name": "MedMe Care Platform",
   "applicationCategory": "HealthApplication",
   "operatingSystem": "Web",
-  "offers": {"@type":"Offer","price":"0","priceCurrency":"USD","description":"Contact sales for pricing"},
-  "audience": {"@type":"Audience","audienceType":"Pharmacy operators in the United States"}
+  "offers": {"@type":"Offer","price":"0","priceCurrency":"CAD","description":"Contact sales for pricing"},
+  "audience": {"@type":"Audience","audienceType":"Pharmacy operators in Canada"}
 }`}></script>
   </Fragment>
 
@@ -234,7 +234,6 @@ import LogoMedme from '../../components/LogoMedme.astro';
       </div>
     </div>
 
-    <!-- ===== PANE: Medical Billing ===== -->
     <!-- ===== PANE: Follow-Ups & Mass Comms (conceptual chat bubbles,
                   in line with the other hero motions; not a literal
                   product mockup) ===== -->
@@ -242,33 +241,17 @@ import LogoMedme from '../../components/LogoMedme.astro';
       <div class="mockup-host" id="msgHost">
         <div class="frame-inner" id="msgFrame">
           <div class="fu-stage">
-            <!-- Three appointment messages appear in sequence and loop. -->
-            <div class="fu-bubble fu-bubble--confirm">
-              <span class="fu-bubble__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-              <span class="fu-bubble__body">
-                <span class="fu-bubble__label">Booked</span>
-                <span class="fu-bubble__line">Flu Shot &middot; Wed Nov 26, 10:00 AM</span>
-              </span>
+            <!-- iMessage-style chat thread between pharmacy (incoming,
+                 left, gray) and patient (outgoing, right, indigo). Each
+                 bubble appears in sequence and the loop replays. -->
+            <div class="fu-bubble fu-bubble--in" data-fu-order="1">
+              <p class="fu-bubble__text">Hi Jane, your flu shot is booked for Wed, Nov 26 at 10:00 AM.</p>
             </div>
-            <div class="fu-bubble fu-bubble--reminder">
-              <span class="fu-bubble__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
-              </span>
-              <span class="fu-bubble__body">
-                <span class="fu-bubble__label">Reminder</span>
-                <span class="fu-bubble__line">Your appointment starts in 1 hour</span>
-              </span>
+            <div class="fu-bubble fu-bubble--out" data-fu-order="2">
+              <p class="fu-bubble__text">Thanks! See you then.</p>
             </div>
-            <div class="fu-bubble fu-bubble--cancel">
-              <span class="fu-bubble__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </span>
-              <span class="fu-bubble__body">
-                <span class="fu-bubble__label">Cancelled</span>
-                <span class="fu-bubble__line">Tap to rebook a new time</span>
-              </span>
+            <div class="fu-bubble fu-bubble--in" data-fu-order="3">
+              <p class="fu-bubble__text">Reminder: your appointment starts in 1 hour.</p>
             </div>
           </div>
         </div>
@@ -503,7 +486,7 @@ import LogoMedme from '../../components/LogoMedme.astro';
           </div>
         </div>
         <h3>Clinical Documentation</h3>
-        <p>Notes drafted as the encounter happens, in whichever template fits the visit (SOAP, MTM, minor ailments). Templates surface automatically so pharmacists finish the chart during the visit.</p>
+        <p>Notes drafted as the encounter happens, in whichever template fits the visit (SOAP, medication reviews, minor ailments). Templates surface automatically so pharmacists finish the chart during the visit.</p>
         <div class="audience-card__cta">
           <a class="pill pill--solid" href="/ca/platform/assisted-documentation">Learn more</a>
         </div>
@@ -1389,214 +1372,6 @@ import LogoMedme from '../../components/LogoMedme.astro';
 })();
 
 /* ============================================================
-   Medical Billing, conceptual motion graphic. Sequence:
-   1. Code rows fade/slide in
-   2. Each code row types its CPT tag + description + amount
-   3. Total counts up from $0 to claim total
-   4. Cursor moves to Submit button, clicks (ripple + pulse)
-   5. "Paid" popup appears with the deposited amount
-   6. Hold, then loop
-   ============================================================ */
-(function () {
-  'use strict';
-  var host = document.getElementById('billHost');
-  var inner = document.getElementById('billFrame');
-  if (!host || !inner) return;
-
-  function fit() {
-    var r = host.getBoundingClientRect();
-    var s = Math.min(r.width / 1192, r.height / 656);
-    if (s > 0) inner.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
-  }
-  window.addEventListener('resize', fit);
-  requestAnimationFrame(function () { requestAnimationFrame(fit); });
-  window.addEventListener('load', fit);
-
-  function $(id) { return document.getElementById(id); }
-
-  var TOTAL = 11000;
-  var SEQ = {
-    row1At:          800,    /* row 1 reveal + matcha glow + value-pop */
-    row2At:          1600,   /* row 2 reveal */
-    totalCountStart: 2500,
-    totalCountEnd:   3300,
-    cursorToSubmit:  { at: 3700, dur: 900 },
-    clickSubmit:     { at: 4700 },
-    popupAt:         5000,
-    advanceAt:       9500,   /* heroAdvance → Scheduling (next loop) */
-    holdUntilLoop:   10500
-  };
-  var REVEAL_GLOW_MS = 600;
-  var billAdvanced = false;
-
-  var ROW_DATA = [
-    { row: 'bcRow1', tag: '99605', desc: 'MTM Initial · 15 min', amt: '$63.00' },
-    { row: 'bcRow2', tag: '99606', desc: 'MTM Additional · 15 min', amt: '$44.00' }
-  ];
-  var CLAIM_TOTAL = 107;
-  var rowsRevealed = [false, false];
-
-  function moveCursor(target, dur) {
-    dur = dur || 800;
-    var cur = $('bcCursor');
-    var fr = inner.getBoundingClientRect();
-    var r = target.getBoundingClientRect();
-    var m = new DOMMatrixReadOnly(getComputedStyle(inner).transform);
-    var sx = m.a, sy = m.d;
-    var fx = (r.left - fr.left) / sx + r.width / sx / 2 - 6;
-    var fy = (r.top - fr.top) / sy + r.height / sy / 2 - 4;
-    cur.style.transition = 'transform ' + dur + 'ms cubic-bezier(.5,.05,.2,1)';
-    cur.style.transform = 'translate(' + fx + 'px,' + fy + 'px)';
-  }
-  function moveInstant(x, y) {
-    var c = $('bcCursor');
-    c.style.transition = 'none';
-    c.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-  }
-  function ripple() {
-    var r = $('bcRipple');
-    r.classList.remove('go');
-    void r.offsetWidth;
-    r.classList.add('go');
-  }
-
-  var step = -1;
-  var clicked = {};
-  var wasHidden = true;
-  var startTime = 0;
-
-  function reset(now) {
-    step = 0;
-    clicked = {};
-    rowsRevealed = [false, false];
-    billAdvanced = false;
-    startTime = now || performance.now();
-    ROW_DATA.forEach(function (r, idx) {
-      var row = $(r.row);
-      if (row) row.classList.remove('is-visible', 'is-filling');
-      var n = idx + 1;
-      var tag = $('bcTag' + n);  if (tag)  tag.textContent  = '';
-      var desc = $('bcDesc' + n); if (desc) desc.textContent = '';
-      var amt = $('bcAmt' + n);  if (amt)  amt.textContent  = '';
-    });
-    var total = $('bcTotal'); if (total) total.textContent = '$0.00';
-    var sub = $('bcSubmit');  if (sub)  sub.classList.remove('is-pulsing');
-    var pop = $('bcPopup');   if (pop)  pop.classList.remove('is-visible');
-    /* Reset Get Paid workflow stage + progress arrow when billing loops. */
-    var paidStage = document.querySelector('.hw-stage[data-pane-key="paid"]');
-    if (paidStage) paidStage.classList.remove('is-active', 'is-done');
-    var paidArrow = document.querySelector('.hw-arrow[data-arrow="paid"]');
-    if (paidArrow) paidArrow.style.setProperty('--bill-progress', '0%');
-    moveInstant(40, 100);
-  }
-
-  /* Intake-style reveal, set text instantly, add .is-filling glow, then
-     remove it after the value-pop animation completes. */
-  function revealRow(idx) {
-    var data = ROW_DATA[idx];
-    var n = idx + 1;
-    var row = $(data.row);
-    if (!row) return;
-    $('bcTag'  + n).textContent = data.tag;
-    $('bcDesc' + n).textContent = data.desc;
-    $('bcAmt'  + n).textContent = data.amt;
-    row.classList.add('is-visible', 'is-filling');
-    setTimeout(function () {
-      row.classList.remove('is-filling');
-    }, REVEAL_GLOW_MS);
-  }
-
-  function tick(now) {
-    var rect = host.getBoundingClientRect();
-    if (rect.width === 0) {
-      wasHidden = true;
-      requestAnimationFrame(tick);
-      return;
-    }
-    if (wasHidden) {
-      wasHidden = false;
-      reset(now);
-    }
-    var t = (now - startTime) % TOTAL;
-    if (t < 0) t = 0;
-    if (t < 100 && step !== 0) reset(now);
-
-    /* Reveal each row once at its scheduled time (Intake-style: instant
-       text fill + matcha glow + value-pop animation). */
-    if (t >= SEQ.row1At && !rowsRevealed[0]) {
-      rowsRevealed[0] = true;
-      revealRow(0);
-    }
-    if (t >= SEQ.row2At && !rowsRevealed[1]) {
-      rowsRevealed[1] = true;
-      revealRow(1);
-    }
-
-    /* Total counts up */
-    var totalEl = $('bcTotal');
-    if (totalEl) {
-      if (t < SEQ.totalCountStart) {
-        totalEl.textContent = '$0.00';
-      } else if (t >= SEQ.totalCountEnd) {
-        totalEl.textContent = '$' + CLAIM_TOTAL.toFixed(2);
-      } else {
-        var tp = (t - SEQ.totalCountStart) / (SEQ.totalCountEnd - SEQ.totalCountStart);
-        var v = CLAIM_TOTAL * tp;
-        totalEl.textContent = '$' + v.toFixed(2);
-      }
-    }
-
-    /* Cursor → Submit button */
-    if (t >= SEQ.cursorToSubmit.at && step === 0) {
-      var sub = $('bcSubmit');
-      if (sub) moveCursor(sub, SEQ.cursorToSubmit.dur);
-      step = 1;
-    }
-    /* Click + pulse */
-    if (t >= SEQ.clickSubmit.at && !clicked.submit) {
-      clicked.submit = true;
-      ripple();
-      var sub2 = $('bcSubmit');
-      if (sub2) sub2.classList.add('is-pulsing');
-    }
-    /* Workflow indicator, progress bar between Medical Billing and
-       Get Paid fills continuously from 0 → 100% during the billing
-       animation. Reaches 100% at popupAt. */
-    var paidArrow = document.querySelector('.hw-arrow[data-arrow="paid"]');
-    if (paidArrow) {
-      var progress = Math.min(100, (t / SEQ.popupAt) * 100);
-      paidArrow.style.setProperty('--bill-progress', progress + '%');
-    }
-
-    /* Paid popup + Get Paid stage activation */
-    if (t >= SEQ.popupAt && !clicked.popup) {
-      clicked.popup = true;
-      var pop = $('bcPopup');
-      if (pop) pop.classList.add('is-visible');
-      /* Light up the Get Paid stage with check-pop animation. */
-      var paidStage = document.querySelector('.hw-stage[data-pane-key="paid"]');
-      if (paidStage) paidStage.classList.add('is-active');
-      /* Mark Medical Billing as done too (since we've moved past it). */
-      var billingStage = document.querySelector('.hw-stage[data-pane-key="billing"]');
-      if (billingStage) {
-        billingStage.classList.remove('is-active');
-        billingStage.classList.add('is-done');
-      }
-    }
-
-    /* heroAdvance → Scheduling so the next cycle gets a fresh 10s window
-       and the rotation timer doesn't fire mid-popup. */
-    if (t >= SEQ.advanceAt && !billAdvanced) {
-      billAdvanced = true;
-      if (typeof window.heroAdvance === 'function') window.heroAdvance();
-    }
-
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-
-/* ============================================================
    Messaging & Follow-Ups motion graphic
    - 3 phone screens visible side-by-side
    - Phone 2 (SMS) animates: typing indicator → bubble 1 → typing → bubble 2 → reset
@@ -1807,9 +1582,7 @@ import LogoMedme from '../../components/LogoMedme.astro';
      ---------------------------------------------------------- */
   /* Rotation unlocked 2026-05-26, full 4-pane cycle:
      Scheduling → Patient Intake → Consult Complete (Documentation) →
-     Medical Billing → back to Scheduling. Get Paid is shown as the
-     5th workflow stage but doesn't have its own pane (it's the final
-     state inside the Billing animation). */
+     Follow-Ups & Mass Comms → back to Scheduling. */
   var ROTATE_ENABLED = true;
 
   var ROTATE_MS    = 10000;

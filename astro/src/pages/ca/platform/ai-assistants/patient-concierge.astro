@@ -112,7 +112,9 @@ import BaseLayout from '../../../../layouts/BaseLayoutCa.astro';
   .ch-card p { margin: 0; color: rgba(250, 249, 245, 0.78); line-height: 1.55; font-size: 0.95rem; }
 
   /* ====== USE-CASE LIGHT CARD GRID (no channel tags, #229) ===== */
-  .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+  @media (max-width: 900px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .feat-grid { grid-template-columns: 1fr; } }
   .feat-card {
     background: var(--white);
     border: 1px solid rgba(6, 62, 84, 0.08);
@@ -216,7 +218,7 @@ import BaseLayout from '../../../../layouts/BaseLayoutCa.astro';
       <article class="ch-card">
         <span class="ch-card__tag">Outbound Voice Agents</span>
         <h3>End the manual outreach loop.</h3>
-        <p>Used by retail and specialty pharmacies across North America, MedMe's enterprise-grade voice agents launch call campaigns that reach hundreds of patients with just a few clicks, scaling specialty programs and delivery logistics alongside your team.</p>
+        <p>Used by retail and specialty pharmacies across Canada, MedMe's enterprise-grade voice agents launch call campaigns that reach hundreds of patients with just a few clicks, scaling specialty programs and delivery logistics alongside your team.</p>
       </article>
       <article class="ch-card">
         <span class="ch-card__tag">Inbound Voice Agents</span>
@@ -254,7 +256,7 @@ import BaseLayout from '../../../../layouts/BaseLayoutCa.astro';
     <div class="tile__head">
       <span class="kicker">Use Cases</span>
       <h2 class="h-display">Six places it lifts the load,<br>tuned to how pharmacy actually runs.</h2>
-      <p class="lead">Trusted by retail and specialty pharmacies across North America. Each use case is built around how your team actually operates, with flexible implementations per pharmacy.</p>
+      <p class="lead">Trusted by retail and specialty pharmacies across Canada. Each use case is built around how your team actually operates, with flexible implementations per pharmacy.</p>
     </div>
     <div class="feat-grid">
       <article class="feat-card">
@@ -280,7 +282,7 @@ import BaseLayout from '../../../../layouts/BaseLayoutCa.astro';
       <article class="feat-card">
         <p class="feat-card__num">05</p>
         <h3>Appointment booking and campaigns</h3>
-        <p>Patients can book appointments by phone or web, and outbound campaigns can run targeted booking outreach (flu season, MTM, follow-up reviews). Bookings sync straight into your MedMe calendar.</p>
+        <p>Patients can book appointments by phone or web, and outbound campaigns can run targeted booking outreach (flu season, medication reviews, follow-up reviews). Bookings sync straight into your MedMe calendar.</p>
       </article>
       <article class="feat-card">
         <p class="feat-card__num">06</p>
@@ -301,10 +303,9 @@ import BaseLayout from '../../../../layouts/BaseLayoutCa.astro';
         <p>Voice and chat conversations stay inside the scope your protocols define. Custom conversational logic is built with your team to reflect the way your pharmacy talks to patients, with controlled escalation back to your pharmacists when a conversation needs them.</p>
       </div>
       <div class="trust-band__pills">
-        <span class="trust-band__pill">HIPAA</span>
         <span class="trust-band__pill">PIPEDA</span>
-        <span class="trust-band__pill">TCPA</span>
-        <span class="trust-band__pill">FCC</span>
+        <span class="trust-band__pill">PHIPA</span>
+        <span class="trust-band__pill">CASL</span>
         <span class="trust-band__pill">CRTC</span>
       </div>
     </div>

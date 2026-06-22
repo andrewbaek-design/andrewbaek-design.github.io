@@ -81,7 +81,7 @@
    border declarations added earlier in the codebase. To opt an
    element back in, write `border: 1px solid X !important` after
    this rule. */
-*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.sub-hero__visual):not(.sub-hero__bg):not(.hero-2col):not(.pulse-ring):not(.hero-2col__media):not(.mockup-host):not(.bd-frame):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
+*:not(.btn):not(.btn-ghost):not(.btn-underline):not(.btn-primary):not(.btn-primary--accent):not(.pill):not(.pill--solid):not(.pill--ghost):not(.sub-hero):not(.sub-hero__visual):not(.sub-hero__bg):not(.hero-2col):not(.pulse-ring):not(.hero-2col__media):not(.mockup-host):not(.mockup-host *):not(.bd-frame):not(button):not(input):not(textarea):not(select):not(option):not(fieldset):not(legend) {
   border: 0 !important;
 }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }

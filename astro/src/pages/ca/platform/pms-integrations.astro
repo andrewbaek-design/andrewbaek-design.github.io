@@ -4,7 +4,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
 ---
 <BaseLayout
   title="PMS Integrations, MedMe Health"
-  description="MedMe works with the systems your pharmacy already runs. Bidirectional integrations with PMS systems, clearinghouses, wholesalers, and payers, BAA-protected and built for real-time sync."
+  description="MedMe works with the systems your pharmacy already runs. Bidirectional integrations with Canadian PMS systems, provincial drug plans, and wholesalers, PHIPA and PIPEDA aligned and built for real-time sync."
   showAnnouncement={false}
 >
   <Fragment slot="head">
@@ -16,9 +16,9 @@ import LogoMedme from '../../../components/LogoMedme.astro';
 
   /* PMS INTEGRATIONS. Hero with hub-and-spokes diagram (MedMe
      center + connected systems orbiting). 3-section workflow
-     (Rx systems, Clearinghouses, Wholesalers/Payers). Three
-     dark cards (real-time, security, developer API). Stat band.
-     Navy closing CTA. */
+     (PMS dispensing systems, eClaims + provincial plans,
+     wholesalers). Three dark cards (real-time, security,
+     developer API). Stat band. Navy closing CTA. */
 
   .sub-hero { background: var(--seashell); padding: 2rem 1.5rem 3.5rem; position: relative; overflow: hidden; }
   .sub-hero__inner { max-width: var(--container); margin: 0 auto; padding-inline: var(--tile-pad-x); position: relative; }
@@ -104,35 +104,33 @@ import LogoMedme from '../../../components/LogoMedme.astro';
         </div>
         <div class="inthub__rows">
           <div class="inthub__col">
-            <div class="inthub__col-lbl">Rx Systems</div>
-            <div class="inthub__system"><span class="inthub__system-name">PioneerRx</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">BestRx</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">McKesson EM</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">Liberty</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">RxConnect</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__col-lbl">PMS Systems</div>
+            <div class="inthub__system"><span class="inthub__system-name">Kroll</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">Nexxsys</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">TelusHealth</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">HealthWatch</span><span class="inthub__system-dot"></span></div>
           </div>
           <div class="inthub__col">
-            <div class="inthub__col-lbl">Clearinghouses</div>
-            <div class="inthub__system"><span class="inthub__system-name">Change Healthcare</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">Availity</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">Office Ally</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">Waystar</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">Trizetto</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__col-lbl">Provincial &amp; Private Plans</div>
+            <div class="inthub__system"><span class="inthub__system-name">ODB</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">BC PharmaCare</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">RAMQ</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">TELUS eClaims</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">Private benefits carriers</span><span class="inthub__system-dot"></span></div>
           </div>
           <div class="inthub__col">
-            <div class="inthub__col-lbl">Payers &amp; Wholesalers</div>
-            <div class="inthub__system"><span class="inthub__system-name">provincial billing</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">BCBS</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">UnitedHealthcare</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">AmerisourceBergen</span><span class="inthub__system-dot"></span></div>
-            <div class="inthub__system"><span class="inthub__system-name">Cardinal Health</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__col-lbl">Wholesalers</div>
+            <div class="inthub__system"><span class="inthub__system-name">McKesson Canada</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">Kohl &amp; Frisch</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">Cencora Canada</span><span class="inthub__system-dot"></span></div>
+            <div class="inthub__system"><span class="inthub__system-name">Innomar Strategies</span><span class="inthub__system-dot"></span></div>
           </div>
         </div>
       </div>
     </div>
     <div class="sub-hero__text">
       <h1 class="h-display">Works with the systems<br>your pharmacy <span class="accent">already runs.</span></h1>
-      <p class="sub-hero__lede">MedMe functions as a clinical and billing layer, not a replacement. Bidirectional integrations with Rx systems, clearinghouses, wholesalers, and payers, in real time, BAA-protected end to end.</p>
+      <p class="sub-hero__lede">MedMe functions as a clinical and provincial billing layer, not a replacement. Bidirectional integrations with PMS systems, provincial drug plans, eClaims rails, and wholesalers, in real time, PHIPA and PIPEDA aligned end to end.</p>
       <div class="sub-hero__cta">
         <a class="pill pill--solid" href="/ca/contact">Book a demo <span class="arrow">→</span></a>
       </div>
@@ -153,40 +151,40 @@ import LogoMedme from '../../../components/LogoMedme.astro';
         <span class="wf-card__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 10h10M7 14h10M7 18h6"/></svg>
         </span>
-        <h3>Rx Dispensing Systems</h3>
+        <h3>PMS Dispensing Systems</h3>
         <p>Two-way sync with your PMS means patient data and updated medication lists flow back automatically. Demographics, allergies, history, and prescriber relationships stay current via real-time webhooks or hourly batches.</p>
         <ul class="wf-card__list">
-          <li>PioneerRx</li>
-          <li>BestRx</li>
-          <li>McKesson EnterpriseRx</li>
-          <li>Liberty</li>
-          <li>RxConnect</li>
+          <li>Kroll</li>
+          <li>Nexxsys</li>
+          <li>TelusHealth</li>
+          <li>HealthWatch</li>
         </ul>
       </article>
       <article class="wf-card">
         <span class="wf-card__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M20 7h-3V4a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v3H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"/><path d="M7 12h10M7 16h6"/></svg>
         </span>
-        <h3>Clearinghouses</h3>
-        <p>Eligibility, claims, remittance, and status flow through major US clearinghouses, with bidirectional sync on 270/271, 837P, 277CA, and 835 ERA.</p>
+        <h3>eClaims &amp; Provincial Plans</h3>
+        <p>Eligibility, claims, and adjudication flow through provincial drug plans and TELUS Health eClaims, with bidirectional sync on coverage lookups, claim submission, and remittance. Adjudicate clinical-service claims at the moment of encounter.</p>
         <ul class="wf-card__list">
-          <li>Change Healthcare</li>
-          <li>Availity</li>
-          <li>Office Ally</li>
-          <li>Waystar</li>
-          <li>Trizetto</li>
+          <li>ODB (Ontario Drug Benefit)</li>
+          <li>BC PharmaCare</li>
+          <li>RAMQ</li>
+          <li>TELUS Health eClaims</li>
+          <li>Major private benefits carriers</li>
         </ul>
       </article>
       <article class="wf-card">
         <span class="wf-card__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
         </span>
-        <h3>Wholesalers &amp; Payers</h3>
-        <p>Direct connections to wholesalers for pricing and ordering, and to major payers for coverage lookup, claims, and ERA reconciliation.</p>
+        <h3>Wholesalers</h3>
+        <p>Direct connections to Canadian pharmacy wholesalers for pricing, ordering, and supply visibility, so clinical demand turns into stock decisions without leaving the platform.</p>
         <ul class="wf-card__list">
-          <li>AmerisourceBergen, McKesson, Cardinal Health</li>
-          <li>provincial billing, BCBS</li>
-          <li>UnitedHealthcare, Humana, Aetna, Cigna</li>
+          <li>McKesson Canada</li>
+          <li>Kohl &amp; Frisch</li>
+          <li>Cencora Canada</li>
+          <li>Innomar Strategies</li>
         </ul>
       </article>
     </div>
@@ -204,12 +202,12 @@ import LogoMedme from '../../../components/LogoMedme.astro';
       <article class="winner-card">
         <span class="winner-card__tag">Real-time Sync</span>
         <h3>Webhook-first event streaming</h3>
-        <p>Bidirectional synchronization where partner systems support it. Webhook-first event streaming keeps data current in seconds, not hours. Median time to wire up a new pharmacy's Rx system: under 30 minutes.</p>
+        <p>Bidirectional synchronization where partner systems support it. Webhook-first event streaming keeps data current in seconds, not hours. Median time to wire up a new pharmacy's PMS: under 30 minutes.</p>
       </article>
       <article class="winner-card">
         <span class="winner-card__tag">Security &amp; Compliance</span>
-        <h3>BAA-protected, SOC 2 Type II</h3>
-        <p>All integrations covered by Business Associate Agreements. TLS 1.3 encryption in transit, AES-256 at rest, immutable audit logs with 7-year retention. SOC 2 Type II audited annually.</p>
+        <h3>PHIPA &amp; PIPEDA aligned, SOC 2 Type II</h3>
+        <p>All integrations aligned to PHIPA and PIPEDA, with Canadian data residency. TLS 1.3 encryption in transit, AES-256 at rest, immutable audit logs with 7-year retention. SOC 2 Type II audited annually.</p>
       </article>
       <article class="winner-card">
         <span class="winner-card__tag">Developer API</span>
@@ -229,16 +227,16 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     </div>
     <div class="stats-band">
       <div class="stats-band__cell">
-        <div class="stats-band__num">38</div>
-        <div class="stats-band__label">Production integrations across Rx systems, clearinghouses, wholesalers, and payers.</div>
+        <div class="stats-band__num">12+</div>
+        <div class="stats-band__label">Production integrations across PMS systems, provincial drug plans, eClaims rails, and wholesalers.</div>
       </div>
       <div class="stats-band__cell">
         <div class="stats-band__num">&lt; 30 min</div>
-        <div class="stats-band__label">Median time to wire up a new pharmacy's Rx system into MedMe.</div>
+        <div class="stats-band__label">Median time to wire up a new pharmacy's PMS into MedMe.</div>
       </div>
       <div class="stats-band__cell">
         <div class="stats-band__num">SOC 2 II</div>
-        <div class="stats-band__label">Type II audited annually. Every integration BAA-protected.</div>
+        <div class="stats-band__label">Type II audited annually. Every integration PHIPA and PIPEDA aligned.</div>
       </div>
     </div>
   </div>

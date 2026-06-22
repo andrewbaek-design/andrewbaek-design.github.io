@@ -160,14 +160,24 @@ import BaseLayout from '../../../layouts/BaseLayoutCa.astro';
   .light-card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 600; color: var(--indigo); letter-spacing: -0.012em; }
   .light-card p { margin: 0; color: rgba(6,62,84,0.72); line-height: 1.55; font-size: 0.95rem; }
 
-  /* ====== SERVICE CHIPS (where Clinical Assistant operates) ==== */
+  /* ====== SERVICE CHIPS (where Clinical Assistant operates) ====
+     Explicit 4-column grid at desktop so 7 chips land as 4 + 3
+     across two rows. Falls back to wrap at narrower viewports. == */
   .svc-row {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
     justify-content: center;
     gap: 0.75rem 1rem;
-    max-width: 880px;
     margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .svc-row { grid-template-columns: repeat(3, max-content); }
+  }
+  @media (max-width: 600px) {
+    .svc-row { grid-template-columns: repeat(2, max-content); }
+  }
+  @media (max-width: 380px) {
+    .svc-row { grid-template-columns: 1fr; justify-items: center; }
   }
   .svc-chip {
     display: inline-flex;
@@ -368,17 +378,17 @@ import BaseLayout from '../../../layouts/BaseLayoutCa.astro';
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Built For Every Service Type</span>
-      <h2 class="h-display">From minor ailments to MTM,<br>one Clinical Assistant for every service.</h2>
+      <h2 class="h-display">From minor ailments to medication reviews,<br>one Clinical Assistant for every service.</h2>
       <p class="lead">Tuned for pharmacy practice across the services your team already delivers. Works in-person and on phone follow-ups, with vocabulary, drugs, and clinical entities recognized out of the box. Pharmacists can also use it for hands-free dictation between appointments.</p>
     </div>
     <div class="svc-row">
       <span class="svc-chip">Minor ailments</span>
-      <span class="svc-chip">MTM sessions</span>
+      <span class="svc-chip">Medication reviews</span>
       <span class="svc-chip">Pharmacist prescribing</span>
       <span class="svc-chip">Health screenings</span>
       <span class="svc-chip">Point-of-care testing</span>
       <span class="svc-chip">Med Sync programs</span>
-      <span class="svc-chip">Test-and-treat programs</span>
+      <span class="svc-chip">Travel consults</span>
     </div>
   </div>
 </section>
@@ -462,7 +472,7 @@ import BaseLayout from '../../../layouts/BaseLayoutCa.astro';
       <article class="apart-card">
         <div class="apart-card__stat">100+</div>
         <h3>Pharmacy-specific template library</h3>
-        <p>A library of clinical-service templates covering MTM, minor ailments, immunizations, POCT, and the protocols your state runs. Drop a template in once and Clinical Assistant fills it consistently every time.</p>
+        <p>A library of clinical-service templates covering medication reviews, minor ailments, immunizations, POCT, and the protocols your province runs. Drop a template in once and Clinical Assistant fills it consistently every time.</p>
       </article>
       <article class="apart-card">
         <div class="apart-card__stat">Pharmacists, on call</div>
