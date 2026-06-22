@@ -4,7 +4,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
 ---
 <BaseLayout
   title="For Enterprise Pharmacy, MedMe Health"
-  description="MedMe is the modular, AI-native pharmacy platform built to integrate with your existing technology stack and operate as a strategic partner driving the clinical strategy across your network."
+  description="The platform of choice for Canadian enterprise pharmacy. The strategic partner with the scale, integrations, and AI capabilities to support the largest pharmacy networks in Canada."
   showAnnouncement={false}
 >
   <Fragment slot="head">
@@ -962,6 +962,191 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     font-weight: 700;
     letter-spacing: -0.005em;
   }
+
+  /* ====== FEATURED: NOVA SCOTIA / PANS STORY =====================
+     Five-up stat grid on navy following the standard section layout
+     (left-aligned .tile__head, grid below). The "90,000+ patients"
+     stat is visually featured. Source + blueprint line below. ==== */
+  .pans-stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0 2rem;
+  }
+  @media (max-width: 980px) {
+    .pans-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .pans-stats { grid-template-columns: 1fr; }
+  }
+  .pans-stat {
+    background: rgba(250, 249, 245, 0.04);
+    border: 1px solid rgba(250, 249, 245, 0.10);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.1rem 1.4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  .pans-stat:hover {
+    border-color: rgba(195, 196, 48, 0.35);
+  }
+  .pans-stat__value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 2.9vw, 2.4rem);
+    letter-spacing: -0.02em;
+    color: var(--matcha);
+    line-height: 1;
+  }
+  .pans-stat__label {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: rgba(250, 249, 245, 0.72);
+    text-wrap: pretty;
+  }
+  .pans-stat--featured {
+    background: rgba(195, 196, 48, 0.10);
+    border-color: rgba(195, 196, 48, 0.35);
+  }
+
+  .pans-footer {
+    text-align: center;
+  }
+  .pans-footer__source {
+    font-size: 0.8rem;
+    color: rgba(250, 249, 245, 0.55);
+    margin: 0 0 0.85rem;
+    line-height: 1.5;
+  }
+  .pans-footer__source a {
+    color: var(--matcha);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(195, 196, 48, 0.4);
+    transition: opacity 0.18s;
+  }
+  .pans-footer__source a:hover { opacity: 0.75; }
+  .pans-footer__blueprint {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--seashell);
+    margin: 0;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  /* ====== AI AGENTS: 3-card grid ============================
+     Three AI agents from Strategy Doc v3 §4.4: Clinical Assistant,
+     AI Scribe, Patient Concierge (tagged Active Pilot). Visually
+     mirrors the Strategic Partnership card grid above. ========= */
+  .ai-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  @media (max-width: 1000px) { .ai-grid { grid-template-columns: 1fr; } }
+  .ai-card {
+    background: var(--tile-card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .ai-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(195, 196, 48, 0.16);
+    color: var(--indigo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .ai-card__icon svg {
+    width: 22px; height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .ai-card h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .ai-card__tag {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--indigo);
+    background: var(--matcha);
+    padding: 3px 8px;
+    border-radius: 999px;
+    line-height: 1;
+  }
+  .ai-card__sub {
+    margin: 0 0 0.6rem;
+    font-size: 0.78rem;
+    color: rgba(6, 62, 84, 0.55);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .ai-card p:not(.ai-card__sub) {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(6, 62, 84, 0.72);
+  }
+
+  /* ====== SECURITY & COMPLIANCE: 4 cert badges on light bg ===== */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 900px) { .cert-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .cert-grid { grid-template-columns: 1fr; } }
+  .cert-badge {
+    background: var(--tile-card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .cert-badge__label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--indigo);
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+  }
+  .cert-badge__sub {
+    font-size: 0.78rem;
+    color: rgba(6, 62, 84, 0.55);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
 </style>
 
 <!-- ============= 1. SUB-HERO (dashboard mockup as faded BG above text) ============= -->
@@ -986,8 +1171,8 @@ import LogoMedme from '../../../components/LogoMedme.astro';
               <span class="dash__stat-value">1,234</span>
             </div>
             <div class="dash__stat">
-              <span class="dash__stat-label">States</span>
-              <span class="dash__stat-value">47</span>
+              <span class="dash__stat-label">Provinces</span>
+              <span class="dash__stat-value">10</span>
             </div>
             <div class="dash__stat">
               <span class="dash__stat-label">Encounters YTD</span>
@@ -1002,27 +1187,27 @@ import LogoMedme from '../../../components/LogoMedme.astro';
             <span class="dash__matrix-title">Top services by region</span>
             <div class="dash__matrix-grid">
               <span class="dash__matrix-cell dash__matrix-cell--head"></span>
-              <span class="dash__matrix-cell dash__matrix-cell--head">NE</span>
-              <span class="dash__matrix-cell dash__matrix-cell--head">M-Atl</span>
-              <span class="dash__matrix-cell dash__matrix-cell--head">SE</span>
-              <span class="dash__matrix-cell dash__matrix-cell--head">MW</span>
-              <span class="dash__matrix-cell dash__matrix-cell--head">West</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">AB</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">BC</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">ON</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">QC</span>
+              <span class="dash__matrix-cell dash__matrix-cell--head">Atl</span>
 
-              <span class="dash__matrix-cell dash__matrix-cell--label">Vaccines</span>
+              <span class="dash__matrix-cell dash__matrix-cell--label">Immunizations</span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.85)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.70)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.55)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.45)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.35)"></span>
 
-              <span class="dash__matrix-cell dash__matrix-cell--label">MTM</span>
+              <span class="dash__matrix-cell dash__matrix-cell--label">Med Reviews</span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.55)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.60)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.30)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.75)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.40)"></span>
 
-              <span class="dash__matrix-cell dash__matrix-cell--label">CCM</span>
+              <span class="dash__matrix-cell dash__matrix-cell--label">Minor Ailments</span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.30)"></span>
               <span class="dash__matrix-cell" style="background: rgba(195, 196, 48, 0.40)"></span>
               <span class="dash__matrix-cell dash__matrix-cell--opportunity">
@@ -1044,7 +1229,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
         <div class="dash__insight">
           <span class="dash__insight-dot" aria-hidden="true"></span>
           <span class="dash__insight-label">Top opportunity</span>
-          <span class="dash__insight-body">CCM in the Southeast: 47% growth headroom across 312 pharmacies. <strong>Run a targeted campaign &rarr;</strong></span>
+          <span class="dash__insight-body">Minor Ailments in Ontario: 47% growth headroom across 312 pharmacies. <strong>Run a targeted campaign &rarr;</strong></span>
         </div>
         <div class="dash__chart">
           <div class="dash__chart-head">
@@ -1076,8 +1261,8 @@ import LogoMedme from '../../../components/LogoMedme.astro';
       </div>
     </div>
     <div class="sub-hero__text">
-      <h1 class="h-display">Your strategic partner<br>for <span class="accent">clinical services at scale.</span></h1>
-      <p class="sub-hero__lede">MedMe is the modular, AI-native pharmacy platform built to integrate with your existing technology stack and operate as a strategic partner, not just a software vendor, driving the clinical strategy across your network.</p>
+      <h1 class="h-display">The platform of choice for<br><span class="accent">Canadian enterprise pharmacy.</span></h1>
+      <p class="sub-hero__lede">The strategic partner with the scale, integrations, and AI capabilities to support the largest pharmacy networks in Canada. Over 70% of Canadian enterprise pharmacy already runs on MedMe.</p>
       <div class="sub-hero__cta">
         <a class="pill pill--solid" href="/ca/contact?source=enterprise">Talk to our enterprise team <span class="arrow">→</span></a>
       </div>
@@ -1100,7 +1285,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <span class="layer"></span><span class="layer"></span><span class="layer"></span><span class="layer"></span><span class="layer"></span>
         </div>
         <h3>Built end-to-end for pharmacy</h3>
-        <p>Not retrofitted from a generic EHR. Every component of the platform is purpose-built for pharmacy clinical services, from scheduling through billing.</p>
+        <p>Not retrofitted from a generic EHR. Every component of the platform is purpose-built for pharmacy clinical services, from scheduling through documentation.</p>
       </article>
       <article class="feature">
         <div class="feat-graphic feat-ai" aria-hidden="true">
@@ -1132,19 +1317,103 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <span class="tick"></span>
         </div>
         <h3>The enterprise playbook, already written</h3>
-        <p>The only platform with a working playbook for clinical services rollout across the largest pharmacy networks in North America, refined across years of enterprise launches.</p>
+        <p>The only platform with a working playbook for clinical services rollout across the largest pharmacy networks in Canada, refined across years of enterprise launches.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============= 3. ENTERPRISE MATURITY (4 stages, per Andrew #198) ============= -->
+<!-- ============= 3. FEATURED: NOVA SCOTIA / PANS PROVINCIAL SCHEDULER =============
+     Per Strategy Doc v3 §4.4 and §6: the FEATURED proof for the CA
+     enterprise audience. Shows MedMe operates at provincial-government
+     scale, won an RFP, and runs a single standardized platform across
+     independents and the largest CA chains simultaneously. Stats
+     sourced from CPhA keynote, April 2026. -->
+<section class="tile tile--navy" aria-label="Nova Scotia and PANS provincial scheduler">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Featured Customer Story</span>
+      <h2 class="h-display">PANS chose MedMe to power Canada's<br>first provincial pharmacy scheduler.</h2>
+      <p class="lead">Selected by the Pharmacy Association of Nova Scotia through a competitive RFP, MedMe is the mandated booking platform for every Community Pharmacy Primary Care Clinic in the province. Independents, Shoppers Drug Mart, and Sobeys, all on the same standardized infrastructure, and the first of its kind in Canada.</p>
+    </div>
+
+    <div class="pans-stats">
+      <div class="pans-stat">
+        <span class="pans-stat__value">10%</span>
+        <span class="pans-stat__label">of hospital ER visits diverted to pharmacy clinics</span>
+      </div>
+      <div class="pans-stat">
+        <span class="pans-stat__value">25%</span>
+        <span class="pans-stat__label">of walk-in clinic visits diverted to pharmacy clinics</span>
+      </div>
+      <div class="pans-stat pans-stat--featured">
+        <span class="pans-stat__value">90,000+</span>
+        <span class="pans-stat__label">unique patients served, 45% with no other regular provider</span>
+      </div>
+      <div class="pans-stat">
+        <span class="pans-stat__value">98%</span>
+        <span class="pans-stat__label">patient satisfaction</span>
+      </div>
+      <div class="pans-stat">
+        <span class="pans-stat__value">$3.6M+</span>
+        <span class="pans-stat__label">in healthcare system cost savings</span>
+      </div>
+    </div>
+
+    <div class="pans-footer">
+      <p class="pans-footer__source">Source: Canadian Pharmacists Association keynote, April 2026. Live at <a href="https://yourpharmacyns.ca" target="_blank" rel="noopener">yourpharmacyns.ca</a>.</p>
+      <p class="pans-footer__blueprint">The blueprint for future provincial deployments.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 4. AI AGENTS (per Strategy Doc v3 §4.4) =============
+     Clinical Assistant, AI Scribe, Patient Concierge (tagged Active
+     Pilot). Three-up card grid. Admin Clerk is referenced separately
+     in Modular Architecture Tier 04. -->
+<section class="tile tile--light" aria-label="AI agents">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">AI-Native By Design</span>
+      <h2 class="h-display">AI built into the workflow,<br>not bolted onto it.</h2>
+      <p class="lead">Each agent is purpose-built for real pharmacist or operational work, and built into the platform with how pharmacy actually moves in mind, not a generic chatbot retrofitted into a clinical product.</p>
+    </div>
+    <div class="ai-grid">
+      <article class="ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M14 4h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+        </span>
+        <h3>Clinical Assistant</h3>
+        <p class="ai-card__sub">Clinical workflow AI</p>
+        <p>Surfaces the right template for the visit, drafts the note structure, and helps pharmacists move through the encounter without context-switching between systems.</p>
+      </article>
+      <article class="ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
+        </span>
+        <h3>AI Scribe</h3>
+        <p class="ai-card__sub">Ambient SOAP note drafting</p>
+        <p>Captures the consult ambiently and drafts the SOAP note as the encounter happens. The pharmacist reviews and signs in seconds, not after hours.</p>
+      </article>
+      <article class="ai-card">
+        <span class="ai-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <h3>Patient Concierge <span class="ai-card__tag">Active Pilot</span></h3>
+        <p class="ai-card__sub">Inbound and outbound voice</p>
+        <p>Voice agent for refill check-ins, appointment confirmations, and follow-up conversations. Frees pharmacy staff from the call queue without losing the human-paced experience patients expect.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 5. ENTERPRISE MATURITY (4 stages, per Andrew #198) ============= -->
 <section class="tile tile--light tile--alt" aria-label="Enterprise maturity">
   <div class="tile__inner">
     <div class="tile__head">
       <span class="kicker">Where You Are On The Curve</span>
       <h2 class="h-display">From your first vaccine clinic<br>to a full MedMe Care Platform.</h2>
-      <p class="lead">Enterprises grow into clinical services in stages. We are a strategic partner at each one, so the platform you start with at Stage 01 is the same platform that runs full clinics and direct payer contracts at Stage 04.</p>
+      <p class="lead">Enterprises grow into clinical services in stages. We are a strategic partner at each one, so the platform you start with at Stage 01 is the same platform that runs full clinics and outcomes-based programs at Stage 04.</p>
     </div>
     <div class="maturity-grid">
       <article class="maturity-card">
@@ -1153,9 +1422,9 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <span class="is-on"></span><span></span><span></span><span></span>
         </span>
         <h3>Starting out</h3>
-        <p class="maturity-card__sub">Vaccines, first MTM pilots</p>
-        <p>Most stores run immunizations. MTM is starting in a handful of locations. Clinical revenue is a small line next to dispensing.</p>
-        <p class="maturity-card__enables"><strong>How we support you:</strong> Scheduling, intake, and SOAP documentation that work the way pharmacy actually moves, so your first clinical services run with paid claims, not paperwork.</p>
+        <p class="maturity-card__sub">Immunizations, first medication review pilots</p>
+        <p>Most stores run immunizations. Medication reviews are starting in a handful of locations. Clinical revenue is a small line next to dispensing.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Scheduling, intake, and SOAP documentation that work the way pharmacy actually moves, so your first clinical services run as completed encounters, not paperwork.</p>
       </article>
       <article class="maturity-card">
         <span class="maturity-card__stage">Stage 02</span>
@@ -1164,8 +1433,8 @@ import LogoMedme from '../../../components/LogoMedme.astro';
         </span>
         <h3>Expanding services</h3>
         <p class="maturity-card__sub">Multi-service, store-by-store</p>
-        <p>POCT, MTM, screenings, and seasonal campaigns are running in pilot stores. Workflow varies by location. The playbook is not yet network-wide.</p>
-        <p class="maturity-card__enables"><strong>How we support you:</strong> Standardize across stores. One scheduler, one note format, one billing path, so what works in your top pharmacies turns into a repeatable program.</p>
+        <p>POCT, medication reviews, minor ailments, and seasonal campaigns are running in pilot stores. Workflow varies by location. The playbook is not yet network-wide.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Standardize across stores. One scheduler, one note format, one workflow, so what works in your top pharmacies turns into a repeatable program.</p>
       </article>
       <article class="maturity-card">
         <span class="maturity-card__stage">Stage 03</span>
@@ -1173,9 +1442,9 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span></span>
         </span>
         <h3>Network-wide program</h3>
-        <p class="maturity-card__sub">CCM, MTM, POCT live across stores</p>
+        <p class="maturity-card__sub">POCT, medication reviews, minor ailments live across stores</p>
         <p>Clinical services are run as a coordinated line of business. There is a dedicated clinical-services lead. Documentation discipline is consistent.</p>
-        <p class="maturity-card__enables"><strong>How we support you:</strong> Operate the program. Per-store scorecards, multi-payer billing, and structured outcomes data you can take to legislators, payers, and your board.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Operate the program. Per-store scorecards, consolidated network reporting, and structured outcomes data you can take to provincial associations, regulators, and your board.</p>
       </article>
       <article class="maturity-card">
         <span class="maturity-card__stage">Stage 04</span>
@@ -1183,9 +1452,9 @@ import LogoMedme from '../../../components/LogoMedme.astro';
           <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span class="is-on"></span>
         </span>
         <h3>Full clinics, consult rooms</h3>
-        <p class="maturity-card__sub">Innovative care, payer-contracted</p>
-        <p>Stores host full clinical visits in dedicated consult rooms. Pharmacists operate at top-of-license. Direct payer contracts and value-based agreements are live.</p>
-        <p class="maturity-card__enables"><strong>How we support you:</strong> Full MedMe Care Platform with QHIN interoperability, multi-state billing, RHTP participation, and provider-status pathways. We grow with you, we don't get replaced.</p>
+        <p class="maturity-card__sub">Innovative care, full clinical practice</p>
+        <p>Stores host full clinical visits in dedicated consult rooms. Pharmacists operate at top-of-scope. Outcomes data informs provincial advocacy and scope-of-practice expansion.</p>
+        <p class="maturity-card__enables"><strong>How we support you:</strong> Full MedMe Care Platform with PMS interoperability, network-wide reporting, provincial-program participation, and scope-of-practice advocacy. We grow with you, we don't get replaced.</p>
       </article>
     </div>
   </div>
@@ -1252,7 +1521,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
         </div>
         <div class="tier__num">Tier 04</div>
         <h3>Connect even where no API exists</h3>
-        <p>Our Admin Clerk agent uses RPA to operate against PMS, payer portals, and legacy systems that were never designed for integration. If a human can use it, the agent can too.</p>
+        <p>Our Admin Clerk agent uses RPA to operate against PMS, provincial portals, and legacy systems that were never designed for integration. If a human can use it, the agent can too.</p>
         <span class="tier__detail">RPA, virtual agents, screen automation</span>
       </article>
     </div>
@@ -1265,32 +1534,32 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     <div class="tile__head">
       <span class="kicker">Interoperability and Future-Forward</span>
       <h2 class="h-display">Built for what enterprise pharmacy<br>is becoming next.</h2>
-      <p class="lead">Interoperability is not a settled requirement for most enterprises yet. For the ones thinking ahead, MedMe is already deployed as an interoperable MedMe Care Platform, federated through QHIN, and in active early-state implementations of the federal Rural Health Transformation Program.</p>
+      <p class="lead">Interoperability is not a settled requirement for most enterprises yet. For the ones thinking ahead, MedMe is already deployed as an interoperable platform, integrated with PMS, provincial registries, and Canadian health-data networks, and in active partnership with national pharmacy associations to define what a Canadian Care Platform should mean.</p>
     </div>
     <div class="interop-grid">
       <article class="interop-card">
-        <span class="interop-card__badge">QHIN</span>
-        <h3>QHIN-integrated</h3>
-        <p>Federated medication history retrieval at point of care, through a Qualified Health Information Network exchange. The pharmacist sees the patient's full medication picture, not just what your PMS knows.</p>
+        <span class="interop-card__badge">PMS</span>
+        <h3>PMS-integrated</h3>
+        <p>Bidirectional sync with Kroll, Nexxsys, TelusHealth, and HealthWatch. The pharmacist sees the patient's full medication picture, not just what one system knows.</p>
       </article>
       <article class="interop-card">
-        <span class="interop-card__badge">RHTP</span>
-        <h3>RHTP-ready</h3>
-        <p>Deployed as the interoperable MedMe Care Platform inside early-state implementations of the federally funded Rural Health Transformation Program. Built to scale to the next states approving funding.</p>
+        <span class="interop-card__badge">INFOWAY</span>
+        <h3>Infoway-ready</h3>
+        <p>Aligned with Canada Health Infoway and PrescribeIT standards so prescriptions, allergies, and medication history move between pharmacy and the broader Canadian health system.</p>
       </article>
       <article class="interop-card">
         <span class="interop-card__badge">FHIR</span>
         <h3>FHIR-native data model</h3>
-        <p>Structured clinical data exchange built around FHIR. Ready for the interoperability requirements of every payer, state HIE, and reporting program.</p>
+        <p>Structured clinical data exchange built around FHIR. Ready for the interoperability requirements of provincial registries, reporting programs, and downstream analytics.</p>
       </article>
       <article class="interop-card">
         <span class="interop-card__badge">PARTNERSHIPS</span>
         <h3>In partnership with leading pharmacy associations</h3>
-        <p>Working alongside national pharmacy associations to define what a MedMe Care Platform should mean for Canadian community pharmacy. Endorsed by associations across multiple states.</p>
+        <p>Working alongside national and provincial pharmacy associations to define what a Canadian Care Platform should mean for community pharmacy. Endorsed by associations across multiple provinces.</p>
       </article>
     </div>
     <div class="interop-footer">
-      <p class="interop-footer__text">Thinking about interoperability, QHIN, or how to take part in a Rural Health Transformation Program implementation? Talk to us.</p>
+      <p class="interop-footer__text">Thinking about PMS interoperability, provincial registry integration, or how to align with Canada Health Infoway? Talk to us.</p>
       <a class="pill pill--solid" href="/ca/contact?source=enterprise">Talk to our enterprise team <span class="arrow">→</span></a>
     </div>
   </div>
@@ -1302,7 +1571,7 @@ import LogoMedme from '../../../components/LogoMedme.astro';
     <div class="tile__head">
       <span class="kicker">Rollout Playbook</span>
       <h2 class="h-display">Three rollout patterns,<br>tuned to how your network actually moves.</h2>
-      <p class="lead">We have rolled out clinical services platforms across enterprise pharmacy networks in three distinct ways, from a single-state pilot to a thousand-store cutover in a single weekend. Pick the pattern that fits your change-management appetite.</p>
+      <p class="lead">We have rolled out clinical services platforms across enterprise pharmacy networks in three distinct ways, from a single-province pilot to a thousand-store cutover in a single weekend. Pick the pattern that fits your change-management appetite.</p>
     </div>
     <div class="rollout-grid">
       <article class="rollout-card">
@@ -1317,9 +1586,9 @@ import LogoMedme from '../../../components/LogoMedme.astro';
             <circle class="rs-dim" cx="180" cy="28" r="4" />
           </svg>
         </div>
-        <h3>Single-state pilot</h3>
+        <h3>Single-province pilot</h3>
         <p class="rollout-card__sub">Lowest change-management lift</p>
-        <p>Stand up MedMe in one state or one operating region first. Validate the clinical workflow, the billing posture, and the patient-facing experience before any wider rollout decision gets made.</p>
+        <p>Stand up MedMe in one province or one operating region first. Validate the clinical workflow, the documentation posture, and the patient-facing experience before any wider rollout decision gets made.</p>
       </article>
       <article class="rollout-card">
         <div class="rollout-card__shape" aria-hidden="true">
@@ -1333,9 +1602,9 @@ import LogoMedme from '../../../components/LogoMedme.astro';
             <circle class="rs-dim" cx="180" cy="28" r="4" />
           </svg>
         </div>
-        <h3>Phased state-by-state</h3>
+        <h3>Phased province-by-province</h3>
         <p class="rollout-card__sub">Steady rollout, predictable load</p>
-        <p>Sequence the rollout state by state, region by region. Each wave benefits from the playbook the previous wave wrote. Operations, training, and clinical configuration move in lockstep with your team.</p>
+        <p>Sequence the rollout province by province, region by region. Each wave benefits from the playbook the previous wave wrote. Operations, training, and clinical configuration move in lockstep with your team.</p>
       </article>
       <article class="rollout-card">
         <div class="rollout-card__shape" aria-hidden="true">
@@ -1357,13 +1626,45 @@ import LogoMedme from '../../../components/LogoMedme.astro';
   </div>
 </section>
 
-<!-- ============= 7. CLOSING CTA (navy, centered, pulse-rings motion) ============= -->
+<!-- ============= 8. SECURITY & COMPLIANCE (per Strategy Doc v3 §4.4) =============
+     SOC 2 Type II certified, PIPEDA + PHIPA aligned, Canadian data
+     residency. Four-up badge row. Sits just before the closing CTA
+     so the legitimacy signal is the last thing readers see. -->
+<section class="tile tile--light" aria-label="Security and compliance">
+  <div class="tile__inner">
+    <div class="tile__head">
+      <span class="kicker">Security &amp; Compliance</span>
+      <h2 class="h-display">Built to enterprise security<br>standards from day one.</h2>
+      <p class="lead">SOC 2 Type II certified. PIPEDA and PHIPA aligned. Canadian data residency for every clinical record, with single sign-on, role-based access, and AI vendor zero-data-retention agreements as standard.</p>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-badge">
+        <span class="cert-badge__label">SOC 2 Type II</span>
+        <span class="cert-badge__sub">Certified</span>
+      </div>
+      <div class="cert-badge">
+        <span class="cert-badge__label">PIPEDA</span>
+        <span class="cert-badge__sub">Aligned</span>
+      </div>
+      <div class="cert-badge">
+        <span class="cert-badge__label">PHIPA</span>
+        <span class="cert-badge__sub">Aligned</span>
+      </div>
+      <div class="cert-badge">
+        <span class="cert-badge__label">Canadian Data Residency</span>
+        <span class="cert-badge__sub">Production + DR in Canada</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 9. CLOSING CTA (navy, centered, pulse-rings motion) ============= -->
 <section class="tile tile--navy tile--prominent" aria-label="Talk to our enterprise team">
   <div class="tile__inner tile__inner--narrow">
     <div class="tile__head tile__head--centered">
       <span class="kicker">Get Started</span>
       <h2 class="h-display">See how MedMe scales<br>with your network.</h2>
-      <p class="lead">30-minute conversation with our enterprise team. We will map your existing technology stack, payer relationships, and clinical service lines, and propose an implementation that fits your fiscal year.</p>
+      <p class="lead">30-minute conversation with our enterprise team. We will map your existing technology stack, clinical service lines, and operational priorities, and propose an implementation that fits your fiscal year.</p>
     </div>
     <div class="pill-cta-row pill-cta-row--center">
       <span class="pulse-rings" aria-hidden="true">
