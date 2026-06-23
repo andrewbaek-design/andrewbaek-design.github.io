@@ -241,17 +241,19 @@ import LogoMedme from '../../components/LogoMedme.astro';
       <div class="mockup-host" id="msgHost">
         <div class="frame-inner" id="msgFrame">
           <div class="fu-stage">
-            <!-- iMessage-style chat thread between pharmacy (incoming,
-                 left, gray) and patient (outgoing, right, indigo). Each
-                 bubble appears in sequence and the loop replays. -->
+            <!-- iMessage-style SMS thread on the patient's phone. Full
+                 booking-confirmation + day-of reminder messages from
+                 the pharmacy (incoming, left-aligned), followed by an
+                 animated typing indicator to suggest more is coming.
+                 Sequence loops every 6s. -->
             <div class="fu-bubble fu-bubble--in" data-fu-order="1">
-              <p class="fu-bubble__text">Hi Jane, your flu shot is booked for Wed, Nov 26 at 10:00 AM.</p>
+              <p class="fu-bubble__text">Hi John! Your Flu Shot appointment with MedMe Pharmacy is <strong>tomorrow</strong> at Nov 26, 10:00 AM EST.</p>
             </div>
-            <div class="fu-bubble fu-bubble--out" data-fu-order="2">
-              <p class="fu-bubble__text">Thanks! See you then.</p>
+            <div class="fu-bubble fu-bubble--in" data-fu-order="2">
+              <p class="fu-bubble__text">Hi John! Just a reminder that your Flu Shot appointment with MedMe Pharmacy is <strong>starting in an hour</strong>. It's scheduled for Wed, Nov 26 at 10:00 AM EST.</p>
             </div>
-            <div class="fu-bubble fu-bubble--in" data-fu-order="3">
-              <p class="fu-bubble__text">Reminder: your appointment starts in 1 hour.</p>
+            <div class="fu-typing fu-bubble--in" data-fu-order="3" aria-hidden="true">
+              <span></span><span></span><span></span>
             </div>
           </div>
         </div>
